@@ -8,7 +8,8 @@ var prefix = '.'
 
 //Feld der Rollen, die den Bot auslösen
 var rollen = ['Die Nerds', 'Knights of the round Table'];
-var vip = [['278573049287278592', './vips/joshua.wav']
+var vip = [
+  ['278573049287278592', './vips/joshua.wav']
 ];
 
 //Sound Files
