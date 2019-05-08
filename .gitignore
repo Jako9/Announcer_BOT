@@ -1,0 +1,10 @@
+# Created by https://www.gitignore.io/api/batch
+# Edit at https://www.gitignore.io/?templates=batch
+
+### Batch ###
+# BatchFiles
+*.bat
+*.cmd
+*.btm
+
+# End of https://www.gitignore.io/api/batch
