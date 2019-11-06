@@ -4,12 +4,16 @@ const volume = 0.2;
 const args = process.argv.slice(2);
 const KEY = args[1];
 const bot_id = args[2];
-var prefix = '.'
+var prefix = '.';
 
 //Feld der Rollen, die den Bot auslösen
 var rollen = ['Die Nerds', 'Knights of the round Table'];
+
+// Format: [USER_ID, SONG_PFAD]
 var vip = [
-  ['278573049287278592', './vips/joshua.wav']
+  ['278573049287278592', './vips/joshua.wav'],
+  ['244563226711293953', './vips/marie.wav'],
+  ['406618328061181952', './vips/sophie.wav']
 ];
 
 //Sound Files
@@ -17,6 +21,7 @@ const login_sound = './Avengers_Suite.wav';
 const comeback_sound = './Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschriebung
+//Format: [BEFEHL, BESCHREIBUNG]
 var instructions  = [
   ['join', ' to manually connect the bot. \n(Could be used for a different \'comeback\' sound when you were just afk)'],
   ['leave', ' to manually disconnect the bot.'],
@@ -28,37 +33,16 @@ var instructions  = [
   ['setPrefix', ' to update the prefix.\n-> Syntax: setPrefix PREFIX']
 ];
 
-
+//BOT booten
 client.login(KEY);
 
-// per Befehl
-client.on('message', message => {
 
+
+
+// BEFEHL-ABFRAGE
+client.on('message', message => {
   // Wenn nicht auf einem Server
   if (!message.guild) return;
-
-  // Join
-  else if (message.content === prefix + instructions[0][0]) {
-    var vs = message.member.voiceChannel;
-
-    // Wenn in einem gültigen Channel, join
-    if (vs) {
-      vs.join().then(connection => bot_join(vs, connection, comeback_sound)).catch(console.log);
-    }
-
-    //Wenn in keinem gültigen Channel
-    else {
-      message.reply('Betrete erst nen Channel, du Bob!');
-    }
-  }
-
-
-  // Leave
-  else if (message.content === prefix + instructions[1][0]) {
-    leave(message);
-  }
-
-
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content === prefix + instructions[2][0]){
     var msg = '``` \n------------------------------------------------------------- \n' +
@@ -71,11 +55,9 @@ client.on('message', message => {
     message.reply(msg + '```');
   }
 
-
   // Personalisiere Befehle mit 'set'
   else  if(message.content.startsWith(prefix + instructions[3][0]  + ' ')){
     var msg = message.content.split(' ');
-
     // Syntax für 'set' Befehl ist korrekt
     if(msg.length === 3 && msg[1] >= 0 && msg[1] < instructions.length){
       var oldBefehl = instructions[msg[1]][0];
@@ -87,7 +69,6 @@ client.on('message', message => {
       }
   }
 
-
   // Neue Rolle adden
   else if (message.content.startsWith(prefix + instructions[4][0]  + ' ')) {
     if(message.content.split(' ').length >= 2){
@@ -98,10 +79,8 @@ client.on('message', message => {
       tmpMessage += message.content.split(' ')[message.content.split(' ').length - 1];
       // Maximale Rollenanzahl  =  40
       if(rollen.length <= 40){
-
         // Ob die Rolle schon hinzugefügt wurde
         if(!rollen.includes(tmpMessage)){
-
           // Ob die Rolle überhaupt existiert
           if(message.guild.roles.find(role => role.name === tmpMessage) !== null){
             rollen.push(tmpMessage);
@@ -124,7 +103,6 @@ client.on('message', message => {
     }
   }
 
-
   // Rolle löschen
   else if (message.content.startsWith(prefix + instructions[5][0]  + ' ')) {
     if(message.content.split(' ').length == 2 && message.content.split(' ')[1] >= 0 && message.content.split(' ')[1] < rollen.length){
@@ -136,7 +114,6 @@ client.on('message', message => {
     }
   }
 
-
   // Alle aktiven Rollen  anzeigen
   else if (message.content === prefix + instructions[6][0]){
     var alleRollen = '```';
@@ -146,7 +123,6 @@ client.on('message', message => {
     alleRollen += '```';
     rollen.length != 0? message.reply(alleRollen) :  message.reply('Es gibt  aktuell keine aktiven Rollen!');
   }
-
 
   // Präfix ändern
   else if(message.content.startsWith(prefix + instructions[7][0]  + ' ')){
@@ -164,38 +140,61 @@ client.on('message', message => {
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[2][0] + '\' für eine Liste aller Befehle!');
   }
 
+  // Join per Befehl
+  else if (message.content === prefix + instructions[0][0]) {
+    var vs = message.member.voiceChannel;
+    // Wenn in einem gültigen Channel, join
+    if (vs) {
+      vs.join().then(connection => bot_join(vs, connection, comeback_sound)).catch(console.log);
+    }
+    else {
+      message.reply('Betrete erst nen Channel, du Bob!');
+    }
+  }
+
+  // Leave per Befehl
+  else if (message.content === prefix + instructions[1][0]) {
+    leave(message);
+  }
 });
 
 
-// per Join und Leave Benutzer
+
+
+
+
+
+
+
+
+// Join Automatisch
 client.on('voiceStateUpdate', (oldMember, newMember) => {
   let newUserChannel = newMember.voiceChannel;
   let oldUserChannel = oldMember.voiceChannel;
 
   if(oldUserChannel === undefined && newUserChannel !== undefined) {
-
-    // User Joins a voice channel
     for(var i = 0;  i < rollen.length; i++){
       let role = newMember.guild.roles.find(role => role.name === rollen[i]);
       if(role != null){
+        //Rolle spricht den Bot an oder Nutzer ist VIP
         if(newMember.roles.has(role.id) && !isVip(newMember.id)[0]) {
-
-          //Nutzer hat einer der validen Rollen
           newUserChannel.join().then(connection => bot_join(newUserChannel, connection, login_sound));
           break;
         }
       }
     }
-
     //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
     if(isVip(newMember.id)[0]){
       newUserChannel.join().then(connection => bot_join(newUserChannel, connection, isVip(newMember.id)[1]));
     }
   } else if(newUserChannel === undefined){
-
-    //  User Leaves a voice channel
+    // Nutzer verlässt den Channel
   }
 });
+
+
+
+
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
@@ -208,12 +207,18 @@ function isVip(userID){
 }
 
 
+
+
+
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
   const dispatcher = connection.playFile(file);
   dispatcher.setVolume(volume);
   dispatcher.on("end", end => leave(vc));
 }
+
+
+
 
 
 // Bot Server verlassen
