@@ -5,7 +5,7 @@ const args = process.argv.slice(2);
 const KEY = args[1];
 const bot_id = args[2];
 var prefix = '.';
-var timeLastJoin = Date.now();
+var timeLastJoin = 0;
 
 //Feld der Rollen, die den Bot auslösen
 var rollen = ['Die Nerds', 'Knights of the round Table'];
