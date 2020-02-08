@@ -14,13 +14,14 @@ var rollen = ['Die Nerds', 'Knights of the round Table'];
 var vip = [
   ['278573049287278592', './vips/joshua.wav'],
   ['244563226711293953', './vips/marie.wav'],
-  ['406618328061181952', './vips/sophie.wav']
+  ['406618328061181952', './vips/sophie.wav'],
+  ['235170831095955466', './vips/jonas.wav']
 ];
 //Sound Files
 const login_sound = './Avengers_Suite.wav';
 const comeback_sound = './Avengers_Suite.wav';
 
-//Feld der Standartbefehle mit der jeweiligen Beschriebung
+//Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
 var instructions  = [
   ['join', ' to manually connect the bot. \n(Could be used for a different \'comeback\' sound when you were just afk)'],
@@ -91,7 +92,7 @@ client.on('message', message => {
           }
         }
         else{
-          message.reply('Die Rolle \'' + tmpMessage + '\' inspect schon aktiv du Kek!');
+          message.reply('Die Rolle \'' + tmpMessage + '\' ist schon aktiv du Kek!');
         }
       }
       else{
