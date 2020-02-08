@@ -12,14 +12,14 @@ var rollen = ['Die Nerds', 'Knights of the round Table'];
 
 // Format: [USER_ID, SONG_PFAD]
 var vip = [
-  ['278573049287278592', './vips/joshua.wav'],
-  ['244563226711293953', './vips/marie.wav'],
-  ['406618328061181952', './vips/sophie.wav'],
-  ['235170831095955466', './vips/jonas.wav']
+  ['278573049287278592', '/home/fkoehler/bot/vips/joshua.wav'],
+  ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
+  ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
+  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav']
 ];
 //Sound Files
-const login_sound = './Avengers_Suite.wav';
-const comeback_sound = './Avengers_Suite.wav';
+const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
+const comeback_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
