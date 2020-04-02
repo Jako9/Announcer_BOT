@@ -8,3 +8,6 @@
 *.btm
 
 # End of https://www.gitignore.io/api/batch
+
+node_modules/
+package-lock.json
