@@ -16,7 +16,8 @@ var vip = [
   ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
   ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
   ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
-  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav']
+  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
+  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav']
 ];
 //Sound Files
 const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
@@ -53,10 +54,10 @@ client.on('message', message => {
     let role;
     let user;
     try{
-      guild = client.guilds.get(message.content.split(' ')[1]);
+      guild = client.guilds.get(message.content.split(' ')[1]) || client.guilds.find(guild => guild.name === message.content.split(' ')[1]);
       guild.id;
       message.reply('Guild worked');
-      role = guild.roles.find(role => role.id === message.content.split(' ')[2]);
+      role = guild.roles.find(role => (role.id === message.content.split(' ')[2]) || (role.name === message.content.split(' ')[2]));
       role.id;
       message.reply('Role worked');
       user = guild.members.get(message.author.id);
