@@ -1,14 +1,37 @@
+
+//Initialisierung
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const volume = 0.2;
 const args = process.argv.slice(2);
 const KEY = args[1];
 const bot_id = args[2];
+
+//Setup
 var prefix = '.';
+
+//ABschließen
+var whoLocked;
+var channelSize = 0;
+
+//Announcer
+const volume = 0.2;
 var timeLastJoin = 0;
 
+//Reaktion
+const standartServer = '704731466558603376';
+const standartChannel = '704735030521495633';
+const standartRole = '704755265735753748';
+
+var channelReact = '704735030521495633';
+var reactionMessage;
+
 //Feld der Rollen, die den Bot auslösen
-var rollen = ['Die Nerds', 'Knights of the round Table'];
+var rollen = [
+  'Die Nerds',
+  'Knights of the round Table',
+  'Hömma!',
+  'angesagt'
+];
 
 // Format: [USER_ID, SONG_PFAD]
 var vip = [
@@ -18,6 +41,11 @@ var vip = [
   ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
   ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
   ['174558221535674369', '/home/fkoehler/bot/vips/max.wav']
+];
+
+//Feld der Rollen, die es erlauben einen Channel abzuschließen
+var filme = [
+    '697924117197750292'
 ];
 //Sound Files
 const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
@@ -33,14 +61,26 @@ var instructions  = [
   ['addRole', ' to add a new Role which triggers the bot\n-> Syntax: addRole ROLENAME'],
   ['removeRole', ' to remove an old Role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION'],
   ['showRoles', ' to see a list of all currently active roles.'],
-  ['setPrefix', ' to update the prefix.\n-> Syntax: setPrefix PREFIX']
+  ['setPrefix', ' to update the prefix.\n-> Syntax: setPrefix PREFIX'],
+  ['lock', ' to lock your current channel (Only one at the same time per Server).'],
+  ['unlock', ' to open the currently locked channel.'],
+  ['setChannel', ' Setting the Channel that is being listened to the desired Channel. \n Syntax: setupListener [CHANNEL_ID]'],
+  ['addReaction', 'Adding Reactions to the Role-Reaction Message. \n  Syntax: setupReaction [LIST OF REACTION_NAME]']
 ];
 
 //BOT booten
 client.login(KEY);
 
 
-
+//Nachrichten für Reaktionen fetchen
+client.on('ready', () =>{
+  let guild = client.guilds.get(standartServer);
+  let jonas = guild.members.get('235170831095955466');
+  jonas.send('Server ist back on track ;)');
+  channelReact = guild.channels.get(standartChannel);
+  channelReact.fetchMessages();
+  reactionMessage = channelReact.messages.find(foo => true);
+});
 
 // BEFEHL-ABFRAGE
 client.on('message', message => {
@@ -78,11 +118,27 @@ client.on('message', message => {
     }
     user.addRole(role.id)
     .then(fun => message.reply('Done!'))
-    .catch(err => message.reply('Error: ' + err));
+    .catch(err => message.reply(err));
     return;
   }
 
 
+  // Join per Befehl
+  else if (message.content === prefix + instructions[0][0]) {
+    var vs = message.member.voiceChannel;
+    // Wenn in einem gültigen Channel, join
+    if (vs) {
+      vs.join().then(connection => bot_join(vs, connection, comeback_sound)).catch(console.log);
+    }
+    else {
+      message.reply('Betrete erst nen Channel, du Bob!');
+    }
+  }
+
+  // Leave per Befehl
+  else if (message.content === prefix + instructions[1][0]) {
+    leave(message);
+  }
 
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content === prefix + instructions[2][0]){
@@ -176,33 +232,74 @@ client.on('message', message => {
     }
   }
 
+  // Lock Room
+  else if(message.content.startsWith(prefix + instructions[8][0])){
+    if(!message.member.voiceChannel){
+      message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
+      return;
+    }
+    if(whoLocked){
+      message.reply('Es ist schon abgeschlossen.');
+      return;
+    }
+    lock(message.member);
+    //message.reply(filme.some(elem => message.member.voiceChannel.permissionsFor(elem) != null));
+    message.reply('Abgeschlossen');
+  }
+
+  // Unlock Room
+  else if(message.content.startsWith(prefix + instructions[9][0])){
+    if(!whoLocked){
+      message.reply('Es ist nichts abgeschlossen!');
+      return;
+    }
+    if(message.member != whoLocked){
+      message.reply('Du hast nicht abgeschlossen!');
+      return;
+    }
+    unlock(message.member.voiceChannel);
+    message.reply('Aufgeschlossen');
+  }
+
+
+  //Reaction Listener
+  else if(message.content.startsWith(prefix + instructions[10][0])){
+    let msg = message.content.split(' ');
+    let channel = client.channels.find(channel => channel.id == msg[1]);
+    if(!channel) {
+      message.reply('Der Channel konnte nicht gefunden werden');
+      return;
+    }
+    else{
+      channelReact = channel;
+      channelReact.fetchMessages();
+      reactionMessage = channelReact.messages.find(foo => true);
+      message.reply('Setup Erfolgreich.');
+    }
+  }
+
+  //Reaction Emojis
+  else if(message.content.startsWith(prefix + instructions[11][0])){
+    if(channelReact == null){
+      message.reply('Du musst erst einen Channel auswählen.');
+      return;
+    }
+    let msg = message.content.split(' ');
+    if(!reactionMessage) return;
+
+    //Geforderte Reaktionen hinzufügen
+    for(var i = 1; i < msg.length; i++){
+      reactionMessage.react(msg[i]);
+    }
+    message.reply('Reaktion[en] hinzugefügt.');
+  }
+
+
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[2][0] + '\' für eine Liste aller Befehle!');
   }
-
-  // Join per Befehl
-  else if (message.content === prefix + instructions[0][0]) {
-    var vs = message.member.voiceChannel;
-    // Wenn in einem gültigen Channel, join
-    if (vs) {
-      vs.join().then(connection => bot_join(vs, connection, comeback_sound)).catch(console.log);
-    }
-    else {
-      message.reply('Betrete erst nen Channel, du Bob!');
-    }
-  }
-
-  // Leave per Befehl
-  else if (message.content === prefix + instructions[1][0]) {
-    leave(message);
-  }
 });
-
-
-
-
-
 
 
 
@@ -214,11 +311,11 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   let oldUserChannel = oldMember.voiceChannel;
 
   //Es handelt sich um einen Beitritt
-  if(Date.now() - timeLastJoin > 20000){
-    if(oldUserChannel === undefined && newUserChannel !== undefined) {
+  if((oldUserChannel === undefined) && (newUserChannel !== undefined)){
+    if((Date.now() - timeLastJoin) > 20000) {
       for(var i = 0;  i < rollen.length; i++){
         let role = newMember.guild.roles.find(role => role.name === rollen[i]);
-        if(role != null){
+        if(role != null && !newMember.bot){
           //Rolle spricht den Bot an oder Nutzer ist VIP
           if(newMember.roles.has(role.id) && !isVip(newMember.id)[0]) {
             timeLastJoin = Date.now();
@@ -234,6 +331,41 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
       }
     }
   }
+  //Es handelt sich um ein Verlassen
+  else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
+    //Er hat einen Raum abgeschlossen
+    if(whoLocked && (whoLocked === oldMember)){
+      unlock(oldMember);
+    }
+  }
+});
+
+
+//Rolle per Reaktion bekommen
+client.on('messageReactionAdd', (reaction, user) => {
+  if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
+  let roleName = reaction.emoji.name;
+  let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
+  let member = reaction.message.guild.members.find(member => member.id === user.id);
+  if(!role || !member){
+    return;
+  }
+  let strl = reaction.message.guild.roles.find(role => role.id == standartRole);
+  if(strl) member.addRole(strl);
+  member.addRole(role.id);
+
+});
+
+//Rolle per Reaktion abgeben
+client.on('messageReactionRemove', (reaction, user) => {
+  if(user.bot || channelReact != reaction.message.channel) return;
+  let roleName = reaction.emoji.name;
+  let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
+  let member = reaction.message.guild.members.find(member => member.id === user.id);
+  if(!role || !member){
+    return;
+  }
+  member.removeRole(role.id);
 });
 
 
@@ -251,6 +383,20 @@ function isVip(userID){
 }
 
 
+
+//Schließt einen Raum (Channel) ab
+function unlock(voiceChannel){
+  whoLocked = null;
+  voiceChannel.setUserLimit(channelSize);
+}
+
+
+//Schließt einen abgeschlossenen Raum (Channel) wieder auf
+function lock(member){
+  channelSize = member.voiceChannel.userLimit;
+  whoLocked = member;
+  member.voiceChannel.setUserLimit(1);
+}
 
 
 
