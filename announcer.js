@@ -40,7 +40,8 @@ var vip = [
   ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
   ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
   ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
-  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav']
+  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav'],
+  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav']
 ];
 
 //Feld der Rollen, die es erlauben einen Channel abzuschließen
