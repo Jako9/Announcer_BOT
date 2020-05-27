@@ -41,7 +41,8 @@ var vip = [
   ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
   ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
   ['174558221535674369', '/home/fkoehler/bot/vips/max.wav'],
-  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav']
+  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav'],
+  ['212605029612257290', '/home/fkoehler/bot/vips/felix.wav']
 ];
 
 //Feld der Rollen, die es erlauben einen Channel abzuschließen
@@ -348,9 +349,7 @@ client.on('messageReactionAdd', (reaction, user) => {
   let roleName = reaction.emoji.name;
   let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
   let member = reaction.message.guild.members.find(member => member.id === user.id);
-  if(!role || !member){
-    return;
-  }
+  if(!role || !member) return;
   let strl = reaction.message.guild.roles.find(role => role.id == standartRole);
   if(strl) member.addRole(strl);
   member.addRole(role.id);
@@ -359,7 +358,7 @@ client.on('messageReactionAdd', (reaction, user) => {
 
 //Rolle per Reaktion abgeben
 client.on('messageReactionRemove', (reaction, user) => {
-  if(user.bot || channelReact != reaction.message.channel) return;
+  if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
   let roleName = reaction.emoji.name;
   let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
   let member = reaction.message.guild.members.find(member => member.id === user.id);
