@@ -68,8 +68,8 @@ var instructions  = [
   ['setPrefix', ' to update the prefix.\n-> Syntax: setPrefix PREFIX'],
   ['lock', ' to lock your current channel (Only one at the same time per Server).'],
   ['unlock', ' to open the currently locked channel.'],
-  ['setChannel', ' Setting the Channel that is being listened to the desired Channel. \n Syntax: setupListener [CHANNEL_ID]'],
-  ['addReaction', 'Adding Reactions to the Role-Reaction Message. \n  Syntax: setupReaction [LIST OF REACTION_NAME]']
+  ['setChannel', ' Setting the Channel that is being listened to the desired Channel. \n Syntax: setChannel [CHANNEL_ID]'],
+  ['addReaction', 'Adding Reactions to the Role-Reaction Message. \n  Syntax: addReaction [LIST OF REACTION_NAME]']
 ];
 
 //BOT booten
