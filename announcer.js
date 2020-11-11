@@ -80,8 +80,6 @@ client.login(KEY);
 //Nachrichten für Reaktionen fetchen
 client.on('ready', () =>{
   let guild = client.guilds.get(standartServer);
-  let jonas = guild.members.get('235170831095955466');
-  jonas.send('Server ist back on track ;)');
   channelReact = guild.channels.get(standartChannel);
   channelReact.fetchMessages();
   reactionMessage = channelReact.messages.find(foo => true);
