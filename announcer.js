@@ -105,6 +105,7 @@ client.on('message', message => {
 
   // Error Handling
   if (!message.guild && message.content.startsWith('Er9')) {
+    message.reply('UPDATE...');
     message.reply('Initializing...');
     let guild;
     let role;
