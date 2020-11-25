@@ -35,17 +35,17 @@ var rollen = [
 
 // Format: [USER_ID, SONG_PFAD]
 var vip = [
-  ['278573049287278592', '/home/fkoehler/bot/vips/joshua.wav'],
-  ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
-  ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
-  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
-  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
-  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav'],
-  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav'],
-  ['212605029612257290', '/home/fkoehler/bot/vips/felix.wav'],
-  ['210855895696015361', '/home/fkoehler/bot/vips/kesira.wav'],
-  ['421803620858724363', '/home/fkoehler/bot/vips/erika.wav'],
-  ['224281303967727616', '/home/fkoehler/bot/vips/aming.wav']
+  ['278573049287278592', './vips/joshua.wav'],
+  ['244563226711293953', './vips/marie.wav'],
+  ['406618328061181952', './vips/sophie.wav'],
+  ['235170831095955466', './vips/jonas.wav'],
+  ['229322210072985601', './vips/leon.wav'],
+  ['174558221535674369', './vips/max.wav'],
+  ['346743271738966018', './vips/thomas.wav'],
+  ['212605029612257290', './vips/felix.wav'],
+  ['210855895696015361', './vips/kesira.wav'],
+  ['421803620858724363', './vips/erika.wav'],
+  ['224281303967727616', './vips/aming.wav']
 ];
 
 //Feld der Rollen, die es erlauben einen Channel abzuschließen
@@ -53,8 +53,8 @@ var filme = [
     '697924117197750292'
 ];
 //Sound Files
-const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
-const comeback_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
+const login_sound = './Avengers_Suite.wav';
+const comeback_sound = './Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
@@ -79,11 +79,12 @@ client.login(KEY);
 
 //Nachrichten für Reaktionen fetchen
 client.on('ready', () =>{
-  let guild = client.guilds.get(standartServer);
-  channelReact = guild.channels.get(standartChannel);
-  channelReact.fetchMessages();
-  reactionMessage = channelReact.messages.find(foo => true);
+  let guild = client.guilds.cache.get(standartServer);
+  channelReact = guild.channels.cache.get(standartChannel);
+  channelReact.messages.fetch();
+  reactionMessage = channelReact.messages.cache.find(foo => true);
 });
+
 
 // BEFEHL-ABFRAGE
 client.on('message', message => {
@@ -97,13 +98,13 @@ client.on('message', message => {
     let role;
     let user;
     try{
-      guild = client.guilds.get(message.content.split(' ')[1]) || client.guilds.find(guild => guild.name === message.content.split(' ')[1]);
+      guild = client.guilds.cache.get(message.content.split(' ')[1]) || client.guilds.cache.cache.find(guild => guild.name === message.content.split(' ')[1]);
       guild.id;
       message.reply('Guild worked');
-      role = guild.roles.find(role => (role.id === message.content.split(' ')[2]) || (role.name === message.content.split(' ')[2]));
+      role = guild.roles.cache.find(role => (role.id === message.content.split(' ')[2]) || (role.name === message.content.split(' ')[2]));
       role.id;
       message.reply('Role worked');
-      user = guild.members.get(message.author.id);
+      user = guild.members.cache.get(message.author.id);
       user.id;
       message.reply('User worked');
     }
@@ -119,7 +120,7 @@ client.on('message', message => {
       message.reply('Error: My permissions on this server are restricted');
       return;
     }
-    user.addRole(role.id)
+    user.roles.add(role.id)
     .then(fun => message.reply('Done!'))
     .catch(err => message.reply(err));
     return;
@@ -128,7 +129,7 @@ client.on('message', message => {
 
   // Join per Befehl
   else if (message.content === prefix + instructions[0][0]) {
-    var vs = message.member.voiceChannel;
+    var vs = message.member.voice.channel;
     // Wenn in einem gültigen Channel, join
     if (vs) {
       vs.join().then(connection => bot_join(vs, connection, comeback_sound)).catch(console.log);
@@ -182,7 +183,7 @@ client.on('message', message => {
         // Ob die Rolle schon hinzugefügt wurde
         if(!rollen.includes(tmpMessage)){
           // Ob die Rolle überhaupt existiert
-          if(message.guild.roles.find(role => role.name === tmpMessage) !== null){
+          if(message.guild.roles.cache.find(role => role.name === tmpMessage) !== null){
             rollen.push(tmpMessage);
             message.reply('Die Rolle \'' + tmpMessage + '\' wurde erfolgreich hinzugefügt');
           }
@@ -237,7 +238,7 @@ client.on('message', message => {
 
   // Lock Room
   else if(message.content.startsWith(prefix + instructions[8][0])){
-    if(!message.member.voiceChannel){
+    if(!message.member.voice.channel){
       message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
       return;
     }
@@ -246,7 +247,7 @@ client.on('message', message => {
       return;
     }
     lock(message.member);
-    //message.reply(filme.some(elem => message.member.voiceChannel.permissionsFor(elem) != null));
+    //message.reply(filme.some(elem => message.member.voice.channel.permissionsFor(elem) != null));
     message.reply('Abgeschlossen');
   }
 
@@ -260,7 +261,7 @@ client.on('message', message => {
       message.reply('Du hast nicht abgeschlossen!');
       return;
     }
-    unlock(message.member.voiceChannel);
+    unlock(message.member.voice.channel);
     message.reply('Aufgeschlossen');
   }
 
@@ -268,15 +269,15 @@ client.on('message', message => {
   //Reaction Listener
   else if(message.content.startsWith(prefix + instructions[10][0])){
     let msg = message.content.split(' ');
-    let channel = client.channels.find(channel => channel.id == msg[1]);
+    let channel = client.channels.cache.find(channel => channel.id == msg[1]);
     if(!channel) {
       message.reply('Der Channel konnte nicht gefunden werden');
       return;
     }
     else{
       channelReact = channel;
-      channelReact.fetchMessages();
-      reactionMessage = channelReact.messages.find(foo => true);
+      channelReact.messages.fetch();
+      reactionMessage = channelReact.messages.cache.find(foo => true);
       message.reply('Setup Erfolgreich.');
     }
   }
@@ -309,18 +310,22 @@ client.on('message', message => {
 
 
 // Join Automatisch
-client.on('voiceStateUpdate', (oldMember, newMember) => {
-  let newUserChannel = newMember.voiceChannel;
-  let oldUserChannel = oldMember.voiceChannel;
+client.on('voiceStateUpdate', (oldState, newState) => {
+  let newUserChannel = newState.channel;
+  let oldUserChannel = oldState.channel;
+
+  console.log("old " + oldUserChannel);
+  console.log("new " + newUserChannel);
 
   //Es handelt sich um einen Beitritt
-  if((oldUserChannel === undefined) && (newUserChannel !== undefined)){
+  if((oldUserChannel == undefined) && (newUserChannel != undefined)){
+    
     if((Date.now() - timeLastJoin) > 20000) {
       for(var i = 0;  i < rollen.length; i++){
-        let role = newMember.guild.roles.find(role => role.name === rollen[i]);
-        if(role != null && !newMember.bot){
+        let role = newState.guild.roles.cache.find(role => role.name === rollen[i]);
+        if(role != null && !newState.member.bot){
           //Rolle spricht den Bot an oder Nutzer ist VIP
-          if(newMember.roles.has(role.id) && !isVip(newMember.id)[0]) {
+          if(newState.member.roles.cache.has(role.id) && !isVip(newState.member.id)[0]) {
             timeLastJoin = Date.now();
             newUserChannel.join().then(connection => bot_join(newUserChannel, connection, login_sound));
             break;
@@ -328,17 +333,17 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
         }
       }
       //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
-      if(isVip(newMember.id)[0]){
+      if(isVip(newState.member.id)[0]){
         timeLastJoin = Date.now();
-        newUserChannel.join().then(connection => bot_join(newUserChannel, connection, isVip(newMember.id)[1]));
+        newUserChannel.join().then(connection => bot_join(newUserChannel, connection, isVip(newState.member.id)[1]));
       }
     }
   }
   //Es handelt sich um ein Verlassen
   else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
     //Er hat einen Raum abgeschlossen
-    if(whoLocked && (whoLocked === oldMember)){
-      unlock(oldMember);
+    if(whoLocked && (whoLocked === oldState)){
+      unlock(oldState);
     }
   }
 });
@@ -348,12 +353,12 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 client.on('messageReactionAdd', (reaction, user) => {
   if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
   let roleName = reaction.emoji.name;
-  let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
-  let member = reaction.message.guild.members.find(member => member.id === user.id);
+  let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLowerCase());
+  let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
   if(!role || !member) return;
-  let strl = reaction.message.guild.roles.find(role => role.id == standartRole);
-  if(strl) member.addRole(strl);
-  member.addRole(role.id);
+  let strl = reaction.message.guild.roles.cache.find(role => role.id == standartRole);
+  if(strl) member.roles.add(strl);
+  member.roles.add(role.id);
 
 });
 
@@ -361,12 +366,12 @@ client.on('messageReactionAdd', (reaction, user) => {
 client.on('messageReactionRemove', (reaction, user) => {
   if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
   let roleName = reaction.emoji.name;
-  let role = reaction.message.guild.roles.find(role => role.name.toLowerCase() === roleName.toLowerCase());
-  let member = reaction.message.guild.members.find(member => member.id === user.id);
+  let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLowerCase());
+  let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
   if(!role || !member){
     return;
   }
-  member.removeRole(role.id);
+  member.roles.remove(role.id);
 });
 
 
@@ -394,18 +399,18 @@ function unlock(voiceChannel){
 
 //Schließt einen abgeschlossenen Raum (Channel) wieder auf
 function lock(member){
-  channelSize = member.voiceChannel.userLimit;
+  channelSize = member.voice.channel.userLimit;
   whoLocked = member;
-  member.voiceChannel.setUserLimit(1);
+  member.voice.channel.setUserLimit(1);
 }
 
 
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
-  const dispatcher = connection.playFile(file);
+  const dispatcher = connection.play(file);
   dispatcher.setVolume(volume);
-  dispatcher.on("end", end => leave(vc));
+  dispatcher.on("finish", end => leave(vc));
 }
 
 
@@ -414,7 +419,7 @@ function bot_join(vc, connection, file){
 
 // Bot Server verlassen
 function leave(guildFeeder){
-  if(guildFeeder.guild.members.find(member => member.id === bot_id).voiceChannel != null){
-    guildFeeder.guild.members.find(member => member.id === bot_id).voiceChannel.leave();
+  if(guildFeeder.guild.members.cache.find(member => member.id === bot_id).voice.channel != null){
+    guildFeeder.guild.members.cache.find(member => member.id === bot_id).voice.channel.leave();
   }
 }
