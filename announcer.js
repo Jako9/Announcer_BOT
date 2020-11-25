@@ -35,17 +35,17 @@ var rollen = [
 
 // Format: [USER_ID, SONG_PFAD]
 var vip = [
-  ['278573049287278592', './vips/joshua.wav'],
-  ['244563226711293953', './vips/marie.wav'],
-  ['406618328061181952', './vips/sophie.wav'],
-  ['235170831095955466', './vips/jonas.wav'],
-  ['229322210072985601', './vips/leon.wav'],
-  ['174558221535674369', './vips/max.wav'],
-  ['346743271738966018', './vips/thomas.wav'],
-  ['212605029612257290', './vips/felix.wav'],
-  ['210855895696015361', './vips/kesira.wav'],
-  ['421803620858724363', './vips/erika.wav'],
-  ['224281303967727616', './vips/aming.wav']
+  ['278573049287278592', '/home/fkoehler/bot/vips/joshua.wav'],
+  ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
+  ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
+  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
+  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
+  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav'],
+  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav'],
+  ['212605029612257290', '/home/fkoehler/bot/vips/felix.wav'],
+  ['210855895696015361', '/home/fkoehler/bot/vips/kesira.wav'],
+  ['421803620858724363', '/home/fkoehler/bot/vips/erika.wav'],
+  ['224281303967727616', '/home/fkoehler/bot/vips/aming.wav']
 ];
 
 //Feld der Rollen, die es erlauben einen Channel abzuschließen
@@ -53,8 +53,8 @@ var filme = [
     '697924117197750292'
 ];
 //Sound Files
-const login_sound = './Avengers_Suite.wav';
-const comeback_sound = './Avengers_Suite.wav';
+const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
+const comeback_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
