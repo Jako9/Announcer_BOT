@@ -89,11 +89,7 @@ client.on('ready', () =>{
 
   //Setup Status
   client.user.setPresence({
-        status: "online",
-        game: {
-            name: "Für Info .help",
-            type: "STREAMING"
-        }
+        activity: { name: 'with discord.js' }, status: 'idle'
     });
 });
 
