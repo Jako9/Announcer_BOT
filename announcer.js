@@ -79,10 +79,22 @@ client.login(KEY);
 
 //Nachrichten für Reaktionen fetchen
 client.on('ready', () =>{
+
+  //Setup für Rollen per React
   let guild = client.guilds.cache.get(standartServer);
   channelReact = guild.channels.cache.get(standartChannel);
   channelReact.messages.fetch();
   reactionMessage = channelReact.messages.cache.find(foo => true);
+
+
+  //Setup Status
+  client.user.setPresence({
+        status: "online",
+        game: {
+            name: "Für Info .help",
+            type: "STREAMING"
+        }
+    });
 });
 
 
@@ -319,7 +331,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
   //Es handelt sich um einen Beitritt
   if((oldUserChannel == undefined) && (newUserChannel != undefined)){
-    
+
     if((Date.now() - timeLastJoin) > 20000) {
       for(var i = 0;  i < rollen.length; i++){
         let role = newState.guild.roles.cache.find(role => role.name === rollen[i]);
