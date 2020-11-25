@@ -89,7 +89,7 @@ client.on('ready', () =>{
 
   //Setup Status
   client.user.setPresence({
-        activity: { name: 'with discord.js' }, status: 'idle'
+        activity: { name: 'twitch.tv/jako9' }, status: 'online'
     });
 });
 
