@@ -35,17 +35,17 @@ var rollen = [
 
 // Format: [USER_ID, SONG_PFAD]
 var vip = [
-  ['278573049287278592', '/home/fkoehler/bot/vips/joshua.wav'],
-  ['244563226711293953', '/home/fkoehler/bot/vips/marie.wav'],
-  ['406618328061181952', '/home/fkoehler/bot/vips/sophie.wav'],
-  ['235170831095955466', '/home/fkoehler/bot/vips/jonas.wav'],
-  ['229322210072985601', '/home/fkoehler/bot/vips/leon.wav'],
-  ['174558221535674369', '/home/fkoehler/bot/vips/max.wav'],
-  ['346743271738966018', '/home/fkoehler/bot/vips/thomas.wav'],
-  ['212605029612257290', '/home/fkoehler/bot/vips/felix.wav'],
-  ['210855895696015361', '/home/fkoehler/bot/vips/kesira.wav'],
-  ['421803620858724363', '/home/fkoehler/bot/vips/erika.wav'],
-  ['224281303967727616', '/home/fkoehler/bot/vips/aming.wav']
+  ['278573049287278592', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/joshua.wav'],
+  ['244563226711293953', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/marie.wav'],
+  ['406618328061181952', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/sophie.wav'],
+  ['235170831095955466', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/jonas.wav'],
+  ['229322210072985601', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/leon.wav'],
+  ['174558221535674369', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/max.wav'],
+  ['346743271738966018', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/thomas.wav'],
+  ['212605029612257290', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/felix.wav'],
+  ['210855895696015361', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/kesira.wav'],
+  ['421803620858724363', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/erika.wav'],
+  ['224281303967727616', '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/vips/aming.wav']
 ];
 
 //Feld der Rollen, die es erlauben einen Channel abzuschließen
@@ -53,8 +53,8 @@ var filme = [
     '697924117197750292'
 ];
 //Sound Files
-const login_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
-const comeback_sound = '/home/fkoehler/bot/Avengers_Suite.wav';
+const login_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
+const comeback_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
