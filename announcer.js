@@ -418,7 +418,7 @@ function lock(member){
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
-  const dispatcher = connection.play(file);
+  const dispatcher = connection.play(file, { type: 'ogg/opus' });
   dispatcher.setVolume(volume);
   dispatcher.on("finish", end => leave(vc));
 }
