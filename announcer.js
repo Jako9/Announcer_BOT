@@ -53,8 +53,8 @@ var filme = [
     '697924117197750292'
 ];
 //Sound Files
-const login_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.ogg';
-const comeback_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.ogg';
+const login_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
+const comeback_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
@@ -418,7 +418,7 @@ function lock(member){
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
-  const dispatcher = connection.play(file, { type: 'ogg/opus' });
+  const dispatcher = connection.play(file);
   dispatcher.setVolume(volume);
   dispatcher.on("finish", end => leave(vc));
 }
