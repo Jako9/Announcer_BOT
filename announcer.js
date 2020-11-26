@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Flo ist ne geile Socke", {
+  client.user.setActivity("Max und Flo sind geile Socken", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
