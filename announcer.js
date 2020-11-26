@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Wir sind live in 3,2,1...", {
+  client.user.setActivity("LIVE AUF TWITCH.TV", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
