@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Koten!!ELF", {
+  client.user.setActivity("Wir sind live in 3,2,1", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
