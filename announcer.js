@@ -53,8 +53,8 @@ var filme = [
     '697924117197750292'
 ];
 //Sound Files
-const login_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
-const comeback_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.wav';
+const login_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.ogg';
+const comeback_sound = '/var/www/abstimmung.jmk.cloud/html/Announcer_BOT/Avengers_Suite.ogg';
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Max und Flo sind geile Socken", {
+  client.user.setActivity("Playing join...", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
