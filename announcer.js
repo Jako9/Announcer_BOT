@@ -88,9 +88,10 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setPresence({
-        activity: { name: 'twitch.tv/jako9' }, status: 'online'
-    });
+  client.user.setActivity("essen", {
+    type: "STREAMING",
+    url: "https://www.twitch.tv/jako9"
+  });
 });
 
 
