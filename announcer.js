@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Koten", {
+  client.user.setActivity("Koten!!ELF", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
