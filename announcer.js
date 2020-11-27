@@ -87,7 +87,7 @@ client.on('ready', () =>{
   reactionMessage = channelReact.messages.cache.find(foo => true);
 
   //Setup Status
-  client.user.setActivity("No you!!", {
+  client.user.setActivity("PEACE", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
