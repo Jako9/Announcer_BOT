@@ -104,7 +104,7 @@ try {
             $color = $green;
         }
 
-        echo printf($page, $color);
+        echo sprintf($page, $color);
     } else {
         run();
     }
