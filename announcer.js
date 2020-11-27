@@ -84,9 +84,9 @@ client.on('ready', () =>{
   let guild = client.guilds.cache.get(standartServer);
   channelReact = guild.channels.cache.get(standartChannel);
   channelReact.messages.fetch();
-  console.log("Channel: " + channelReact);
+  console.log("--Channel: " + channelReact);
   reactionMessage = channelReact.messages.cache.find(foo => true);
-  console.log("Message: " + reactionMessage);
+  console.log("--Message: " + reactionMessage);
 
 
   //Setup Status
