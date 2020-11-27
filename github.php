@@ -103,7 +103,7 @@ try {
         exec("pgrep node", $pids);
         if(empty($pids)) {
             $color = $red;
-            $status = "offline"
+            $status = "offline";
         }else{
             $color = $green;
             $status = "online";
