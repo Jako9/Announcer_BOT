@@ -3,7 +3,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const args = process.argv.slice(2);
-//const KEY = args[0];
+const KEY = args[0];
 const bot_id = args[1];
 
 //Setup
