@@ -3,8 +3,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const args = process.argv.slice(2);
-const KEY = args[1];
-const bot_id = args[2];
+const KEY = args[0];
+const bot_id = args[1];
 
 //Setup
 var prefix = '.';
@@ -87,7 +87,7 @@ client.on('ready', () =>{
   reactionMessage = channelReact.messages.cache.find(foo => true);
 
   //Setup Status
-  client.user.setActivity("Yo Mama fat", {
+  client.user.setActivity("No you", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
