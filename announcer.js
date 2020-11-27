@@ -85,12 +85,11 @@ client.on('ready', () =>{
   channelReact = guild.channels.cache.get(standartChannel);
   channelReact.messages.fetch();
   reactionMessage = channelReact.messages.cache.find(foo => true);
-  reactionMessage.react('😀');
-  //reactionMessage.reactions.cache.get('😀').remove(guild.me);
+  reactionMessage.reactions.cache.get('704876588147146794');
 
 
   //Setup Status
-  client.user.setActivity("TESTING...", {
+  client.user.setActivity("TESTING", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
