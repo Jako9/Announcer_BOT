@@ -9,8 +9,7 @@ function run() {
 
     if ($payload->repository->url == 'https://github.com/Jako9/Announcer_BOT' && $payload->ref == 'refs/heads/master') {
 
-        shell_exec('kill -9 $(ps aux | grep '\snode\s' | awk '{print $2}')');
-        shell_exec('git pull');
+        shell_exec('kill -9 $(ps aux | grep '\snode\s' | awk '{print $2}') && git pull');
         
         return true;
     }
