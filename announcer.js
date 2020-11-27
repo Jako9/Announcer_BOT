@@ -85,8 +85,6 @@ client.on('ready', () =>{
   channelReact = guild.channels.cache.get(standartChannel);
   channelReact.messages.fetch();
   reactionMessage = channelReact.messages.cache.find(foo => true);
-  reactionMessage.reactions.cache.get('704876588147146794');
-
 
   //Setup Status
   client.user.setActivity("TESTING", {
