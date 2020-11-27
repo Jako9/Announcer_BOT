@@ -82,10 +82,9 @@ client.on('ready', () =>{
 
   //Setup für Rollen per React
   let guild = client.guilds.cache.get(standartServer);
-  channelReact = guild.channels.cache.get(standartChannel);
+  channelReact = guild.channels.cache.find(channel => channel.id == standartChannel);
   channelReact.messages.fetch();
   reactionMessage = channelReact.messages.cache.find(foo => true);
-
 
   //Setup Status
   client.user.setActivity("Back on track! ;)", {
