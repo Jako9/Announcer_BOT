@@ -19,7 +19,8 @@ function run() {
 
 try {
     if (!isset($_POST['payload'])) {
-        echo "Works fine.";
+        $homepage = file_get_contents('webpage.html');
+        echo $homepage;
     } else {
         run();
     }
