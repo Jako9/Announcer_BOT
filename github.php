@@ -85,7 +85,7 @@ try {
             <section>
                     <i class="fas fa-microphone" id="mic"></i>
                     <div style="display: flex;">
-                        <h2 style="text-align: center;">Der Bot ist online!</h2>
+                        <h2 style="text-align: center;">Der Bot ist %s!</h2>
                         <i class="fas fa-circle" id="check"></i>
                     </div>
             </section>
@@ -97,15 +97,19 @@ try {
         $color = "";
         $red = "#ff3a30";
         $green = "#34c74f";
+        
+        $status = "";
 
         exec("pgrep node", $pids);
         if(empty($pids)) {
             $color = $red;
+            $status = "offline"
         }else{
             $color = $green;
+            $status = "online";
         }
 
-        echo sprintf($page, $color);
+        echo sprintf($page, $color, $status);
     } else {
         run();
     }
