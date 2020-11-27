@@ -61,7 +61,7 @@ try {
                     }
             
                     section{
-                        width: 100%;
+                        width: 100%%;
                         height: 800px;
                         display: flex;
                         justify-content: center;
@@ -104,7 +104,7 @@ try {
             $color = $green;
         }
 
-        echo sprintf($page, $color);
+        echo printf($page, $color);
     } else {
         run();
     }
