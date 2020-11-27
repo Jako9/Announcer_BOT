@@ -84,13 +84,11 @@ client.on('ready', () =>{
   let guild = client.guilds.cache.get(standartServer);
   channelReact = guild.channels.cache.get(standartChannel);
   channelReact.messages.fetch();
-  console.log("--Channel: " + channelReact);
   reactionMessage = channelReact.messages.cache.find(foo => true);
-  console.log("--Message: " + reactionMessage);
 
 
   //Setup Status
-  client.user.setActivity("Back on track ;)", {
+  client.user.setActivity("Back on track! ;)", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
