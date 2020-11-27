@@ -86,7 +86,7 @@ client.on('ready', () =>{
   channelReact.messages.fetch();
   reactionMessage = channelReact.messages.cache.find(foo => true);
   reactionMessage.react('😀');
-  reactionMessage.reactions.cache.get('😀').remove(guild.me);
+  //reactionMessage.reactions.cache.get('😀').remove(guild.me);
 
 
   //Setup Status
