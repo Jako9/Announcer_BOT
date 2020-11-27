@@ -88,7 +88,7 @@ client.on('ready', () =>{
 
 
   //Setup Status
-  client.user.setActivity("Playing join...", {
+  client.user.setActivity("check me out...", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
