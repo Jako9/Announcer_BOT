@@ -26,19 +26,7 @@ var rollen = [
 ];
 
 // Format: [USER_ID, SONG_PFAD]
-var vip = [
-  ['278573049287278592', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/joshua.wav'],
-  ['244563226711293953', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/marie.wav'],
-  ['406618328061181952', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/sophie.wav'],
-  ['235170831095955466', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/jonas.wav'],
-  ['229322210072985601', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/leon.wav'],
-  ['174558221535674369', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/max.wav'],
-  ['346743271738966018', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/thomas.wav'],
-  ['212605029612257290', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/felix.wav'],
-  ['210855895696015361', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/kesira.wav'],
-  ['421803620858724363', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/erika.wav'],
-  ['224281303967727616', '/var/www/git.jmk.cloud/html/Announcer_BOT/vips/aming.wav']
-];
+
 
 //Feld der Standartbefehle mit der jeweiligen Beschreibung
 //Format: [BEFEHL, BESCHREIBUNG]
@@ -76,7 +64,7 @@ client.on('ready', () =>{
 
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
-  connectionManager.triggerJoin(oldState,newState,rollen,vip);
+  connectionManager.triggerJoin(oldState,newState,rollen);
 });
 
 //Rolle per Reaktion bekommen
@@ -107,7 +95,7 @@ client.on('message', message => {
   // Join per Befehl
   else if (message.content === prefix + instructions[0][0]) {
     // Wenn in einem gültigen Channel, join
-    message.member.voice.channel ? connectionManager.triggerJoin(null, message.member.voice,rollen,vip) : message.reply('Betrete erst nen Channel, du Bob!');
+    message.member.voice.channel ? connectionManager.triggerJoin(null, message.member.voice,rollen) : message.reply('Betrete erst nen Channel, du Bob!');
 
   }
 
