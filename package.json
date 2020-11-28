@@ -1,0 +1,23 @@
+{
+  "name": "announcer_bot",
+  "version": "1.1.0",
+  "description": "A discord bot, for playing sounds on join and more",
+  "main": "./src/announcer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jako9/Announcer_BOT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jako9/Announcer_BOT/issues"
+  },
+  "homepage": "https://github.com/Jako9/Announcer_BOT#readme",
+  "dependencies": {
+    "ffmpeg-static": "^4.2.7",
+    "opusscript": "0.0.7"
+  }
+}
