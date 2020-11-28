@@ -1,12 +1,8 @@
-const standartServer = '704731466558603376';
-const standartChannel = '704735030521495633';
-const standartRole = '704755265735753748';
-var channelReact;
-var reactionMessage;
+const serverManager = require('./serverManager.js');
 
 module.exports = {
   giveReaction: function(reaction, user){
-    if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild.id) || serverManager.getChannelReact(reaction.message.guild.id) != reaction.message.channel) return;
 
     let roleName = reaction.emoji.name;
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLowerCase());
@@ -14,7 +10,7 @@ module.exports = {
 
     if(!role || !member) return;
 
-    let strl = reaction.message.guild.roles.cache.find(role => role.id == standartRole);
+    let strl = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(reaction.message.guild.id));
 
     if(strl) member.roles.add(strl);
 
@@ -22,7 +18,7 @@ module.exports = {
   },
 
   removeReaction: function(reaction, user){
-    if(user.bot || !channelReact || channelReact != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild.id) || serverManager.getChannelReact(reaction.message.guild.id) != reaction.message.channel) return;
 
     let roleName = reaction.emoji.name;
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName.toLowerCase());
@@ -33,26 +29,18 @@ module.exports = {
     member.roles.remove(role.id);
 },
 
-  setupReaction: function(client){
-      //Setup für Rollen per React
-    let guild = client.guilds.cache.get(standartServer);
-    channelReact = guild.channels.cache.find(channel => channel.id == standartChannel);
-    channelReact.messages.fetch();
-    reactionMessage = channelReact.messages.cache.find(foo => true);
-  },
-
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
   addReactor: function(message){
-      if(channelReact == null){
+      if(serverManager.getChannelReact(message.guild.id) == null){
           message.reply('Du musst erst einen Channel auswählen.');
           return;
         }
         let msg = message.content.split(' ');
-        if(!reactionMessage) return;
+        if(!serverManager.getReactionMessage(message.guild.id)) return;
     
         //Geforderte Reaktionen hinzufügen
         for(var i = 1; i < msg.length; i++){
-          reactionMessage.react(msg[i]);
+          serverManager.getReactionMessage(message.guild.id).react(msg[i]);
         }
         message.reply('Reaktion[en] hinzugefügt.');
   },
@@ -65,9 +53,9 @@ module.exports = {
         return;
       }
       else{
-        channelReact = channel;
-        channelReact.messages.fetch();
-        reactionMessage = channelReact.messages.cache.find(foo => true);
+        serverManager.setChannelReact(message.guild.id, channel);
+        serverManager.getChannelReact(message.guild.id).messages.fetch();
+        serverManager.setReactionMessage(message.guild.id, serverManager.getChannelReact(message.guild.id).messages.cache.find(foo => true));
         message.reply('Setup Erfolgreich.');
       }
     }

@@ -1,3 +1,5 @@
+const serverManager = require('./serverManager.js');
+
 
 module.exports = {
   addRole: function(message, rollen, prefix, instructions){
@@ -14,6 +16,7 @@ module.exports = {
             // Ob die Rolle überhaupt existiert
             if(message.guild.roles.cache.find(role => role.name === tmpMessage) !== null){
               rollen.push(tmpMessage);
+              serverManager.setRollen(message.guild.id, rollen);
               message.reply('Die Rolle \'' + tmpMessage + '\' wurde erfolgreich hinzugefügt');
             }
             else{
@@ -37,6 +40,7 @@ module.exports = {
     removeRole: function(message, rollen, prefix, instructions){
       if(message.content.split(' ').length == 2 && message.content.split(' ')[1] >= 0 && message.content.split(' ')[1] < rollen.length){
           var tmpRolle = rollen.splice(message.content.split(' ')[1], 1);
+          serverManager.setRollen(message.guild.id, rollen);
           message.reply('Die Rolle \'' + tmpRolle + '\' wurde erfolgreich entfernt');
         }
         else{

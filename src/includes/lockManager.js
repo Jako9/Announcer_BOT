@@ -1,20 +1,19 @@
-var whoLocked;
-
-//ABschließen
-var channelSize = 0;
+const serverManager = require('./serverManager.js');
 
 //Schließ einen abgeschlossenen Raum (Channel) wieder auf
 function lockChannel (member){
-    channelSize = member.voice.channel.userLimit;
-    whoLocked = member;
+    console.log("Übergebene ID: " + member.voice.channel.userLimit);
+    serverManager.setChannelSize(member.voice.channel.guild.id, member.voice.channel.userLimit);
+    serverManager.setWhoLocked(member.voice.channel.guild.id,member.id);
     member.voice.channel.setUserLimit(1);
 }
 
 
 //Schließt einen Raum (Channel) ab
 function unlockChannel(voiceChannel){
-    whoLocked = null;
-    voiceChannel.setUserLimit(channelSize);
+    serverManager.setWhoLocked(voiceChannel.guild.id, null);
+    voiceChannel.setUserLimit(serverManager.getChannelSize(voiceChannel.guild.id));
+    console.log(serverManager.getChannelSize(voiceChannel.guild.id));
 }
 
 module.exports = {
@@ -23,7 +22,7 @@ module.exports = {
             message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
             return;
           }
-          if(whoLocked){
+          if(serverManager.setWhoLocked(message.guild.id)){
             message.reply('Es ist schon abgeschlossen.');
             return;
           }
@@ -33,11 +32,11 @@ module.exports = {
     
     
     unlock: function(message){
-        if(!whoLocked){
+        if(!serverManager.getWhoLocked(message.guild.id)){
             message.reply('Es ist nichts abgeschlossen!');
             return;
         }
-        if(message.member != whoLocked){
+        if(message.member != serverManager.getWhoLocked(message.guild.id)){
             message.reply('Du hast nicht abgeschlossen!');
             return;
         }

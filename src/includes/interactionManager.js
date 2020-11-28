@@ -1,3 +1,6 @@
+const serverManager = require('./serverManager.js');
+
+
 module.exports = {
 
 
@@ -21,6 +24,7 @@ module.exports = {
     if(msg.length === 3 && msg[1] >= 0 && msg[1] < instructions.length){
       var oldBefehl = instructions[msg[1]][0];
       instructions[msg[1]][0] = msg[2];
+      serverManager.setInstructions(message.guild.id, instructions);
       message.reply('Der Befehl \'' + prefix + oldBefehl + '\' heißt nun \'' + prefix + msg[2] + '\'');
     }
     else{
@@ -30,7 +34,7 @@ module.exports = {
 
 
 
-  changePrefix: function (message, prefix){
+  changePrefix: function (message, prefix, instructions){
     if(message.content.split(' ').length == 2){
         message.reply('Der neue Präfix wurde erfolgreich auf \'' + message.content.split(' ')[1] + '\' gesetzt');
         return message.content.split(' ')[1];

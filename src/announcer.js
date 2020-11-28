@@ -1,49 +1,19 @@
 //Imports
-errorManager = require('./includes/errorManager.js');
-connectionManager = require('./includes/connectionManager.js');
-interactionManager = require('./includes/interactionManager.js');
-roleManager = require('./includes/roleManager.js');
-lockManager = require('./includes/lockManager.js');
-reactionManager = require('./includes/reactionManager.js');
-
+const errorManager = require('./includes/errorManager.js');
+const connectionManager = require('./includes/connectionManager.js');
+const interactionManager = require('./includes/interactionManager.js');
+const roleManager = require('./includes/roleManager.js');
+const lockManager = require('./includes/lockManager.js');
+const reactionManager = require('./includes/reactionManager.js');
+const serverManager = require('./includes/serverManager.js');
 
 //Initialisierung
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const args = process.argv.slice(2);
-const KEY = args[0];
-
-//Setup
-var prefix = '.';
+const KEY = process.argv.slice(2)[0];
 
 
-//Feld der Rollen, die den Bot auslösen
-var rollen = [
-  'Die Nerds',
-  'Knights of the round Table',
-  'Hömma!',
-  'angesagt'
-];
-
-// Format: [USER_ID, SONG_PFAD]
-
-
-//Feld der Standartbefehle mit der jeweiligen Beschreibung
-//Format: [BEFEHL, BESCHREIBUNG]
-var instructions  = [
-  ['join', ' to manually connect the bot. \n(Could be used for a different \'comeback\' sound when you were just afk)'],
-  ['leave', ' to manually disconnect the bot.'],
-  ['help', ' to get some help ;)'],
-  ['set', ' set  the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer between 0 and 3 and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND'],
-  ['addRole', ' to add a new Role which triggers the bot\n-> Syntax: addRole ROLENAME'],
-  ['removeRole', ' to remove an old Role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION'],
-  ['showRoles', ' to see a list of all currently active roles.'],
-  ['setPrefix', ' to update the prefix.\n-> Syntax: setPrefix PREFIX'],
-  ['lock', ' to lock your current channel (Only one at the same time per Server).'],
-  ['unlock', ' to open the currently locked channel.'],
-  ['setChannel', ' Setting the Channel that is being listened to the desired Channel. \n Syntax: setChannel [CHANNEL_ID]'],
-  ['addReaction', 'Adding Reactions to the Role-Reaction Message. \n  Syntax: addReaction [LIST OF REACTION_NAME]']
-];
+serverManager.readInServers();
 
 //BOT booten
 client.login(KEY);
@@ -51,9 +21,6 @@ client.login(KEY);
 
 //Nachrichten für Reaktionen fetchen
 client.on('ready', () =>{
-
-  reactionManager.setupReaction(client);
-
   //Setup Status
   client.user.setActivity("....", {
     type: "STREAMING",
@@ -62,8 +29,22 @@ client.on('ready', () =>{
 });
 
 
+//Füge den neuen Server der Datenbank hinzu
+client.on("guildCreate", guild => {
+  serverManager.addServer(guild.id);
+});
+
+
+
+//Löscht den Server aus der Datenbank
+client.on("guildRemove", guild => {
+  serverManager.removeServer(guild.id);
+});
+
+
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
+  var rollen = newState.channel == null ? null : serverManager.getRollen(newState.channel.guild.id);
   connectionManager.triggerJoin(oldState,newState,rollen);
 });
 
@@ -93,70 +74,69 @@ client.on('message', message => {
   }
 
   // Join per Befehl
-  else if (message.content === prefix + instructions[0][0]) {
+  else if (message.content === serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[0][0]) {
     // Wenn in einem gültigen Channel, join
-    message.member.voice.channel ? connectionManager.triggerJoin(null, message.member.voice,rollen) : message.reply('Betrete erst nen Channel, du Bob!');
-
+    message.member.voice.channel ? connectionManager.triggerJoin(null, message.member.voice,serverManager.getRollen(message.guild.id)) : message.reply('Betrete erst nen Channel, du Bob!');
   }
 
   // Leave per Befehl
-  else if (message.content === prefix + instructions[1][0]) {
+  else if (message.content === serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[1][0]) {
     connectionManager.triggerLeave(message);
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content === prefix + instructions[2][0]){
-    interactionManager.help(message, prefix, instructions);
+  else  if(message.content === serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[2][0]){
+    interactionManager.help(message, serverManager.getPrefix(message.guild.id), serverManager.getInstructions(message.guild.id));
   }
 
   // Personalisiere Befehle mit 'set'
-  else  if(message.content.startsWith(prefix + instructions[3][0]  + ' ')){
-    interactionManager.changeCommands(message, prefix, instructions);
+  else  if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[3][0]  + ' ')){
+    interactionManager.changeCommands(message, serverManager.getPrefix(message.guild.id), serverManager.getInstructions(message.guild.id));
   }
 
   // Neue Rolle adden
-  else if (message.content.startsWith(prefix + instructions[4][0]  + ' ')) {
-    roleManager.addRole(message, rollen, prefix, instructions);
+  else if (message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[4][0]  + ' ')) {
+    roleManager.addRole(message, serverManager.getRollen(message.guild.id), serverManager.getPrefix(message.guild.id), serverManager.getInstructions(message.guild.id));
   }
 
   // Rolle löschen
-  else if (message.content.startsWith(prefix + instructions[5][0]  + ' ')) {
-    roleManager.removeRole(message, rollen, prefix, instructions);
+  else if (message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[5][0]  + ' ')) {
+    roleManager.removeRole(message, serverManager.getRollen(message.guild.id), serverManager.getPrefix(message.guild.id), serverManager.getInstructions(message.guild.id));
   }
 
   // Alle aktiven Rollen  anzeigen
-  else if (message.content === prefix + instructions[6][0]){
-    roleManager.showRoles(message, rollen);
+  else if (message.content === serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[6][0]){
+    roleManager.showRoles(message, serverManager.getRollen(message.guild.id));
   }
 
   // Präfix ändern
-  else if(message.content.startsWith(prefix + instructions[7][0]  + ' ')){
-    let newPrefix = interactionManager.changePrefix(message, prefix);
-    prefix = newPrefix == null ? prefix : newPrefix;
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[7][0]  + ' ')){
+    let newPrefix = interactionManager.changePrefix(message, serverManager.getPrefix(message.guild.id), serverManager.getInstructions(message.guild.id));
+    if (newPrefix != null) serverManager.setPrefix(message.guild.id, newPrefix);
   }
 
   // Lock Room
-  else if(message.content.startsWith(prefix + instructions[8][0])){
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[8][0])){
     lockManager.lock(message);
   }
 
   // Unlock Room
-  else if(message.content.startsWith(prefix + instructions[9][0])){
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[9][0])){
     lockManager.unlock(message);
   }
 
   //Reaction Listener
-  else if(message.content.startsWith(prefix + instructions[10][0])){
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[10][0])){
     reactionManager.setupListener(message, client);
   }
 
   //Reaction Emojis
-  else if(message.content.startsWith(prefix + instructions[11][0])){
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[11][0])){
     reactionManager.addReactor(message);
   }
 
   // Falsche Eingabe
-  else if(message.content.startsWith(prefix)){
-    message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[2][0] + '\' für eine Liste aller Befehle!');
+  else if(message.content.startsWith(serverManager.getPrefix(message.guild.id))){
+    message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + serverManager.getPrefix(message.guild.id) + serverManager.getInstructions(message.guild.id)[2][0] + '\' für eine Liste aller Befehle!');
   }
 });
