@@ -1,0 +1,23 @@
+{
+    "rollen": [
+        "Die Nerds",
+        "Knights of the round Table",
+        "Hömma!",
+        "angesagt"
+    ],
+
+    "instructions":[
+        ["join", " to manually connect the bot. \n(Could be used for a different \"comeback\" sound when you were just afk)"],
+        ["leave", " to manually disconnect the bot."],
+        ["help", " to get some help ;)"],
+        ["set", " set  the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer between 0 and 3 and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND"],
+        ["addRole", " to add a new Role which triggers the bot\n-> Syntax: addRole ROLENAME"],
+        ["removeRole", " to remove an old Role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION"],
+        ["showRoles", " to see a list of all currently active roles."],
+        ["setPrefix", " to update the prefix.\n-> Syntax: setPrefix PREFIX"],
+        ["lock", " to lock your current channel (Only one at the same time per Server)."],
+        ["unlock", " to open the currently locked channel."],
+        ["setChannel", " Setting the Channel that is being listened to the desired Channel. \n Syntax: setChannel [CHANNEL_ID]"],
+        ["addReaction", "Adding Reactions to the Role-Reaction Message. \n  Syntax: addReaction [LIST OF REACTION_NAME]"]
+    ]
+}
