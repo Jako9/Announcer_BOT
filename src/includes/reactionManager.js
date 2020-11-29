@@ -37,7 +37,7 @@ module.exports = {
         }
         let msg = message.content.split(' ');
         if(!serverManager.getReactionMessage(message.guild.id)) return;
-    
+
         //Geforderte Reaktionen hinzufügen
         for(var i = 1; i < msg.length; i++){
           serverManager.getReactionMessage(message.guild.id).react(msg[i]);
@@ -60,4 +60,3 @@ module.exports = {
       }
     }
 }
-

@@ -3,9 +3,8 @@ const serverManager = require('./serverManager.js');
 const _path = require('path');
 
 //Sound Files
-const PATH = '/var/www/git.jmk.cloud/html/Announcer_BOT/';
 const SUFFIX = '.wav';
-const LOGIN_SOUND = PATH + 'resources/default/Avengers_Suite' + SUFFIX;
+const LOGIN_SOUND =_path.resolve('./resources/default/Avengers_Suite' + SUFFIX);
 
 var vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
 
@@ -55,7 +54,7 @@ module.exports = {
                 //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
                 if(isVip(newState.member.id)){
                     serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                    newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + 'resources/vips/'+ newState.member.id + SUFFIX));
+                    newUserChannel.join().then(connection => bot_join(newUserChannel, connection, _path.resolve('./resources/vips/'+ newState.member.id + SUFFIX)));
                 }
             }
         }
