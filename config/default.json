@@ -1,16 +1,16 @@
 {
     "descriptions":[
-        " to manually connect the bot. \n(Could be used for a different \"comeback\" sound when you were just afk)",
-        " to manually disconnect the bot.",
+        " to manually connect the bot. (For example when returning from being AFK...)",
+        " to manually disconnect the bot. (Use if stuck)",
         " to get some help ;)",
-        " set  the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer between 0 and 3 and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND",
-        " to add a new Role which triggers the bot\n-> Syntax: addRole ROLENAME",
-        " to remove an old Role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION",
+        " set  the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND",
+        " to add a new role which triggers the bot\n-> Syntax: addRole ROLENAME",
+        " to remove an old role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION",
         " to see a list of all currently active roles.",
-        " to update the prefix.\n-> Syntax: setPrefix PREFIX",
-        " to lock your current channel (Only one at the same time per Server).",
+        " to change the prefix.\n-> Syntax: setPrefix PREFIX",
+        " to lock your current channel (Only one at the same time).",
         " to open the currently locked channel.",
-        " Setting the Channel that is being listened to the desired Channel. \n Syntax: setChannel [CHANNEL_ID]",
-        " Adding Reactions to the Role-Reaction Message. \n  Syntax: addReaction [LIST OF REACTION_NAME]"
+        " to set the channel whose messages are being reacted and listened to by the bot. \n Syntax: setChannel [CHANNEL_ID]",
+        " Adding Reactions to the already set Channel messages. \n  Syntax: addReaction [LIST OF REACTION_NAME]"
     ]
 }

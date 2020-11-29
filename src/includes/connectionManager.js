@@ -4,18 +4,16 @@ const _path = require('path');
 
 //Sound Files
 const SUFFIX = '.wav';
-const LOGIN_SOUND =_path.resolve('./resources/default/Avengers_Suite' + SUFFIX);
+const LOGIN_SOUND =_path.resolve('./resources/default/default' + SUFFIX);
 
 var vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
-    for(i = 0; i < vip.length; i++){
-        if(vip[i] == userID){
-            return true;
-        }
-    }
-        return false;
+    vip.forEach(vip => {
+      if (vip == userID) return true;
+    });
+    return false;
 }
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
@@ -35,31 +33,38 @@ function leave(guildFeeder){
 module.exports = {
     triggerJoin: function(oldState, newState, rollen){
         let newUserChannel = newState.channel;
-        let oldUserChannel = oldState == null ? undefined : oldState.channel;
+        let oldUserChannel = oldState.channel;
+        //Member ist der Bot
+        if(newState.member.bot) return;
 
         //Es handelt sich um einen Beitritt
         if((oldUserChannel == undefined) && (newUserChannel != undefined)){
-            if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) > 20000) {
-                for(var i = 0;  i < rollen.length; i++){
-                    let role = newState.guild.roles.cache.find(role => role.name === rollen[i]);
-                    if(role != null && !newState.member.bot){
-                        //Rolle spricht den Bot an oder Nutzer ist VIP
-                        if(newState.member.roles.cache.has(role.id) && !isVip(newState.member.id)) {
-                            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
-                            break;
-                        }
-                    }
-                }
-                //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
-                if(isVip(newState.member.id)){
-                    serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                    newUserChannel.join().then(connection => bot_join(newUserChannel, connection, _path.resolve('./resources/vips/'+ newState.member.id + SUFFIX)));
-                }
-            }
+
+          //Antispamschutz => Bot ist gerade erst gejoint
+          if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
+
+          //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
+          if(isVip(newState.member.id)){
+            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, _path.resolve('./resources/vips/'+ newState.member.id + SUFFIX)));
+            return;
+          }
+
+          //Hat der Nutzer eine passende Rolle?
+          for(var i = 0;  i < rollen.length; i++){
+            let role = newState.guild.roles.cache.find(role => role.name === rollen[i]);
+            //Nicht interessant
+            if(!newState.member.roles.cache.has(role.id)) continue;
+
+            //Bot soll joinen
+            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
+            return;
+          }
         }
         //Es handelt sich um ein Verlassen
         else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
+
         }
     },
 

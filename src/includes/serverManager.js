@@ -6,20 +6,19 @@ let servers = {};
 
 module.exports = {
     addServer: function(id) {
-        if(!fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))){
+      //Server existiert schon
+      if(fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))) return;
 
-            jsonParser.copy(_path.resolve("./config/template.json"), _path.resolve("./config/guilds/" + id + ".json"));
-            servers[id] = jsonParser.read(_path.resolve("./config/guilds/" + id + ".json"));
-        }
+      jsonParser.copy(_path.resolve("./config/template.json"), _path.resolve("./config/guilds/" + id + ".json"));
+      servers[id] = jsonParser.read(_path.resolve("./config/guilds/" + id + ".json"));
     },
-    
-    
-    removeServer: function(id) {
-        if(fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))){
 
-            jsonParser.delete(_path.resolve("./config/guilds/" + id + ".json"));
-            delete servers.id;
-        }
+    removeServer: function(id) {
+      //Server existiert nicht
+      if(!fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))) return;
+
+      jsonParser.delete(_path.resolve("./config/guilds/" + id + ".json"));
+      delete servers.id;
     },
 
     getServers: function() {
@@ -33,7 +32,7 @@ module.exports = {
      */
     getServer: function(id){
         return servers.filter((item) => {
-            return item.id == id;  
+            return item.id == id;
         });
     },
 
@@ -75,12 +74,11 @@ module.exports = {
      * @param {Array} instructions Instruktionen des Servers
      */
     setInstructions: function(id, instructions){
-        if(instructions){
-            ins = unMergeArrays(instructions);
-            servers[id].instructions = ins;
+        if(!instructions) return;
 
-            saveServer(id);
-        }
+        servers[id].instructions = unMergeArrays(instructions);
+        saveServer(id);
+
     },
 
     /**
@@ -159,7 +157,6 @@ module.exports = {
      */
     setChannelSize: function(id, channelSize){
         servers[id].channelSize = (channelSize !== undefined) ? channelSize : servers[id].channelSize;
-        console.log("id: " + id + " " + servers[id].channelSize);
     },
 
     /**
@@ -182,26 +179,6 @@ module.exports = {
     },
 
     /**
-     * Gibt den Standartchannel des Servers zurück
-     *
-     * @param {number} id Id des Servers
-     */
-    getStandartChannel: function(id){
-        return servers[id].standartChannel;
-    },
-
-    /**
-     * Setzt den StandartChannel des Servers
-     *
-     * @param {string} id Id des Servers
-     * @param {string} standartChannel standartChannel des Servers
-     */
-    setStandartChannel: function(id, standartChannel){
-        servers[id].standartChannel = (standartChannel) ? standartChannel : servers[id].standartChannel;
-        saveServer(id);
-    },
-
-    /**
      * Gibt den StandartRole des Servers zurück
      *
      * @param {number} id Id des Servers
@@ -214,7 +191,7 @@ module.exports = {
      * Setzt den StandartRole des Servers
      *
      * @param {string} id Id des Servers
-     * @param {string} standartRole standartChannel des Servers
+     * @param {string} standartRole standartRolel des Servers
      */
     setStandartRole: function(id, standartRole){
         servers[id].standartRole = (standartRole) ? standartRole : servers[id].standartRole;
@@ -264,7 +241,7 @@ module.exports = {
     },
 
     readInServers: function (){
-        fs.readdirSync(_path.resolve("./config/guilds/")).forEach(file => { 
+        fs.readdirSync(_path.resolve("./config/guilds/")).forEach(file => {
             id = file.split(".")[0];
             serverObj = jsonParser.read(_path.resolve("./config/guilds/") + "/" + file);
 
@@ -272,7 +249,7 @@ module.exports = {
             serverObj["channelSize"] = 0;
             serverObj["whoLocked"] = "";
 
-            servers[id] = serverObj; 
+            servers[id] = serverObj;
         });
     },
 }
@@ -283,7 +260,7 @@ function saveServer(id){
     delete toWrite.timeLastJoin;
     delete toWrite.channelSize;
     delete toWrite.whoLocked;
-    
+
     jsonParser.write(_path.resolve("./config/guilds/") + "/" + id + ".json", toWrite);
 }
 

@@ -20,11 +20,9 @@
 
     "volume" : 0.2,
 
-    "standartChannel" : "",
-
     "standartRole" : "",
 
-    "channelReact" : {},
+    "channelReact" : null,
 
-    "reactionMessage" : {}
+    "reactionMessage" : null
 }

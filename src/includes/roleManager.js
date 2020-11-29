@@ -1,61 +1,51 @@
 const serverManager = require('./serverManager.js');
 
-
 module.exports = {
   addRole: function(message, rollen, prefix, instructions){
-    if(message.content.split(' ').length >= 2){
-        var tmpMessage = '';
-        for(var i = 1; i < message.content.split(' ').length  - 1; i++){
-          tmpMessage += message.content.split(' ')[i]   + ' ';
-        }
-        tmpMessage += message.content.split(' ')[message.content.split(' ').length - 1];
-        // Maximale Rollenanzahl  =  40
-        if(rollen.length <= 40){
-          // Ob die Rolle schon hinzugefügt wurde
-          if(!rollen.includes(tmpMessage)){
-            // Ob die Rolle überhaupt existiert
-            if(message.guild.roles.cache.find(role => role.name === tmpMessage) !== null){
-              rollen.push(tmpMessage);
-              serverManager.setRollen(message.guild.id, rollen);
-              message.reply('Die Rolle \'' + tmpMessage + '\' wurde erfolgreich hinzugefügt');
-            }
-            else{
-              message.reply('Die Rolle \'' + tmpMessage + '\' existiert nicht!');
-            }
-          }
-          else{
-            message.reply('Die Rolle \'' + tmpMessage + '\' ist schon aktiv du Kek!');
-          }
-        }
-        else{
-          message.reply('Es dürfen maximal 40 Rollen gleichzeitig aktiv sein!');
-        }
-      }
-      else{
-        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[4][0] + '\', schreibe \'' + prefix +  instructions[2][0] + '\' für korrekte Syntax.');
-      }
-    },
-
-
-    removeRole: function(message, rollen, prefix, instructions){
-      if(message.content.split(' ').length == 2 && message.content.split(' ')[1] >= 0 && message.content.split(' ')[1] < rollen.length){
-          var tmpRolle = rollen.splice(message.content.split(' ')[1], 1);
-          serverManager.setRollen(message.guild.id, rollen);
-          message.reply('Die Rolle \'' + tmpRolle + '\' wurde erfolgreich entfernt');
-        }
-        else{
-          message.reply('Ungültige Eingabe für \'' + prefix +  instructions[5][0] + '\', schreibe \'' + prefix + instructions[2][0] + '\' für korrekte Syntax.');
-        }
+    //Falsche Syntax
+    if(message.content.split(' ').length < 2){
+      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[4][0] + '\', schreibe \'' + prefix +  instructions[2][0] + '\' für korrekte Syntax.');
+      return;
+    }
+    let rollenName = '';
+    //Falls Rollename SPACE enthält
+    let param = message.content.split(' ');
+    for(var i = 1; i < param.length; i++){
+      rollenName += param[i]   + ' ';
+    }
+    rollenName = rollenName.substring(0, rollenName.length - 1);
+    //Die Rolle existiert nicht
+    if(message.guild.roles.cache.find(role => role.name === rollenName) == null){
+      message.reply('Die Rolle \'' + rollenName + '\' existiert nicht!');
+      return;
+    }
+    // Ob die Rolle schon hinzugefügt wurde
+    if(rollen.includes(rollenName)) {
+      message.reply('Die Rolle \'' + rollenName + '\' ist schon aktiv du Kek!');
+      return;
+    }
+    rollen.push(rollenName);
+    serverManager.setRollen(message.guild.id, rollen);
+    message.reply('Die Rolle \'' + rollenName + '\' wurde erfolgreich hinzugefügt');
   },
 
+    removeRole: function(message, rollen, prefix, instructions){
+      let param = message.content.split(' ');
+      //Falsche Syntax
+      if(param.length != 2 || param[1] < 0 || param[1] >= rollen.length){
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[5][0] + '\', schreibe \'' + prefix + instructions[2][0] + '\' für korrekte Syntax.');
+        return;
+      }
+      var tmpRolle = rollen.splice(param[1], 1);
+      serverManager.setRollen(message.guild.id, rollen);
+      message.reply('Die Rolle \'' + tmpRolle + '\' wurde erfolgreich entfernt');
+  },
 
-  showRoles: function(message, rollen){
+  showRoles: function(rollen){
       var alleRollen = '```';
       for(var i = 0; i < rollen.length; i++){
         alleRollen += i + ' ' + rollen[i] + '\n';
       }
-      alleRollen += '```';
-      rollen.length != 0? message.reply(alleRollen) :  message.reply('Es gibt  aktuell keine aktiven Rollen!');
-
+      return rollen.length != 0? alleRollen += '```' :  'Es gibt  aktuell keine aktiven Rollen!';
   }
 }

@@ -1,48 +1,44 @@
 const serverManager = require('./serverManager.js');
 
-//Schließ einen abgeschlossenen Raum (Channel) wieder auf
+//Schließ einen abgeschlossenen Raum wieder auf
 function lockChannel (member){
-    console.log("Übergebene ID: " + member.voice.channel.userLimit);
-    serverManager.setChannelSize(member.voice.channel.guild.id, member.voice.channel.userLimit);
-    serverManager.setWhoLocked(member.voice.channel.guild.id,member.id);
-    member.voice.channel.setUserLimit(1);
+  let channel = member.voice.channel;
+  serverManager.setChannelSize(channel.guild.id, channel.userLimit);
+  serverManager.setWhoLocked(channel.guild.id,member.id);
+  channel.setUserLimit(1);
 }
 
-
-//Schließt einen Raum (Channel) ab
+//Schließt einen Raum ab
 function unlockChannel(voiceChannel){
-    serverManager.setWhoLocked(voiceChannel.guild.id, null);
-    voiceChannel.setUserLimit(serverManager.getChannelSize(voiceChannel.guild.id));
-    console.log(serverManager.getChannelSize(voiceChannel.guild.id));
+  let id = voiceChannel.guild.id;
+  serverManager.setWhoLocked(id, null);
+  voiceChannel.setUserLimit(serverManager.getChannelSize(id));
 }
 
 module.exports = {
     lock: function (message){
-        if(!message.member.voice.channel){
-            message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
-            return;
-          }
-          if(serverManager.setWhoLocked(message.guild.id)){
-            message.reply('Es ist schon abgeschlossen.');
-            return;
-          }
-          lockChannel(message.member);
-          message.reply('Abgeschlossen');
+      if(!message.member.voice.channel){
+        message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
+        return;
+      }
+      if(serverManager.setWhoLocked(message.guild.id)){
+        message.reply('Es ist schon abgeschlossen.');
+        return;
+      }
+      lockChannel(message.member);
+      message.reply('Abgeschlossen');
     },
-    
-    
+
     unlock: function(message){
-        if(!serverManager.getWhoLocked(message.guild.id)){
-            message.reply('Es ist nichts abgeschlossen!');
-            return;
-        }
-        if(message.member != serverManager.getWhoLocked(message.guild.id)){
-            message.reply('Du hast nicht abgeschlossen!');
-            return;
-        }
-        unlockChannel(message.member.voice.channel);
-        message.reply('Aufgeschlossen');
+      if(!serverManager.getWhoLocked(message.guild.id)){
+        message.reply('Es ist nichts abgeschlossen!');
+        return;
+      }
+      if(message.member != serverManager.getWhoLocked(message.guild.id)){
+        message.reply('Es kann nur die Person aufschließen, die auch abgeschlossen hat!');
+        return;
+      }
+      unlockChannel(message.member.voice.channel);
+      message.reply('Aufgeschlossen');
     },
 }
-  
-  

@@ -16,21 +16,13 @@
         "addReaction"
     ],
 
-    "-timeLastJoin" : 0,
-
     "prefix" : ".",
 
     "volume" : 0.2,
 
-    "-channelSize" : 0,
-
-    "-whoLocked" : "",
-
-    "standartChannel" : "",
-
     "standartRole" : "",
 
-    "channelReact" : {},
+    "channelReact" : null,
 
-    "reactionMessage" : {}
+    "reactionMessage" : null
 }
