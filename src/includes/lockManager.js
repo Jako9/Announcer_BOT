@@ -30,11 +30,12 @@ module.exports = {
     },
 
     unlock: function(message){
-      if(!serverManager.getWhoLocked(message.guild.id)){
+      let id = message.guild.id;
+      if(!serverManager.getWhoLocked(id)){
         message.reply('Es ist nichts abgeschlossen!');
         return;
       }
-      if(message.member != serverManager.getWhoLocked(message.guild.id)){
+      if(message.member != serverManager.getWhoLocked(id)){
         message.reply('Es kann nur die Person aufschließen, die auch abgeschlossen hat!');
         return;
       }

@@ -15,6 +15,7 @@ module.exports = {
   },
 
   removeReaction: function(reaction, user){
+    //Uninteressant
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild.id) || serverManager.getChannelReact(reaction.message.guild.id) != reaction.message.channel) return;
 
     let roleName = reaction.emoji.name.toLowerCase();

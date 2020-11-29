@@ -25,9 +25,10 @@ function bot_join(vc, connection, file){
 
 // Bot Server verlassen
 function leave(guildFeeder){
-    if(guildFeeder.guild.members.cache.find(member => member.id === guildFeeder.guild.me.id).voice.channel != null){
-        guildFeeder.guild.members.cache.find(member => member.id === guildFeeder.guild.me.id).voice.channel.leave();
-    }
+  let id = guildFeeder.guild.me.id;
+  if(guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel != null){
+    guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
+  }
 }
 
 module.exports = {
