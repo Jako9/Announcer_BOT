@@ -1,0 +1,28 @@
+{
+    "rollen": ["Knights of the round Table"],
+
+    "instructions":[
+        "join",
+        "leave",
+        "help",
+        "set",
+        "addRole",
+        "removeRole",
+        "showRoles",
+        "setPrefix",
+        "lock",
+        "unlock",
+        "setChannel",
+        "addReaction"
+    ],
+
+    "prefix" : ".",
+
+    "volume" : 0.2,
+
+    "standartRole" : "",
+
+    "channelReact" : null,
+
+    "reactionMessage" : null
+}
