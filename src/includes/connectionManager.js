@@ -10,6 +10,7 @@ var vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
+    vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
     vip.forEach(vip => {
       if (vip == userID) return true;
     });
