@@ -12,7 +12,7 @@ module.exports = {
     write: function(path, value) {
         jObject = JSON.stringify(value)
 
-        fs.writeFile(path, jObject, (err) => {
+        fs.writeFileSync(path, jObject, (err) => {
             if (err) throw err;
         });
     },

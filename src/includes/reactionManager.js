@@ -3,7 +3,7 @@ const serverManager = require('./serverManager.js');
 module.exports = {
   giveReaction: function(reaction, user){
     let id = reaction.message.guild.id;
-    if(user.bot || !serverManager.getChannelReact(id) || serverManager.getChannelReact(id) != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
@@ -16,7 +16,7 @@ module.exports = {
 
   removeReaction: function(reaction, user){
     //Uninteressant
-    if(user.bot || !serverManager.getChannelReact(reaction.message.guild.id) || serverManager.getChannelReact(reaction.message.guild.id) != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
@@ -30,7 +30,7 @@ module.exports = {
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
   addReactor: function(message){
     let id = message.guild.id;
-    if(serverManager.getChannelReact(id) == null){
+    if(serverManager.getChannelReact(message.guild) == null){
       message.reply('Du musst erst einen Channel auswählen.');
       return;
     }
@@ -54,8 +54,8 @@ module.exports = {
       return;
     }
     serverManager.setChannelReact(id, channel);
-    serverManager.getChannelReact(id).messages.fetch();
-    serverManager.setReactionMessage(id, serverManager.getChannelReact(id).messages.cache.find(foo => true));
+    serverManager.getChannelReact(message.guild).messages.fetch();
+    serverManager.setReactionMessage(id, serverManager.getChannelReact(message.guild).messages.cache.find(foo => true));
     message.reply('Setup Erfolgreich.');
   }
 }

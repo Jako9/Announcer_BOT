@@ -203,8 +203,8 @@ module.exports = {
      *
      * @param {number} id Id des Servers
      */
-    getChannelReact: function(id){
-        return servers[id].channelReact;
+    getChannelReact: function(guild){
+        return guild.channels.cache.find(channel => channel.id == servers[guild.id].channelReact);
     },
 
     /**
@@ -214,7 +214,7 @@ module.exports = {
      * @param {string} channelReact standartChannel des Servers
      */
     setChannelReact: function(id, channelReact){
-        servers[id].channelReact = (channelReact) ? channelReact : servers[id].channelReact;
+        servers[id].channelReact = (channelReact) ? channelReact.id : servers[id].channelReact;
         saveServer(id);
 
     },
@@ -240,7 +240,7 @@ module.exports = {
 
     },
 
-    readInServers: function (){
+    readInServers: function (client){
         fs.readdirSync(_path.resolve("./config/guilds/")).forEach(file => {
             id = file.split(".")[0];
             serverObj = jsonParser.read(_path.resolve("./config/guilds/") + "/" + file);
@@ -248,20 +248,31 @@ module.exports = {
             serverObj["timeLastJoin"] = 0;
             serverObj["channelSize"] = 0;
             serverObj["whoLocked"] = "";
+            serverObj["reactionMessage"] = null;
+            fetchMessage(client, id, serverObj.channelReact);
 
             servers[id] = serverObj;
         });
-    },
+    }
+}
+
+function fetchMessage(client, id, channelReact){
+  if(channelReact == "") return;
+
+  //Aua ich weiß es selber danke
+  client.guilds.fetch(id).then(guild => guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => client.guilds.fetch(id).then(guild => msg = servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true))));
 }
 
 function saveServer(id){
     toWrite = servers[id];
-
+    message = servers[id].reactionMessage;
     delete toWrite.timeLastJoin;
     delete toWrite.channelSize;
     delete toWrite.whoLocked;
+    delete toWrite.reactionMessage;
 
     jsonParser.write(_path.resolve("./config/guilds/") + "/" + id + ".json", toWrite);
+    servers[id].reactionMessage = message;
 }
 
 function mergeArrays(a, b){

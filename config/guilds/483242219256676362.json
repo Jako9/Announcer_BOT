@@ -22,7 +22,5 @@
 
     "standartRole" : "",
 
-    "channelReact" : null,
-
-    "reactionMessage" : null
+    "channelReact" : ""
 }

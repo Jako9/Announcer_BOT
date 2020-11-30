@@ -12,14 +12,13 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const KEY = process.argv.slice(2)[0];
 
-//Fetch all existing Servers and their settings
-serverManager.readInServers();
-
 //BOT booten
 client.login(KEY);
 
 //Set Status
 client.on('ready', () =>{
+  //Fetch all existing Servers and their settings
+  serverManager.readInServers(client);
   client.user.setActivity("....", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
@@ -38,9 +37,8 @@ client.on("guildRemove", guild => {
 
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
-  let id = newState.channel.guild.id;
   //Fetch roles in case they are needed (on voiceChannelJoinEvent)
-  var rollen = newState.channel == null ? null : serverManager.getRollen(id);
+  var rollen = newState.channel == null ? null : serverManager.getRollen(newState.channel.guild.id);
   connectionManager.triggerJoin(oldState,newState,rollen);
 });
 
