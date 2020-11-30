@@ -1,23 +1,23 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
-const _path = require('path');
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
 
 module.exports = {
     addServer: function(id) {
       //Server existiert schon
-      if(fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))) return;
+      if(fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
 
-      jsonParser.copy(_path.resolve("./config/template.json"), _path.resolve("./config/guilds/" + id + ".json"));
-      servers[id] = jsonParser.read(_path.resolve("./config/guilds/" + id + ".json"));
+      jsonParser.copy(PATH + "/config/template.json", PATH + "/config/guilds/" + id + ".json");
+      servers[id] = jsonParser.read(PATH + "/config/guilds/" + id + ".json");
     },
 
     removeServer: function(id) {
       //Server existiert nicht
-      if(!fs.existsSync(_path.resolve("./config/guilds/" + id + ".json"))) return;
+      if(!fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
 
-      jsonParser.delete(_path.resolve("./config/guilds/" + id + ".json"));
+      jsonParser.delete(PATH + "/config/guilds/" + id + ".json");
       delete servers.id;
     },
 
@@ -63,7 +63,7 @@ module.exports = {
      */
     getInstructions: function(id){
         instructions = servers[id].instructions;
-        descriptions = jsonParser.read(_path.resolve("./config/default.json")).descriptions;
+        descriptions = jsonParser.read(PATH + "/config/default.json").descriptions;
         return mergeArrays(instructions, descriptions);
     },
 
@@ -241,9 +241,9 @@ module.exports = {
     },
 
     readInServers: function (client){
-        fs.readdirSync(_path.resolve("./config/guilds/")).forEach(file => {
+        fs.readdirSync(PATH + "/config/guilds/").forEach(file => {
             id = file.split(".")[0];
-            serverObj = jsonParser.read(_path.resolve("./config/guilds/") + "/" + file);
+            serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
 
             serverObj["timeLastJoin"] = 0;
             serverObj["channelSize"] = 0;
@@ -271,7 +271,7 @@ function saveServer(id){
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
 
-    jsonParser.write(_path.resolve("./config/guilds/") + "/" + id + ".json", toWrite);
+    jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
     servers[id].reactionMessage = message;
 }
 

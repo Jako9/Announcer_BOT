@@ -1,21 +1,20 @@
 const jsonParser = require('./jsonParser.js');
 const serverManager = require('./serverManager.js');
+const _path = require('path');
 
 //Sound Files
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 const SUFFIX = '.wav';
-const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
+const LOGIN_SOUND =_path.resolve('./resources/default/default' + SUFFIX);
 
-var vip = jsonParser.read(PATH + "/config/vips.json").vips;
+var vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
-    vip = jsonParser.read(PATH + "/config/vips.json").vips;
-    let found = false;
+    vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
     vip.forEach(vip => {
-      if (vip == userID) found = true;
+	console.log("VIP: " + vip + " User: " + userID + " eval: " + (vip == userID));      if (vip == userID) return true;
     });
-    return found;
+    return false;
 }
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
@@ -48,8 +47,10 @@ module.exports = {
 
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
           if(isVip(newState.member.id)){
+		console.log("Bin drin:" + newstate.meber.id);
+		console.log(_path.resolve('./resources/vips/'+ newState.member.id + SUFFIX));
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/vips/"+ newState.member.id + SUFFIX));
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, _path.resolve('./resources/vips/'+ newState.member.id + SUFFIX)));
             return;
           }
 
