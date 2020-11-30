@@ -19,7 +19,7 @@ client.login(KEY);
 client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   serverManager.readInServers(client);
-  client.user.setActivity("....", {
+  client.user.setActivity("PHP ist scheise", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
