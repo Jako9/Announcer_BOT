@@ -11,10 +11,11 @@ var vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
     vip = jsonParser.read(_path.resolve('./config/vips.json')).vips;
+    let found = false;
     vip.forEach(vip => {
-      if (vip == userID) return true;
+      if (vip == userID) found = true;
     });
-    return false;
+    return found;
 }
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
