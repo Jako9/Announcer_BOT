@@ -49,7 +49,7 @@ module.exports = {
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
           if(isVip(newState.member.id)){
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/vips/"+ newState.member.id + SUFFIX)));
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/vips/"+ newState.member.id + SUFFIX));
             return;
           }
 
