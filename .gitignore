@@ -9,6 +9,9 @@
 *.btm
 *.log
 
+**/weboverlay/conf
+**/weboverlay/logs
+
 # End of https://www.gitignore.io/api/batch
 
 node_modules/

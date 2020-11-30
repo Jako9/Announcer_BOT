@@ -1,0 +1,26 @@
+{
+    "rollen": [],
+
+    "instructions":[
+        "join",
+        "leave",
+        "help",
+        "set",
+        "addRole",
+        "removeRole",
+        "showRoles",
+        "setPrefix",
+        "lock",
+        "unlock",
+        "setChannel",
+        "addReaction"
+    ],
+
+    "prefix" : ".",
+
+    "volume" : 0.2,
+
+    "standartRole" : "",
+
+    "channelReact" : ""
+}
