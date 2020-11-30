@@ -19,7 +19,7 @@ client.login(KEY);
 client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   serverManager.readInServers(client);
-  client.user.setActivity("RUNNING", {
+  client.user.setActivity("c====3", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
