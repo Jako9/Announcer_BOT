@@ -3,7 +3,7 @@
         " to manually connect the bot. (For example when returning from being AFK...)",
         " to manually disconnect the bot. (Use if stuck)",
         " to get some help ;)",
-        " set  the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND",
+        " set the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND",
         " to add a new role which triggers the bot\n-> Syntax: addRole ROLENAME",
         " to remove an old role which triggers the bot\n-> Syntax: removeRole ROLEPOSITION",
         " to see a list of all currently active roles.",
