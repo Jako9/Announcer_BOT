@@ -4,7 +4,7 @@ const serverManager = require('./serverManager.js');
 //Sound Files
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 const SUFFIX = '.wav';
-const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX);
+const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 
 var vip = jsonParser.read(PATH + "/config/vips.json").vips;
 
