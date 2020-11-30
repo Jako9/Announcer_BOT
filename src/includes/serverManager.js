@@ -9,8 +9,8 @@ module.exports = {
       //Server existiert schon
       if(fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
 
-      jsonParser.copy(PATH + "/config/template.json"), PATH + "/config/guilds/" + id + ".json"));
-      servers[id] = jsonParser.read(PATH + "/config/guilds/" + id + ".json"));
+      jsonParser.copy(PATH + "/config/template.json", PATH + "/config/guilds/" + id + ".json"));
+      servers[id] = jsonParser.read(PATH + "/config/guilds/" + id + ".json");
     },
 
     removeServer: function(id) {
