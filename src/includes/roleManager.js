@@ -46,6 +46,6 @@ module.exports = {
       for(var i = 0; i < rollen.length; i++){
         alleRollen += i + ' ' + rollen[i] + '\n';
       }
-      return rollen.length != 0? alleRollen += '```' :  'Es gibt  aktuell keine aktiven Rollen!';
+      return rollen.length != 0? alleRollen += '```' :  'Es gibt aktuell keine aktiven Rollen!';
   }
 }
