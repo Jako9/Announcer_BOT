@@ -10,7 +10,8 @@ function run() {
     if ($payload->repository->url == 'https://github.com/Jako9/Announcer_BOT' && $payload->ref == 'refs/heads/master') {
 
         shell_exec("killall node");
-        shell_exec("cd .. && git pull && ./restart.sh");
+        shell_exec("git pull");
+        shell_exec("./restart.sh");
         
         return true;
     }
