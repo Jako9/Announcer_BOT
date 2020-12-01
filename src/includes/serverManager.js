@@ -1,16 +1,19 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
+const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 
 let servers = {};
 
 module.exports = {
-    addServer: function(id) {
+    addServer: function(guild) {
       //Server existiert schon
-      if(fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
+      if(fs.existsSync(PATH + "/config/guilds/" + guild.id + ".json")) return;
 
-      jsonParser.copy(PATH + "/config/template.json", PATH + "/config/guilds/" + id + ".json");
-      servers[id] = jsonParser.read(PATH + "/config/guilds/" + id + ".json");
+      jsonParser.copy(PATH + "/config/template.json", PATH + "/config/guilds/" + guild.id + ".json");
+      servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
+      servers[guild.id].name = guild.name;
+      servers[guild.id].avatar = guild.iconURL();
+      safeServer(guild.id);
     },
 
     removeServer: function(id) {

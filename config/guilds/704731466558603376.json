@@ -1,4 +1,8 @@
 {
+    "name" : "Unserer Helpdesk",
+
+    "avatar" : "",
+    
     "rollen": ["angesagt"],
 
     "instructions":[

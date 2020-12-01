@@ -27,7 +27,7 @@ client.on('ready', () =>{
 
 //Füge den neuen Server der Datenbank hinzu
 client.on("guildCreate", guild => {
-  serverManager.addServer(guild.id);
+  serverManager.addServer(guild);
 });
 
 //Löscht den Server aus der Datenbank
