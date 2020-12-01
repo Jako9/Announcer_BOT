@@ -26,12 +26,35 @@ jQuery( document ).ready(function($) {
             
         });
 
+        $('#edit-prefix-' + i).click( function(){
+
+            if($(this).hasClass('fa-pencil-alt')){
+                $(this).removeClass( 'fa-pencil-alt' );
+                $(this).addClass( 'fa-check' );
+
+                $('#prefix-char-' + i).prop('disabled', false);
+                $('#prefix-char-' + i).removeClass('server-settings-input-disabled');
+                $('#prefix-char-' + i).addClass('server-settings-input-enabled');
+                $('#prefix-char-' + i).focus();
+            }else{
+                $('#prefix-char-' + i).removeClass('server-settings-input-enabled');
+                $('#prefix-char-' + i).addClass('server-settings-input-disabled');
+
+                $(this).removeClass( 'fa-check' );
+                $(this).addClass( 'fa-pencil-alt' );
+
+                $('#prefix-char-' + i).prop('disabled', true);
+            }
+            
+        });
+
         $('#colapse-button-header-' + i).click(function(){
             $('#volume-range-' + i).prop('disabled', true);
         })
 
         $('#submit-server-settings-' + i).click(function(){
             $('#volume-range-' + i).prop('disabled', false);
+            $('#prefix-char-' + i).prop('disabled', false);
         })
     });
 

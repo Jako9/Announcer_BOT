@@ -15,11 +15,24 @@ function printServer(){
                 $pObj = $jObj;
 
                 if(isset($_POST['volume-range-'. $i])){
-                    $pObj->volume = $_POST['volume-range-'. $i];
+                    $val = $_POST['volume-range-'. $i];
+                    if($val <= 1 && $val >= 0){
+                        $pObj->volume = $val;
+                    }
+                }
+
+
+                if(isset($_POST['prefix-char-'. $i])){
+                    $val = $_POST['prefix-char-'. $i];
+                    
+                    if(strlen($val) == 1){
+                        $pObj->prefix = $val;
+                    }
                 }
 
                 $jToWrite = json_encode($pObj);
-                
+                file_put_contents('../../../config/guilds/' . $file, $jToWrite);
+
             }
 
             $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
@@ -70,11 +83,9 @@ function printServer(){
                                 <div class="server-settings server-prefix">
                                     <h3 class="setting-title">Prefix</h3>
                                     <div class="setting-ist">
-                                        <p class="array-box">
-                                            '. $jObj->prefix .'
-                                        </p>
+                                        <input id="prefix-char-'. $i .'" name="prefix-char-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->prefix .'" maxlength="1" disabled>
                                     </div>
-                                    <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#prefix-modal-'. $i .'"></i>
+                                    <i class="prefix-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#prefix-modal-'. $i .'" id="edit-prefix-'. $i .'"></i>
                                 </div>
                                 <div class="server-settings server-volume">
                                     <h3 class="setting-title">Volume</h3>
@@ -130,16 +141,19 @@ function readFromJSON($file){
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Actions</a>
+                <a class="nav-link" href="#">Actions</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Server</a>
+                <a class="nav-link" href="#">Server</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="#logs">Logs</a>
+                <a class="nav-link" href="#logs">VIPs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#logs">Logs</a>
             </li>
         </ul>
         </div>
