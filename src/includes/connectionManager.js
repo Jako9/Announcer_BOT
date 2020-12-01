@@ -6,11 +6,11 @@ const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 const SUFFIX = '.wav';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 
-var vip = jsonParser.read(PATH + "/config/vips.json").vips;
+var vip = unmerge(jsonParser.read(PATH + "/config/vips.json").vips);
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
-    vip = jsonParser.read(PATH + "/config/vips.json").vips;
+    vip = unmerge(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
       if (vip == userID) found = true;
@@ -32,6 +32,16 @@ function leave(guildFeeder){
     guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
   }
 }
+
+function unMergeArrays(a){
+  let merged = [];
+  for (i = 0; i < a.length; i++) {
+      merged.push(a[i][0]);
+  }
+
+  return merged;
+}
+
 
 module.exports = {
     triggerJoin: function(oldState, newState, rollen){

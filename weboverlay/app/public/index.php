@@ -1,27 +1,97 @@
 <?php
 
+
 function printServer(){
     $files = preg_grep('/^([^.])/', scandir('../../../config/guilds'));
     $i = 0;
     foreach($files as $file) {
         if($file !== '.' || $file !== '..'){
+
             $jObj = readFromJSON($file);
+
+            if(isset($_POST['submit-server-settings-' . $i])){
+                $pObj = new stdClass();
+
+                $pObj = $jObj;
+
+                if(isset($_POST['volume-range-'. $i])){
+                    $pObj->volume = $_POST['volume-range-'. $i];
+                }
+
+                $jToWrite = json_encode($pObj);
+                
+            }
+
+            $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
+
+            $roles = "";
+            $instructions = "";
+
+            foreach($jObj->rollen as $role){
+                $roles .= $role . "<br>";
+            }
+
+            foreach($jObj->instructions as $instruction){
+                $instructions .= $instruction . "<br>";
+            }
+
             echo('
             <div class="card">
                     <div class="card-header" id="headingOne">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-'. $i .'" aria-expanded="true" aria-controls="collapse-'. $i .'">
-                            '. $jObj->name. '
-                        </button>
-                    </h2>
-                    </div>
+                        <div class="card-serverpic" style="'. $serverStyle .'"></div>
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" id="colapse-button-header-'. $i .'"  type="button" data-toggle="collapse" data-target="#collapse-'. $i .'" aria-expanded="true" aria-controls="collapse-'. $i .'">
+                                '. $jObj->name. '
+                            </button>
+                        </h2>
+                        </div>
 
-                    <div id="collapse-'. $i .'" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div class="card-body">
-                        '. $jObj->volume .'
-                    </div>
+                        <div id="collapse-'. $i .'" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="half-container">
+                                <div class="server-settings server-roles">
+                                    <h3 class="setting-title">Rollen</h3>
+                                    <div class="setting-ist">
+                                        <p class="array-box">
+                                            '. $roles .'
+                                        </p>
+                                </div>
+                                <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'"></i>
+                                </div>
+                                <div class="server-settings server-instructions">
+                                    <h3 class="setting-title">Instruktionen</h3>
+                                    <div class="setting-ist">
+                                        <p class="array-box">
+                                            '. $instructions .'
+                                        </p>
+                                    </div>
+                                    <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#instructions-modal-'. $i .'"></i>
+                                </div>
+                                <div class="server-settings server-prefix">
+                                    <h3 class="setting-title">Prefix</h3>
+                                    <div class="setting-ist">
+                                        <p class="array-box">
+                                            '. $jObj->prefix .'
+                                        </p>
+                                    </div>
+                                    <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#prefix-modal-'. $i .'"></i>
+                                </div>
+                                <div class="server-settings server-volume">
+                                    <h3 class="setting-title">Volume</h3>
+                                    <div class="setting-ist">
+                                        <input type="range" id="volume-range-'. $i .'" name="volume-range-'. $i .'" min="0" max="1" value="' . $jObj->volume . '" step="0.1" disabled>
+                                        <div id="range-val-'. $i .'" class="range-val"></div>
+                                    </div>
+                                    <i class="volume-edit-button fas fa-pencil-alt" id="edit-volume-'. $i .'"></i>
+                                </div>
+                                <input type="submit" id="submit-server-settings-'. $i .'" name="submit-server-settings-'. $i .'" class="btn btn-success" value="Speichern">
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                
+                
         ');
         $i++;
         }
@@ -105,11 +175,12 @@ function readFromJSON($file){
         <div class="card">
             <h5 class="card-header">Server</h5>
             <div class="card-body">
-            <h5 class="card-title">Server Einstellungen</h5>
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
 
-                <?php printServer() ?>
+                <form method="post">
+                    <?php printServer() ?>
+                </form>
             
             </div>
         </div>
@@ -121,6 +192,8 @@ function readFromJSON($file){
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    
+    <script type='text/javascript' src="script.js"></script>
     </body>
     </html>
 
