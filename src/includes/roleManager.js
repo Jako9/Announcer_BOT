@@ -25,5 +25,10 @@ module.exports = {
 
   showRole: function(rolle){
       return rolle.length != 0? rolle :  'Es gibt aktuell keine aktiven Rollen!';
+  },
+
+  showReactionRole: function(message){
+    rolle = serverManager.getStandartRole(message.guild.id);
+    message.reply(rolle == "" ? "Es gibt aktuell keine Rolle für Reaktionen!" : "Die aktuelle Rolle für Reaktionen ist: " + rolle + ".");
   }
 }

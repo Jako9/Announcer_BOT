@@ -143,6 +143,7 @@ client.on('message', message => {
 
   //show Reaction role
   else if(message.content.startsWith(prefix + instructions[14][0])){
+    roleManager.showReactionRole(message);
   }
 
   // Falsche Eingabe
