@@ -10,7 +10,7 @@ const serverManager = require('./includes/serverManager.js');
 //Initilizing BOT
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const KEY = process.argv.slice(2)[0];
+const KEY = process.argv.slice(2)[1];
 
 //BOT booten
 client.login(KEY);
@@ -81,11 +81,13 @@ client.on('message', message => {
   }
 
   // setVolume
-  else if (message.content === prefix + instructions[2][0]) {
+  else if (message.content.startsWith(prefix + instructions[2][0])) {
+    interactionManager.setVolume(message);
   }
 
   // getVolume
   else if (message.content === prefix + instructions[3][0]) {
+    message.reply("Die Lautstärke ist auf " + (100 * interactionManager.getVolume(message)) + "%.");
   }
 
 

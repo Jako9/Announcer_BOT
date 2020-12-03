@@ -35,5 +35,36 @@ module.exports = {
     }
     message.reply('Der neue Präfix wurde erfolgreich auf \'' + param[1] + '\' gesetzt');
     return param[1];
+  },
+
+  setVolume: function(message){
+    var param = message.content.split(' ');
+    //Ungültige Anzahl an Argumenten
+    if (param.length != 2){
+      message.reply("Falsche Eingabe..");
+      return;
+    }
+
+    //Keine Nummer
+    try{
+      volume = parseInt(param[1]);
+      //Nummer nicht im gültigen bereich
+      if (volume < 0 || volume > 100){
+        message.reply("Die Lautstärke muss zwischen 0 und 100 liegen.");
+        return;
+      }
+
+      serverManager.setVolume(message.guild.id, volume / 100.0);
+      message.reply("Das Volume wurde auf " + volume +"% gesetzt.");
+    }
+    catch(e){
+      message.reply("Die Lautstärke muss eine ganze Zahl sein! " + e);
+      return;
+    }
+
+  },
+
+  getVolume: function(message){
+    return serverManager.getVolume(message.guild.id);
   }
 }

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const PATH = "C:/Users/Jako9/Documents/Announcer_BOT";
 
 let servers = {};
 
@@ -133,13 +133,13 @@ module.exports = {
     },
 
     /**
-     * Setzt das Prefix des Servers
+     * Setzt das Volume des Servers
      *
      * @param {string} id Id des Servers
      * @param {number} volume Volume des Servers
      */
     setVolume: function(id, volume){
-        servers[id].volume = (volume) ? volume : servers[id].volume;
+        servers[id].volume = volume;
         saveServer(id);
     },
 
