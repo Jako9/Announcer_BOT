@@ -38,8 +38,8 @@ client.on("guildRemove", guild => {
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
   //Fetch roles in case they are needed (on voiceChannelJoinEvent)
-  var rollen = newState.channel == null ? null : serverManager.getRollen(newState.channel.guild.id);
-  connectionManager.triggerJoin(oldState,newState,rollen);
+  var rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
+  connectionManager.triggerJoin(oldState,newState,rolle);
 });
 
 //Rolle per Reaktion bekommen
@@ -72,7 +72,7 @@ client.on('message', message => {
   // Join per Befehl
   if (message.content === prefix + instructions[0][0]) {
     // Wenn in einem gültigen Channel, join
-    message.member.voice.channel ? connectionManager.triggerJoin({"connection" : null}, message.member.voice,serverManager.getRollen(id)) : message.reply('Betrete erst nen Channel, du Bob!');
+    message.member.voice.channel ? connectionManager.triggerJoin({"connection" : null}, message.member.voice,serverManager.getRolle(id)) : message.reply('Betrete erst nen Channel, du Bob!');
   }
 
   // Leave per Befehl
@@ -80,55 +80,67 @@ client.on('message', message => {
     connectionManager.triggerLeave(message);
   }
 
+  // setVolume
+  else if (message.content === prefix + instructions[2][0]) {
+  }
+
+  // getVolume
+  else if (message.content === prefix + instructions[3][0]) {
+  }
+
+
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content === prefix + instructions[2][0]){
+  else  if(message.content === prefix + instructions[4][0]){
     message.reply(interactionManager.help(prefix, instructions));
   }
 
   // Personalisiere Befehle mit 'set'
-  else  if(message.content.startsWith(prefix + instructions[3][0]  + ' ')){
+  else  if(message.content.startsWith(prefix + instructions[5][0]  + ' ')){
     message.reply(interactionManager.changeCommands(message, prefix, instructions));
   }
 
-  // Neue Rolle adden
-  else if (message.content.startsWith(prefix + instructions[4][0]  + ' ')) {
-    roleManager.addRole(message, serverManager.getRollen(id), prefix, instructions);
+  // Aktive Rolle ändern
+  else if (message.content.startsWith(prefix + instructions[6][0]  + ' ')) {
+    roleManager.changeRole(message, prefix, instructions);
   }
 
-  // Rolle löschen
-  else if (message.content.startsWith(prefix + instructions[5][0]  + ' ')) {
-    roleManager.removeRole(message, serverManager.getRollen(id), prefix, instructions);
-  }
-
-  // Alle aktiven Rollen  anzeigen
-  else if (message.content === prefix + instructions[6][0]){
-    message.reply(roleManager.showRoles(serverManager.getRollen(id)));
+  // Aktive Rolle anzeigen
+  else if (message.content === prefix + instructions[7][0]){
+    message.reply(roleManager.showRole(serverManager.getRolle(id)));
   }
 
   // Präfix ändern
-  else if(message.content.startsWith(prefix + instructions[7][0]  + ' ')){
+  else if(message.content.startsWith(prefix + instructions[8][0]  + ' ')){
     let newPrefix = interactionManager.changePrefix(message, prefix, instructions);
     if (newPrefix != null) serverManager.setPrefix(id, newPrefix);
   }
 
   // Lock Room
-  else if(message.content.startsWith(prefix + instructions[8][0])){
+  else if(message.content.startsWith(prefix + instructions[9][0])){
     lockManager.lock(message);
   }
 
   // Unlock Room
-  else if(message.content.startsWith(prefix + instructions[9][0])){
+  else if(message.content.startsWith(prefix + instructions[10][0])){
     lockManager.unlock(message);
   }
 
   //Reaction Listener
-  else if(message.content.startsWith(prefix + instructions[10][0])){
+  else if(message.content.startsWith(prefix + instructions[11][0])){
     reactionManager.setupListener(message, client);
   }
 
   //Reaction Emojis
-  else if(message.content.startsWith(prefix + instructions[11][0])){
+  else if(message.content.startsWith(prefix + instructions[12][0])){
     reactionManager.addReactor(message);
+  }
+
+  //change Reaction Role
+  else if(message.content.startsWith(prefix + instructions[13][0])){
+  }
+
+  //show Reaction role
+  else if(message.content.startsWith(prefix + instructions[14][0])){
   }
 
   // Falsche Eingabe

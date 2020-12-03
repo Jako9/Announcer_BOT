@@ -3,21 +3,24 @@
 
     "avatar" : "",
     
-    "rollen": [],
+    "rolle": "",
 
     "instructions":[
         "join",
         "leave",
+        "setVolume",
+        "volume",
         "help",
         "set",
-        "addRole",
-        "removeRole",
-        "showRoles",
+        "changeRole",
+        "role",
         "setPrefix",
         "lock",
         "unlock",
         "setChannel",
-        "addReaction"
+        "addReaction",
+        "changeReactionRole",
+        "showReactionRole"
     ],
 
     "prefix" : ".",

@@ -14,6 +14,15 @@ function printServer(){
 
                 $pObj = $jObj;
 
+                for($j=0; $j < sizeof($pObj->instructions); $j++){
+                    if(isset($_POST['instruction-input-'. $i . "-" . $j])){
+                        $r = $_POST['instruction-input-'. $i . "-" . $j];
+                        if(strlen($r) >= 1){
+                            $pObj->instructions[$j] = $r;
+                        }
+                    } 
+                }
+
                 if(isset($_POST['volume-range-'. $i])){
                     $val = $_POST['volume-range-'. $i];
                     if($val <= 1 && $val >= 0){
@@ -37,15 +46,14 @@ function printServer(){
 
             $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
 
-            $roles = "";
             $instructions = "";
 
-            foreach($jObj->rollen as $role){
-                $roles .= $role . "<br>";
-            }
-
+            $j = 0;
             foreach($jObj->instructions as $instruction){
-                $instructions .= $instruction . "<br>";
+
+                $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
+                //$instructions .= $instruction . "<br>";
+                $j++;
             }
 
             echo('
@@ -63,22 +71,19 @@ function printServer(){
                         <div class="card-body">
                             <div class="half-container">
                                 <div class="server-settings server-roles">
-                                    <h3 class="setting-title">Rollen</h3>
+                                    <h3 class="setting-title">Rolle</h3>
                                     <div class="setting-ist">
-                                        <p class="array-box">
-                                            '. $roles .'
-                                        </p>
-                                </div>
-                                <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'"></i>
+                                        <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->rolle .'" disabled>
+                                    </div>
+                                <i class="role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-role-'. $i .'"></i>
                                 </div>
                                 <div class="server-settings server-instructions">
                                     <h3 class="setting-title">Instruktionen</h3>
                                     <div class="setting-ist">
-                                        <p class="array-box">
+                                        <div class="array-box instruction-editor">
                                             '. $instructions .'
-                                        </p>
+                                        </div>
                                     </div>
-                                    <i class="fas fa-pencil-alt" data-toggle="modal" data-target="#instructions-modal-'. $i .'"></i>
                                 </div>
                                 <div class="server-settings server-prefix">
                                     <h3 class="setting-title">Prefix</h3>

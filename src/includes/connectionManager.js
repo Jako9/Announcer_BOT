@@ -6,11 +6,11 @@ const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 const SUFFIX = '.wav';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 
-var vip = unmerge(jsonParser.read(PATH + "/config/vips.json").vips);
+var vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID){
-    vip = unmerge(jsonParser.read(PATH + "/config/vips.json").vips);
+    vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
       if (vip == userID) found = true;
@@ -44,7 +44,7 @@ function unMergeArrays(a){
 
 
 module.exports = {
-    triggerJoin: function(oldState, newState, rollen){
+    triggerJoin: function(oldState, newState, rolle){
         let newUserChannel = newState.channel;
         let oldUserChannel = oldState.channel;
         //Member ist der Bot
@@ -63,17 +63,18 @@ module.exports = {
             return;
           }
 
-          //Hat der Nutzer eine passende Rolle?
-          for(var i = 0;  i < rollen.length; i++){
-            let role = newState.guild.roles.cache.find(role => role.name === rollen[i]);
-            //Nicht interessant
-            if(!newState.member.roles.cache.has(role.id)) continue;
+          //Der Server hat keine Rolle festgelegt
+          if(!rolle) return;
 
-            //Bot soll joinen
-            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
-            return;
-          }
+          //Hat der Nutzer die passende Rolle?
+          let role = newState.guild.roles.cache.find(role => role.name === rolle);
+          //Nicht interessant
+          if(!newState.member.roles.cache.has(role.id)) return;
+
+          //Bot soll joinen
+          serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+          newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
+          return;
         }
         //Es handelt sich um ein Verlassen
         else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){

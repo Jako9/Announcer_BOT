@@ -40,22 +40,22 @@ module.exports = {
     },
 
     /**
-     * Gibt die Rollen des Servers zurück
+     * Gibt die Rolle des Servers zurück
      *
      * @param {string} id Id des Servers
      */
-    getRollen: function(id){
-        return servers[id].rollen;
+    getRolle: function(id){
+        return servers[id].rolle;
     },
 
     /**
-     * Setzt die Rollen des Servers
+     * Setzt die Rolle des Servers
      *
      * @param {string} id Id des Servers
-     * @param {Array} roles Rollen des Servers
+     * @param {String} role Rolle des Servers
      */
-    setRollen: function(id, roles){
-        servers[id].rollen = (roles) ? roles : servers[id].rollen;
+    setRolle: function(id, role){
+        servers[id].rolle = (role) ? role : servers[id].rolle;
         saveServer(id);
     },
 

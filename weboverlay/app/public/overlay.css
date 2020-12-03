@@ -103,3 +103,15 @@ body {
     font-weight: 700;
     padding-left: 10px;
 }
+
+.array-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.instruction-input{
+    width: 50%;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
