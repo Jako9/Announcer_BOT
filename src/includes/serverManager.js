@@ -1,6 +1,6 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
-const PATH = "C:/Users/Jako9/Documents/Announcer_BOT";
+const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 
 let servers = {};
 
@@ -255,7 +255,35 @@ module.exports = {
             fetchMessage(client, id, serverObj.channelReact);
 
             servers[id] = serverObj;
+            servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
+            servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+            saveServer(id);
         });
+    },
+
+    updateUser: function(client){
+        let vips = jsonParser.read(PATH + "/config/vips.json").vips;
+
+        let toWrite = {};
+
+        vips.forEach(vip => {
+            let id = vip[0];
+            client.users.fetch(id)
+            .then(user => {
+                //Nutzer nicht gefunden
+                if(!user) return;
+
+                vip[1] = user.username;
+                vip[2] = user.avatarURL();
+
+                //Nutzer zurück schreiben
+                toWrite.vips = vips;
+                jsonParser.write(PATH + "/config/vips.json", toWrite);
+            })
+            .catch();
+        });
+
+        
     }
 }
 

@@ -10,7 +10,7 @@ const serverManager = require('./includes/serverManager.js');
 //Initilizing BOT
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const KEY = process.argv.slice(2)[1];
+const KEY = process.argv.slice(2)[0];
 
 //BOT booten
 client.login(KEY);
@@ -19,6 +19,7 @@ client.login(KEY);
 client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   serverManager.readInServers(client);
+  serverManager.updateUser(client);
   client.user.setActivity("zZZZZ", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"

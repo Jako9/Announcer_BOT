@@ -2,7 +2,7 @@ const jsonParser = require('./jsonParser.js');
 const serverManager = require('./serverManager.js');
 
 //Sound Files
-const PATH = "C:/Users/Jako9/Documents/Announcer_BOT";
+const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 const SUFFIX = '.wav';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 

@@ -40,7 +40,7 @@ jQuery( document ).ready(function($) {
     });
 
 
-    $('.volume-edit-button').each(function(i){
+    $('.prefix-edit-button').each(function(i){
         $('#edit-prefix-' + i).click( function(){
 
             if($(this).hasClass('fa-pencil-alt')){
@@ -51,6 +51,9 @@ jQuery( document ).ready(function($) {
                 $('#prefix-char-' + i).removeClass('server-settings-input-disabled');
                 $('#prefix-char-' + i).addClass('server-settings-input-enabled');
                 $('#prefix-char-' + i).focus();
+
+                let fldLength= $('#prefix-char-' + i).val().length;
+                $('#prefix-char-' + i)[0].setSelectionRange(fldLength, fldLength);
             }else{
                 $('#prefix-char-' + i).removeClass('server-settings-input-enabled');
                 $('#prefix-char-' + i).addClass('server-settings-input-disabled');
@@ -87,6 +90,9 @@ jQuery( document ).ready(function($) {
                 $('#standard-role-' + i).removeClass('server-settings-input-disabled');
                 $('#standard-role-' + i).addClass('server-settings-input-enabled');
                 $('#standard-role-' + i).focus();
+
+                let fldLength= $('#standard-role-' + i).val().length;
+                $('#standard-role-' + i)[0].setSelectionRange(fldLength, fldLength);
             }else{
                 $('#standard-role-' + i).removeClass('server-settings-input-enabled');
                 $('#standard-role-' + i).addClass('server-settings-input-disabled');
@@ -111,6 +117,44 @@ jQuery( document ).ready(function($) {
         })
     });
 
+    $('.reaction-role-edit-button').each(function(i){
+        $('#edit-reaction-role-' + i).click( function(){
+
+            if($(this).hasClass('fa-pencil-alt')){
+                $(this).removeClass( 'fa-pencil-alt' );
+                $(this).addClass( 'fa-check' );
+
+                $('#reaction-role-' + i).prop('disabled', false);
+                $('#reaction-role-' + i).removeClass('server-settings-input-disabled');
+                $('#reaction-role-' + i).addClass('server-settings-input-enabled');
+                $('#reaction-role-' + i).focus();
+
+                let fldLength= $('#reaction-role-' + i).val().length;
+                $('#reaction-role-' + i)[0].setSelectionRange(fldLength, fldLength);
+            }else{
+                $('#reaction-role-' + i).removeClass('server-settings-input-enabled');
+                $('#reaction-role-' + i).addClass('server-settings-input-disabled');
+
+                $(this).removeClass( 'fa-check' );
+                $(this).addClass( 'fa-pencil-alt' );
+
+                $('#reaction-role-' + i).prop('disabled', true);
+            }
+            
+        });
+
+        $('#colapse-button-header-' + i).click(function(){
+            $('#edit-reaction-role-' + i).removeClass( 'fa-check' );
+            $('#edit-reaction-role-' + i).addClass( 'fa-pencil-alt' );
+
+            $('#reaction-role-' + i).prop('disabled', true);
+        })
+
+        $('#submit-server-settings-' + i).click(function(){
+            $('#reaction-role-' + i).prop('disabled', false);
+        })
+    });
+
     
     $('.instruction-editor').each(function(i){
         $('.instruction-input-' + i).each( function(j){
@@ -126,6 +170,9 @@ jQuery( document ).ready(function($) {
                     $('#instruction-input-' + i + "-" + j).removeClass('server-settings-input-disabled');
                     $('#instruction-input-' + i + "-" + j).addClass('server-settings-input-enabled');
                     $('#instruction-input-' + i + "-" + j).focus();
+
+                    let fldLength= $('#instruction-input-' + i + "-" + j).val().length;
+                    $('#instruction-input-' + i + "-" + j)[0].setSelectionRange(fldLength, fldLength);
                 }else{
                     $('#instruction-input-' + i + "-" + j).removeClass('server-settings-input-enabled');
                     $('#instruction-input-' + i + "-" + j).addClass('server-settings-input-disabled');
@@ -150,4 +197,16 @@ jQuery( document ).ready(function($) {
             });
         });
     });
+
+
+    $('.sound-icon').each(function(i){
+        $("#sound-button-" + i).click(function(){
+            let id = $(this).data("id");
+            $(this).replaceWith('<audio controls class="vip-sound-player"><source src="http://git.jmk.cloud/resources/vips/'+ id +'.wav" type="audio/wav"> Your browser does not support the audio element. </audio>');
+        
+            $('.vip-sound-player').prop("volume", 0.3);
+        });
+    });
+
+    
 });

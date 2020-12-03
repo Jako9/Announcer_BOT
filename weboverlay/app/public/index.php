@@ -1,15 +1,51 @@
 <?php
 
+if(isset($_POST['shutdown'])){
+    $out = [];
+    exec("../../../shutdown.sh", $out);
+}
+
+if(isset($_POST['restart'])){
+    $out = [];
+    exec("../../../restart.sh >/dev/null &", $out);
+    echo print_r($out, true);
+}
+
 
 function printServer(){
     $files = preg_grep('/^([^.])/', scandir('../../../config/guilds'));
     $i = 0;
+
+    $defaultSettings = readFromJSON('../template.json');
+
     foreach($files as $file) {
         if($file !== '.' || $file !== '..'){
 
+            $showSaveSuccess = false;
+            $showResetSuccess = false;
+            $showSaveError = false;
+
             $jObj = readFromJSON($file);
 
+            if(isset($_POST['reset-server-settings-'. $i])){
+                $showResetSuccess = true;
+
+                $pObj = new stdClass();
+
+                $pObj = $jObj;
+
+                $pObj->rolle = $defaultSettings->rolle;
+                $pObj->instructions = $defaultSettings->instructions;
+                $pObj->prefix = $defaultSettings->prefix;
+                $pObj->volume = $defaultSettings->volume;
+                $pObj->standartRole = $defaultSettings->standartRole;
+
+                $jToWrite = json_encode($pObj);
+                file_put_contents('../../../config/guilds/' . $file, $jToWrite);
+            }
+
             if(isset($_POST['submit-server-settings-' . $i])){
+
                 $pObj = new stdClass();
 
                 $pObj = $jObj;
@@ -17,8 +53,10 @@ function printServer(){
                 for($j=0; $j < sizeof($pObj->instructions); $j++){
                     if(isset($_POST['instruction-input-'. $i . "-" . $j])){
                         $r = $_POST['instruction-input-'. $i . "-" . $j];
-                        if(strlen($r) >= 1){
+                        if(strlen($r) >= 1 && !strpos($r, " ") && !in_array($r ,$pObj->instructions)){
                             $pObj->instructions[$j] = $r;
+                        }else{
+                            $showSaveError = true;
                         }
                     } 
                 }
@@ -27,6 +65,8 @@ function printServer(){
                     $val = $_POST['volume-range-'. $i];
                     if($val <= 1 && $val >= 0){
                         $pObj->volume = $val;
+                    }else{
+                        $showSaveError = true;
                     }
                 }
 
@@ -36,12 +76,30 @@ function printServer(){
                     
                     if(strlen($val) == 1){
                         $pObj->prefix = $val;
+                    }else{
+                        $showSaveError = true;
                     }
+                }
+
+                if(isset($_POST['standard-role-'. $i])){
+                    $val = $_POST['standard-role-'. $i];
+                    
+                    $pObj->rolle = $val;
+                }
+
+                if(isset($_POST['reaction-role-'. $i])){
+                    $val = $_POST['reaction-role-'. $i];
+                    
+                    $pObj->standartRole = $val;
                 }
 
                 $jToWrite = json_encode($pObj);
                 file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
+
+                $showSaveSuccess = !$showSaveError;
+            }else{
+                $showSaveSuccess = false;
             }
 
             $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
@@ -51,9 +109,19 @@ function printServer(){
             $j = 0;
             foreach($jObj->instructions as $instruction){
 
-                $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
+                $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
                 //$instructions .= $instruction . "<br>";
                 $j++;
+            }
+
+            $message = "";
+
+            if($showSaveSuccess){
+                $message = '<div class="alert alert-success save-message" role="alert">Speichern erfolgreich!</div>';
+            }elseif($showResetSuccess){
+                $message = '<div class="alert alert-success save-message" role="alert">Zurücksetzen erfolgreich!</div>';
+            }elseif($showSaveError){
+                $message = '<div class="alert alert-danger save-message" role="alert">Die Änderungen konnten nicht gespeichert werden! Versuchen sie es erneut</div>';
             }
 
             echo('
@@ -65,6 +133,7 @@ function printServer(){
                                 '. $jObj->name. '
                             </button>
                         </h2>
+                        '. $message .'
                         </div>
 
                         <div id="collapse-'. $i .'" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -76,6 +145,13 @@ function printServer(){
                                         <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->rolle .'" disabled>
                                     </div>
                                 <i class="role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-role-'. $i .'"></i>
+                                </div>
+                                <div class="server-settings server-reaction-role">
+                                    <h3 class="setting-title">Reaktion<br>Rolle</h3>
+                                    <div class="setting-ist">
+                                        <input id="reaction-role-'. $i .'" name="reaction-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->standartRole .'" disabled>
+                                    </div>
+                                <i class="reaction-role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-reaction-role-'. $i .'"></i>
                                 </div>
                                 <div class="server-settings server-instructions">
                                     <h3 class="setting-title">Instruktionen</h3>
@@ -95,23 +171,84 @@ function printServer(){
                                 <div class="server-settings server-volume">
                                     <h3 class="setting-title">Volume</h3>
                                     <div class="setting-ist">
-                                        <input type="range" id="volume-range-'. $i .'" name="volume-range-'. $i .'" min="0" max="1" value="' . $jObj->volume . '" step="0.1" disabled>
+                                        <input class="volume-range" type="range" id="volume-range-'. $i .'" name="volume-range-'. $i .'" min="0" max="1" value="' . $jObj->volume . '" step="0.1" disabled>
                                         <div id="range-val-'. $i .'" class="range-val"></div>
                                     </div>
                                     <i class="volume-edit-button fas fa-pencil-alt" id="edit-volume-'. $i .'"></i>
                                 </div>
                                 <input type="submit" id="submit-server-settings-'. $i .'" name="submit-server-settings-'. $i .'" class="btn btn-success" value="Speichern">
+                                <button type="button" class="btn btn-light reset-button" data-toggle="modal" data-target="#staticBackdrop-'. $i .'">Reset</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                
+                <div class="modal fade" id="staticBackdrop-'. $i .'" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel-'. $i .'">Zurücksetzen</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Sollen alle Einstellungen des Servers zurückgesetzt werden? Sie können danach nicht wiederhergestellt werden!<br><br>Der Bot muss neugestartet werden, damit Änderungen sichtbar werden!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                            <input type="submit" class="btn btn-danger" id="reset-server-settings-'. $i .'" name="reset-server-settings-'. $i .'"  value="Fortfahren">
+                        </div>
+                        </div>
+                    </div>
+                </div>
                 
         ');
         $i++;
         }
     }
+}
+
+
+function printVips(){
+    $i = 0;
+
+    $vip_file = readFromJSON('../vips.json');
+    $vips = $vip_file->vips;
+
+    foreach($vips as $vip) {
+
+        $id = $vip[0];
+        $name = $vip[1];
+        $vipAvatar = $vip[2];
+
+        $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
+
+        echo('
+            <div class="vip-element">
+                <div class="card mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <div class="vip-avatar" style="'. $vipStyle .'">
+
+                        </div>
+                        <div class="vip-name">
+                            '. $name .'
+                        </div>
+                    </div>
+                    <div class="card-body text-dark">
+                    <div class="card-text vip-sound-card">
+                        <i class="fas fa-volume-up sound-icon" id="sound-button-'. $i .'" data-id="'. $id .'"></i>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        ');
+        $i++;
+    }
+}
+
+function printActions(){
+    echo("");
 }
 
 function readFromJSON($file){
@@ -143,7 +280,7 @@ function readFromJSON($file){
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse main-nav" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -161,6 +298,19 @@ function readFromJSON($file){
                 <a class="nav-link" href="#logs">Logs</a>
             </li>
         </ul>
+        <form method="post">
+            <ul class="navbar-nav">
+            <li class="nav-item action-item">
+                <button type="submit" class="action-button" name="restart">
+                    <i class="action-icon fas fa-redo restart"></i>
+                </button>
+            </li>
+            <li class="nav-item action-item">
+                <button type="submit" class="action-button" name="shutdown">
+                    <i class="action-icon fas fa-power-off off"></i>
+                </button>
+            </li>
+        </form>
         </div>
     </nav>
 
@@ -171,22 +321,6 @@ function readFromJSON($file){
         </div>
     </div>
     <!--Ende Home-->
-
-    <!--Beginn Actions-->
-    <div id="actions">
-        <div class="container-fluid">
-        <div class="card">
-            <h5 class="card-header">Actions</h5>
-            <div class="card-body">
-            <h5 class="card-title">Admin-Actions</h5>
-            <div class="card-text action-body">
-                
-            </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!--Ende Actions-->
     
     <!--Beginn Server Abschnitt-->
     <div id="server" class="d-board-card">
@@ -208,6 +342,27 @@ function readFromJSON($file){
         </div>
     </div>
     <!--Ende Server -->
+
+    <!--Beginn VIP Abschnitt-->
+    <div id="vip" class="d-board-card">
+        <div class="container-fluid">
+        <div class="card">
+            <h5 class="card-header">VIPs</h5>
+            <div class="card-body">
+            <div class="card-text server-body">
+            <div class="accordion" id="accordionExample">
+
+                <div class="vip-container">
+                    <?php printVips() ?>
+                </div>
+            
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!--Ende VIP -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
