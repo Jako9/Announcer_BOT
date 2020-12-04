@@ -7,24 +7,9 @@ $shutDownButtonAction = "boot";
 $restartButton = "";
 $statusText = "";
 
-if(isset($_POST['shutdown'])){
-    if(isServerRunning()) {
-        $out = [];
-        exec("../../../shutdown.sh >/dev/null &", $out);
-        header("Refresh:0");
+handleLogReset();
 
-    }else{
-        $out = [];
-        exec("../../../launch.sh >/dev/null &", $out);
-        header("Refresh:0");
-    }
-}
-
-if(isset($_POST['restart'])){
-    $out = [];
-    exec("../../../restart.sh >/dev/null &", $out);
-    header("Refresh:0");
-}
+handleNodeServerActions();
 
 if(isServerRunning()) {
     $shutdownButtonColor = $red;
@@ -33,14 +18,14 @@ if(isServerRunning()) {
     $statusText = "Online";
     
     $shutDownButton = '<button type="Button" class="action-button" name="shutdown" data-toggle="modal" data-target="#staticBackdrop-shutdown">';
-    $restartButton = '<button type="Button" class="action-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart"><i class="action-icon fas fa-redo restart"></i></button> ';
+    $restartButton = '<button type="Button" class="action-button restart-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart"><i class="action-icon fas fa-redo restart"></i></button> ';
 }else{
     $shutdownButtonColor = $green;
     $statusColor = $red;
     $shutDownButtonAction = "shutdown";
     
     $shutDownButton = '<button type="submit" class="action-button" name="shutdown">';
-    $restartButton = '<button type="Button" class="action-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart" hidden><i class="action-icon fas fa-redo restart"></i></button>';
+    $restartButton = '<button type="Button" class="action-button restart-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart" hidden><i class="action-icon fas fa-redo restart"></i></button>';
     $statusText = "Offline";
 }
 
@@ -280,6 +265,36 @@ function printVips(){
     }
 }
 
+function readLogFile($file){
+    $logPath = '../../../logs/' . $file;
+
+    if(file_exists($logPath)){
+        $logContent = '';
+
+        $handle = @fopen($logPath, "r");
+        if ($handle) {
+            while (($buffer = fgets($handle, 4096)) !== false) {
+                $logContent .= $buffer . "<br>";
+            }
+            if (!feof($handle)) {
+                echo "Fehler: unerwarteter fgets() Fehlschlag\n";
+            }
+            fclose($handle);
+        }
+
+        return $logContent;
+    }else{
+        return "";
+    }
+}
+
+function clearLogFile($file){
+    $logPath = '../../../logs/' . $file;
+    file_put_contents($logPath, "");
+}
+
+
+
 function printActions(){
     echo("");
 }
@@ -292,6 +307,41 @@ function readFromJSON($file){
 function isServerRunning(){
     exec("pgrep node", $pids);
     return !(empty($pids));
+}
+
+function handleNodeServerActions(){
+    if(isset($_POST['shutdown'])){
+        if(isServerRunning()) {
+            $out = [];
+            exec("../../../shutdown.sh >/dev/null &", $out);
+            header("Refresh:0");
+    
+        }else{
+            $out = [];
+            exec("../../../launch.sh >/dev/null &", $out);
+            header("Refresh:0");
+        }
+    }
+    
+    if(isset($_POST['restart'])){
+        $out = [];
+        exec("../../../restart.sh >/dev/null &", $out);
+        header("Refresh:0");
+    }
+}
+
+function handleLogReset(){
+    if(isset($_POST['reset-error-log'])){
+        clearLogFile('error_log.log');
+    }
+
+    if(isset($_POST['reset-boot-log'])){
+        clearLogFile('boot_log.log');
+    }
+
+    if(isset($_POST['reset-debug-log'])){
+        clearLogFile('debug.log');
+    }
 }
 
 
@@ -307,6 +357,7 @@ function isServerRunning(){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <link rel="stylesheet" href="overlay.css">
@@ -325,13 +376,10 @@ function isServerRunning(){
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Actions</a>
+                <a class="nav-link" href="#server">Server</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Server</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#logs">VIPs</a>
+                <a class="nav-link" href="#vips">VIPs</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#logs">Logs</a>
@@ -445,7 +493,7 @@ function isServerRunning(){
     <!--Ende Server -->
 
     <!--Beginn VIP Abschnitt-->
-    <div id="vip" class="d-board-card">
+    <div id="vips" class="d-board-card">
         <div class="container-fluid">
         <div class="card">
             <h5 class="card-header">VIPs</h5>
@@ -465,11 +513,66 @@ function isServerRunning(){
     </div>
     <!--Ende VIP -->
 
+    <!--Beginn Server Abschnitt-->
+    <div id="logs" class="d-board-card">
+        <div class="container-fluid">
+        <div class="card">
+            <h5 class="card-header">Logs</h5>
+            <div class="card-body">
+            <div class="card-text server-body">
+            <h5 class="log-title">Error Log</h5>
+            <div class="accordion accordion-log" id="accordionExample">
+
+                <div class="log-viewer">
+                    <?php echo readLogFile("error_log.log") ?>
+                </div>
+                <div class="log-actions">
+                    <form method="post">
+                        <button type="submit" class="btn btn-secondary reload-log-button" id="reload-error">Aktualisieren</button>
+                        <button type="submit" class="btn btn-secondary" id="reset-error-log" name="reset-error-log">Log zurücksetzen</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <h5 class="log-title">Boot Log</h5>
+            <div class="accordion accordion-log" id="accordionExample">
+
+                <div class="log-viewer">
+                    <?php echo readLogFile("boot_log.log") ?>
+                </div>
+                <div class="log-actions">
+                    <form method="post">
+                        <button type="submit" class="btn btn-secondary reload-log-button" id="reload-boot">Aktualisieren</button>
+                        <button type="submit" class="btn btn-secondary" id="reset-boot-log" name="reset-boot-log">Log zurücksetzen</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <h5 class="log-title">Debug Log</h5>
+            <div class="accordion accordion-log" id="accordionExample">
+
+                <div class="log-viewer" id="debug-log-viewer">
+                    <?php echo readLogFile("debug.log") ?>
+                </div>
+                <div class="log-actions">
+                    <form method="post">
+                        <button type="submit" class="btn btn-secondary reload-log-button" id="reload-debug" >Aktualisieren</button>
+                        <button type="submit" class="btn btn-secondary" id="reset-debug-log" name="reset-debug-log">Log zurücksetzen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    <!--Ende Server -->
     
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
     <script type='text/javascript' src="script.js"></script>
     </body>
     </html>

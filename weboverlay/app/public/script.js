@@ -1,4 +1,14 @@
 jQuery( document ).ready(function($) {
+
+    let lastScrollTop = Cookies.get('reload-log-position');
+    if (lastScrollTop) {
+        $(window).scrollTop(lastScrollTop);
+        Cookies.remove('reload-log-position');
+    }
+
+
+
+
     $('.volume-edit-button').each(function(i){
         $('#range-val-' + i).text(
             $('#volume-range-' + i).val() * 100 + "%"
@@ -209,4 +219,18 @@ jQuery( document ).ready(function($) {
     });
 
     
+    $('#reload-debug').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
+
+    $('#reload-boot').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
+
+    $('#reload-error').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
 });

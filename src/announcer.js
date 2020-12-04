@@ -6,6 +6,7 @@ const roleManager = require('./includes/roleManager.js');
 const lockManager = require('./includes/lockManager.js');
 const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
+const logManager = require('./includes/logManager.js');
 
 //Initilizing BOT
 const Discord = require('discord.js');
@@ -14,6 +15,8 @@ const KEY = process.argv.slice(2)[0];
 
 //BOT booten
 client.login(KEY);
+
+logManager.writeDebugLog("c====3");
 
 //Set Status
 client.on('ready', () =>{
