@@ -199,3 +199,27 @@ body {
 .action-button:focus{
     outline:none;
 }
+
+.home-card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home-header-status{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.home-status{
+    width: 12.5px;
+    height: 12.5px;
+
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.home-status-text{
+    margin-bottom: 0px !important;
+}

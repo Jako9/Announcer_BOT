@@ -1,14 +1,47 @@
 <?php
+$shutdownButtonColor = "";
+$statusColor = "";
+$red = "#ff3a30";
+$green = "#34c74f";
+$shutDownButtonAction = "boot";
+$restartButton = "";
+$statusText = "";
 
 if(isset($_POST['shutdown'])){
-    $out = [];
-    exec("../../../shutdown.sh", $out);
+    if(isServerRunning()) {
+        $out = [];
+        exec("../../../shutdown.sh >/dev/null &", $out);
+        header("Refresh:0");
+
+    }else{
+        $out = [];
+        exec("../../../launch.sh >/dev/null &", $out);
+        header("Refresh:0");
+    }
 }
 
 if(isset($_POST['restart'])){
     $out = [];
     exec("../../../restart.sh >/dev/null &", $out);
-    echo print_r($out, true);
+    header("Refresh:0");
+}
+
+if(isServerRunning()) {
+    $shutdownButtonColor = $red;
+    $statusColor = $green;
+    $shutDownButtonAction = "boot";
+    $statusText = "Online";
+    
+    $shutDownButton = '<button type="Button" class="action-button" name="shutdown" data-toggle="modal" data-target="#staticBackdrop-shutdown">';
+    $restartButton = '<button type="Button" class="action-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart"><i class="action-icon fas fa-redo restart"></i></button> ';
+}else{
+    $shutdownButtonColor = $green;
+    $statusColor = $red;
+    $shutDownButtonAction = "shutdown";
+    
+    $shutDownButton = '<button type="submit" class="action-button" name="shutdown">';
+    $restartButton = '<button type="Button" class="action-button" name="restart" data-toggle="modal" data-target="#staticBackdrop-restart" hidden><i class="action-icon fas fa-redo restart"></i></button>';
+    $statusText = "Offline";
 }
 
 
@@ -256,6 +289,12 @@ function readFromJSON($file){
     return json_decode($json);
 }
 
+function isServerRunning(){
+    exec("pgrep node", $pids);
+    return !(empty($pids));
+}
+
+
 ?>
 
 
@@ -301,23 +340,85 @@ function readFromJSON($file){
         <form method="post">
             <ul class="navbar-nav">
             <li class="nav-item action-item">
-                <button type="submit" class="action-button" name="restart">
-                    <i class="action-icon fas fa-redo restart"></i>
-                </button>
+                <?php echo $restartButton ?>
             </li>
             <li class="nav-item action-item">
-                <button type="submit" class="action-button" name="shutdown">
-                    <i class="action-icon fas fa-power-off off"></i>
+                <?php echo $shutDownButton ?>
+                    <i class="action-icon fas fa-power-off off" style="color: <?php echo $shutdownButtonColor ?>"></i>
                 </button>
             </li>
-        </form>
+
+            <div class="modal fade" id="staticBackdrop-restart" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel-restart">Neustarten</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Soll der Bot wirklich neugestartet werden?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                    <input type="submit" class="btn btn-danger" id="restart" name="restart"  value="Neustarten">
+                </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="modal fade" id="staticBackdrop-shutdown" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel-shutdown">Herunterfahren</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Soll der Bot wirklich heruntergefahren werden?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                    <input type="submit" class="btn btn-danger" id="shutdown" name="shutdown"  value="Herunterfahren">
+                </div>
+                </div>
+            </form>
+        </div>
+        
         </div>
     </nav>
 
     <!--Beginn Home-->
-    <div id="home">
+    <div id="home" class="d-board-card">
         <div class="container-fluid">
+        <div class="card">
+            <div class="card-header home-card-header">
+                <div class="home-header-text" >
+                    <h5>Home</h5>
+                </div>
+                <div class="home-header-status">
+                    <div class="home-status" style="background-color: <?php echo $statusColor  ?>"></div>
+                    <h6 class="home-status-text"><?php echo $statusText ?></h6>
+                </div>
+            </div>
+            <div class="card-body">
+            <div class="card-text server-body">
+            <div class="accordion" id="accordionExample">
 
+                <div class="stats">
+                
+                </div>
+                <hr>
+                <div class="status">
+                
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
         </div>
     </div>
     <!--Ende Home-->
@@ -363,6 +464,8 @@ function readFromJSON($file){
     </div>
     </div>
     <!--Ende VIP -->
+
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
