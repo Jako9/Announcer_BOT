@@ -59,7 +59,15 @@ module.exports = {
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
           if(isVip(newState.member.id)){
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/vips/"+ newState.member.id + SUFFIX));
+            file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
+
+            rdm = Math.floor(Math.random() * 60) + 1;
+
+            if(rdm == 60){
+              file = PATH + "/resources/default/rickroll" + SUFFIX;
+            }
+
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file ));
             return;
           }
 

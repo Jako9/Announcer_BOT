@@ -268,3 +268,14 @@ body {
 .restart:hover{
     color: #171717;
 }
+
+#login{
+    width: 30%;
+}
+
+.login-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

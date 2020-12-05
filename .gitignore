@@ -9,6 +9,8 @@
 *.btm
 *.log
 
+*/webConfig.json
+
 **/weboverlay/conf
 **/weboverlay/logs
 
