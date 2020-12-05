@@ -14,14 +14,15 @@ if(isset($_POST['login'])){
 
         $confUser = getUserfromConfig();
 
-        $validPassword = ($confUser->password == $password); //Hier noch richtiges hashing implementieren
+        $validPassword = ($confUser->password == md5($password)); //Hier noch richtiges hashing implementieren
         $validUser = ($confUser->user == $user);
 
+
         if($validPassword && $validUser){
-            $_SESSION["loggedin"] = true;
-            $_SESSION["username"] = $username;                            
+             $_SESSION["loggedin"] = true;
+             $_SESSION["username"] = $username;                            
             
-            header("location: index.php");
+             header("location: index.php");
         }
     }
 }

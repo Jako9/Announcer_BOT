@@ -61,9 +61,9 @@ module.exports = {
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
             file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
 
-            rdm = Math.floor(Math.random() * 60) + 1;
+            rdm = Math.floor(Math.random() * 61) + 1; //Never gonna give you up, never gonna let you down.....
 
-            if(rdm == 60){
+            if(rdm == 5){
               file = PATH + "/resources/default/rickroll" + SUFFIX;
             }
 
