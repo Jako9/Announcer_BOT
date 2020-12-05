@@ -1,10 +1,10 @@
 const fs = require('fs');
-const path = "/home/max/Dokumente/Bastelordner/Announcer_BOT/logs/";
+const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT/";
 
 module.exports = {
     writeBootLog: function(message) {
         
-        bootLogPath = path + "boot_log.log"
+        bootLogPath = PATH + "logs/boot_log.log"
 
         try {
             date = new Date().toUTCString();
@@ -18,7 +18,7 @@ module.exports = {
 
     writeDebugLog: function(message) {
         
-        debugLogPath = path + "debug.log"
+        debugLogPath = PATH + "logs/debug.log"
 
         try {
             date = new Date().toUTCString();
