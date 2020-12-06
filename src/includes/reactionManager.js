@@ -10,8 +10,13 @@ module.exports = {
     let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
     if(!role || !member) return;
 
-    let defaultRole = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(id));
-    member.roles.add([role.id,'701520005942083635']);
+    let defaultRole = reaction.message.guild.roles.cache.find(role => role.name == serverManager.getStandartRole(id));
+    if(defaultRole){
+      member.roles.add([role.id,defaultRole.id]);
+    }
+    else{
+      member.roles.add(role.id);
+    }
   },
 
   removeReaction: function(reaction, user){
@@ -45,10 +50,13 @@ module.exports = {
     message.reply('Reaktion[en] hinzugefügt.');
   },
 
-  setupListener: function(message, client){
+  setupListener: function(message, client, prefix, instructions){
     let id = message.guild.id;
-    let param = message.content.split(' ');
-    let channel = message.guild.channels.cache.find(channel => channel.id == param[1]);
+    if(message.content.split(' ').length < 2 || message.mentions.channels.size != 1){
+      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[11][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+      return;
+    }
+    let channel = message.mentions.channels.find(channel => true);
     if(!channel) {
       message.reply('Der Channel konnte nicht gefunden werden');
       return;

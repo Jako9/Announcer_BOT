@@ -6,14 +6,14 @@
         " to see the volume at which joinsounds are being played (Between 0% , 100%)",
         " to get some help ;)",
         " set the command COMMAND_ID to be NEW_COMMAND. \n(where COMMAND_ID is an Integer and NEW_COMMAND is the new alias)\n-> Syntax: set COMMAND_ID NEW_COMMAND",
-        " to change the role the but listens to (for joining purposes)\n-> Syntax: changeRole ROLENAME",
+        " to change the role the but listens to (for joining purposes)\n-> Syntax: changeRole ROLE_MENTION",
         " to see the role the bot listens to (for joining purposes).",
         " to change the prefix.\n-> Syntax: setPrefix PREFIX",
         " to lock your current channel (Only one at the same time).",
         " to open the currently locked channel.",
-        " to set the channel whose messages are being reacted and listened to by the bot. \n Syntax: setChannel [CHANNEL_ID]",
+        " to set the channel whose messages are being reacted and listened to by the bot. \n Syntax: setChannel CHANNEL_MENTION",
         " Adding Reactions to the already set Channel messages. \n  Syntax: addReaction [LIST OF REACTION_NAME]",
-        " to change the standart role that is given with every reaction role. \n Syntax changeReactionRole ROLENAME",
+        " to change the standart role that is given with every reaction role. \n Syntax changeReactionRole ROLE_MENTION",
         " to show the standart role that is given with every reaction role."
     ]
 }

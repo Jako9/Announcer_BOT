@@ -12,6 +12,8 @@ const logManager = require('./includes/logManager.js');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const KEY = process.argv.slice(2)[0];
+const JOIN = false;
+const REACTION = true;
 
 //BOT booten
 client.login(KEY);
@@ -107,7 +109,7 @@ client.on('message', message => {
 
   // Aktive Rolle ändern
   else if (message.content.startsWith(prefix + instructions[6][0]  + ' ')) {
-    roleManager.changeRole(message, prefix, instructions);
+    roleManager.changeRole(message, JOIN, prefix, instructions);
   }
 
   // Aktive Rolle anzeigen
@@ -133,7 +135,7 @@ client.on('message', message => {
 
   //Reaction Listener
   else if(message.content.startsWith(prefix + instructions[11][0])){
-    reactionManager.setupListener(message, client);
+    reactionManager.setupListener(message, client, prefix, instructions);
   }
 
   //Reaction Emojis
@@ -143,6 +145,7 @@ client.on('message', message => {
 
   //change Reaction Role
   else if(message.content.startsWith(prefix + instructions[13][0])){
+    roleManager.changeRole(message, REACTION, prefix, instructions);
   }
 
   //show Reaction role
@@ -152,6 +155,6 @@ client.on('message', message => {
 
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
-    message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[2][0] + '\' für eine Liste aller Befehle!');
+    message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[4][0] + '\' für eine Liste aller Befehle!');
   }
 });
