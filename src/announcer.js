@@ -16,8 +16,6 @@ const KEY = process.argv.slice(2)[0];
 //BOT booten
 client.login(KEY);
 
-logManager.writeDebugLog("c====3");
-
 //Set Status
 client.on('ready', () =>{
   //Fetch all existing Servers and their settings

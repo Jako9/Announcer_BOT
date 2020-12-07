@@ -1,5 +1,7 @@
 const jsonParser = require('./jsonParser.js');
 const serverManager = require('./serverManager.js');
+const logManager = require('./logManager.js');
+const statisticsManager = require('./statisticsManager.js');
 
 //Sound Files
 const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
@@ -21,8 +23,12 @@ function isVip(userID){
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
     const dispatcher = connection.play(file);
+    statisticsManager.joined();
     dispatcher.setVolume(serverManager.getVolume(vc.guild.id));
-    dispatcher.on("finish", end => leave(vc));
+    dispatcher.on("finish", end => {
+      statisticsManager.addToPlaytime(dispatcher.streamTime);
+      leave(vc);
+    });
 }
 
 // Bot Server verlassen
