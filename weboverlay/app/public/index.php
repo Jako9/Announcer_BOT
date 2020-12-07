@@ -380,6 +380,11 @@ function getStatistics(){
         <h3 class="stat-value">' . $stats->timesJoined . '</h3>
         <p class="stat-description">Anzahl der Beitritte über alle Server</p>
     </div>
+    <div class="timesRickrolled stat-object">
+        <h3 class="stat-title">Rick-Rolls</h3>
+        <h3 class="stat-value">' . $stats->timesRickroll . '</h3>
+        <p class="stat-description">Wie oft beim Joinen Never gonna give you Up abgespielt wurde.</p>
+    </div>
     ');
 }
 

@@ -1,5 +1,11 @@
 const serverManager = require('./serverManager.js');
 
+function contains(arr, word){
+  for(let i = 0; i < arr.length; i++){
+    if(arr[i][0] == word) return true;
+  }
+  return false;
+}
 module.exports = {
 
   //Create a list of all commands and their usage
@@ -18,7 +24,9 @@ module.exports = {
     var msg = message.content.split(' ');
     // Syntax für 'set' Befehl ist nicht korrekt
     if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length)
-      return 'Ungültige Eingabe für \'' + prefix + instructions[3][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.';
+      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.';
+
+    if(contains(instructions, msg[2])) return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
 
     var oldBefehl = instructions[msg[1]][0];
     instructions[msg[1]][0] = msg[2];
@@ -29,8 +37,8 @@ module.exports = {
 
   changePrefix: function (message, prefix, instructions){
     var param = message.content.split(' ');
-    if(param.length != 2){
-      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[7][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
+    if(param.length != 2 || param[1].length != 1){
+      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
       return null;
     }
     message.reply('Der neue Präfix wurde erfolgreich auf \'' + param[1] + '\' gesetzt');
