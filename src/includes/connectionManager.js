@@ -21,6 +21,10 @@ function isVip(userID){
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
+    rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
+    if(rdm == 5){
+      file = PATH + "/resources/default/rickroll" + SUFFIX;
+    }
     const dispatcher = connection.play(file);
     dispatcher.setVolume(serverManager.getVolume(vc.guild.id));
     dispatcher.on("finish", end => leave(vc));
@@ -62,12 +66,6 @@ module.exports = {
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
             file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
 
-            rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
-
-            if(rdm == 5){
-              file = PATH + "/resources/default/rickroll" + SUFFIX;
-            }
-
             newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file ));
             return;
           }
@@ -83,12 +81,6 @@ module.exports = {
           //Bot soll joinen
           serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
 
-          rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
-
-          if(rdm == 5){
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/rickroll" + SUFFIX));
-            return;
-          }
           newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
           return;
         }
