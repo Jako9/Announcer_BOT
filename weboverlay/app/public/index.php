@@ -352,6 +352,37 @@ function handleLogReset(){
 }
 
 
+function getStatistics(){
+    $json = file_get_contents('../../../config/statistics/statistics.json');
+    $stats = json_decode($json);
+
+    $timeInMilliSeconds = $stats->totalPlaytime;
+
+    $rest = ($timeInMilliSeconds % (1000*60*60*24));
+    $timeInDays = floor(($timeInMilliSeconds / (1000*60*60*24)));
+
+    $daysString = "";
+
+    if($timeInDays == 1){
+        $daysString = " Tag ";
+    }else{
+        $daysString = " Tage ";
+    }
+
+    echo ('
+    <div class="totalPlayTime stat-object">
+        <h3 class="stat-title">Gesamtspielzeit</h3>
+        <h3 class="stat-value">' . $timeInDays . $daysString . gmdate("H:i:s", $rest) . '</h3>
+        <p class="stat-description">Die Gesamte Zeit, die der Bot mit abspielen von Sounddateien beschäftigt war</p>
+    </div>
+    <div class="totalTimesJoined stat-object">
+        <h3 class="stat-title">Serverbeitritte</h3>
+        <h3 class="stat-value">' . $stats->timesJoined . '</h3>
+        <p class="stat-description">Anzahl der Beitritte über alle Server</p>
+    </div>
+    ');
+}
+
 ?>
 
 
@@ -464,13 +495,12 @@ function handleLogReset(){
             <div class="card-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
-
+                
                 <div class="stats">
-                
-                </div>
-                <hr>
-                <div class="status">
-                
+                    <h4 class="stats-headline">Statistik</h4>
+                    <div class="stats-values">
+                        <?php getStatistics() ?>
+                    </div>
                 </div>
             </div>
         </div>

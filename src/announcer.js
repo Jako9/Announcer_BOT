@@ -18,8 +18,6 @@ const REACTION = true;
 //BOT booten
 client.login(KEY);
 
-logManager.writeDebugLog("c====3");
-
 //Set Status
 client.on('ready', () =>{
   //Fetch all existing Servers and their settings

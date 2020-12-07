@@ -279,3 +279,47 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stats-values{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.stat-object{
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 30%;
+}
+
+.stat-title{
+    font-weight: 700;
+}
+
+.stat-description{
+    width: 50%;
+}
+
+.stats-headline{
+    margin-bottom: 50px;
+}
+
+.stat-value{
+    font-family: 'Roboto Mono', monospace;
+}
+
+.stat-value{
+    margin-bottom: 20px;
+}
