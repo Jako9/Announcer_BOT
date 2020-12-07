@@ -18,7 +18,7 @@ module.exports = {
     var msg = message.content.split(' ');
     // Syntax für 'set' Befehl ist nicht korrekt
     if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length)
-      return 'Ungültige Eingabe für \'' + prefix + instructions[3][0] + '\', schreibe \'' + prefix +  instructions[2][0] + '\' für korrekte Syntax.';
+      return 'Ungültige Eingabe für \'' + prefix + instructions[3][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.';
 
     var oldBefehl = instructions[msg[1]][0];
     instructions[msg[1]][0] = msg[2];
@@ -30,7 +30,7 @@ module.exports = {
   changePrefix: function (message, prefix, instructions){
     var param = message.content.split(' ');
     if(param.length != 2){
-      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[7][0] + '\', schreibe \'' + prefix + instructions[2][0] + '\' für korrekte Syntax.');
+      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[7][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
       return null;
     }
     message.reply('Der neue Präfix wurde erfolgreich auf \'' + param[1] + '\' gesetzt');

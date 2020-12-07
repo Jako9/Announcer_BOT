@@ -7,6 +7,7 @@ const statisticsManager = require('./statisticsManager.js');
 const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
 const SUFFIX = '.wav';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
+const PROBAILITY = 65;
 
 var vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
 
@@ -60,14 +61,14 @@ module.exports = {
         if((oldUserChannel == undefined) && (newUserChannel != undefined)){
 
           //Antispamschutz => Bot ist gerade erst gejoint
-          if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
+          //if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
 
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
           if(isVip(newState.member.id)){
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
             file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
 
-            rdm = Math.floor(Math.random() * 61) + 1; //Never gonna give you up, never gonna let you down.....
+            rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
 
             if(rdm == 5){
               file = PATH + "/resources/default/rickroll" + SUFFIX;
@@ -87,6 +88,13 @@ module.exports = {
 
           //Bot soll joinen
           serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+
+          rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
+
+          if(rdm == 5){
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/rickroll" + SUFFIX));
+            return;
+          }
           newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
           return;
         }

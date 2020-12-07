@@ -1,25 +1,32 @@
 const serverManager = require('./serverManager.js');
 
 module.exports = {
-  changeRole: function(message, prefix, instructions){
+  changeRole: function(message, reaction, prefix, instructions){
     //Falsche Syntax
-    if(message.content.split(' ').length < 2){
-      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[4][0] + '\', schreibe \'' + prefix +  instructions[2][0] + '\' für korrekte Syntax.');
+    if(message.content.split(' ').length < 2 || message.mentions.roles.size != 1){
+      if(reaction){
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[13][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+      }
+      else{
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[6][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+      }
       return;
     }
-    let rollenName = '';
-    //Falls Rollename SPACE enthält
-    let param = message.content.split(' ');
-    for(var i = 1; i < param.length; i++){
-      rollenName += param[i]   + ' ';
-    }
-    rollenName = rollenName.substring(0, rollenName.length - 1);
+
+    let rolle = message.mentions.roles.find(role => true);
+
+    let rollenName = rolle.name;
     //Die Rolle existiert nicht
     if(message.guild.roles.cache.find(role => role.name === rollenName) == null){
       message.reply('Die Rolle \'' + rollenName + '\' existiert nicht!');
       return;
     }
-    serverManager.setRolle(message.guild.id, rollenName);
+    if(reaction){
+      serverManager.setStandartRole(message.guild.id, rollenName);
+    }
+    else{
+      serverManager.setRolle(message.guild.id, rollenName);
+    }
     message.reply('Die Rolle \'' + rollenName + '\' wurde erfolgreich hinzugefügt');
   },
 
