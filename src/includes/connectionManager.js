@@ -25,6 +25,7 @@ function isVip(userID){
 function bot_join(vc, connection, file){
     rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
     if(rdm == 5){
+      statisticsManager.rickroll();
       file = PATH + "/resources/default/rickroll" + SUFFIX;
     }
     const dispatcher = connection.play(file);

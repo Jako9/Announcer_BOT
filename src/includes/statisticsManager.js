@@ -9,8 +9,14 @@ module.exports = {
     },
 
     joined: function(){
-        let statistic = jsonParser.read(PATH + "/config/statistics/statistics.json");
-        statistic.timesJoined = statistic.timesJoined + 1;
-        jsonParser.write(PATH + "/config/statistics/statistics.json", statistic);
+      let statistic = jsonParser.read(PATH + "/config/statistics/statistics.json");
+      statistic.timesJoined = statistic.timesJoined + 1;
+      jsonParser.write(PATH + "/config/statistics/statistics.json", statistic);
+    }
+
+    rickroll: function(){
+      let statistic = jsonParser.read(PATH + "/config/statistics/statistics.json");
+      statistic.timesRickroll = statistic.timesRickroll + 1;
+      jsonParser.write(PATH + "/config/statistics/statistics.json", statistic);
     }
 }
