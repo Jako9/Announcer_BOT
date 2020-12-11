@@ -86,7 +86,7 @@
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
