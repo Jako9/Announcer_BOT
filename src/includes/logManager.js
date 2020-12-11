@@ -16,13 +16,14 @@ module.exports = {
         }
     },
 
+
     writeDebugLog: function(message) {
 
         debugLogPath = PATH + "/logs/debug.log"
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(debugLogPath, "<span style='color:#BF616A'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(debugLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n", (err) => {
                 if (err) throw err;
             });
         } catch(err) {
@@ -36,7 +37,7 @@ module.exports = {
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(errorLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(errorLogPath, "<span style='color:#BF616A;'>[" + date + "]</span> " + message + "\n", (err) => {
                 if (err) throw err;
             });
         } catch(err) {

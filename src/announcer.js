@@ -30,12 +30,12 @@ const REACTION = true;
 logManager.writeBootLog("Logge den Bot ein...");
 //BOT booten
 client.login(KEY);
-logManager.writeBootLog("[SUCCESS] Login erfolgreich.");
+logManager.writeBootLog("<span style='color:#22c722;'>[SUCCESS]</span> Login erfolgreich.");
 
 logManager.writeBootLog("Warte auf Readyness des Bots...");
 //Set Status
 client.on('ready', () =>{
-  logManager.writeBootLog("[SUCCESS] Bot bereit. Beginne Systemprozesse");
+  logManager.writeBootLog("<span style='color:#22c722;'>[SUCCESS]</span> Bot bereit. Beginne Systemprozesse");
   //Fetch all existing Servers and their settings
   logManager.writeBootLog("Beginne mit dem Einlesen der Server...");
   serverManager.readInServers(client);
