@@ -10,7 +10,7 @@ module.exports = {
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
     if(!role || !member) {
-      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Die Rolle oder der Nutzer existieren nicht).");
+      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Die Rolle oder der Nutzer existieren nicht).");
       return;
     }
 
@@ -34,7 +34,7 @@ module.exports = {
     let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
 
     if(!role || !member){
-      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
+      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
       return;
     }
 
@@ -46,14 +46,14 @@ module.exports = {
   addReactor: function(message){
     let id = message.guild.id;
     if(serverManager.getChannelReact(message.guild) == null){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Reaktion konnte nicht hinzugefügt werden (Es gibt keinen gültigen Channel).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Reaktion konnte nicht hinzugefügt werden (Es gibt keinen gültigen Channel).");
       message.reply('Du musst erst einen Channel auswählen.');
       return;
     }
     let param = message.content.split(' ');
     //Keine Nachricht zum reagieren
     if(!serverManager.getReactionMessage(id)){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Es gibt keine gültige Nachricht).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Es gibt keine gültige Nachricht).");
       return;
     }
 
@@ -68,13 +68,13 @@ module.exports = {
   setupListener: function(message, client, prefix, instructions){
     let id = message.guild.id;
     if(message.content.split(' ').length < 2 || message.mentions.channels.size != 1){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Fehlerhafte Argumente).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Fehlerhafte Argumente).");
       message.reply('Ungültige Eingabe für \'' + prefix +  instructions[11][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
       return;
     }
     let channel = message.mentions.channels.find(channel => true);
     if(!channel) {
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Der Channel konnte nicht hinzugefügt werden).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Der Channel konnte nicht hinzugefügt werden).");
       message.reply('Der Channel konnte nicht gefunden werden');
       return;
     }

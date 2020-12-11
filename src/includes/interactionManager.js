@@ -30,7 +30,7 @@ module.exports = {
     }
 
     if(contains(instructions, msg[2])){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Den Namen gibt es schon).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Den Namen gibt es schon).");
       return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
     }
 
@@ -46,7 +46,7 @@ module.exports = {
     var param = message.content.split(' ');
     if(param.length != 2 || param[1].length != 1){
       message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
       return null;
     }
     logManager.writeDebugLog(message.guild.name + ": Der Präfix wurde erfolgreich auf: \"" + param[1] + "\" gesetzt.");
@@ -58,7 +58,7 @@ module.exports = {
     var param = message.content.split(' ');
     //Ungültige Anzahl an Argumenten
     if (param.length != 2){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
       message.reply("Falsche Eingabe..");
       return;
     }
@@ -68,7 +68,7 @@ module.exports = {
       volume = parseInt(param[1]);
       //Nummer nicht im gültigen bereich
       if (volume < 0 || volume > 100){
-        logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
         message.reply("Die Lautstärke muss zwischen 0 und 100 liegen.");
         return;
       }
@@ -78,7 +78,7 @@ module.exports = {
       message.reply("Das Volume wurde auf " + volume +"% gesetzt.");
     }
     catch(e){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
       message.reply("Die Lautstärke muss eine ganze Zahl sein! " + e);
       return;
     }
