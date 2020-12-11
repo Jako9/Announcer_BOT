@@ -23,7 +23,7 @@ module.exports = {
         message.reply('---User worked---');
       }
       catch(e){
-        logManager.writeDebugLog(message.author.username + ": FEHLER: Falsche Parameter für Rollenvergabe.");
+        logManager.writeDebugLog(message.author.username + ": <span style='color:#BF616A;'>FEHLER</span>: Falsche Parameter für Rollenvergabe.");
         message.reply('Error: Wrong parameter');
         return;
       }
@@ -32,7 +32,7 @@ module.exports = {
       message.reply('Role: ' + role.id);
       message.reply('User: ' + user.id);
       if(!guild.me.hasPermission(["MANAGE_ROLES","ADMINISTRATOR"])){
-        logManager.writeDebugLog(message.author.username + ": FEHLER: Der Bot kann keine Rollen auf diesem Server vergeben.");
+        logManager.writeDebugLog(message.author.username + ": <span style='color:#BF616A;'>FEHLER</span>: Der Bot kann keine Rollen auf diesem Server vergeben.");
         message.reply('Error: My permissions on this server are restricted');
         return;
       }
@@ -42,7 +42,7 @@ module.exports = {
           message.reply('Done!');
         })
         .catch(err => {
-          ogManager.writeDebugLog(message.author.username + ": FEHLER: Die Rolle konnte nicht vergeben werden, warscheinlich ist die Rolle des Bots nicht hoch genug in der Hirarchie.");
+          ogManager.writeDebugLog(message.author.username + ": <span style='color:#BF616A;'>FEHLER</span>: Die Rolle konnte nicht vergeben werden, warscheinlich ist die Rolle des Bots nicht hoch genug in der Hirarchie.");
           message.reply(err);
         });
     }
