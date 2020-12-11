@@ -8,7 +8,7 @@ module.exports = {
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(bootLogPath, "<span style='color:##BF616A;'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(bootLogPath, "<span style='color:#BF616A;'>[" + date + "]</span> " + message + "\n", (err) => {
                 if (err) throw err;
             });
         } catch(err) {
