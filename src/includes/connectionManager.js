@@ -45,7 +45,7 @@ function leave(guildFeeder){
   if(guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel != null){
     guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
   }
-  logManager.writeDebugLog(vc.guild.name + ": Bot soll den Server verlassen.");
+  logManager.writeDebugLog(guildFeeder.guild.name + ": Bot soll den Server verlassen.");
 }
 
 function unMergeArrays(a){
