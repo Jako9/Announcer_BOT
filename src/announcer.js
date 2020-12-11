@@ -8,6 +8,17 @@ const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
 
+process.on('uncaughtException', function(err) {
+  logManager.writeErrorLog(err);
+  logManager.writeErrorLog(err.stack);
+  process.exit();
+});
+
+process.on('warning', function(warning) {
+  logManager.writeErrorLog(warning);
+  logManager.writeErrorLog(warning.stack);
+});
+
 //Initilizing BOT
 const Discord = require('discord.js');
 const client = new Discord.Client();
@@ -15,14 +26,23 @@ const KEY = process.argv.slice(2)[0];
 const JOIN = false;
 const REACTION = true;
 
+
+logManager.writeBootLog("Logge den Bot ein...");
 //BOT booten
 client.login(KEY);
+logManager.writeBootLog("[SUCCESS] Login erfolgreich.");
 
+logManager.writeBootLog("Warte auf Readyness des Bots...");
 //Set Status
 client.on('ready', () =>{
+  logManager.writeBootLog("[SUCCESS] Bot bereit. Beginne Systemprozesse");
   //Fetch all existing Servers and their settings
+  logManager.writeBootLog("Beginne mit dem Einlesen der Server...");
   serverManager.readInServers(client);
+  logManager.writeBootLog("[SUCCESS] Lesen erfolgreich.");
+  logManager.writeBootLog("Aktualisiere VIPs...");
   serverManager.updateUser(client);
+  logManager.writeBootLog("[SUCCESS] VIPs aktualisiert.");
   client.user.setActivity("zZZZZ", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
@@ -42,7 +62,7 @@ client.on("guildRemove", guild => {
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
   //Fetch roles in case they are needed (on voiceChannelJoinEvent)
-  var rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
+  let rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
   connectionManager.triggerJoin(oldState,newState,rolle);
 });
 

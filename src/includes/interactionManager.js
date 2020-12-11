@@ -23,14 +23,20 @@ module.exports = {
   changeCommands: function (message, prefix, instructions){
     var msg = message.content.split(' ');
     // Syntax für 'set' Befehl ist nicht korrekt
-    if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length)
+    if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length){
+      logManager.writeDebugLog(message.guild.name + ": FEHLER: Der Befehl konnte nicht umbenannt werden (Fehlerhafte Argumente).");
       return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.';
+    }
 
-    if(contains(instructions, msg[2])) return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
+    if(contains(instructions, msg[2])){
+      logManager.writeDebugLog(message.guild.name + ": FEHLER: Der Befehl konnte nicht umbenannt werden (Den Namen gibt es schon).");
+      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
+    }
 
     var oldBefehl = instructions[msg[1]][0];
     instructions[msg[1]][0] = msg[2];
     serverManager.setInstructions(message.guild.id, instructions);
+    logManager.writeDebugLog(message.guild.name + ": Der Befehl: " + oldBefehl + " wurde zu: " + msg[2] + " umbennant.");
     return 'Der Befehl \'' + prefix + oldBefehl + '\' heißt nun \'' + prefix + msg[2] + '\'';
 
   },
@@ -39,8 +45,10 @@ module.exports = {
     var param = message.content.split(' ');
     if(param.length != 2 || param[1].length != 1){
       message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
+      logManager.writeDebugLog(message.guild.name + ": FEHLER: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
       return null;
     }
+    logManager.writeDebugLog(message.guild.name + ": Der Präfix wurde erfolgreich auf: \"" + param[1] + "\" gesetzt.");
     message.reply('Der neue Präfix wurde erfolgreich auf \'' + param[1] + '\' gesetzt');
     return param[1];
   },
@@ -49,6 +57,7 @@ module.exports = {
     var param = message.content.split(' ');
     //Ungültige Anzahl an Argumenten
     if (param.length != 2){
+      logManager.writeDebugLog(message.guild.name + ": FEHLER: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
       message.reply("Falsche Eingabe..");
       return;
     }
@@ -58,14 +67,17 @@ module.exports = {
       volume = parseInt(param[1]);
       //Nummer nicht im gültigen bereich
       if (volume < 0 || volume > 100){
+        logManager.writeDebugLog(message.guild.name + ": FEHLER: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
         message.reply("Die Lautstärke muss zwischen 0 und 100 liegen.");
         return;
       }
 
       serverManager.setVolume(message.guild.id, volume / 100.0);
+      logManager.writeDebugLog(message.guild.name + ": Die Lautstärke wurde erfolgreich auf " + volume + "% gesetzt.");
       message.reply("Das Volume wurde auf " + volume +"% gesetzt.");
     }
     catch(e){
+      logManager.writeDebugLog(message.guild.name + ": FEHLER: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
       message.reply("Die Lautstärke muss eine ganze Zahl sein! " + e);
       return;
     }

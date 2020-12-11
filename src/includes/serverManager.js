@@ -1,6 +1,7 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const logManager = require('./logManager.js');
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
 
@@ -13,6 +14,7 @@ module.exports = {
       servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
+      logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
       safeServer(guild.id);
     },
 
@@ -21,6 +23,7 @@ module.exports = {
       if(!fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
 
       jsonParser.delete(PATH + "/config/guilds/" + id + ".json");
+      logManager.writeDebugLog(id + ": Der Server wurde erfolgreich entfernt.");
       delete servers.id;
     },
 

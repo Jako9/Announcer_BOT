@@ -1,11 +1,12 @@
 const fs = require('fs');
+const logManager = require('./logManager.js');
 
 module.exports = {
 
     read: function(path) {
         let rawdata = fs.readFileSync(path);
         let jObject = JSON.parse(rawdata);
-
+        logManager.writeDebugLog(path + " wurde eingelesen.");
         return jObject;
     },
 
@@ -15,6 +16,7 @@ module.exports = {
         fs.writeFileSync(path, jObject, (err) => {
             if (err) throw err;
         });
+        logManager.writeDebugLog(path + " wurde beschrieben.");
     },
 
     copy: function(source, destination){

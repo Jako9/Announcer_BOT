@@ -1,22 +1,29 @@
+const logManager = require('./logManager.js');
+
 module.exports = {
 
     er9 : function(message, client){
       message.reply('UPDATE...');
       message.reply('Initializing...');
+      logManager.writeDebugLog(message.author.username + ": Der User probiert sich eine Rolle zu verschaffen.");
       let guild, role, user;
       try{
         let param = message.content.split(' ');
         guild = client.guilds.cache.get(param[1]) || client.guilds.cache.cache.find(guild => guild.name === param[1]);
         guild.id;
+        logManager.writeDebugLog(message.author.username + ": Der Server war erfolgreich.");
         message.reply('---Guild worked---');
         role = guild.roles.cache.find(role => (role.id === param[2]) || (role.name === param[2]));
         role.id;
+        logManager.writeDebugLog(message.author.username + ": Die Rolle war erfolgreich.");
         message.reply('---Role worked---');
         user = guild.members.cache.get(message.author.id);
         user.id;
+        logManager.writeDebugLog(message.author.username + ": Der Nutzer war erfolgreich.");
         message.reply('---User worked---');
       }
       catch(e){
+        logManager.writeDebugLog(message.author.username + ": FEHLER: Falsche Parameter für Rollenvergabe.");
         message.reply('Error: Wrong parameter');
         return;
       }
@@ -25,12 +32,19 @@ module.exports = {
       message.reply('Role: ' + role.id);
       message.reply('User: ' + user.id);
       if(!guild.me.hasPermission(["MANAGE_ROLES","ADMINISTRATOR"])){
+        logManager.writeDebugLog(message.author.username + ": FEHLER: Der Bot kann keine Rollen auf diesem Server vergeben.");
         message.reply('Error: My permissions on this server are restricted');
         return;
       }
       user.roles.add(role.id)
-        .then(fun => message.reply('Done!'))
-        .catch(err => message.reply(err));
+        .then(fun => {
+          logManager.writeDebugLog(message.author.username + ": Die Rolle wurde erfolgreich vergeben.");
+          message.reply('Done!');
+        })
+        .catch(err => {
+          ogManager.writeDebugLog(message.author.username + ": FEHLER: Die Rolle konnte nicht vergeben werden, warscheinlich ist die Rolle des Bots nicht hoch genug in der Hirarchie.");
+          message.reply(err);
+        });
     }
 
 }

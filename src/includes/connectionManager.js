@@ -4,7 +4,7 @@ const logManager = require('./logManager.js');
 const statisticsManager = require('./statisticsManager.js');
 
 //Sound Files
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 const SUFFIX = '.wav';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 const PROBAILITY = 65;
@@ -23,9 +23,11 @@ function isVip(userID){
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
+  logManager.writeDebugLog(vc.guild.name + ": Bot soll dem Server betreten.");
     rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
     if(rdm == 5){
       statisticsManager.rickroll();
+      logManager.writeDebugLog(vc.guild.name + ": Rickroll wurde aktiviert.");
       file = PATH + "/resources/default/rickroll" + SUFFIX;
     }
     const dispatcher = connection.play(file);
@@ -43,6 +45,7 @@ function leave(guildFeeder){
   if(guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel != null){
     guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
   }
+  logManager.writeDebugLog(vc.guild.name + ": Bot soll den Server verlassen.");
 }
 
 function unMergeArrays(a){
