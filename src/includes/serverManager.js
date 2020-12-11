@@ -15,7 +15,7 @@ module.exports = {
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
       logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
-      safeServer(guild.id);
+      saveServer(guild.id);
     },
 
     removeServer: function(id) {
