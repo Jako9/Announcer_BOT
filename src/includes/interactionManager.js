@@ -1,4 +1,5 @@
 const serverManager = require('./serverManager.js');
+const logManager = require('./logManager.js');
 
 function contains(arr, word){
   for(let i = 0; i < arr.length; i++){
