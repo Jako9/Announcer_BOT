@@ -37,8 +37,8 @@
 
     $timeInMilliSeconds = $stats->totalPlaytime;
 
-    $rest = ($timeInMilliSeconds % (1000*60*60*24));
-    $timeInDays = floor(($timeInMilliSeconds / (1000*60*60*24)));
+    $rest = ($timeInMilliSeconds % (60*60*24));
+    $timeInDays = floor(($timeInMilliSeconds / (60*60*24)));
 
     $daysString = "";
 

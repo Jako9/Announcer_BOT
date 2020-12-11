@@ -224,12 +224,27 @@ jQuery( document ).ready(function($) {
         document.location.reload();
     });
 
+    $('#reset-debug-log').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
+
     $('#reload-boot').click(function(){
         Cookies.set('reload-log-position', $(window).scrollTop());
         document.location.reload();
     });
 
+    $('#reset-boot-log').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
+
     $('#reload-error').click(function(){
+        Cookies.set('reload-log-position', $(window).scrollTop());
+        document.location.reload();
+    });
+
+    $('#reset-error-log').click(function(){
         Cookies.set('reload-log-position', $(window).scrollTop());
         document.location.reload();
     });

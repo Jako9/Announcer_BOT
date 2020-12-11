@@ -51,7 +51,7 @@ function getUserfromConfig(){
 
     <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
 
-    <link rel="shortcut icon" type="image/ico" href="./favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
     </head>
     <body>
     
