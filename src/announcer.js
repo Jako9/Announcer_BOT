@@ -39,11 +39,7 @@ client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   logManager.writeBootLog("Beginne mit dem Einlesen der Server...");
   serverManager.readInServers(client);
-  logManager.writeBootLog("[SUCCESS] Lesen erfolgreich.");
-  logManager.writeBootLog("Aktualisiere VIPs...");
-  serverManager.updateUser(client);
-  logManager.writeBootLog("[SUCCESS] VIPs aktualisiert.");
-  client.user.setActivity("zZZZZ", {
+  client.user.setActivity("zZZZZ...", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
