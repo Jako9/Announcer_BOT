@@ -11,7 +11,7 @@ function run() {
 
         //shell_exec("killall node");
         //shell_exec("git pull");
-        shell_exec("./restart.sh");
+        shell_exec("./git.sh");
         
         return true;
     }
