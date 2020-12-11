@@ -248,19 +248,23 @@ module.exports = {
 
     readInServers: function (client){
         fs.readdirSync(PATH + "/config/guilds/").forEach(file => {
-            id = file.split(".")[0];
-            serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
+          try{
+              id = file.split(".")[0];
+              serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
 
-            serverObj["timeLastJoin"] = 0;
-            serverObj["channelSize"] = 0;
-            serverObj["whoLocked"] = "";
-            serverObj["reactionMessage"] = null;
-            fetchMessage(client, id, serverObj.channelReact);
+              serverObj["timeLastJoin"] = 0;
+              serverObj["channelSize"] = 0;
+              serverObj["whoLocked"] = "";
+              serverObj["reactionMessage"] = null;
+              fetchMessage(client, id, serverObj.channelReact);
 
-            servers[id] = serverObj;
-            servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
-            servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
-            saveServer(id);
+              servers[id] = serverObj;
+              servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
+              servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+              saveServer(id);
+            }
+            catch(e){
+            }
         });
     },
 
