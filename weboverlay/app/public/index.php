@@ -408,6 +408,8 @@ function getStatistics(){
     <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
 
     <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
+
+    <title>Announcer_Bot Admin</title>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
