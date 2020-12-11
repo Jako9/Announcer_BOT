@@ -39,7 +39,7 @@ client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   logManager.writeBootLog("Beginne mit dem Einlesen der Server...");
   serverManager.readInServers(client);
-  client.user.setActivity("v1.0", {
+  client.user.setActivity("v1.0 Jetzt live", {
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
