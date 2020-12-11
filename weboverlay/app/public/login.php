@@ -51,7 +51,7 @@ function getUserfromConfig(){
 
     <link rel="stylesheet" href="./overlay.css">
 
-    <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="./favicon.ico"/>
     </head>
     <body>
     
