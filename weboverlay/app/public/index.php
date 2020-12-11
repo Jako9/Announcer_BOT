@@ -569,7 +569,7 @@ function getStatistics(){
             <h5 class="log-title">Error Log</h5>
             <div class="accordion accordion-log" id="accordionExample">
 
-                <div class="log-viewer">
+                <div class="log-viewer" id="error-log-viewer">
                     <?php echo readLogFile("error_log.log") ?>
                 </div>
                 <div class="log-actions">
@@ -583,7 +583,7 @@ function getStatistics(){
             <h5 class="log-title">Boot Log</h5>
             <div class="accordion accordion-log" id="accordionExample">
 
-                <div class="log-viewer">
+                <div class="log-viewer" id="boot-log-viewer">
                     <?php echo readLogFile("boot_log.log") ?>
                 </div>
                 <div class="log-actions">

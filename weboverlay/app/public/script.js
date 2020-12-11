@@ -248,4 +248,8 @@ jQuery( document ).ready(function($) {
         Cookies.set('reload-log-position', $(window).scrollTop());
         document.location.reload();
     });
+
+    $('#debug-log-viewer').scrollTop($('#debug-log-viewer')[0].scrollHeight);
+    $('#boot-log-viewer').scrollTop($('#boot-log-viewer')[0].scrollHeight);
+    $('#error-log-viewer').scrollTop($('#boot-log-viewer')[0].scrollHeight);
 });

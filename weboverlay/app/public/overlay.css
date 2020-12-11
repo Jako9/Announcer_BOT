@@ -94,6 +94,7 @@ body {
 
     font-weight: 700;
     padding-left: 10px;
+    width: 100%;
 }
 
 .server-settings-input-enabled{
@@ -102,6 +103,7 @@ body {
 
     font-weight: 700;
     padding-left: 10px;
+    width: 100%;
 }
 
 .array-box{
@@ -229,13 +231,16 @@ body {
     height: 400px;
     border-width: 2px;
     border-style: solid;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px;
 
     font-size: 10px;
 
     overflow: auto;
     font-family: 'Roboto Mono', monospace;
+
+    background-color: #2E3440;
+    color: #ECEFF4;
 }
 
 .accordion-log{
