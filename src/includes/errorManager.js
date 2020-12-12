@@ -43,7 +43,7 @@ module.exports = {
         })
         .catch(err => {
           logManager.writeDebugLog(message.author.username + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle konnte nicht vergeben werden, warscheinlich ist die Rolle des Bots nicht hoch genug in der Hirarchie.");
-          message.reply(err);
+          message.reply('Die Rolle konnte nicht hinzugefügt werden.');
         });
     }
 
