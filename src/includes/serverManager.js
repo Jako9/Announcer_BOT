@@ -18,12 +18,12 @@ module.exports = {
       saveServer(guild.id);
     },
 
-    removeServer: function(id) {
+    removeServer: function(guild) {
       //Server existiert nicht
-      if(!fs.existsSync(PATH + "/config/guilds/" + id + ".json")) return;
+      if(!fs.existsSync(PATH + "/config/guilds/" + guild.id + ".json")) return;
 
-      jsonParser.delete(PATH + "/config/guilds/" + id + ".json");
-      logManager.writeDebugLog(id + ": Der Server wurde erfolgreich entfernt.");
+      jsonParser.delete(PATH + "/config/guilds/" + guild.id + ".json");
+      logManager.writeDebugLog(guild.n<me + ": Der Server wurde erfolgreich entfernt.");
       delete servers.id;
     },
 

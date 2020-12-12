@@ -52,8 +52,7 @@ client.on("guildCreate", guild => {
 
 //Löscht den Server aus der Datenbank
 client.on("guildDelete", guild => {
-  logManager.writeDebugLog("JAAAAAAAAAAAAAAAAAA");
-  serverManager.removeServer(guild.id);
+  serverManager.removeServer(guild);
 });
 
 // Join Automatisch
