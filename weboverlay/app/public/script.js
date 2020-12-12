@@ -228,7 +228,7 @@ jQuery( document ).ready(function($) {
             type: 'POST',
             success: function(output) {
                 if(output.debugLog != undefined){
-                    $('#debug-log-viewer').html(output.debugLog + "<br> c=====3");
+                    $('#debug-log-viewer').html(output.debugLog);
                 }
             }
         });
