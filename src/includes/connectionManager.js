@@ -33,8 +33,8 @@ function bot_join(vc, connection, file){
       let today = new Date();
 
       if(today.getMonth() == 11){
-        if(today.getDate() == 24 || today.getDate() == 25 || today.getDate() == 26 || today.getDate() == 12){
-          logManager.writeDebugLog(vc.guild.name + ": Es ist Weihnachten meine Kerle");
+        if(today.getDate() == 24 || today.getDate() == 25 || today.getDate() == 26){
+          logManager.writeDebugLog(vc.guild.name + ": Es ist Weihnachten meine Kerle.");
           file = PATH + "/resources/default/christmas" + SUFFIX;
         }
       }
