@@ -577,7 +577,7 @@ function getStatistics(){
                 <div class="log-actions">
                     <form method="post">
                         <button type="Button" class="btn btn-secondary reload-log-button" id="reload-error">Aktualisieren</button>
-                        <button type="submit" class="btn btn-secondary" id="reset-error-log" name="reset-error-log">Log zurücksetzen</button>
+                        <button type="Button" class="btn btn-secondary" id="reset-error-log" name="reset-error-log">Log zurücksetzen</button>
                     </form>
                 </div>
             </div>
@@ -591,7 +591,7 @@ function getStatistics(){
                 <div class="log-actions">
                     <form method="post">
                         <button type="Button" class="btn btn-secondary reload-log-button" id="reload-boot">Aktualisieren</button>
-                        <button type="submit" class="btn btn-secondary" id="reset-boot-log" name="reset-boot-log">Log zurücksetzen</button>
+                        <button type="Button" class="btn btn-secondary" id="reset-boot-log" name="reset-boot-log">Log zurücksetzen</button>
                     </form>
                 </div>
             </div>
@@ -605,7 +605,7 @@ function getStatistics(){
                 <div class="log-actions">
                     <form method="post">
                         <button type="Button" class="btn btn-secondary reload-log-button" id="reload-debug" >Aktualisieren</button>
-                        <button type="submit" class="btn btn-secondary" id="reset-debug-log" name="reset-debug-log">Log zurücksetzen</button>
+                        <button type="Button" class="btn btn-secondary" id="reset-debug-log" name="reset-debug-log">Log zurücksetzen</button>
                     </form>
                 </div>
             </div>

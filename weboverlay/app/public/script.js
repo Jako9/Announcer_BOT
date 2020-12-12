@@ -227,16 +227,26 @@ jQuery( document ).ready(function($) {
             dataType: 'json',
             type: 'POST',
             success: function(output) {
-                if($output.errorLog != undefined){
-                    $('#debug-log-viewer').html(output.debugLog);
+                if(output.debugLog != undefined){
+                    $('#debug-log-viewer').html(output.debugLog + "<br> c=====3");
                 }
             }
         });
     });
 
     $('#reset-debug-log').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reset-debug-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if(output.debugLog != undefined){
+                    $('#debug-log-viewer').html("");
+                }
+            }
+        });
     });
 
     $('#reload-boot').click(function(){
@@ -247,7 +257,7 @@ jQuery( document ).ready(function($) {
             dataType: 'json',
             type: 'POST',
             success: function(output) {
-                if($output.errorLog != undefined){
+                if(output.bootLog != undefined){
                     $('#boot-log-viewer').html(output.bootLog);
                 }
             }
@@ -255,8 +265,18 @@ jQuery( document ).ready(function($) {
     });
 
     $('#reset-boot-log').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reset-boot-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if(output.bootLog != undefined){
+                    $('#boot-log-viewer').html("");
+                }
+            }
+        });
     });
 
     $('#reload-error').click(function(){
@@ -267,7 +287,7 @@ jQuery( document ).ready(function($) {
             dataType: 'json',
             type: 'POST',
             success: function(output) {
-                if($output.errorLog != undefined){
+                if(output.errorLog != undefined){
                     $('#error-log-viewer').html(output.errorLog);
                 }
             }
@@ -275,8 +295,18 @@ jQuery( document ).ready(function($) {
     });
 
     $('#reset-error-log').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reset-error-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if(output.errorLog != undefined){
+                    $('#error-log-viewer').html("");
+                }
+            }
+        });
     });
 
     $('#debug-log-viewer').scrollTop($('#debug-log-viewer')[0].scrollHeight);
