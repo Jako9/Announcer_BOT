@@ -220,8 +220,18 @@ jQuery( document ).ready(function($) {
 
     
     $('#reload-debug').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reload-debug-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if($output.errorLog != undefined){
+                    $('#debug-log-viewer').html(output.debugLog);
+                }
+            }
+        });
     });
 
     $('#reset-debug-log').click(function(){
@@ -230,8 +240,18 @@ jQuery( document ).ready(function($) {
     });
 
     $('#reload-boot').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reload-boot-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if($output.errorLog != undefined){
+                    $('#boot-log-viewer').html(output.bootLog);
+                }
+            }
+        });
     });
 
     $('#reset-boot-log').click(function(){
@@ -240,8 +260,18 @@ jQuery( document ).ready(function($) {
     });
 
     $('#reload-error').click(function(){
-        Cookies.set('reload-log-position', $(window).scrollTop());
-        document.location.reload();
+        $.ajax({
+            url: 'ajax.php',
+            data: {action: 'reload-error-log'},
+            //crossDomain: true,
+            dataType: 'json',
+            type: 'POST',
+            success: function(output) {
+                if($output.errorLog != undefined){
+                    $('#error-log-viewer').html(output.errorLog);
+                }
+            }
+        });
     });
 
     $('#reset-error-log').click(function(){
