@@ -29,7 +29,17 @@ function bot_join(vc, connection, file){
       statisticsManager.rickroll();
       logManager.writeDebugLog(vc.guild.name + ": Rickroll wurde aktiviert.");
       file = PATH + "/resources/default/rickroll" + SUFFIX;
+    }else{
+      let today = new Date();
+
+      if(today.getMonth() == 11){
+        if(today.getDate() == 24 || today.getDate() == 25 || today.getDate() == 26 || today.getDate() == 12){
+          logManager.writeDebugLog(vc.guild.name + ": Es ist Weihnachten meine Kerle");
+          file = PATH + "/resources/default/christmas" + SUFFIX;
+        }
+      }
     }
+
     const dispatcher = connection.play(file);
     statisticsManager.joined();
     dispatcher.setVolume(serverManager.getVolume(vc.guild.id));
