@@ -23,7 +23,7 @@ module.exports = {
       if(!fs.existsSync(PATH + "/config/guilds/" + guild.id + ".json")) return;
 
       jsonParser.delete(PATH + "/config/guilds/" + guild.id + ".json");
-      logManager.writeDebugLog(guild.n<me + ": Der Server wurde erfolgreich entfernt.");
+      logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
       delete servers.id;
     },
 
