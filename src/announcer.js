@@ -8,6 +8,8 @@ const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
 
+logManager.writeErrorLog("------------ Please ignore")
+
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
