@@ -8,11 +8,11 @@ const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
 
-process.on('uncaughtException', function(err) {
-  logManager.writeErrorLog(err);
-  logManager.writeErrorLog(err.stack);
-  process.exit();
-});
+// process.on('uncaughtException', function(err) {
+//   logManager.writeErrorLog(err);
+//   logManager.writeErrorLog(err.stack);
+//   process.exit();
+// });
 
 process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
