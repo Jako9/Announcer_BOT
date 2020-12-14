@@ -16,11 +16,11 @@ module.exports = {
 
     let defaultRole = reaction.message.guild.roles.cache.find(role => role.name == serverManager.getStandartRole(id));
     if(defaultRole){
-      logManager.writeDebugLog(reaction.message.guild.name + "Die Rolle der Reaktion wurde erfolgreich vergeben.");
+      logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
       member.roles.add([role.id,defaultRole.id]);
     }
     else{
-      logManager.writeDebugLog(reaction.message.guild.name + "Die Rolle der Reaktion wurde erfolgreich vergeben.");
+      logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
       member.roles.add(role.id);
     }
   },
