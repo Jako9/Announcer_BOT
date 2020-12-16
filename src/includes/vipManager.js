@@ -21,7 +21,7 @@ module.exports = {
           let transactions = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
           let transID = jsonData.transID;
           let userID = message.author.id;
-          transactions.add({
+          transactions.push({
             "transID" : transID,
             "userID" : userID,
             "status" : "Pending"
