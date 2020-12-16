@@ -169,6 +169,11 @@ client.on('message', message => {
     roleManager.showReactionRole(message);
   }
 
+//becomeVIP
+  else if(message.content === prefix + instructions[15][0]){
+    //becomeVIP
+  }
+
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[4][0] + '\' für eine Liste aller Befehle!');
