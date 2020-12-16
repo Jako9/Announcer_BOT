@@ -4,7 +4,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $transactionId = $_POST['transID'];
     $state = $_POST['state'];
 
-    $pendingPayments = readFromJSON('pendingpayments.json');
+    $pendingPayments = readFromJSON('pendingPayments.json');
     $pendingPaymentsArray = $pendingPayments->transactions;
 
     if($pendingPaymentsArray != null){
@@ -21,7 +21,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
         }
 
         $encodedArrray = json_encode($pendingPaymentsArray)
-        file_put_contents('../../../config/pendingpayments.json', $encodedArrray);
+        file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
     }
 }
 
