@@ -2,7 +2,7 @@
     "name" : "",
 
     "avatar" : "",
-    
+
     "rolle": "",
 
     "instructions":[
@@ -20,7 +20,8 @@
         "setChannel",
         "addReaction",
         "changeReactionRole",
-        "showReactionRole"
+        "showReactionRole",
+        "becomeVIP"
     ],
 
     "prefix" : ".",

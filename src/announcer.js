@@ -44,6 +44,7 @@ client.on('ready', () =>{
     type: "STREAMING",
     url: "https://www.twitch.tv/jako9"
   });
+  logManager.writeBootLog("------------------------------");
 });
 
 //Füge den neuen Server der Datenbank hinzu
