@@ -20,7 +20,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
             $pendingPaymentsArray[$key] = json_encode($transaction);
         }
 
-        $encodedArrray = json_encode($pendingPaymentsArray)
+        $encodedArrray = json_encode($pendingPaymentsArray);
         file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
     }
 }
