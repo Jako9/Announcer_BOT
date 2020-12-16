@@ -10,7 +10,6 @@
 *.log
 
 */webConfig.json
-config/
 
 **/weboverlay/conf
 **/weboverlay/logs
