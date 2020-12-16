@@ -7,6 +7,9 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $pendingPayments = readFromJSON('pendingPayments.json');
     $pendingPaymentsArray = $pendingPayments->transactions;
 
+    error_log(print_r($pendingPayments, true));
+    error_log("transaktionsID: " . $transactionId . " Status: " . $state);
+
     if($pendingPaymentsArray != null){
         for ($i = 0; count($pendingPaymentsArray); $i++) {
             $transactionJson = $pendingPaymentsArray[i];
@@ -22,7 +25,9 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
             
         }
 
-        $encodedArrray = json_encode($pendingPaymentsArray);
+        $pendingPayments->transactions = $pendingPaymentsArray;
+
+        $encodedArrray = json_encode($pendingPayments);
         file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
     }
 }
