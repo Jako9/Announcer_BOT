@@ -8,16 +8,16 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $pendingPaymentsArray = $pendingPayments->transactions;
 
     if($pendingPaymentsArray != null){
-        foreach ($pendingPayments->transactions as $key => $transactionJson) {
+        foreach ($pendingPaymentsArray as $key => $transactionJson) {
             $transaction = json_decode($transactionJson);
     
-            if($transaction->transId != null){
-                if($transaction->transId == $transactionId){
+            if($transaction->transID != null){
+                if($transaction->transID == $transactionId){
                     $transaction->status = $state;
+                    $pendingPaymentsArray[$key] = json_encode($transaction);
                 }
             }
-
-            $pendingPaymentsArray[$key] = json_encode($transaction);
+            
         }
 
         $encodedArrray = json_encode($pendingPaymentsArray);
