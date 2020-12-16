@@ -20,7 +20,8 @@
         "setChannel",
         "addReaction",
         "changeReactionRole",
-        "showReactionRole"
+        "showReactionRole",
+        "becomeVIP"
     ],
 
     "prefix" : ".",
