@@ -23,7 +23,7 @@ function isVip(userID){
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
-  logManager.writeDebugLog(vc.guild.name + ": Bot soll dem Server betreten.");
+  logManager.writeDebugLog(vc.guild.name + ": Bot soll dem Server betreten. " + "File = " + file);
     rdm = Math.floor(Math.random() * PROBAILITY) + 1; //Never gonna give you up, never gonna let you down.....
     if(rdm == 5){
       statisticsManager.rickroll();
