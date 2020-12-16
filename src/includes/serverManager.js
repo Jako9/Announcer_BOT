@@ -1,7 +1,7 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
 const logManager = require('./logManager.js');
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
 

@@ -1,5 +1,5 @@
 const jsonParser = require('./jsonParser.js');
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 module.exports = {
     addToPlaytime: function(time){

@@ -1,6 +1,6 @@
 const jsonParser = require('./jsonParser.js');
 var https = require("https");
-const PATH = "/home/max/Dokumente/Bastelordner/Announcer_BOT";
+const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 
 module.exports = {
