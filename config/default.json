@@ -14,7 +14,6 @@
         " to set the channel whose messages are being reacted and listened to by the bot. \n Syntax: setChannel CHANNEL_MENTION",
         " Adding Reactions to the already set Channel messages. \n  Syntax: addReaction [LIST OF REACTION_NAME]",
         " to change the standart role that is given with every reaction role. \n Syntax changeReactionRole ROLE_MENTION",
-        " to show the standart role that is given with every reaction role.",
-        " to become a VIP and get a custom joinsound. (You can also dm the bot \"becomeVIP\")"
+        " to show the standart role that is given with every reaction role."
     ]
 }
