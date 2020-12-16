@@ -18,14 +18,16 @@ module.exports = {
         let jsonData = JSON.parse(data);
         let link = jsonData.paypalLink;
         if(link){
-          let transactions = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
+          let transactions = jsonParser.read(PATH + "/config/pendingPayments.json");
+          let transaction = transactions.transactions;
           let transID = jsonData.transID;
           let userID = message.author.id;
-          transactions.push({
+          transaction.push({
             "transID" : transID,
             "userID" : userID,
             "status" : "Pending"
           });
+          transactions.transactions = transaction;
           jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
           message.reply(link);
         }else{
