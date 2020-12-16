@@ -8,11 +8,11 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $pendingPaymentsArray = $pendingPayments->transactions;
 
     if($pendingPaymentsArray != null){
-        foreach ($pendingPaymentsArray as $key => $transactionJson) {
+        foreach ($pendingPayments->transactions as $key => $transactionJson) {
             $transaction = json_decode($transactionJson);
     
-            if($transaction->transID != null){
-                if($transaction->transID == $transactionId){
+            if($transaction->transId != null){
+                if($transaction->transId == $transactionId){
                     $transaction->state = $state;
                 }
             }
