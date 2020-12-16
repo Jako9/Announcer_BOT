@@ -7,6 +7,7 @@ const lockManager = require('./includes/lockManager.js');
 const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
+const vipManager = require('./includes/vipManager.js');
 
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
@@ -171,7 +172,7 @@ client.on('message', message => {
 
 //becomeVIP
   else if(message.content === prefix + instructions[15][0]){
-    //becomeVIP
+    vipManager.becomeVIP(message);
   }
 
   // Falsche Eingabe
