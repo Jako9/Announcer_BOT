@@ -13,7 +13,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     
             if($transaction->transId != null){
                 if($transaction->transId == $transactionId){
-                    $transaction->state = $state;
+                    $transaction->status = $state;
                 }
             }
 
