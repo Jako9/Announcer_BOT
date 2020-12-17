@@ -3,7 +3,7 @@ var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(link){
-  let hyperlink = '[here](https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412 \"become VIP\")';
+  let hyperlink = '[here](' + link + ' \"become VIP\")';
   let embed = {
     color: 0x0099ff,
     title: 'Become a VIP',
@@ -61,6 +61,8 @@ function isVip(userID){
     vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
+      logManager.writeDebugLog("VIP = " + vip);
+      logManager.writeDebugLog("IsEqual = " + vip == userID);
       if (vip == userID) found = true;
     });
     return found;
@@ -77,6 +79,7 @@ function getLink(userID){
 
 module.exports = {
     becomeVIP: function(message){
+      logManager.writeDebugLog("1");
       if(isVip(message.author.userID)){
         message.author.send("Du bist schon VIP!").catch();
         return;

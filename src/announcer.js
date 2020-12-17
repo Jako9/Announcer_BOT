@@ -85,7 +85,7 @@ client.on('message', message => {
       errorManager.er9(message,client);
     }
     else if(message.content === "becomeVIP"){
-      vipManager.becomeVIPTest(message);
+      vipManager.becomeVIP(message);
     }
     else if(logManager.writeDebugLog("Attachments = " + message.attachments.size) == 1){
       logManager.writeDebugLog("Content = " + message.content);
