@@ -1,7 +1,42 @@
 const jsonParser = require('./jsonParser.js');
 var https = require("https");
-const discord = require('discord.js');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
+
+function buildEmbed(){
+  return {
+	color: 0x0099ff,
+	title: 'Become a VIP',
+	url: 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412',
+	author: {
+		name: 'Announcer_BOT',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+		url: 'http://announcer.jmk.cloud',
+	},
+	description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!',
+	thumbnail: {
+		url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+	fields: [
+		{
+			name: 'How do I become a VIP?',
+			value: 'Just click on the paypal link below and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!',
+		},
+    {
+      name: '\u200B',
+      value: '\u200B',
+    },
+    }
+	],
+	image: {
+		url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+	timestamp: new Date(),
+	footer: {
+		text: 'Some footer text here',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+	},
+};
+}
 
 module.exports = {
     becomeVIP: function(message){
@@ -43,21 +78,7 @@ module.exports = {
   },
 
   becomeVIPTest: function(message){
-    const exampleEmbed = discord.MessageEmbed()
-	.setColor('#0099ff')
-	.setTitle('Become a VIP')
-	.setURL('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412')
-	.setAuthor('Announcer_BOT', 'https://i.imgur.com/wSTFkRM.png', 'http://announcer.jmk.cloud')
-	.setDescription('You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!')
-	.setThumbnail('https://i.imgur.com/wSTFkRM.png')
-	.addFields(
-		{ name: 'How do I become a VIP?', value: 'Just click on the paypal link below and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!' },
-		{ name: '\u200B', value: '\u200B' },
-
-	)
-	.setImage('https://i.imgur.com/wSTFkRM.png')
-	.setTimestamp()
-	.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+    const exampleEmbed = buildEmbed();
     message.author.send(exampleEmbed).catch();
     if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
     }
