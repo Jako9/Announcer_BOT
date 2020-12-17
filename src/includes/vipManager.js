@@ -3,7 +3,7 @@ var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(){
-  let embed = {
+  /*let embed = {
 	color: 0x0099ff,
 	title: 'Become a VIP',
 	url: 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412',
@@ -35,8 +35,9 @@ function buildEmbed(){
 		text: 'Some footer text here',
 		icon_url: 'https://i.imgur.com/wSTFkRM.png',
 	},
-};
-  return embed;
+};*/
+let embed2 = {title: 'Become a VIP'}
+  return embed2;
 }
 
 module.exports = {
