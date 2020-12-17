@@ -4,10 +4,12 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $transactionId = $_POST['transID'];
     $state = $_POST['state'];
 
-    $pendingPayments = readFromJSON('pendingPayments.json');
+    $json = file_get_contents('../../../config/' . 'pendingPayments.json');
+
+    $pendingPayments = json_decode('pendingPayments.json');
     $pendingPaymentsArray = $pendingPayments->transactions;
 
-    return(print_r($pendingPayments, true));
+    return $json;
     echo("transaktionsID: " . $transactionId . " Status: " . $state);
 
     if($pendingPaymentsArray != null){
