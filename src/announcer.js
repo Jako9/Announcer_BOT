@@ -87,10 +87,12 @@ client.on('message', message => {
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIPTest(message);
     }
-    logManager.writeDebugLog("Content = " + message.content);
-    logManager.writeDebugLog("Attachments = " + message.attachments.size);
-    logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL);
-    logManager.writeDebugLog("PNG = " + message.attachments.find(foo => true).proxyURL.endsWith(".png"));
+    else if(logManager.writeDebugLog("Attachments = " + message.attachments.size) == 1){
+      logManager.writeDebugLog("Content = " + message.content);
+      logManager.writeDebugLog("Attachments = " + message.attachments.size);
+      logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL);
+      logManager.writeDebugLog("PNG = " + message.attachments.find(foo => true).proxyURL.endsWith(".png"));
+    }
     return;
   }
 
