@@ -11,7 +11,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     error_log("transaktionsID: " . $transactionId . " Status: " . $state);
 
     if($pendingPaymentsArray != null){
-        for ($i = 0; count($pendingPaymentsArray); $i++) {
+        for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
             $transactionJson = $pendingPaymentsArray[i];
 
             $transaction = json_decode($transactionJson);
