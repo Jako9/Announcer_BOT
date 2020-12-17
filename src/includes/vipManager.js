@@ -171,42 +171,52 @@ module.exports = {
           }
 
           if(!breakIt){
-            const pathToCheck = "/var/www/git.jmk.cloud/html/Announcer_BOT/resources/.cache/255064680417067019.mp3" //jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+            //const pathToCheck = "/var/www/git.jmk.cloud/html/Announcer_BOT/resources/.cache/255064680417067019.mp3" //jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
             
-            let failed = false;
-            logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
-            mp3Duration(pathToCheck, function (err, duration) {
-              if(err){
-                message.author.send("Your submitted file is not a valid mp3. Please try again!");
-                failed = true;
-              }
+            const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
+            const request = https.get(link, function(response) {
+                response.on('end', () => {
+                  response.pipe(file);
 
-              logManager.writeDebugLog("Die duration ist: " + duration);
-              
-              if(duration > 8){
-                message.author.send("The duration of the joinsound has to be less then 8 seconds.");
-                failed = true;
-              }
-              //File valid, trage den VIP sound ein
-            
-              if(!failed){
-              //copy ins zielverzeichnis
-              jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
+                  const pathToCheck = fileToWrite.path;
 
-              //Füge VIP hinzu
-              message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
-              vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
-              const index = transactions.indexOf(transaction);
-              transactions.splice(index,1);
-              transactionsJSON.transactions = transactions
+                  let failed = false;
+                  logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
+                  mp3Duration(pathToCheck, function (err, duration) {
+                    if(err){
+                      message.author.send("Your submitted file is not a valid mp3. Please try again!");
+                      failed = true;
+                    }
 
-              jsonParser.write(PATH + "/config/vips.json", vipsJSON);
-              jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
-            }
-            //jsonParser.delete(pathToCheck);
+                    logManager.writeDebugLog("Die duration ist: " + duration);
+                    
+                    if(duration > 8){
+                      message.author.send("The duration of the joinsound has to be less then 8 seconds.");
+                      failed = true;
+                    }
+                    //File valid, trage den VIP sound ein
+                  
+                    if(!failed){
+                      //copy ins zielverzeichnis
+                      jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
+
+                      //Füge VIP hinzu
+                      message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+                      vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
+                      const index = transactions.indexOf(transaction);
+                      transactions.splice(index,1);
+                      transactionsJSON.transactions = transactions
+
+                      jsonParser.write(PATH + "/config/vips.json", vipsJSON);
+                      jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
+                    }
+                  jsonParser.delete(pathToCheck);
+                  });
+
+                });
             });
             
-         }
+          }
         }
         //Das sollte nicht passieren
         else{
