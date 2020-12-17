@@ -20,7 +20,7 @@ function buildEmbed(link){
     fields: [
   		{
   			name: 'How do I become a VIP?',
-  			value: 'Just click on ' + hyperlink + ' and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!'
+  			value: 'Just click ' + hyperlink + ' and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!'
   		},
       {
         name: '\u200B',
