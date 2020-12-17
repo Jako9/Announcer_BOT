@@ -155,12 +155,19 @@ module.exports = {
         }
         //Zahlung erfolgreich
         else if(transaction.status == "approved"){
+
+
+          /**
+          **TODO HIER MP3 STUFF
+          **/
+
+
+          //Füge VIP hinzu
           message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
           vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
           const index = transactions.indexOf(transaction);
           transactions.splice(index,1);
           transactionsJSON.transactions = transactions
-
 
           jsonParser.write(PATH + "/config/vips.json", vipsJSON);
           jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
@@ -176,7 +183,7 @@ module.exports = {
     if(found) return;
 
     //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
-    message.author.send("You are no vip YET! Tyoe \"becomeVIP\" to become a vip.");
+    message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.");
   },
 
   becomeVIPTest: function(message){
