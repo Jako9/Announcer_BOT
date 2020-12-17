@@ -60,7 +60,7 @@ let embed = {
     }
 	],
   image: {
-		url: 'https://i.imgur.com/wSTFkRM.png'
+		url: 'https://www.paypalobjects.com/webstatic/icon/pp258.png'
 	},
   timestamp: new Date(),
   footer: {
