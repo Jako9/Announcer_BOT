@@ -163,7 +163,7 @@ module.exports = {
           **/
 
           //File zu groß
-          if(file.size() > (1024 * 700)){
+          if(file.size > (1024 * 700)){
             message.author.send("The file is too big. The maximum filesize must be at most 700kb");
             return;
           }
