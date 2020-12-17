@@ -205,7 +205,7 @@ module.exports = {
               jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
             }
 
-            jsonParser.delete(pathToCheck);
+            //jsonParser.delete(pathToCheck);
          }
         }
         //Das sollte nicht passieren
