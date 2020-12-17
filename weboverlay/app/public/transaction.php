@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST['transID']) && isset($_POST['state'])){
-    $transactionId = $_POST['transID'];
+    $transactionId = rtrim($_POST['transID']);
     $state = $_POST['state'];
 
     $pendingPayments = readFromJSON('pendingPayments.json');
@@ -14,6 +14,8 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     
             if($transaction->transID != null){
                 echo( print_r( strval($transaction->transID), true));
+                echo("\n");
+                echo( print_r( strval($transactionId), true));
                 if(strval($transaction->transID) == strval($transactionId)){
                     $transaction->status = $state;
                     $pendingPaymentsArray[$i] = $transaction;
