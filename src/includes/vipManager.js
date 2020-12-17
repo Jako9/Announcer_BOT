@@ -80,7 +80,7 @@ module.exports = {
 
   becomeVIPTest: function(message){
     const exampleEmbed = buildEmbed();
-    message.author.send(exampleEmbed).catch();
+    message.author.send({{ embed: exampleEmbed}).catch();
     if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
     }
 }
