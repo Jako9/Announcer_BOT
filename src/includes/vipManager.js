@@ -219,7 +219,7 @@ module.exports = {
                       jsonParser.write(PATH + "/config/vips.json", vipsJSON);
                       jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
                     }
-                  jsonParser.delete(pathToCheck);
+                  //jsonParser.delete(pathToCheck);
                   });
 
                 });
