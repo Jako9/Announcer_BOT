@@ -84,7 +84,7 @@ client.on('message', message => {
     if(message.content.startsWith('Er9')){
       errorManager.er9(message,client);
     }
-    else if(message.conten === "becomeVIP"){
+    else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
     }
     return;
