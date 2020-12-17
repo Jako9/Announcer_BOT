@@ -3,7 +3,7 @@ var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(){
-  return {
+  let embed = {
 	color: 0x0099ff,
 	title: 'Become a VIP',
 	url: 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412',
@@ -36,6 +36,7 @@ function buildEmbed(){
 		icon_url: 'https://i.imgur.com/wSTFkRM.png',
 	},
 };
+  return embed;
 }
 
 module.exports = {
@@ -78,7 +79,7 @@ module.exports = {
   },
 
   becomeVIPTest: function(message){
-    const exampleEmbed = buildEmbed();
+    let exampleEmbed = buildEmbed();
     message.author.send({ embed: exampleEmbed}).catch();
     if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
     }
