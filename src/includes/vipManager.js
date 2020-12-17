@@ -163,46 +163,50 @@ module.exports = {
           **/
 
           //File zu groß
+          let breakIt = false;
           if(file.size > (1024 * 700)){
             message.author.send("The file is too big. The maximum filesize must be at most 700kb");
-            return;
-          }
-
-          const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
-          
-          let failed = false;
-          logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
-          mp3Duration(pathToCheck, function (err, duration) {
-            if(err){
-              message.author.send("Your submitted file is not a valid mp3. Please try again!");
-              failed = true;
-            }
-
-            logManager.writeDebugLog("Die duration ist: " + duration);
+            breakIt = true;
             
-            if(duration > 8){
-              message.author.send("The duration of the joinsound has to be less then 8 seconds.");
-              failed = true;
-            }
-          });
-          
-          //File valid, trage den VIP sound ein
-          if(!failed){
-            //copy ins zielverzeichnis
-            jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
-
-            //Füge VIP hinzu
-            message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
-            vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
-            const index = transactions.indexOf(transaction);
-            transactions.splice(index,1);
-            transactionsJSON.transactions = transactions
-
-            jsonParser.write(PATH + "/config/vips.json", vipsJSON);
-            jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
           }
 
-          jsonParser.delete(pathToCheck);
+          if(!breakIt){
+            const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+            
+            let failed = false;
+            logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
+            mp3Duration(pathToCheck, function (err, duration) {
+              if(err){
+                message.author.send("Your submitted file is not a valid mp3. Please try again!");
+                failed = true;
+              }
+
+              logManager.writeDebugLog("Die duration ist: " + duration);
+              
+              if(duration > 8){
+                message.author.send("The duration of the joinsound has to be less then 8 seconds.");
+                failed = true;
+              }
+            });
+            
+            //File valid, trage den VIP sound ein
+            if(!failed){
+              //copy ins zielverzeichnis
+              jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
+
+              //Füge VIP hinzu
+              message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+              vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
+              const index = transactions.indexOf(transaction);
+              transactions.splice(index,1);
+              transactionsJSON.transactions = transactions
+
+              jsonParser.write(PATH + "/config/vips.json", vipsJSON);
+              jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
+            }
+
+            jsonParser.delete(pathToCheck);
+         }
         }
         //Das sollte nicht passieren
         else{
