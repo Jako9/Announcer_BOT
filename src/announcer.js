@@ -89,8 +89,8 @@ client.on('message', message => {
     }
     logManager.writeDebugLog("Content = " + message.content);
     logManager.writeDebugLog("Attachments = " + message.attachments.size);
-    logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL;
-    logManager.writeDebugLog("PNG = " + message.attachments.find(foo => true).proxyURL.endsWith(".png");
+    logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL);
+    logManager.writeDebugLog("PNG = " + message.attachments.find(foo => true).proxyURL.endsWith(".png"));
     return;
   }
 
