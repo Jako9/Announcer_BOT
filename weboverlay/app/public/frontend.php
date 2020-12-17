@@ -45,26 +45,26 @@
     $daysString = "";
 
     if($timeInDays == 1){
-        $daysString = " Tag ";
+        $daysString = " Day ";
     }else{
-        $daysString = " Tage ";
+        $daysString = " Days ";
     }
 
     echo ('
     <div class="col-sm centered-column">
-        <h3 class="stat-title">Gesamtspielzeit</h3>
+        <h3 class="stat-title">Total time played</h3>
         <h3 class="stat-value">' . $timeInDays . $daysString . gmdate("H:i:s", $rest) . '</h3>
-        <p class="stat-description">Die Gesamte Zeit, die der Bot mit abspielen von Sounddateien beschäftigt war</p>
+        <p class="stat-description">The total playtime of the soundfiles the bot played.</p>
     </div>
     <div class="col-sm centered-column">
-        <h3 class="stat-title">Serverbeitritte</h3>
+        <h3 class="stat-title">Times joined</h3>
         <h3 class="stat-value">' . $stats->timesJoined . '</h3>
-        <p class="stat-description">Anzahl der Beitritte über alle Server</p>
+        <p class="stat-description">The total count of server joins.</p>
     </div>
     <div class="col-sm centered-column">
         <h3 class="stat-title">Rick-Rolls</h3>
         <h3 class="stat-value">' . $stats->timesRickroll . '</h3>
-        <p class="stat-description">Wie oft beim Joinen Never gonna give you Up abgespielt wurde.</p>
+        <p class="stat-description">How many times the bot played never gonna give you up.</p>
     </div>
     ');
 }
@@ -196,7 +196,7 @@
     <div class="container-fluid documentation" id="documentation">
             <h2 class="documentation-headline">Documentation</h2>
             <i class="fab fa-youtube documenation-icon"></i>
-            <p class="lead">You are looking for a functionallity? Head over to our YouTube channel and watch one of our tutorials. </p>
+            <p class="lead">Need help? Head over to our YouTube channel and watch one of our tutorials. </p>
     </div>
     <div class="container-fluid statistics" id="statistics">
         <div class="statistics-block">
