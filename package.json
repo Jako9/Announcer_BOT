@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Jako9/Announcer_BOT#readme",
   "dependencies": {
     "ffmpeg-static": "^4.2.7",
+    "mp3-duration": "^1.1.0",
     "opusscript": "0.0.7"
   }
 }

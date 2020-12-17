@@ -1,6 +1,7 @@
 const jsonParser = require('./jsonParser.js');
 const logManager = require('./logManager.js');
-var https = require("https");
+let https = require("https");
+let mp3Duration = require('mp3-duration');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(link){
@@ -161,16 +162,44 @@ module.exports = {
           **TODO HIER MP3 STUFF
           **/
 
+          //File zu groß
+          if(file.size() > (1024 * 700)){
+            message.author.send("The file is too big. The maximum filesize must be at most 700kb");
+            return;
+          }
 
-          //Füge VIP hinzu
-          message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
-          vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
-          const index = transactions.indexOf(transaction);
-          transactions.splice(index,1);
-          transactionsJSON.transactions = transactions
+          const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+          
+          let failed = false;
+          mp3Duration(pathToCheck, function (err, duration) {
+            if(err){
+              message.author.send("Your submitted file is not a valid mp3. Please try again!");
+              failed = true;
+            }
+            
+            if(duration < 9){
+              message.author.send("The duration of the joinsound hast to be less then 8 seconds.");
+              failed = false;
+            }
+          });
+          
+          //File valid, trage den VIP sound ein
+          if(!failed){
+            //copy ins zielverzeichnis
+            jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
 
-          jsonParser.write(PATH + "/config/vips.json", vipsJSON);
-          jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
+            //Füge VIP hinzu
+            message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+            vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
+            const index = transactions.indexOf(transaction);
+            transactions.splice(index,1);
+            transactionsJSON.transactions = transactions
+
+            jsonParser.write(PATH + "/config/vips.json", vipsJSON);
+            jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
+          }
+
+          jsonParser.delete(pathToCheck);
         }
         //Das sollte nicht passieren
         else{
