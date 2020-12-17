@@ -26,6 +26,22 @@ const client = new Discord.Client();
 const KEY = process.argv.slice(2)[0];
 const JOIN = false;
 const REACTION = true;
+const ENDUNGEN = [
+  ".3gp",
+  ".aac",
+  ".flac",
+  ".m4a",
+  ".m4b",
+  ".m4p",
+  ".msv",
+  ".ogg",
+  ".oga",
+  ".opus",
+  ".wav",
+  ".wma",
+  ".webm",
+  ".aa"
+];
 
 
 logManager.writeBootLog("Logge den Bot ein...");
@@ -88,11 +104,15 @@ client.on('message', message => {
       vipManager.becomeVIP(message);
     }
     else if(message.attachments.size == 1){
-      logManager.writeDebugLog("Attachments = " + message.attachments.size)
-      logManager.writeDebugLog("Content = " + message.content);
-      logManager.writeDebugLog("Attachments = " + message.attachments.size);
-      logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL);
-      logManager.writeDebugLog("PNG = " + message.attachments.find(foo => true).proxyURL.endsWith(".png"));
+      let attachment = message.attachments.find(foo => true);
+      ENDUNGEN.forEach(endung => {
+        if(attachment.proxyURL.endsWith(endung)){
+          message.author.send("The joinsound must be an mp3!");
+        }
+      });
+      if(attachment.proxyURL.endsWith(".mp3")){
+        vipManager.fileReceived(message, attachment);
+      }
     }
     return;
   }
