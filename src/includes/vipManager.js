@@ -171,7 +171,7 @@ module.exports = {
           }
 
           if(!breakIt){
-            const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+            const pathToCheck = "/var/www/git.jmk.cloud/html/Announcer_BOT/resources/.cache/255064680417067019.mp3" //jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
             
             let failed = false;
             logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
