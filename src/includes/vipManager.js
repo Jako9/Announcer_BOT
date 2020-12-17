@@ -37,6 +37,7 @@ function buildEmbed(){
 	},
 };*/
 let embed = {
+  color: 0x0099ff,
   title: 'Become a VIP'
 };
   return embed;
