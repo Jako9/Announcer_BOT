@@ -21,13 +21,6 @@ function isVip(userID){
     return found;
 }
 
-function wait(milis){
-  let now = Date.now();
-  while(Date.now() - now < milis){
-    
-  }
-}
-
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
   logManager.writeDebugLog(vc.guild.name + ": Bot soll dem Server betreten. " + "File = " + file);
@@ -48,9 +41,6 @@ function bot_join(vc, connection, file){
     }
 
     const dispatcher = connection.play(file);
-    dispatcher.pause(true);
-    wait(1000);
-    dispatcher.resume();
     statisticsManager.joined();
     dispatcher.setVolume(serverManager.getVolume(vc.guild.id));
     dispatcher.on("finish", end => {
