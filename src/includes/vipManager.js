@@ -130,7 +130,7 @@ module.exports = {
 
   fileReceived: function(message, file){
     message.author.reply("WORKED, File = " + file);
-  }
+  },
 
   becomeVIPTest: function(message){
     let exampleEmbed = buildEmbed("https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412");
