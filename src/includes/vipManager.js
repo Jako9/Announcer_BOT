@@ -32,7 +32,7 @@ module.exports = {
           });
           transactions.transactions = transaction;
           jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-          message.author.send(link).catch(message.reply("1Your dms are probably closed. Please open them and try again."));
+          message.author.send(link).catch(err => message.reply(err));
         }else{
           message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!").catch(message.reply("2Your dms are probably closed. Please open them and try again."));
         }
