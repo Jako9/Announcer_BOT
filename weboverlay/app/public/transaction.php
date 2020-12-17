@@ -11,9 +11,9 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
         for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
             
             $transaction = $pendingPaymentsArray[$i];
-            echo("oben: " . print_r($transaction, true));
     
             if($transaction->transID != null){
+                echo("objID: " . $transaction->transID . " ParamID: " . $transactionId);
                 if($transaction->transID == $transactionId){
                     $transaction->status = $state;
                     $pendingPaymentsArray[$i] = $transaction;
