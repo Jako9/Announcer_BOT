@@ -45,7 +45,21 @@ let embed = {
 		icon_url: 'https://i.imgur.com/wSTFkRM.png',
 		url: 'http://announcer.jmk.cloud'
 	},
-  description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!'
+  description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!',
+  thumbnail: {
+		url: 'https://i.imgur.com/wSTFkRM.png'
+	},
+  fields: [
+		{
+			name: 'How do I become a VIP?',
+			value: 'Just click on the paypal link below and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!'
+		},
+    {
+      name: '\u200B',
+      value: '\u200B'
+    }
+    }
+	]
 };
   return embed;
 }
