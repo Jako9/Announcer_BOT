@@ -29,7 +29,7 @@ module.exports = {
     download: function(path, link, id){
         const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
         const request = https.get(link, function(response) {
-            response.pipe(file);
+            response.pipe(fileToWrite);
         });
 
         return fileToWrite.path;

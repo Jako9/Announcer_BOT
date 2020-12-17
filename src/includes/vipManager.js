@@ -178,8 +178,8 @@ module.exports = {
             
             const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
             const request = https.get(file.proxyURL, function(response) {
-                response.on('end', () => {
-                  response.pipe(file);
+                response.on('finish', () => {
+                  response.pipe(fileToWrite);
 
                   const pathToCheck = fileToWrite.path;
 
