@@ -39,6 +39,15 @@ function buildEmbed(link){
   return embed;
 }
 
+function unMergeArrays(a){
+  let merged = [];
+  for (i = 0; i < a.length; i++) {
+      merged.push(a[i][0]);
+  }
+
+  return merged;
+}
+
 function isPending(userID){
   pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
   let found = false;
