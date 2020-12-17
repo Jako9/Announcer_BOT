@@ -7,8 +7,8 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $pendingPayments = readFromJSON('pendingPayments.json');
     $pendingPaymentsArray = $pendingPayments->transactions;
 
-    error_log(print_r($pendingPayments, true));
-    error_log("transaktionsID: " . $transactionId . " Status: " . $state);
+    return(print_r($pendingPayments, true));
+    echo("transaktionsID: " . $transactionId . " Status: " . $state);
 
     if($pendingPaymentsArray != null){
         for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
