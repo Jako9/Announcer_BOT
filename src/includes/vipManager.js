@@ -58,7 +58,15 @@ let embed = {
       name: '\u200B',
       value: '\u200B'
     }
-	]
+	],
+  image: {
+		url: 'https://i.imgur.com/wSTFkRM.png'
+	},
+  timestamp: new Date(),
+  footer: {
+		text: 'Some footer text here',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png'
+	}
 };
   return embed;
 }
