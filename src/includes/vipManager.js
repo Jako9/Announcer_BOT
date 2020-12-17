@@ -187,10 +187,9 @@ module.exports = {
                 message.author.send("The duration of the joinsound has to be less then 8 seconds.");
                 failed = true;
               }
-            });
+              //File valid, trage den VIP sound ein
             
-            //File valid, trage den VIP sound ein
-            if(!failed){
+              if(!failed){
               //copy ins zielverzeichnis
               jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
 
@@ -204,8 +203,9 @@ module.exports = {
               jsonParser.write(PATH + "/config/vips.json", vipsJSON);
               jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
             }
-
             //jsonParser.delete(pathToCheck);
+            });
+            
          }
         }
         //Das sollte nicht passieren
