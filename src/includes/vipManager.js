@@ -130,11 +130,11 @@ module.exports = {
 
   fileReceived: function(message, file){
     message.author.send("WORKED, File = " + file.proxyURL);
-    transactionsJSON = jsonParser.read(PATH + "/config/pendingPayments.json");
-    transactions = transactionsJSON.transactions;
-    vipsJSON = jsonParser.read(PATH + "/config/vips.json");
-    vips = unMergeArrays(vipsJSON.vips);
-    found = false;
+    let transactionsJSON = jsonParser.read(PATH + "/config/pendingPayments.json");
+    let transactions = transactionsJSON.transactions;
+    let vipsJSON = jsonParser.read(PATH + "/config/vips.json");
+    let vips = unMergeArrays(vipsJSON.vips);
+    let found = false;
 
     //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
     vips.forEach(vip => {
@@ -161,7 +161,7 @@ module.exports = {
           transactions.splice(index,1);
           transactionsJSON.transactions = transactions
 
-          
+
           jsonParser.write(PATH + "/config/vips.json", vipsJSON);
           jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
         }
