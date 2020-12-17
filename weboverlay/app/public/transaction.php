@@ -9,7 +9,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     $pendingPayments = json_decode('pendingPayments.json');
     $pendingPaymentsArray = $pendingPayments->transactions;
 
-    return $json;
+    echo ($json);
     echo("transaktionsID: " . $transactionId . " Status: " . $state);
 
     if($pendingPaymentsArray != null){
