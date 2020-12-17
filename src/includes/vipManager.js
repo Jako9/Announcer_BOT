@@ -184,9 +184,10 @@ module.exports = {
                 });
 
                 response.on('end', () => {
-                  dataToWrite.pipe(fileToWrite);
-
                   const pathToCheck = fileToWrite.path;
+                  fs.writeFileSync(pathToCheck, dataToWrite, (err) => {
+                    if (err) throw err;
+                  });
 
                   let failed = false;
                   logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
