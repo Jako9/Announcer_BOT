@@ -13,7 +13,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
             $transaction = $pendingPaymentsArray[$i];
     
             if($transaction->transID != null){
-                echo('Sind die string gleich: ' . strval($transaction->transID) == strval($transactionId) . "\n");
+                echo( print_r( strval($transaction->transID) == strval($transactionId), true));
                 if(strval($transaction->transID) == strval($transactionId)){
                     $transaction->status = $state;
                     $pendingPaymentsArray[$i] = $transaction;
