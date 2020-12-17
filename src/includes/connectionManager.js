@@ -5,7 +5,7 @@ const statisticsManager = require('./statisticsManager.js');
 
 //Sound Files
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
-const SUFFIX = '.wav';
+const SUFFIX = '.aac';
 const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 const PROBAILITY = 65;
 
