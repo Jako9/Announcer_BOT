@@ -177,9 +177,9 @@ module.exports = {
               failed = true;
             }
             
-            if(duration < 9){
+            if(duration > 9){
               message.author.send("The duration of the joinsound hast to be less then 8 seconds.");
-              failed = false;
+              failed = true;
             }
           });
           
