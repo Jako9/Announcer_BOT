@@ -171,14 +171,17 @@ module.exports = {
           const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
           
           let failed = false;
+          logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
           mp3Duration(pathToCheck, function (err, duration) {
             if(err){
               message.author.send("Your submitted file is not a valid mp3. Please try again!");
               failed = true;
             }
+
+            logManager.writeDebugLog("Die duration ist: " + duration);
             
-            if(duration > 9){
-              message.author.send("The duration of the joinsound hast to be less then 8 seconds.");
+            if(duration > 8){
+              message.author.send("The duration of the joinsound has to be less then 8 seconds.");
               failed = true;
             }
           });
