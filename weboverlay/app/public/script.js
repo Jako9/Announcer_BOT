@@ -212,7 +212,7 @@ jQuery( document ).ready(function($) {
     $('.sound-icon').each(function(i){
         $("#sound-button-" + i).click(function(){
             let id = $(this).data("id");
-            $(this).replaceWith('<audio controls class="vip-sound-player"><source src="http://git.jmk.cloud/resources/vips/'+ id +'.wav" type="audio/wav"> Your browser does not support the audio element. </audio>');
+            $(this).replaceWith('<audio controls class="vip-sound-player"><source src="http://git.jmk.cloud/resources/vips/'+ id +'.mp3" type="audio/mp3"> Your browser does not support the audio element. </audio>');
         
             $('.vip-sound-player').prop("volume", 0.3);
         });
