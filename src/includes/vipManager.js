@@ -2,7 +2,9 @@ const jsonParser = require('./jsonParser.js');
 var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
-
+function private(message){
+  message.reply("Your dms are probably closed. Please open them and try again.");
+}
 module.exports = {
     becomeVIP: function(message){
       https.get('https://hook.integromat.com/rq89fjoouy985of9qg8tltpjgynnhj3a', (resp) => {
@@ -29,11 +31,11 @@ module.exports = {
           });
           transactions.transactions = transaction;
           jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-          message.reply(link);
+          message.author.send(link).catch(private(message));
         }else{
-          message.reply("Fehler bei der Transaktion, bitte versuche es erneut!");
+          message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!").catch(private(message));
         }
-      
+
       });
 
     }).on("error", (err) => {

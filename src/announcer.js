@@ -79,10 +79,13 @@ client.on('messageReactionRemove', (reaction, user) => {
 // BEFEHL-ABFRAGE
 client.on('message', message => {
 
-  // Error Handling
+  // DM => becomeVIP Regelung
   if (!message.guild) {
     if(message.content.startsWith('Er9')){
       errorManager.er9(message,client);
+    }
+    else if(message.conten === "becomeVIP"){
+      vipManager.becomeVIP(message);
     }
     return;
   }
