@@ -3,6 +3,7 @@ var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(link){
+  let hyperlink = '[here](https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412)';
   let embed = {
     color: 0x0099ff,
     title: 'Become a VIP',
@@ -12,14 +13,14 @@ function buildEmbed(link){
   		icon_url: 'https://i.imgur.com/wSTFkRM.png',
   		url: 'http://announcer.jmk.cloud'
   	},
-    description: 'You want to become a VIP? \n Just follow the instructions on this [link](' + link + ' get VIP here)  and you will have a custom joinsound in no time!',
+    description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!',
     thumbnail: {
   		url: 'https://i.imgur.com/wSTFkRM.png'
   	},
     fields: [
   		{
   			name: 'How do I become a VIP?',
-  			value: 'Just click on the paypal link below and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!'
+  			value: 'Just click on ' + hyperlink + ' and follow the instructions. After you are done, you can send a .wav file (max length 8 sec.) to the bot and your custom joinsound is ready!'
   		},
       {
         name: '\u200B',
