@@ -130,6 +130,45 @@ module.exports = {
 
   fileReceived: function(message, file){
     message.author.send("WORKED, File = " + file.proxyURL);
+    transactionsJSON = jsonParser.read(PATH + "/config/pendingPayments.json");
+    transactions = transactionsJSON.transactions;
+    vipsJSON = jsonParser.read(PATH + "/config/vips.json");
+    vips = unMergeArrays(vipsJSON.vips);
+    found = false;
+
+    //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
+    vips.forEach(vip => {
+      if(vip == message.author.id){
+        message.author.send("Your joinsound has been updated successfully!");
+        found = true;
+      }
+    });
+
+    if(found) return;
+
+    //Der Nutzer hat eine Bezahlung am laufen (erledigt oder nicht)
+    transactions.forEach(transaction =>{
+      if(transaction.userID == message.author.id){
+        //Zahlung noch nicht erfolgt
+        if(transaction.status == "Pending"){
+          message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+        }
+        //Zahlung erfolgreich
+        else if(transaction.status == "approved"){
+          message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+        }
+        //Das sollte nicht passieren
+        else{
+          message.author.reply("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+        }
+        found = true;
+      }
+    });
+
+    if(found) return;
+
+    //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
+    message.author.send("You are no vip YET! Tyoe \"becomeVIP\" to become a vip.");
   },
 
   becomeVIPTest: function(message){
