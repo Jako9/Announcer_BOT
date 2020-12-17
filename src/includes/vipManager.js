@@ -156,6 +156,14 @@ module.exports = {
         //Zahlung erfolgreich
         else if(transaction.status == "approved"){
           message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+          vipsJSON.vips = vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
+          const index = transactions.indexOf(transaction);
+          transactions.splice(index,1);
+          transactionsJSON.transactions = transactions
+
+          
+          jsonParser.write(PATH + "/config/vips.json", vipsJSON);
+          jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
         }
         //Das sollte nicht passieren
         else{
