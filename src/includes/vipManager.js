@@ -129,7 +129,7 @@ module.exports = {
   },
 
   fileReceived: function(message, file){
-    message.author.reply("WORKED, File = " + file);
+    message.author.send("WORKED, File = " + file);
   },
 
   becomeVIPTest: function(message){
