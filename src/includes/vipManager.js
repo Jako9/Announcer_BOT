@@ -36,8 +36,10 @@ function buildEmbed(){
 		icon_url: 'https://i.imgur.com/wSTFkRM.png',
 	},
 };*/
-let embed2 = {title: 'Become a VIP'}
-  return embed2;
+let embed = {
+  title: 'Become a VIP'
+};
+  return embed;
 }
 
 module.exports = {
