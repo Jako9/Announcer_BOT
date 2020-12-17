@@ -12,7 +12,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
             
             $transactionJson = $pendingPaymentsArray[$i];
             $transaction = json_decode($transactionJson);
-            echo($transaction);
+            echo("oben: " . print_r($transaction, true));
     
             if($transaction->transID != null){
                 if($transaction->transID == $transactionId){
@@ -23,7 +23,7 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
             
         }
 
-        echo($pendingPaymentsArray);
+        echo("unten: " . print_r($pendingPaymentsArray, true));
 
         $pendingPayments->transactions = $pendingPaymentsArray;
 
