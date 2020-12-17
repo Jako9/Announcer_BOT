@@ -62,8 +62,6 @@ function isVip(userID){
     vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
-      logManager.writeDebugLog("VIP = " + vip);
-      logManager.writeDebugLog("IsEqual = " + vip == userID);
       if (vip == userID) found = true;
     });
     return found;
@@ -73,7 +71,7 @@ function getLink(userID){
   pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
   let link = "";
   pending.forEach(transaction => {
-    if (transaction.userID == userID) found = transaction.link;
+    if (transaction.userID == userID) link = transaction.link;
   });
   return link;
 }
