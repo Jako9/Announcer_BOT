@@ -3,7 +3,7 @@ var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 function buildEmbed(link){
-  let hyperlink = '[here](https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412 become VIP)';
+  let hyperlink = '[here](https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412 \"become VIP\")';
   let embed = {
     color: 0x0099ff,
     title: 'Become a VIP',
