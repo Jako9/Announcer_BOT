@@ -81,11 +81,11 @@ function getLink(userID){
 module.exports = {
     becomeVIP: function(message){
       logManager.writeDebugLog("1");
-      if(isVip(message.author.userID)){
+      if(isVip(message.author.id)){
         message.author.send("Du bist schon VIP!").catch();
         return;
       }
-      if(isPending(message.author.userID)){
+      if(isPending(message.author.id)){
         let link = getLink(userID);
         let embed = buildEmbed(link);
         message.author.send({ embed: embed}).catch();
