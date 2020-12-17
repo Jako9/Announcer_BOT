@@ -12,7 +12,7 @@ function buildEmbed(link){
   		icon_url: 'https://i.imgur.com/wSTFkRM.png',
   		url: 'http://announcer.jmk.cloud'
   	},
-    description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!',
+    description: 'You want to become a VIP? \n Just follow the instructions on this [link](' + link + ' get VIP here)  and you will have a custom joinsound in no time!',
     thumbnail: {
   		url: 'https://i.imgur.com/wSTFkRM.png'
   	},
