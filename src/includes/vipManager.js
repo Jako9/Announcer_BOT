@@ -39,5 +39,10 @@ module.exports = {
     }).on("error", (err) => {
       console.log("Error: " + err.message);
     });
-  }
+  },
+
+  becomeVIPTest: function(message){
+    message.author.send("https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412").catch();
+    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+    }
 }
