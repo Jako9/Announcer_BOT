@@ -1,4 +1,5 @@
 const fs = require('fs');
+let https = require("https");
 const logManager = require('./logManager.js');
 
 module.exports = {
@@ -27,7 +28,7 @@ module.exports = {
 
     download: function(path, link, id){
         const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
-        const request = http.get(link, function(response) {
+        const request = https.get(link, function(response) {
             response.pipe(file);
         });
 
