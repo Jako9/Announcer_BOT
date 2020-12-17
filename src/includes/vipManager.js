@@ -5,6 +5,7 @@ const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 function private(message){
   message.reply("Your dms are probably closed. Please open them and try again.");
 }
+
 module.exports = {
     becomeVIP: function(message){
       https.get('https://hook.integromat.com/rq89fjoouy985of9qg8tltpjgynnhj3a', (resp) => {
@@ -31,9 +32,9 @@ module.exports = {
           });
           transactions.transactions = transaction;
           jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-          message.author.send(link).catch(private(message));
+          message.author.send(link).catch(message.reply("1Your dms are probably closed. Please open them and try again."));
         }else{
-          message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!").catch(private(message));
+          message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!").catch(message.reply("2Your dms are probably closed. Please open them and try again."));
         }
 
       });
