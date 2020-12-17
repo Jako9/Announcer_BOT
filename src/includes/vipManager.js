@@ -1,5 +1,6 @@
 const jsonParser = require('./jsonParser.js');
 var https = require("https");
+const discord = require('discord.js');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 module.exports = {
