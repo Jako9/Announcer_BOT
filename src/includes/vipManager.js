@@ -39,8 +39,46 @@ function buildEmbed(link){
   return embed;
 }
 
+function isPending(userID){
+  pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
+  let found = false;
+  transactions.forEach(transaction => {
+    if (transaction.userID == userID) found = true;
+  });
+  return found;
+}
+
+function isVip(userID){
+    vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
+    let found = false;
+    vip.forEach(vip => {
+      if (vip == userID) found = true;
+    });
+    return found;
+}
+
+function getLink(userID){
+  pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
+  let link = "";
+  transactions.forEach(transaction => {
+    if (transaction.userID == userID) found = transaction.link;
+  });
+  return link;
+}
+
 module.exports = {
     becomeVIP: function(message){
+      if(isVip(message.author.userID)){
+        message.author.send("Du bist schon VIP!").catch();
+        return;
+      }
+      if(isPending(message.author.userID)){
+        let link = getLink(userID);
+        let embed = buildEmbed(link);
+        message.author.send({ embed: embed}).catch();
+        if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+        return;
+      }
       https.get('https://hook.integromat.com/rq89fjoouy985of9qg8tltpjgynnhj3a', (resp) => {
       let data = '';
 
@@ -61,11 +99,13 @@ module.exports = {
           transaction.push({
             "transID" : transID,
             "userID" : userID,
+            "link" : link,
             "status" : "Pending"
           });
           transactions.transactions = transaction;
           jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-          message.author.send(link).catch();
+          let embed = buildEmbed(link);
+          message.author.send({ embed: embed}).catch();
           if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
         }else{
           message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
