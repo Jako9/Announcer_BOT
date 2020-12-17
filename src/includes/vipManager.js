@@ -1,4 +1,5 @@
 const jsonParser = require('./jsonParser.js');
+const logManager = require('./logManager.js');
 var https = require("https");
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
