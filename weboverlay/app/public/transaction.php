@@ -11,8 +11,8 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
         for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
             
             $transactionJson = $pendingPaymentsArray[$i];
-            echo($transactionJson);
             $transaction = json_decode($transactionJson);
+            echo($transaction);
     
             if($transaction->transID != null){
                 if($transaction->transID == $transactionId){
