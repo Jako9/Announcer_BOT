@@ -176,8 +176,8 @@ module.exports = {
           if(!breakIt){
             //const pathToCheck = "/var/www/git.jmk.cloud/html/Announcer_BOT/resources/.cache/255064680417067019.mp3" //jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
             
-            const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
-            const request = https.get(link, function(response) {
+            const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
+            const request = https.get(file.proxyURL, function(response) {
                 response.on('end', () => {
                   response.pipe(file);
 
