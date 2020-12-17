@@ -10,14 +10,13 @@ if(isset($_POST['transID']) && isset($_POST['state'])){
     if($pendingPaymentsArray != null){
         for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
             
-            $transactionJson = $pendingPaymentsArray[$i];
-            $transaction = json_decode($transactionJson);
+            $transaction = $pendingPaymentsArray[$i];
             echo("oben: " . print_r($transaction, true));
     
             if($transaction->transID != null){
                 if($transaction->transID == $transactionId){
                     $transaction->status = $state;
-                    $pendingPaymentsArray[$i] = json_encode($transaction);
+                    $pendingPaymentsArray[$i] = $transaction;
                 }
             }
             
