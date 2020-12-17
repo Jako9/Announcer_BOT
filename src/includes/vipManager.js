@@ -38,7 +38,14 @@ function buildEmbed(){
 };*/
 let embed = {
   color: 0x0099ff,
-  title: 'Become a VIP'
+  title: 'Become a VIP',
+  url: 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412',
+  author: {
+		name: 'Announcer_BOT',
+		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+		url: 'http://announcer.jmk.cloud'
+	},
+  description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!'
 };
   return embed;
 }
