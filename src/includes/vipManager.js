@@ -51,7 +51,7 @@ function unMergeArrays(a){
 function isPending(userID){
   pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
   let found = false;
-  transactions.forEach(transaction => {
+  pending.forEach(transaction => {
     if (transaction.userID == userID) found = true;
   });
   return found;
@@ -69,7 +69,7 @@ function isVip(userID){
 function getLink(userID){
   pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
   let link = "";
-  transactions.forEach(transaction => {
+  pending.forEach(transaction => {
     if (transaction.userID == userID) found = transaction.link;
   });
   return link;
