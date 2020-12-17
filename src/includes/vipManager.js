@@ -86,7 +86,7 @@ module.exports = {
         return;
       }
       if(isPending(message.author.id)){
-        let link = getLink(userID);
+        let link = getLink(message.author.id);
         let embed = buildEmbed(link);
         message.author.send({ embed: embed}).catch();
         if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
