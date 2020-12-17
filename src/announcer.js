@@ -87,7 +87,8 @@ client.on('message', message => {
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
     }
-    else if(logManager.writeDebugLog("Attachments = " + message.attachments.size) == 1){
+    else if(message.attachments.size == 1){
+      logManager.writeDebugLog("Attachments = " + message.attachments.size)
       logManager.writeDebugLog("Content = " + message.content);
       logManager.writeDebugLog("Attachments = " + message.attachments.size);
       logManager.writeDebugLog("URL = " + message.attachments.find(foo => true).proxyURL);

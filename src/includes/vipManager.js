@@ -78,7 +78,6 @@ function getLink(userID){
 
 module.exports = {
     becomeVIP: function(message){
-      logManager.writeDebugLog("1");
       if(isVip(message.author.id)){
         message.author.send("Du bist schon VIP!").catch();
         return;
