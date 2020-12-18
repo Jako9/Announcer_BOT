@@ -26,7 +26,7 @@ module.exports = {
         fs.unlinkSync(path);
     },
 
-    download: function(path, link, id){
+    download: async function(path, link, id){
         const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
         const request = https.get(link, function(response) {
             response.pipe(fileToWrite);
