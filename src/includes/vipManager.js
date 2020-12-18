@@ -174,7 +174,7 @@ module.exports = {
           }
 
           if(!breakIt){
-            const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+            const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id).then;
             
             let now = Date.now();
             while(Date.now() - now < 30000){
