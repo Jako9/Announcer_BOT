@@ -1,5 +1,6 @@
 const fs = require('fs');
 let https = require("https");
+let axios = require('axios');
 const logManager = require('./logManager.js');
 
 module.exports = {
@@ -27,11 +28,17 @@ module.exports = {
     },
 
     download: async function(path, link, id){
-        const fileToWrite  = fs.createWriteStream(path + id + ".mp3");
-        const request = await https.get(link, function(response) {
-            response.pipe(fileToWrite);
-        });
-
-        return fileToWrite.path;
+        return axios.request({
+            responseType: 'arraybuffer',
+            url: link,
+            method: 'get',
+            headers: {
+              'Content-Type': 'audio/mpeg',
+            },
+          }).then((result) => {
+            const outputFilename = path;
+            fs.writeFileSync(outputFilename, result.data);
+            return outputFilename;
+          });
     }
 }
