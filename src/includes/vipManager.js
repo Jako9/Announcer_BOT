@@ -180,13 +180,13 @@ module.exports = {
             
             axios.request({
               responseType: 'arraybuffer',
-              url: link,
+              url: file.proxyURL,
               method: 'get',
               headers: {
                 'Content-Type': 'audio/mpeg',
               },
             }).then((result) => {
-              const outputFilename = path;
+              const outputFilename = PATH + "/resources/.cache/" + message.author.id + ".mp3";
               fs.writeFileSync(outputFilename, result.data);
               const pathToCheck = outputFilename;
 
