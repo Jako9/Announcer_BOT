@@ -185,7 +185,7 @@ module.exports = {
 
                 response.on('end', () => {
                   const pathToCheck = fileToWrite.path;
-                  fs.writeFileSync(pathToCheck, dataToWrite, (err) => {
+                  fs.writeFileSync(pathToCheck, dataToWrite, 'base64', (err) => {
                     if (err) throw err;
                   });
 
