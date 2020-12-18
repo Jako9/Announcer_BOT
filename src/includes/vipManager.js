@@ -177,6 +177,10 @@ module.exports = {
             jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id).then(pathToCheck => {
               //const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
       
+              let now = Date.now();
+              while(Date.now() - now < 30000){
+
+              }
               let failed = false;
               logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
               mp3Duration(pathToCheck, function (err, duration) {
