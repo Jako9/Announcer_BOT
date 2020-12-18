@@ -185,7 +185,7 @@ module.exports = {
 
                 response.on('end', () => {
                   const pathToCheck = fileToWrite.path;
-                  response.pipe(pathToCheck);
+                  response.pipe(fileToWrite);
 
                   let failed = false;
                   logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
