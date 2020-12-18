@@ -27,7 +27,7 @@ module.exports = {
         fs.unlinkSync(path);
     },
 
-    download: async function(path, link, id){
+    download: function(path, link, id){
         return axios.request({
             responseType: 'arraybuffer',
             url: link,

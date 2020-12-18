@@ -3,6 +3,8 @@ const logManager = require('./logManager.js');
 
 const fs = require('fs');
 let https = require("https");
+let axios = require('axios');
+
 
 let mp3Duration = require('mp3-duration');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
@@ -174,13 +176,22 @@ module.exports = {
           }
 
           if(!breakIt){
-            jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id).then(pathToCheck => {
+            //const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+            
+            axios.request({
+              responseType: 'arraybuffer',
+              url: link,
+              method: 'get',
+              headers: {
+                'Content-Type': 'audio/mpeg',
+              },
+            }).then((result) => {
+              const outputFilename = path;
+              fs.writeFileSync(outputFilename, result.data);
+              const pathToCheck = outputFilename;
+
               //const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
       
-              let now = Date.now();
-              while(Date.now() - now < 30000){
-
-              }
               let failed = false;
               logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
               mp3Duration(pathToCheck, function (err, duration) {
@@ -213,9 +224,15 @@ module.exports = {
                 }
               //jsonParser.delete(pathToCheck);
               });
-            });
+
+                
+              });
+            
+            
           }
-        }else{
+        }
+        //Das sollte nicht passieren
+        else{
           message.author.reply("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
         }
         found = true;
