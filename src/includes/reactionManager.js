@@ -1,9 +1,9 @@
 const serverManager = require('./serverManager.js');
 const logManager = require('./logManager.js');
 
-function delRole(reaction,role,user){
+function delRole(reaction,role,member){
   logManager.writeDebugLog(reaction.message.guild.name + ": Anzahl der Member = " + reaction.message.guild.members.cache.array.length);
-  let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+  //let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
   logManager.writeDebugLog(reaction.message.guild.name + ": Member = " + member);
   if(!role || !member){
     logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
@@ -47,7 +47,7 @@ module.exports = {
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     logManager.writeDebugLog(reaction.message.guild.name + ": Rolle = " + role.name);
-    reaction.message.guild.members.fetch().then(delRole(reaction, role,user)).catch(logManager.writeErrorLog("ERROR WHILE FETCHING REACTIONS"));
+    reaction.message.guild.members.fetch(user).then(member => delRole(reaction, role,member)).catch(logManager.writeErrorLog("ERROR WHILE FETCHING REACTIONS"));
 },
 
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
