@@ -301,11 +301,14 @@ function fetchMessage(client, id, channelReact){
   client.guilds.fetch(id).then(guild => {
     guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
-        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true)
+        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
+        server[id].reactionMessage.awaitReactions((reaction, user) => true).then(collected => {
+          logManager.writeBootLog(collected.size + " Reaktionen geladen...");
+      }).catch(e => logManager.writeBootLog("Reaktionen konnten nicht geldaen werden"));
       });
     });
   });
-  //server[id].reactionMessage.awaitReactions((reaction, user) => true).then(collected => logManager.writeBootLog(collected.size + " Reaktionen geladen...")).catch(e => logManager.writeBootLog("Reaktionen konnten nicht geldaen werden"));
+  //
 }
 
 function saveServer(id){
