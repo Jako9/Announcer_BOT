@@ -36,13 +36,13 @@ module.exports = {
     logManager.writeDebugLog(reaction.message.guild.name + ": Rolle = " + role.name);
     let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
     logManager.writeDebugLog(reaction.message.guild.name + ": Member = " + member);
-    if(!role || !member){
+    if(!role || !user){
       logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
       return;
     }
 
     logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich entfernt.");
-    member.roles.remove(role.id);
+    user.roles.remove(role.id);
 },
 
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
