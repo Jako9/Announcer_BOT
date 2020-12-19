@@ -74,7 +74,7 @@ module.exports = {
   isValid: function(message){
     let channels = serverManager.getWhitelist(message.guild.id);
 
-    if (channel.length == 0) return true;
+    if (channels.length == 0) return true;
 
     let found = false;
     channels.forEach(channel => {
