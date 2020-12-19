@@ -302,7 +302,7 @@ function fetchMessage(client, id, channelReact){
     guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
-        logManager.writeDebugLog(reactionMessage.reactions.cache.array.length());
+        logManager.writeDebugLog(servers[id].reactionMessage.reactions.cache.array.length());
       });
     });
   });
