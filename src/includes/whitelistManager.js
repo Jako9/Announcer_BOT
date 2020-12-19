@@ -69,5 +69,18 @@ module.exports = {
   clear: function(message){
     serverManager.setWhitelist(message.guild.id, []);
     message.reply("Die Whitelist wurde erfolgreich zurückgesetzt.");
+  },
+
+  isValid: function(message){
+    let channels = serverManager.getWhitelist(message.guild.id);
+
+    if (channel.length == 0) return true;
+
+    let found = false;
+    channels.forEach(channel => {
+      if (channel == message.channel.name) found = true;
+    });
+
+    return found;
   }
 }

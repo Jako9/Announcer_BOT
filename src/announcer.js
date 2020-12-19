@@ -122,6 +122,8 @@ client.on('message', message => {
   var prefix = serverManager.getPrefix(id);
   var instructions = serverManager.getInstructions(id)
 
+  //Channel ist nicht gewhitelisted
+  if(!whitelistManager.isValid(message)) return;
   // Join per Befehl
   if (message.content === prefix + instructions[0][0]) {
     // Wenn in einem gültigen Channel, join
