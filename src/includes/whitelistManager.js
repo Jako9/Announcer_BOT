@@ -64,5 +64,10 @@ module.exports = {
     channels.splice(index, 1);
     serverManager.setWhitelist(id, channels);
     message.reply("Der Channel wurde erfolgreich entfernt");
+  },
+
+  clear: function(message){
+    serverManager.setWhitelist(message.guild.id, []);
+    message.reply("Die Whitelist wurde erfolgreich zurückgesetzt.");
   }
 }
