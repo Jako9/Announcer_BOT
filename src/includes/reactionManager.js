@@ -27,7 +27,7 @@ module.exports = {
 
   removeReaction: function(reaction, user){
     logManager.writeDebugLog(reaction.message.guild.name + ": Reaktion soll entfernt werden");
-    logManager.writeDebugLog(reaction.message.guild.name + ": User = " + user.userName);
+    logManager.writeDebugLog(reaction.message.guild.name + ": User = " + user);
     //Uninteressant
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel) return;
 
