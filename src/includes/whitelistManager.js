@@ -10,7 +10,7 @@ module.exports = {
       return;
     }
     let msg = "``"
-    channels.forEach(channel => msg += (channel + "\n");
+    channels.forEach(channel => msg += (channel + "\n"));
     msg += "``";
     message.reply(msg);
   },

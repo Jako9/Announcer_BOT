@@ -14,6 +14,7 @@ module.exports = {
       servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
+      servers[guild.id].whitelist = "";
       logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
       saveServer(guild.id);
     },
