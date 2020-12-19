@@ -117,7 +117,7 @@ client.on('message', message => {
     }
     return;
   }
-
+  logManager.writeDebugLog("1");
   //Fetch atrributes for current guild
   var id = message.guild.id;
   var prefix = serverManager.getPrefix(id);
@@ -144,7 +144,7 @@ client.on('message', message => {
     message.reply("Die Lautstärke ist auf " + (100 * interactionManager.getVolume(message)) + "%.");
   }
 
-
+logManager.writeDebugLog("2");
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content === prefix + instructions[4][0]){
     message.reply(interactionManager.help(prefix, instructions));
