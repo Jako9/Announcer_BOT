@@ -54,7 +54,7 @@ module.exports = {
       return;
     }
 
-    if(!channels.contains(channel.name)) {
+    if(!channels.includes(channel.name)) {
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden.");
       message.reply('Der Channel konnte nicht gefunden werden');
       return;

@@ -183,7 +183,7 @@
                 <div class="col-sm centered-column">
                     <i class="fas fa-comments feature-icon"></i>
                         <h3 class="feature-text">Role-Via-Reaction</h3>
-                    <p class="feature-explanation">Do you want to let your fellow Users choose roles by themself without them to have manage permissions? This bot provides you with the optimal soluion as the User can simply react to a message and recieve their desired role automatically!</p>
+                    <p class="feature-explanation">Do you want to distribute roles among your users? This bot provides you with the optimal soluion, so that user can simply react to a message and recieve their desired role automatically!</p>
                 </div>
                 <div class="col-sm centered-column">
                     <i class="fas fa-lock feature-icon"></i>
