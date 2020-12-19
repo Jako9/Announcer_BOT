@@ -1,7 +1,7 @@
 <?php
 
     if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])){
-        $ch = curl_init("https://hook.integromat.com/jyssa9kqy6gacwuu3g5povhy8u7yqkya?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&=PayerID=" . $_GET['PayerID']);
+        $ch = curl_init("https://hook.integromat.com/jyssa9kqy6gacwuu3g5povhy8u7yqkya?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&PayerID=" . $_GET['PayerID']);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
