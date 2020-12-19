@@ -54,6 +54,12 @@ module.exports = {
       return;
     }
 
+    if(!channels.contains(channel.name)) {
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden.");
+      message.reply('Der Channel konnte nicht gefunden werden');
+      return;
+    }
+
     let index = channels.indexOf(channel.name);
     channels.splice(index, 1);
     serverManager.setWhitelist(id, channels);
