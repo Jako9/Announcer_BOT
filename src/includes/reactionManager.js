@@ -35,17 +35,19 @@ module.exports = {
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     logManager.writeDebugLog(reaction.message.guild.name + ": Rolle = " + role.name);
     reaction.message.guild.members.fetch().then({
-      logManager.writeDebugLog(reaction.message.guild.name + ": Anzahl der Member = " + reaction.message.guild.members.cache.array.length);
-      let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-      logManager.writeDebugLog(reaction.message.guild.name + ": Member = " + member);
-      if(!role || !member){
-        logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
-        return;
-      }
 
-      logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich entfernt.");
-      member.roles.remove(role.id);
     });
+
+    logManager.writeDebugLog(reaction.message.guild.name + ": Anzahl der Member = " + reaction.message.guild.members.cache.array.length);
+    let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+    logManager.writeDebugLog(reaction.message.guild.name + ": Member = " + member);
+    if(!role || !member){
+      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht entfernt werden (Die Rolle oder der Nutzer existieren nicht).");
+      return;
+    }
+
+    logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich entfernt.");
+    member.roles.remove(role.id);
 },
 
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
