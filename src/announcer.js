@@ -8,6 +8,7 @@ const reactionManager = require('./includes/reactionManager.js');
 const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
 const vipManager = require('./includes/vipManager.js');
+const whitelistManager = require('./includes/whitelistManager.js');
 
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
@@ -200,9 +201,24 @@ client.on('message', message => {
     roleManager.showReactionRole(message);
   }
 
-//becomeVIP
+  //becomeVIP
   else if(message.content === prefix + instructions[15][0]){
     vipManager.becomeVIP(message);
+  }
+
+  //showWhitelist
+  else if(message.content === prefix + instructions[16][0]){
+    whitelistManager.show(message);
+  }
+
+  //whitelistAdd
+  else if(message.content.startsWith.(prefix + instructions[17][0])){
+    whitelistManager.addElem(message, prefix, instructions);
+  }
+
+  //whitelistRemove
+  else if(message.content.startsWith(prefix + instructions[18][0])){
+    whitelistManager.removeElem(message, prefix, instructions);
   }
 
   // Falsche Eingabe

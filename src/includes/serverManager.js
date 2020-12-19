@@ -235,6 +235,27 @@ module.exports = {
     },
 
     /**
+     * Gibt die whitelist des Servers zurück
+     *
+     * @param {number} id Id des Servers
+     */
+    getWhitelist: function(id){
+        return servers[id].whitelist;
+    },
+
+    /**
+     * Setzt den ChannelReact des Servers
+     *
+     * @param {string} id Id des Servers
+     * @param {string} whitelist whitelist des Servers
+     */
+    setChannelReact: function(id, whitelist){
+        servers[id].whitelist = whitelist;
+        saveServer(id);
+
+    },
+
+    /**
      * Setzt die ReactionMessage des Servers
      *
      * @param {string} id Id des Servers
