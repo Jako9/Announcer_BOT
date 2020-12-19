@@ -105,7 +105,9 @@ module.exports = {
           return;
         }
         //Es handelt sich um ein Verlassen
-        else if((oldUserChannel !== undefined) && (newUserChannel === undefined))
+        else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
+          
+        }
     },
 
     triggerLeave: function(message){
