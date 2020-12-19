@@ -120,6 +120,7 @@ module.exports = {
         message.reply("Du bist in keinem Channel.");
         return;
       }
+      logManager.writeDebugLog("Message = " + message.content.split(' ')[1]);
       logManager.writeDebugLog("Länge = " + message.content.split(' ').length != 2);
       logManager.writeDebugLog("Number = " + !isNaN(message.content.split(' ')[1]));
       logManager.writeDebugLog("Lower = " + message.content.split(' ')[1] <0);
