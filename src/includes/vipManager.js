@@ -5,10 +5,10 @@ const fs = require('fs');
 let https = require("https");
 let axios = require('axios');
 
-const webApi = jsonParser.read(PATH + "/config/api.json");
-
 let mp3Duration = require('mp3-duration');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
+
+const webApi = jsonParser.read(PATH + "/config/api.json");
 
 function buildEmbed(link){
   let hyperlink = '[here](' + link + ' \"become VIP\")';
