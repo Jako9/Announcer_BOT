@@ -12,8 +12,8 @@ module.exports = {
   //Create a list of all commands and their usage
   help: function (message, prefix, instructions){
     let page = 1;
-    if(message.split(' ').lenght == 2 && Number.isInteger(message.split(' ')[1])){
-      page = message.split(' ')[1];
+    if(message.content.split(' ').lenght == 2 && Number.isInteger(message.content.split(' ')[1])){
+      page = message.content.split(' ')[1];
     }
     var msg = '``` \n------------------------------------------------------------- \n' +
               'The bot should connect and disconnect automatically but if there are ' +
