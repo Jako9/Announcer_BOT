@@ -23,7 +23,7 @@ process.on('warning', function(warning) {
 //Initilizing BOT
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const KEY = process.argv.slice(2)[0];
+const KEY = process.argv.slice(2)[1];
 const JOIN = false;
 const REACTION = true;
 const ENDUNGEN = [

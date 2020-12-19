@@ -47,7 +47,7 @@ function buildEmbed(link){
   return embed;
 }
 
-function changeVIPSound(message, file, transactionsJSON, transactions, transaction vipsJSON){
+function changeVIPSound(message, file, transactionsJSON, transactions, transaction, vipsJSON){
   //File zu groß
   if(file.size > (1024 * 700)){
     message.author.send("The file is too big. The maximum filesize must be at most 700kb");
