@@ -2,8 +2,10 @@
     "name" : "",
 
     "avatar" : "",
-    
+
     "rolle": "",
+
+    "whitelist": [],
 
     "instructions":[
         "join",
@@ -21,7 +23,10 @@
         "addReaction",
         "changeReactionRole",
         "showReactionRole",
-        "becomeVIP"
+        "becomeVIP",
+        "whitelist", 
+        "whitelistAdd",
+        "whitelistRemove"
     ],
 
     "prefix" : ".",

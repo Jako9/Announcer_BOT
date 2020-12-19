@@ -14,6 +14,7 @@ module.exports = {
       servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
+      servers[guild.id].whitelist = "";
       logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
       saveServer(guild.id);
     },
@@ -235,6 +236,27 @@ module.exports = {
     },
 
     /**
+     * Gibt die whitelist des Servers zurück
+     *
+     * @param {number} id Id des Servers
+     */
+    getWhitelist: function(id){
+        return servers[id].whitelist;
+    },
+
+    /**
+     * Setzt den ChannelReact des Servers
+     *
+     * @param {string} id Id des Servers
+     * @param {string} whitelist whitelist des Servers
+     */
+    setWhitelist: function(id, whitelist){
+        servers[id].whitelist = whitelist;
+        saveServer(id);
+
+    },
+
+    /**
      * Setzt die ReactionMessage des Servers
      *
      * @param {string} id Id des Servers
@@ -251,7 +273,6 @@ module.exports = {
           try{
               id = file.split(".")[0];
               serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
-
               serverObj["timeLastJoin"] = 0;
               serverObj["channelSize"] = 0;
               serverObj["whoLocked"] = "";

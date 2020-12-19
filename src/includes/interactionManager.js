@@ -11,6 +11,7 @@ module.exports = {
 
   //Create a list of all commands and their usage
   help: function (prefix, instructions){
+    logManager.writeDebugLog("3");
     var msg = '``` \n------------------------------------------------------------- \n' +
               'The bot should connect and disconnect automatically but if there are ' +
               'any problems \nor if you want to customize usage you can use the following commands' +
@@ -18,6 +19,7 @@ module.exports = {
     for(var i = 0; i < instructions.length; i++){
       msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0] + '\'' + instructions[i][1] + '\n \n');
     }
+    logManager.writeDebugLog("4");
     return msg + '```';
   },
 
