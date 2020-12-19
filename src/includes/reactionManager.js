@@ -34,7 +34,7 @@ module.exports = {
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     logManager.writeDebugLog(reaction.message.guild.name + ": Rolle = " + role.name);
-    reaction.message.guild.members.fetch().then(console.log("HIER"));
+    reaction.message.guild.members.fetch().then(logManager.writeDebugLog("HIER"));
 
     logManager.writeDebugLog(reaction.message.guild.name + ": Anzahl der Member = " + reaction.message.guild.members.cache.array.length);
     let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
