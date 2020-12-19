@@ -117,7 +117,6 @@ client.on('message', message => {
     }
     return;
   }
-  logManager.writeDebugLog("1");
   //Fetch atrributes for current guild
   var id = message.guild.id;
   var prefix = serverManager.getPrefix(id);
@@ -145,9 +144,8 @@ client.on('message', message => {
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content === prefix + instructions[4][0]){
-    logManager.writeDebugLog("2");
-    message.reply(interactionManager.help(prefix, instructions));
+  else  if(message.content.startsWith(prefix + instructions[4][0])){
+    message.reply(interactionManager.help(message, prefix, instructions));
   }
 
   // Personalisiere Befehle mit 'set'

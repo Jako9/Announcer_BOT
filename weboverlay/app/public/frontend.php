@@ -188,7 +188,7 @@
                 <div class="col-sm centered-column">
                     <i class="fas fa-lock feature-icon"></i>
                         <h3 class="feature-text">Channel-Lock</h3>
-                    <p class="feature-explanation">Have you ever wanted to exclude an annoying colleague from your channel? Get ready for this feature. Just tell the bot to lock your current channel and enjoy some peace.</p>
+                    <p class="feature-explanation">Need some privacy? Just tell the bot to lock your current channel and enjoy some peace.</p>
                 </div>
             </div>
         </div>
