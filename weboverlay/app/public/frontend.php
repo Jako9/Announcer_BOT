@@ -162,7 +162,7 @@
     <div class="container" id="stage">
         <i class="fas fa-microphone" id="stage-mic"></i>
         <h1 class="display-4" id="stage-title">Announcer Bot</h1>
-        <p class="lead">Your Discord server is very quiet? Your always dreamed of some cool announcement sound while joining? Hold up and invite this bot.</p>
+        <p class="lead">Your Discord server is very quiet? You always dreamed of some cool announcement sound while joining? Hold up and invite this bot.</p>
         <a class="ich-hasse-links" href="https://discord.com/api/oauth2/authorize?client_id=541676543525519360&permissions=8&scope=bot">
             <div class="discord-container">
                 <i class="fab fa-discord discord-icon"></i>
@@ -178,7 +178,7 @@
                 <div class="col-sm centered-column">
                     <i class="fas fa-volume-up feature-icon"></i>
                     <h3 class="feature-text">Join-Announcement</h3>
-                    <p class="feature-explanation">When you join to a channel on your server the bot will play an announcement-sound automaticly. Become a VIP for a custom sound!</p>
+                    <p class="feature-explanation">When you join to a channel on your server the bot will play an announcement-sound automatically. Become a VIP for a custom sound!</p>
                 </div>
                 <div class="col-sm centered-column">
                     <i class="fas fa-comments feature-icon"></i>
@@ -188,7 +188,7 @@
                 <div class="col-sm centered-column">
                     <i class="fas fa-lock feature-icon"></i>
                         <h3 class="feature-text">Channel-Lock</h3>
-                    <p class="feature-explanation">Need some privacy? Just tell the bot to lock your current channel and enjoy some peace.</p>
+                    <p class="feature-explanation">Need some privacy? Just tell the bot to lock your current channel and enjoy some private moments.</p>
                 </div>
             </div>
         </div>
@@ -196,7 +196,7 @@
     <div class="container-fluid documentation" id="documentation">
             <h2 class="documentation-headline">Documentation</h2>
             <i class="fab fa-youtube documenation-icon"></i>
-            <p class="lead">Need help? Head over to our YouTube channel and watch one of our tutorials. </p>
+            <p class="lead">Need help? Refer to the 'help' command, or head over to our YouTube channel and watch one of our tutorials. </p>
     </div>
     <div class="container-fluid statistics" id="statistics">
         <div class="statistics-block">
