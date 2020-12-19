@@ -219,6 +219,11 @@ client.on('message', message => {
     whitelistManager.removeElem(message, prefix, instructions);
   }
 
+  //whitelistClear
+  else if(message.content == (prefix + instructions[19][0])){
+    whitelistManager.clear(message);
+  }
+
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[4][0] + '\' für eine Liste aller Befehle!');

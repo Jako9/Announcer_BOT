@@ -24,9 +24,10 @@
         "changeReactionRole",
         "showReactionRole",
         "becomeVIP",
-        "whitelist", 
+        "whitelist",
         "whitelistAdd",
-        "whitelistRemove"
+        "whitelistRemove",
+        "whitelistClear"
     ],
 
     "prefix" : ".",

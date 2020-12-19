@@ -18,6 +18,7 @@
         " to support the bot and get a custom joinsound! You can also dm the bot \"becomeVIP\".",
         " to show all the channels, that can talk to the bot. If empty, the bot lsitens to every channel.",
         " to add a channel, that can talk to the bot. \n Syntax: whitelistAdd CHANNEL_MENTION",
-        " to remove a channel, that can talk to the bot. \n Syntax: whitelistRemove CHANNEL_MENTION"
+        " to remove a channel, that can talk to the bot. \n Syntax: whitelistRemove CHANNEL_MENTION",
+        " to clear all whitelisted channels."
     ]
 }
