@@ -273,7 +273,7 @@ module.exports = {
           try{
               id = file.split(".")[0];
               serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
-
+              logManager.writeDebugLog("hier");
               serverObj["timeLastJoin"] = 0;
               serverObj["channelSize"] = 0;
               serverObj["whoLocked"] = "";
