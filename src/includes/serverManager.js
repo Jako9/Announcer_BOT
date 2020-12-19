@@ -297,14 +297,10 @@ module.exports = {
 function fetchMessage(client, id, channelReact){
   if(channelReact == "") return;
 
-logManager.writeDebugLog("Fetching Messages..");
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
-    logManager.writeDebugLog("Starting with guilds..");
     guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => {
-      logManager.writeDebugLog("Proceeding with channels..");
       client.guilds.fetch(id).then(guild => {
-        logManager.writeDebugLog("Fetching Reaction..");
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
       });
     });
