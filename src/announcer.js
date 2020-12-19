@@ -228,7 +228,7 @@ client.on('message', message => {
   }
 
   //play
-  else if(message.content == (prefix + instructions[20][0])){
+  else if(message.content.startsWith(prefix + instructions[20][0])){
     connectionManager.play(message, prefix, instructions);
   }
 
