@@ -17,6 +17,7 @@ module.exports = {
     }
     logManager.writeDebugLog("Seite = " + page);
     logManager.writeDebugLog("Ist eine Nummer = " + !isNaN(message.content.split(' ')[1]));
+    logManager.writeDebugLog("Länge gleich 2 = " + (message.content.split(' ').lenght == 2));
     var msg = '``` \n------------------------------------------------------------- \n' +
               'The bot should connect and disconnect automatically but if there are ' +
               'any problems \nor if you want to customize usage you can use the following commands' +
@@ -24,7 +25,7 @@ module.exports = {
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
       msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0] + '\'' + instructions[i][1] + '\n \n');
     }
-    return msg + '```';
+    return msg + "Seite: " + page + '```';
   },
 
   changeCommands: function (message, prefix, instructions){
