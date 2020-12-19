@@ -306,14 +306,10 @@ logManager.writeDebugLog("Fetching Messages..");
       client.guilds.fetch(id).then(guild => {
         logManager.writeDebugLog("Fetching Reaction..");
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
-        servers[id].reactionMessage.reactions.resolve().then(reaction => {
-          logManager.writeDebugLog("Reaktion = " + reaction);
-          reaction.fetch();
-        });
+        guild.members.fetch();
       });
     });
   });
-  //
 }
 
 function saveServer(id){
