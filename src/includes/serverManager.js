@@ -306,7 +306,9 @@ logManager.writeDebugLog("Fetching Messages..");
       client.guilds.fetch(id).then(guild => {
         logManager.writeDebugLog("Fetching Reaction..");
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
-        logManager.writeDebugLog("Länge = " + servers[id].reactionMessage.reactions.cache.array.length);
+        servers[id].reactionMessage.reactions.fetch().then(reactions => {
+          logManager.writeDebugLog("Länge = " + servers[id].reactionMessage.reactions.cache.array.length);
+        });
       });
     });
   });
