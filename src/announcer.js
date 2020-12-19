@@ -124,7 +124,7 @@ client.on('message', message => {
 
   //Channel ist nicht gewhitelisted
   if(!whitelistManager.isValid(message)) return;
-  
+
   // Join per Befehl
   if (message.content === prefix + instructions[0][0]) {
     // Wenn in einem gültigen Channel, join
@@ -225,6 +225,21 @@ client.on('message', message => {
   //whitelistClear
   else if(message.content == (prefix + instructions[19][0])){
     whitelistManager.clear(message);
+  }
+
+  //play
+  else if(message.content == (prefix + instructions[20][0])){
+    connectionManager.play(message, prefix, instructions);
+  }
+
+  //setJoinSound
+  else if(message.content.startsWith(prefix + instructions[21][0])){
+    connectionManager.setJoinSound(message, prefix, instructions);
+  }
+
+  //removeJoinSound
+  else if(message.content == (prefix + instructions[22][0])){
+    connectionManager.removeJoinSound(message);
   }
 
   // Falsche Eingabe

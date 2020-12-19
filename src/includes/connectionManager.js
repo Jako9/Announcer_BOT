@@ -86,7 +86,7 @@ module.exports = {
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
             file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
 
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file ));
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             return;
           }
 
@@ -105,12 +105,32 @@ module.exports = {
           return;
         }
         //Es handelt sich um ein Verlassen
-        else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
-
-        }
+        else if((oldUserChannel !== undefined) && (newUserChannel === undefined))
     },
 
     triggerLeave: function(message){
         leave(message);
+    },
+
+    play: function(message, prefix, instructions){
+      let channel = message.member.voice.channel;
+      if(!channel){
+        message.reply("Du bist in keinem Channel.");
+        return;
+      }
+      if(message.content.split(' ').length != 2 || !isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+        return;
+      }
+      let sound = message.content.split(' ')[1];
+      channel.join().then(connection => bot_join(channel, connection, PATH + "/resources/default/" + sound + SUFFIX));
+    },
+
+    setJoinSound: function(message, prefix, instructions){
+
+    },
+
+    removeJoinSound: function(message){
+
     }
 }

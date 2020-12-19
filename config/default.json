@@ -19,6 +19,9 @@
         " to show all the channels, that can talk to the bot. If empty, the bot lsitens to every channel.",
         " to add a channel, that can talk to the bot. \n Syntax: whitelistAdd CHANNEL_MENTION",
         " to remove a channel, that can talk to the bot. \n Syntax: whitelistRemove CHANNEL_MENTION",
-        " to clear all whitelisted channels."
+        " to clear all whitelisted channels.",
+        " to listen to one of the available joinsounds. \n Syntax: play NUMBER (NUMBER between 0-9) => If you want a custom joinsound, checkout \"becomeVIP\"",
+        " to set the sound thats being played while you join to your desired sound. \n Syntax: setJoinSound NUMBER (NUMBER between 0-9)",
+        " to no longer be accompanied by a joinsound :("
     ]
 }
