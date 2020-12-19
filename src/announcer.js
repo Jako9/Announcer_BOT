@@ -10,6 +10,10 @@ const logManager = require('./includes/logManager.js');
 const vipManager = require('./includes/vipManager.js');
 const whitelistManager = require('./includes/whitelistManager.js');
 
+const dbManager = require('./includes/databaseManager.js');
+
+dbManager.openConnection();
+
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
