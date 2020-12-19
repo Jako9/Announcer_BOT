@@ -121,7 +121,7 @@ module.exports = {
         return;
       }
       logManager.writeDebugLog("Message = " + message.content.split(' ')[1]);
-      logManager.writeDebugLog("Länge = " + message.content.split(' ').length != 2);
+      logManager.writeDebugLog("Länge = " + message.content.split(' ').length);
       logManager.writeDebugLog("Number = " + !isNaN(message.content.split(' ')[1]));
       logManager.writeDebugLog("Lower = " + message.content.split(' ')[1] <0);
       logManager.writeDebugLog("Upper = " + message.content.split(' ')[1] > 9);
