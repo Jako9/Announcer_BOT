@@ -1,32 +1,36 @@
 <?php
 
-if(isset($_POST['transID']) && isset($_POST['state'])){
-    $transactionId = rtrim($_POST['transID']);
-    $state = $_POST['state'];
+$api = readFromJSON('api.json');
+$processPayment = $api->processPayment;
+$password = $processPayment->password;
 
-    $pendingPayments = readFromJSON('pendingPayments.json');
-    $pendingPaymentsArray = $pendingPayments->transactions;
+if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
+    if($_POST['pass'] == $password){
+        $transactionId = rtrim($_POST['transID']);
+        $state = $_POST['state'];
 
-    if($pendingPaymentsArray != null){
-        for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
-            
-            $transaction = $pendingPaymentsArray[$i];
-    
-            if($transaction->transID != null){
-                if(strval($transaction->transID) == strval($transactionId)){
-                    $transaction->status = $state;
-                    $pendingPaymentsArray[$i] = $transaction;
+        $pendingPayments = readFromJSON('pendingPayments.json');
+        $pendingPaymentsArray = $pendingPayments->transactions;
+
+        if($pendingPaymentsArray != null){
+            for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
+                
+                $transaction = $pendingPaymentsArray[$i];
+        
+                if($transaction->transID != null){
+                    if(strval($transaction->transID) == strval($transactionId)){
+                        $transaction->status = $state;
+                        $pendingPaymentsArray[$i] = $transaction;
+                    }
                 }
+                
             }
-            
+
+            $pendingPayments->transactions = $pendingPaymentsArray;
+
+            $encodedArrray = json_encode($pendingPayments);
+            file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
         }
-
-        echo("unten: " . print_r($pendingPaymentsArray, true));
-
-        $pendingPayments->transactions = $pendingPaymentsArray;
-
-        $encodedArrray = json_encode($pendingPayments);
-        file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
     }
 }
 
@@ -123,7 +127,7 @@ function readFromJSON($file){
     <div class="container" id="stage">
         <i class="fas fa-microphone" id="stage-mic"></i>
         <h1 class="display-4" id="stage-title">Thank your for your Payment</h1>
-        <p class="lead">Thank you for your interest in this discord bot. The activation of your custom join sound may take up to 30 minutes.<br>You have any questions regarding your purchase, please contact the following email: <a href="mailto:announcer.backend@gmail.com"><i class="far fa-envelope"></i></a></p>
+        <p class="lead">Thank you for your interest in this discord bot. In the next Step you can send your custom sound to the bot. The activation may take up to 30 minutes.<br>You have any questions regarding your purchase, please contact the following email: <a href="mailto:announcer.backend@gmail.com"><i class="far fa-envelope"></i></a></p>
         <a class="ich-hasse-links" href="https://discord.com/api/oauth2/authorize?client_id=541676543525519360&permissions=8&scope=bot">
         </a>
     </div>

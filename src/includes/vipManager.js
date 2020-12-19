@@ -5,6 +5,7 @@ const fs = require('fs');
 let https = require("https");
 let axios = require('axios');
 
+const webApi = jsonParser.read(PATH + "/config/api.json");
 
 let mp3Duration = require('mp3-duration');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
@@ -95,7 +96,8 @@ module.exports = {
         if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
         return;
       }
-      https.get('https://hook.integromat.com/rq89fjoouy985of9qg8tltpjgynnhj3a', (resp) => {
+
+      https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
       let data = '';
 
        //Antwort
