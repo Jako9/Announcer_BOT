@@ -54,7 +54,7 @@ module.exports = {
       return;
     }
 
-    int index = channels.indexOf(channel.name);
+    let index = channels.indexOf(channel.name);
     channels.splice(index, 1);
     serverManager.setWhitelist(id, channels);
     message.reply("Der Channel wurde erfolgreich entfernt");
