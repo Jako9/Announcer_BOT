@@ -1,13 +1,23 @@
 <?php
 
+    $api = readFromJSON('api.json');
+    $handleThankYou = $api->handleThankYou;
+    $link = $handleThankYou->link;
+    $password = $handleThankYou->password;
+
     if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])){
-        $ch = curl_init("https://hook.integromat.com/jyssa9kqy6gacwuu3g5povhy8u7yqkya?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&PayerID=" . $_GET['PayerID']);
+        $ch = curl_init($link ."?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&PayerID=" . $_GET['PayerID'] . "&pass=" . $password);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $output = curl_exec($ch);      
         curl_close($ch);
         echo $output;
+    }
+
+    function readFromJSON($file){
+        $json = file_get_contents('../../../config/' . $file);
+        return json_decode($json);
     }
 
 ?>
