@@ -5,6 +5,8 @@ $processPayment = $api->processPayment;
 $password = $processPayment->password;
 
 if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
+    echo($_POST['pass']);
+    echo($password);
     if($_POST['pass'] == $password){
         $transactionId = rtrim($_POST['transID']);
         $state = $_POST['state'];
