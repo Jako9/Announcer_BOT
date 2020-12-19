@@ -106,7 +106,7 @@ module.exports = {
         }
         //Es handelt sich um ein Verlassen
         else if((oldUserChannel !== undefined) && (newUserChannel === undefined)){
-          
+
         }
     },
 
@@ -120,6 +120,10 @@ module.exports = {
         message.reply("Du bist in keinem Channel.");
         return;
       }
+      logManager.writeDebugLog("Länge = " + message.content.split(' ').length != 2);
+      logManager.writeDebugLog("Number = " + !isNaN(message.content.split(' ')[1]);
+      logManager.writeDebugLog("Lower = " + message.content.split(' ')[1] <0);
+      logManager.writeDebugLog("Upper = " + message.content.split(' ')[1] > 9);
       if(message.content.split(' ').length != 2 || !isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
         message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
         return;
