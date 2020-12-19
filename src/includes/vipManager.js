@@ -135,7 +135,6 @@ module.exports = {
   },
 
   fileReceived: function(message, file){
-    message.author.send("WORKED, File = " + file.proxyURL);
     let transactionsJSON = jsonParser.read(PATH + "/config/pendingPayments.json");
     let transactions = transactionsJSON.transactions;
     let vipsJSON = jsonParser.read(PATH + "/config/vips.json");
@@ -162,22 +161,17 @@ module.exports = {
         //Zahlung erfolgreich
         else if(transaction.status == "approved"){
 
-
-          /**
-          **TODO HIER MP3 STUFF
-          **/
-
           //File zu groß
           let breakIt = false;
           if(file.size > (1024 * 700)){
             message.author.send("The file is too big. The maximum filesize must be at most 700kb");
             breakIt = true;
-            
+
           }
 
           if(!breakIt){
             //const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
-            
+
             axios.request({
               responseType: 'arraybuffer',
               url: file.proxyURL,
@@ -191,7 +185,7 @@ module.exports = {
               const pathToCheck = outputFilename;
 
               //const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
-      
+
               let failed = false;
               logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
               mp3Duration(pathToCheck, function (err, duration) {
@@ -201,13 +195,13 @@ module.exports = {
                 }
 
                 logManager.writeDebugLog("Die duration ist: " + duration);
-                
+
                 if(duration > 8){
                   message.author.send("The duration of the joinsound has to be less then 8 seconds.");
                   failed = true;
                 }
                 //File valid, trage den VIP sound ein
-              
+
                 if(!failed){
                   //copy ins zielverzeichnis
                   jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
@@ -225,12 +219,12 @@ module.exports = {
               jsonParser.delete(pathToCheck);
               });
 
-                
+
               }).catch(err => {
                 message.author.send("Your submitted file is not a valid mp3. Please try again!");
               });
-            
-            
+
+
           }
         }
         //Das sollte nicht passieren
@@ -245,11 +239,5 @@ module.exports = {
 
     //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
     message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.");
-  },
-
-  becomeVIPTest: function(message){
-    let exampleEmbed = buildEmbed("https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-17V25142MM4028412");
-    message.author.send({ embed: exampleEmbed}).catch();
-    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
-    }
+  }
 }
