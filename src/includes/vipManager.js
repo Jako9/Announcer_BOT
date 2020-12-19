@@ -48,73 +48,65 @@ function buildEmbed(link){
 
 function changeVIPSound(message, file, transactionsJSON, transactions, vipsJSON){
   //File zu groß
-  let breakIt = false;
   if(file.size > (1024 * 700)){
     message.author.send("The file is too big. The maximum filesize must be at most 700kb");
-    breakIt = true;
-
+    return;
   }
 
-  if(!breakIt){
-    //const pathToCheck = jsonParser.download(PATH + "/resources/.cache/" ,file.proxyURL, message.author.id);
+  axios.request({
+    responseType: 'arraybuffer',
+    url: file.proxyURL,
+    method: 'get',
+    headers: {
+      'Content-Type': 'audio/mpeg',
+    },
+  }).then((result) => {
+    const outputFilename = PATH + "/resources/.cache/" + message.author.id + ".mp3";
+    fs.writeFileSync(outputFilename, result.data);
+    const pathToCheck = outputFilename;
 
-    axios.request({
-      responseType: 'arraybuffer',
-      url: file.proxyURL,
-      method: 'get',
-      headers: {
-        'Content-Type': 'audio/mpeg',
-      },
-    }).then((result) => {
-      const outputFilename = PATH + "/resources/.cache/" + message.author.id + ".mp3";
-      fs.writeFileSync(outputFilename, result.data);
-      const pathToCheck = outputFilename;
+    let failed = false;
+    logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
+    mp3Duration(pathToCheck, function (err, duration) {
+      if(err){
+        message.author.send("1: Your submitted file is not a valid mp3. Please try again!");
+        failed = true;
+      }
 
-      //const fileToWrite  = fs.createWriteStream(PATH + "/resources/.cache/" + message.author.id + ".mp3");
+      logManager.writeDebugLog("Die duration ist: " + duration);
 
-      let failed = false;
-      logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
-      mp3Duration(pathToCheck, function (err, duration) {
-        if(err){
-          message.author.send("1: Your submitted file is not a valid mp3. Please try again!");
-          failed = true;
+      if(duration > 8){
+        message.author.send("The duration of the joinsound has to be less then 8 seconds.");
+        failed = true;
+      }
+      //File valid, trage den VIP sound ein
+
+      if(!failed){
+        //copy ins zielverzeichnis
+        jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
+
+        //Füge VIP hinzu
+        if(vipsJSON != null){
+          message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+          vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
+          const index = transactions.indexOf(transaction);
+          transactions.splice(index,1);
+          transactionsJSON.transactions = transactions
+
+          jsonParser.write(PATH + "/config/vips.json", vipsJSON);
+          jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
         }
-
-        logManager.writeDebugLog("Die duration ist: " + duration);
-
-        if(duration > 8){
-          message.author.send("The duration of the joinsound has to be less then 8 seconds.");
-          failed = true;
+        else{
+          message.author.send("Your joinsound has been updated successfully!");
         }
-        //File valid, trage den VIP sound ein
-
-        if(!failed){
-          //copy ins zielverzeichnis
-          jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
-
-          //Füge VIP hinzu
-          if(vipsJSON != null){
-            message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
-            vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
-            const index = transactions.indexOf(transaction);
-            transactions.splice(index,1);
-            transactionsJSON.transactions = transactions
-
-            jsonParser.write(PATH + "/config/vips.json", vipsJSON);
-            jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
-          }
-          else{
-            message.author.send("Your joinsound has been updated successfully!");
-          }
-        }
-      jsonParser.delete(pathToCheck);
-      });
+      }
+    jsonParser.delete(pathToCheck);
+    });
 
 
-      }).catch(err => {
-        message.author.send("2: Your submitted file is not a valid mp3. Please try again!");
-      });
-  }
+    }).catch(err => {
+      message.author.send("2: Your submitted file is not a valid mp3. Please try again!");
+    });
 }
 
 function unMergeArrays(a){
