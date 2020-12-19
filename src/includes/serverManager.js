@@ -299,6 +299,7 @@ function fetchMessage(client, id, channelReact){
 
   //Aua ich weiß es selber danke
   client.guilds.fetch(id).then(guild => guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => client.guilds.fetch(id).then(guild => msg = servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true))));
+  server[id].reactionMessage.awaitReactions((reaction, user) => true).then(collected => logManager.writeBootLog(collected.size + " Reaktionen geladen...")).catch(e => logManager.writeBootLog("Reaktionen konnten nicht geldaen werden"));
 }
 
 function saveServer(id){
