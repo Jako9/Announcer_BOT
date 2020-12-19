@@ -47,7 +47,7 @@ function buildEmbed(link){
   return embed;
 }
 
-function changeVIPSound(message, file, transactionsJSON, transactions, vipsJSON){
+function changeVIPSound(message, file, transactionsJSON, transactions, transaction, vipsJSON){
   //File zu groß
   if(file.size > (1024 * 700)){
     message.author.send("The file is too big. The maximum filesize must be at most 700kb");
@@ -211,7 +211,7 @@ module.exports = {
     //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
     vips.forEach(vip => {
       if(vip == message.author.id){
-        changeVIPSound(message, file, null, null, null);
+        changeVIPSound(message, file, null, null, null, null);
         found = true;
       }
     });
@@ -227,7 +227,7 @@ module.exports = {
         }
         //Zahlung erfolgreich
         else if(transaction.status == "approved"){
-          changeVIPSound(message, file, transactionsJSON, transaction, vipsJSON);
+          changeVIPSound(message, file, transactionsJSON, transactions, transaction, vipsJSON);
         }
         //Das sollte nicht passieren
         else{
