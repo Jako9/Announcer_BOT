@@ -47,7 +47,7 @@ module.exports = {
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     logManager.writeDebugLog(reaction.message.guild.name + ": Rolle = " + role.name);
-    reaction.message.guild.members.fetch().then(delRole(reaction, role,user));
+    reaction.message.guild.members.fetch().then(delRole(reaction, role,user)).catch(logManager.writeErrorLog(e));
 },
 
   //Das Funktioniert nicht ganz, sollte neu gemacht werden
