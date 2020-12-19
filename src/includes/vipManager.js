@@ -160,6 +160,8 @@ module.exports = {
         return;
       }
 
+      logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
+
       https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
       let data = '';
 
