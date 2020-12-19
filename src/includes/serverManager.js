@@ -250,7 +250,7 @@ module.exports = {
      * @param {string} id Id des Servers
      * @param {string} whitelist whitelist des Servers
      */
-    setChannelReact: function(id, whitelist){
+    setWhitelist: function(id, whitelist){
         servers[id].whitelist = whitelist;
         saveServer(id);
 
