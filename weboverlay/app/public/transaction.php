@@ -13,7 +13,6 @@ if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
         $pendingPayments = readFromJSON('pendingPayments.json');
         $pendingPaymentsArray = $pendingPayments->transactions;
 
-        echo("Ich kam bis nach der Abfrage");
 
         updatePaymentStatus($transactionId, $state);
     }
@@ -46,7 +45,9 @@ function updatePaymentStatus($transID, $state){
     $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID=" . $transID;
 
     $result = $connection->query($sql);
-    $arr = array();
+    if(!$result){
+        echo($connection->error);
+    }
 
     $connection->close();
 }
