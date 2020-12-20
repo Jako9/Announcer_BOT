@@ -85,7 +85,7 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results[0]);
+                callback(results[0].isVip);
             }
         });
         connection.end();
