@@ -24,7 +24,7 @@ process.on('warning', function(warning) {
 });
 
 dbManager.getUser('174558221535674369', function(out){
-  logManager.writeDebugLog(JSON.stringify(out));
+  logManager.writeDebugLog(out.username);
 });
 
 //Initilizing BOT
