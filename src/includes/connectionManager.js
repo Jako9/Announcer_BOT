@@ -138,8 +138,16 @@ module.exports = {
             message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
           }
           else{
-            dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
-            message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+            dbManager.getUser(message.author.id, function(user){
+              if(!user){
+                dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
+                message.reply("Der Bot begleitet dich nun!");
+              }
+              else{
+                dbManager.setJoinSound(message.author.id,message.content.split(' ')[1]);
+                message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+              }
+            });
           }
 
         }
