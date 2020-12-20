@@ -279,7 +279,7 @@ function establishConnection(){
         database : database,
         user     : user,
         password : password,
-        charset : 'utf8'
+        charset : 'utf8mb4'
     });
 
     return connection;
