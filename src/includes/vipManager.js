@@ -129,7 +129,7 @@ function isPending(userID){
   return found;
 }
 
-function isVip(userID){
+function isVip(userID, callback){
     /* vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
@@ -137,16 +137,15 @@ function isVip(userID){
     });
     return found; */
 
-  let is = false;
-
   dbManager.getUser(userID, function(out){
     logManager.writeDebugLog(out.isVip);
     if(out.isVip == 1){
-      is = true;
+      callback(true);
+    }else{
+      callback(true);
     }
   });
-  logManager.writeDebugLog(is);
-  return is;
+  
 }
 
 function getLink(userID){
@@ -160,57 +159,59 @@ function getLink(userID){
 
 module.exports = {
     becomeVIP: function(message){
-      if(isVip(message.author.id)){
-        message.author.send("Du bist schon VIP!").catch();
-        return;
-      }
-      if(isPending(message.author.id)){
-        let link = getLink(message.author.id);
-        let embed = buildEmbed(link);
-        message.author.send({ embed: embed}).catch();
-        if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
-        return;
-      }
-
-      logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
-
-      https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
-      let data = '';
-
-       //Antwort
-      resp.on('data', (chunk) => {
-        data += chunk;
-      });
-
-      // The whole response has been received. Print out the result.
-      resp.on('end', () => {
-        let jsonData = JSON.parse(data);
-        let link = jsonData.paypalLink;
-        if(link){
-          let transactions = jsonParser.read(PATH + "/config/pendingPayments.json");
-          let transaction = transactions.transactions;
-          let transID = jsonData.transID;
-          let userID = message.author.id;
-          transaction.push({
-            "transID" : transID,
-            "userID" : userID,
-            "link" : link,
-            "status" : "Pending"
-          });
-          transactions.transactions = transaction;
-          jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-          let embed = buildEmbed(link);
-          message.author.send({ embed: embed}).catch();
-          if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+      isVip(message.author.id, function(is){
+        if(is){
+          message.author.send("Du bist schon VIP!").catch();
         }else{
-          message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
+          if(isPending(message.author.id)){
+            let link = getLink(message.author.id);
+            let embed = buildEmbed(link);
+            message.author.send({ embed: embed}).catch();
+            if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+            return;
+          }
+    
+          logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
+    
+          https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
+          let data = '';
+    
+           //Antwort
+          resp.on('data', (chunk) => {
+            data += chunk;
+          });
+    
+          // The whole response has been received. Print out the result.
+          resp.on('end', () => {
+            let jsonData = JSON.parse(data);
+            let link = jsonData.paypalLink;
+            if(link){
+              let transactions = jsonParser.read(PATH + "/config/pendingPayments.json");
+              let transaction = transactions.transactions;
+              let transID = jsonData.transID;
+              let userID = message.author.id;
+              transaction.push({
+                "transID" : transID,
+                "userID" : userID,
+                "link" : link,
+                "status" : "Pending"
+              });
+              transactions.transactions = transaction;
+              jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
+              let embed = buildEmbed(link);
+              message.author.send({ embed: embed}).catch();
+              if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+            }else{
+              message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
+            }
+    
+          });
+    
+        }).on("error", (err) => {
+          console.log("Error: " + err.message);
+        });
         }
-
-      });
-
-    }).on("error", (err) => {
-      console.log("Error: " + err.message);
-    });
+      })
   },
 
   fileReceived: function(message, file){
