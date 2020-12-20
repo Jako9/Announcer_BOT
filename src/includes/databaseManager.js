@@ -162,10 +162,14 @@ module.exports = {
 };
 
 function establishConnection(){
-    return connection = mysql.createConnection({
+    connection = mysql.createConnection({
         host : 'localhost',
         database : database,
         user     : user,
         password : password
     });
+
+    connection.connect();
+
+    return connection;
 }
