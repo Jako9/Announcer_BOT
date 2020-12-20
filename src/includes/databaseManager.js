@@ -165,7 +165,7 @@ module.exports = {
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
-                        callback(results[0]);
+                        callback(true);
                     }else{
                         callback(false);
                     }
