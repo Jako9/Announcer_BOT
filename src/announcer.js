@@ -23,9 +23,9 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning.stack);
 });
 
-// dbManager.getUser('174558221535674369', function(out){
-//   logManager.writeDebugLog(out.isVip);
-// });
+dbManager.getVip('174558221535674369', function(out){
+  logManager.writeDebugLog(out);
+});
 
 //Initilizing BOT
 const Discord = require('discord.js');
