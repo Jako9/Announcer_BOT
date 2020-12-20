@@ -278,9 +278,7 @@ module.exports = {
             dbServer["whoLocked"] = "";
             dbServer["reactionMessage"] = null;
 
-
-
-            dbServer.instructions = JSON.parse(dbServer.instructions);
+            //dbServer.instructions = JSON.parse(dbServer.instructions);
 
             logManager.writeDebugLog(dbServer.instructions);
 
