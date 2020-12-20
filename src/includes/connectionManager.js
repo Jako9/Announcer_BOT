@@ -138,6 +138,11 @@ module.exports = {
     },
 
     removeJoinSound: function(message){
-
+      if(isVip(message.member.id)){
+        message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+        return;
+      }
+      serverManager.removeUser(message.member.id);
+      message.reply("Der Bot begleitet dich nun nicht mehr");
     }
 }
