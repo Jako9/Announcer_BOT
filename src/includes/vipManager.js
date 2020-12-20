@@ -137,10 +137,10 @@ function isVip(userID, callback){
     });
     return found; */
 
-  dbManager.getUser(userID, function(out){
+  dbManager.getVip(userID, function(out){
     logManager.writeDebugLog(out.isVip);
     if(out){
-      if(out.isVip == 1){
+      if(out == 1){
         callback(true);
       }else{
         callback(false);
