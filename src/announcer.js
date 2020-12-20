@@ -23,29 +23,7 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning.stack);
 });
 
-dbManager.addUser('278573049287278592', 'joshua.se', 'https://cdn.discordapp.com/avatars/278573049287278592/d10aad6592739dc03c9764aff7aa5b1a.webp', '0');
-dbManager.addUser('244563226711293953', 'Shisuki', 'https://cdn.discordapp.com/avatars/244563226711293953/6213743d20424c6ec7ee254afa691cbb.webp', '0');
-dbManager.addUser('406618328061181952', 'Soph', 'https://cdn.discordapp.com/avatars/406618328061181952/7f717da83545eab0ed45a0e244f0fa9c.webp', '0');
-dbManager.addUser('235170831095955466', 'MrMorkat', 'https://cdn.discordapp.com/avatars/235170831095955466/a8a3be7991d733cf880fc6ad45006ae7.webp', '0');
-dbManager.addUser('229322210072985601', 'Daalmann', 'https://cdn.discordapp.com/avatars/229322210072985601/a9953ae3a441a8076f0c5d1420b80028.webp', '0');
-dbManager.addUser('174558221535674369', 'Printerboy', 'https://cdn.discordapp.com/avatars/174558221535674369/ebf81228dac6cd22d90a2e721b9c7888.webp', '0');
-dbManager.addUser('346743271738966018', 'CptOdin / Thomas', 'https://cdn.discordapp.com/avatars/346743271738966018/02454cdb9bb8759ee1aaf881f64be71f.webp', '0');
-dbManager.addUser('212605029612257290', 'Metmob02', 'https://cdn.discordapp.com/avatars/212605029612257290/32d17a6efdc143a44fe19cb62efe88ff.webp', '0');
-dbManager.addUser('210855895696015361', 'kesira', 'https://cdn.discordapp.com/avatars/210855895696015361/40c8183722e92bd3c5117e0a6c89bc73.webp', '0');
-dbManager.addUser('421803620858724363', 'jimeow', 'https://cdn.discordapp.com/avatars/421803620858724363/d6deb4addfa9d85984917b1f2f11adfd.webp', '0');
-dbManager.addUser('224281303967727616', 'AminGames', 'https://cdn.discordapp.com/avatars/224281303967727616/318d02dccb00667fbb5f6c99c307a4e0.webp', '0');
-dbManager.addUser('268485499969208321', 'Chickenfuchs', 'https://cdn.discordapp.com/avatars/268485499969208321/e730d487a354d1dd6f978e4d038f282c.webp', '0');
-
-dbManager.setVip('278573049287278592');
-dbManager.setVip('244563226711293953');
-dbManager.setVip('406618328061181952');
-dbManager.setVip('235170831095955466');
-dbManager.setVip('229322210072985601');
-dbManager.setVip('174558221535674369');
-dbManager.setVip('346743271738966018');
-dbManager.setVip('212605029612257290');
 dbManager.setVip('210855895696015361');
-dbManager.setVip('421803620858724363');
 dbManager.setVip('224281303967727616');
 dbManager.setVip('268485499969208321');
 
