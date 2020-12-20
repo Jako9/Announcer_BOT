@@ -155,12 +155,11 @@ module.exports = {
                 }else{
                   message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
                 }
+              }).on("error", (err) => {
+                console.log("Error: " + err.message);
               });
-    
             });
           }
-        }).on("error", (err) => {
-          console.log("Error: " + err.message);
         });
         }
       })
