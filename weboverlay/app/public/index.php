@@ -163,14 +163,6 @@ function printServer(){
                                 </div>
                             <i class="reaction-role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-reaction-role-'. $i .'"></i>
                             </div>
-                            <div class="server-settings server-instructions">
-                                <h3 class="setting-title">Instruktionen</h3>
-                                <div class="setting-ist">
-                                    <div class="array-box instruction-editor">
-                                        '. $instructions .'
-                                    </div>
-                                </div>
-                            </div>
                             <div class="server-settings server-prefix">
                                 <h3 class="setting-title">Prefix</h3>
                                 <div class="setting-ist">
