@@ -18,11 +18,11 @@ let connection = mysql.createConnection({
 module.exports = {
 
     addUser: function(userID, username, avatar, joinsound){
-        con = connection.connect();
+        connection.connect();
         
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
 
-        con.query(q);
+        connection.query(q);
         connection.end();
     }
 };
