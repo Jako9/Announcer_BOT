@@ -12,7 +12,7 @@ const whitelistManager = require('./includes/whitelistManager.js');
 
 const dbManager = require('./includes/databaseManager.js');
 
-dbManager.openConnection();
+dbManager.addUser('1', 'max', 'https://lolol.de', '1');
 
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);

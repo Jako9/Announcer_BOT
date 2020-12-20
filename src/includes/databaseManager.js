@@ -16,11 +16,13 @@ let connection = mysql.createConnection({
 
 
 module.exports = {
-    openConnection: function(){
-        connection.connect();
-    },
 
-    closeConnection: function(){
+    addUser: function(userID, username, avatar, joinsound){
+        con = connection.connect();
+        
+        let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
+
+        con.query(q);
         connection.end();
     }
 };
