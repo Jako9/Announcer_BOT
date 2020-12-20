@@ -21,6 +21,6 @@
     "ffmpeg-static": "^4.2.7",
     "mp3-duration": "^1.1.0",
     "mysql": "^2.18.1",
-    "@discordjs/opus": "0.3.3"
+    "opusscript": "0.0.7"
   }
 }
