@@ -236,7 +236,7 @@ function printServer(){
 
 
 function printVips(){
-    print_r(getVipsFromDatabase(), true);
+   echo print_r(getVipsFromDatabase(), true);
 }
 
 function readLogFile($file){
