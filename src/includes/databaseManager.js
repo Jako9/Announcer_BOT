@@ -51,15 +51,18 @@ module.exports = {
 
         out = false;
 
-        let q = "SELECT * FROM users WHERE userID=" + userID;
+        connection.connect(function(err){
+            if(err) throw err;
+            let q = "SELECT * FROM users WHERE userID=" + userID;
 
-        connection.query(q, [true], (error, results, fields) => {
-            if(error){
-                throw err;
-            }else{
-                out = results;
-            }
-        });
+            connection.query(q, [true], (error, results, fields) => {
+                if(error){
+                    throw err;
+                }else{
+                    out = results;
+                }
+            });
+         });
         connection.end();
         return out;
     },
@@ -168,8 +171,6 @@ function establishConnection(){
         user     : user,
         password : password
     });
-
-    connection.connect();
 
     return connection;
 }
