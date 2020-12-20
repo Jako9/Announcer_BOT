@@ -71,7 +71,7 @@ module.exports = {
     removeUser: function(userID, callback){
         let connection = establishConnection();
 
-        let q = "DELETE * FROM users WHERE userID=" + userID;
+        let q = "DELETE FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
             if(error){
