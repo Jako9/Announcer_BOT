@@ -88,15 +88,6 @@ module.exports = {
           //Antispamschutz => Bot ist gerade erst gejoint
           if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
 
-          //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
-          /* if(isVip(newState.member.id)){
-            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-            file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
-
-            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
-            return;
-          } */
-
           isVip(newState.member.id, function(out){
             if(out){
               serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
@@ -153,11 +144,13 @@ module.exports = {
     },
 
     removeJoinSound: function(message){
-      if(isVip(message.member.id)){
-        message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
-        return;
-      }
-      dbManager.removeUser(message.member.id);
-      message.reply("Der Bot begleitet dich nun nicht mehr");
+      isVip(message.member.id, function(is){
+        if(is){
+          message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+        }else{
+          dbManager.removeUser(message.member.id);
+          message.reply("Der Bot begleitet dich nun nicht mehr");
+        }
+      });   
     }
 }
