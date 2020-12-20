@@ -67,7 +67,7 @@ function printServer(){
             $pObj->standartRole = "";
 
             $jToWrite = json_encode($pObj);
-            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $jToWrite->volume);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
@@ -122,7 +122,7 @@ function printServer(){
             $jToWrite = json_encode($pObj);
             //file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
-            updateServerInDatabase($jToWrite->guildID, $jToWrite->rolle, $jToWrite->standartRole, $jToWrite->prefix, $jToWrite->volume);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
 
             $showSaveSuccess = !$showSaveError;
         }else{
