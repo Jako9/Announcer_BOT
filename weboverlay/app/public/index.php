@@ -317,7 +317,7 @@ function connectToDatabase(){
     return $conn;
 }
 
-function getVipsFromDatabase($connection){
+function getVipsFromDatabase(){
     $connection = connectToDatabase();
     $sql = "SELECT userID, username, avatar FROM users WHERE isVip=1";
 
