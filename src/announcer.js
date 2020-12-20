@@ -24,7 +24,7 @@ process.on('warning', function(warning) {
 });
 
 dbManager.getVip('174558221535674369', function(out){
-  logManager.writeDebugLog(out);
+  logManager.writeDebugLog(JSON.stringify(out));
 });
 
 //Initilizing BOT
