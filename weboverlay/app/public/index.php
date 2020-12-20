@@ -136,7 +136,7 @@ function printServer(){
             
         }
 
-        $instructions = print_r(json_decode($jObj->instructions), true);
+        $instructions = print_r(json_decode($jObj), true);
 
         $message = "";
 
