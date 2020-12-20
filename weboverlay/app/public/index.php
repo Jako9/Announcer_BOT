@@ -52,6 +52,7 @@ function printServer(){
         $showSaveError = false;
 
         $jObj = json_decode(json_encode($server), FALSE);
+        $jObj->instructions = getInstructionsFromDatabase();
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
@@ -131,13 +132,13 @@ function printServer(){
         $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
         $instructions = "";
 
-        /* $j = 0;
+        $j = 0;
         foreach($jObj->instructions as $instruction){
 
             $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
-        } */
+        }
 
         $message = "";
 
@@ -182,7 +183,7 @@ function printServer(){
                                 <h3 class="setting-title">Instruktionen</h3>
                                 <div class="setting-ist">
                                     <div class="array-box instruction-editor">
-                                        
+                                        '. $instructions .'
                                     </div>
                                 </div>
                             </div>
@@ -342,6 +343,23 @@ function getServersFromDatabase(){
 
     if($result){
         while ($row = mysqli_fetch_assoc($result)) {
+            array_push($arr, $row);
+        }
+    }
+
+    return $arr;
+    $connection->close();
+}
+
+function getInstructionsFromDatabase($guild){
+    $connection = connectToDatabase();
+    $sql = "SELECT * FROM `instructions` WHERE ServerID=" . $guild;
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        while ($row = mysqli_fetch($result)) {
             array_push($arr, $row);
         }
     }
