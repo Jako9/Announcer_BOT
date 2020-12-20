@@ -53,7 +53,7 @@ module.exports = {
 
         let q = "SELECT * FROM users WHERE userID=" + userID;
 
-        connection.query(q, (error, results, fields) => {
+        connection.query(q, [true], (error, results, fields) => {
             if(error){
                 throw err;
             }else{
