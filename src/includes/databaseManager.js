@@ -338,7 +338,7 @@ module.exports = {
             if(error){
                 throw error;
             }else{
-                if(results){
+                if(results.length != 0){
                     callback(results[0].status);
                 }else{
                     callback(false);
