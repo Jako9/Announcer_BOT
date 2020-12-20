@@ -2,6 +2,8 @@ const mysql = require('mysql');
 const jsonParser = require('./jsonParser');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
+const logManager = require('./includes/logManager.js');
+
 const dbData = jsonParser.read(PATH + "/config/database.json");
 const database = dbData.database;
 const user = dbData.user;
@@ -38,6 +40,8 @@ module.exports = {
             if(!error){
                 out = results;
             }
+
+            logManager.writeDebugLog(error);
         });
         connection.end();
         return out;
