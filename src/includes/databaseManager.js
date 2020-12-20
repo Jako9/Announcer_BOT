@@ -163,15 +163,7 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                if(typeof results !== 'undefined' && results !== null){
-                    if(results.length != 0){
-                        callback(true);
-                    }else{
-                        callback(false);
-                    }
-                }else{
-                    callback(false);
-                }
+              callback(true);
             }
         });
         connection.end();
