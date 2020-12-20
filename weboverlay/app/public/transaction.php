@@ -6,14 +6,14 @@ $password = $processPayment->password;
 
 
 if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
-    echo($_POST['pass']);
-    echo($password);
     if(rtrim($_POST['pass']) == $password){
         $transactionId = rtrim($_POST['transID']);
         $state = $_POST['state'];
 
         $pendingPayments = readFromJSON('pendingPayments.json');
         $pendingPaymentsArray = $pendingPayments->transactions;
+
+        echo("Ich kam bis nach der Abfrage");
 
         updatePaymentStatus($transactionId, $state);
     }
