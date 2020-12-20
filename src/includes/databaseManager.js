@@ -19,14 +19,18 @@ module.exports = {
 
     addUser: function(userID, username, avatar, joinsound){
         connection.connect();
-        
-        try{
-            let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
-        }catch(err){
-            return false;
-        }
 
-        connection.query(q);
+        let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
+
+        connection.query(q, (error) => {
+            if(error){
+                return false;
+            }
+
+            return true;
+        });
+
+
         connection.end();
 
         return true;
