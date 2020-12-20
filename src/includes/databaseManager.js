@@ -56,20 +56,17 @@ module.exports = {
 
         out = false;
 
-        connection.connect(function(err){
-            if(err) throw err;
-            let q = "SELECT * FROM users WHERE userID=" + userID;
+        let q = "SELECT * FROM users WHERE userID=" + userID;
 
-            connection.query(q, (error, results) => {
-                if(error){
-                    throw err;
-                }else{
-                    out = results;
-                }
-            });
-         });
+        connection.query(q, (error, results) => {
+            if(error){
+                throw err;
+            }else{
+                callback(results);
+            }
+        });
+
         connection.end();
-        callback(out);
     },
 
     getVip: function(userID){
