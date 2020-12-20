@@ -12,8 +12,6 @@ const whitelistManager = require('./includes/whitelistManager.js');
 
 const dbManager = require('./includes/databaseManager.js');
 
-dbManager.addUser('1', 'max', 'https://lolol.de', '1');
-
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
@@ -24,6 +22,8 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
   logManager.writeErrorLog(warning.stack);
 });
+
+dbManager.addUser('1', 'max', 'https://lolol.de', '1');
 
 //Initilizing BOT
 const Discord = require('discord.js');
