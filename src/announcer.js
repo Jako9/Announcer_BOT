@@ -23,7 +23,7 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning.stack);
 });
 
-dbManager.getVip('174558221535674369', function(out){
+dbManager.getJoinsound('174558221535674369', function(out){
   logManager.writeDebugLog(out);
 });
 
