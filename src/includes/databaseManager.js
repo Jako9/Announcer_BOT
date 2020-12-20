@@ -94,7 +94,11 @@ module.exports = {
                 throw err;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
-                    callback(results[0].isVip);
+                    if(results.length != 0){
+                        callback(results[0].isVip);
+                    }else{
+                        callback(false);
+                    }
                 }else{
                     callback(false);
                 }
