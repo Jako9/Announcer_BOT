@@ -1,6 +1,7 @@
 const fs = require('fs');
 const jsonParser = require('./jsonParser');
 const logManager = require('./logManager.js');
+const dbManager = require('./dataManager.js');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
@@ -14,7 +15,7 @@ module.exports = {
       servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
-      servers[guild.id].whitelist = "";
+      servers[guild.id].whitelist = [];
       logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
       saveServer(guild.id);
     },
@@ -290,28 +291,19 @@ module.exports = {
     },
 
     updateUser: function(client){
-        let vips = jsonParser.read(PATH + "/config/vips.json").vips;
+        dbManager.getVips(function(vips){
+          vips.forEach(vip => {
+              let id = vip.userID;
+              client.users.fetch(id)
+              .then(user => {
+                  //Nutzer nicht gefunden
+                  if(!user) return;
 
-        let toWrite = {};
-
-        vips.forEach(vip => {
-            let id = vip[0];
-            client.users.fetch(id)
-            .then(user => {
-                //Nutzer nicht gefunden
-                if(!user) return;
-
-                vip[1] = user.username;
-                vip[2] = user.avatarURL();
-
-                //Nutzer zurück schreiben
-                toWrite.vips = vips;
-                jsonParser.write(PATH + "/config/vips.json", toWrite);
-            })
-            .catch();
+                  dbManager.setInformation(user.id,user.username,user.avatarURL(), function(succ){});
+              })
+              .catch();
+          });
         });
-
-
     }
 }
 
@@ -336,7 +328,8 @@ function saveServer(id){
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
 
-    jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
+    dbManager.saveServer(servers[id], id function(worked){});
+    //jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
     servers[id].reactionMessage = message;
 }
 

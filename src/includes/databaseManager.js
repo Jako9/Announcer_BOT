@@ -154,10 +154,57 @@ module.exports = {
         connection.end();
     },
 
+    getName: function(callback){
+        connection = establishConnection();
+
+        let q = "SELECT userID FROM users WHERE isVip=1";
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw err;
+            }else{
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
+
     setInformation: function(userID, username, avatar, callback){
         connection = establishConnection();
 
         let q = "UPDATE users SET username="+ username +", avatar="+ avatar +" WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw err;
+            }else{
+              callback(true);
+            }
+        });
+        connection.end();
+    },
+
+    saveServer: function(server, id, callback){
+        connection = establishConnection();
+        let id = id;
+        let name = server.name;
+        let avatar= server.avatar;
+        let rolle= server.rolle;
+        let whitelist = server.whitelist;
+        let instructions= server.instructions;
+        let prefix= server.prefix;
+        let volume= server.volume;
+        let standartRole= server.standartRole;
+        let channelReact= server.channelReact;
+        let q = "UPDATE server SET name="+ name + "avatar=" + avatar +", rolle="+ rolle + "instructions="+ instructions +", prefix="+ prefix + "volume="+ volume +", standartRole="+ standartRole + "channelReact="+ channelReact +" WHERE guildID=" + id;
 
         connection.query(q, (error, results) => {
             if(error){
