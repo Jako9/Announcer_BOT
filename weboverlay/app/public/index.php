@@ -358,6 +358,8 @@ function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume
     $result = $connection->query($sql);
     $arr = array();
 
+    echo($mysqli->error);
+
     $connection->close();
 }
 
