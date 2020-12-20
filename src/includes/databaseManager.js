@@ -93,7 +93,7 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                if(results){
+                if(results != undefined){
                     callback(results[0].isVip);
                 }else{
                     callback(false);
