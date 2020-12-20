@@ -65,10 +65,9 @@ function printServer(){
             $pObj->volume = 0.2;
             $pObj->standartRole = "";
 
-            $pobj->instructions = '{"instructions":[{"name":"join","type":"1"},{"name":"leave","type":"2"},{"name":"setVolume","type":"3"},{"name":"volume","type":"4"},{"name":"help","type":"5"},{"name":"set","type":"6"},{"name":"changeRole","type":"7"},{"name":"role","type":"8"},{"name":"setPrefix","type":"9"},{"name":"lock","type":"10"},{"name":"unlock","type":"11"},{"name":"setChannel","type":"12"},{"name":"addReaction","type":"13"},{"name":"changeReactionRole","type":"14"},{"name":"showReactionRole","type":"15"},{"name":"becomeVIP","type":"16"},{"name":"whitelist","type":"17"},{"name":"whitelistAdd","type":"18"},{"name":"whitelistRemove","type":"19"},{"name":"whitelistClear","type":"20"},{"name":"play","type":"21"},{"name":"setJoinSound","type":"22"},{"name":"removeJoinSound","type":"23"}]}';
 
             $jToWrite = json_encode($pObj);
-            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume, $pObj->instructions);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
@@ -77,16 +76,6 @@ function printServer(){
 
             $pObj = $jObj;
 
-            for($j=0; $j < sizeof($pObj->instructions); $j++){
-                if(isset($_POST['instruction-input-'. $i . "-" . $j])){
-                    $r = $_POST['instruction-input-'. $i . "-" . $j];
-                    if(strlen($r) >= 1 && !strpos($r, " ") && !in_array($r ,$pObj->instructions)){
-                        $pObj->instructions[$j] = $r;
-                    }else{
-                        $showSaveError = true;
-                    }
-                } 
-            }
 
             if(isset($_POST['volume-range-'. $i])){
                 $val = $_POST['volume-range-'. $i];
@@ -123,7 +112,7 @@ function printServer(){
             $jToWrite = json_encode($pObj);
             //file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
-            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume, $pObJ->instructions);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
 
             $showSaveSuccess = !$showSaveError;
         }else{
@@ -134,12 +123,6 @@ function printServer(){
         $instructions = "";
 
         $j = 0;
-        foreach(json_decode($jObj->instructions)->instructions as $instruction){
-
-            $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction->name .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
-            //$instructions .= $instruction . "<br>";
-            $j++;
-        }
 
         $message = "";
 
@@ -352,7 +335,7 @@ function getServersFromDatabase(){
     $connection->close();
 }
 
-function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume, $instructions){
+function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
     $connection = connectToDatabase();
     $sql = "UPDATE server SET prefix=". $prefix .", rolle=". $role ." WHERE guildID=" . $guildID;
 
