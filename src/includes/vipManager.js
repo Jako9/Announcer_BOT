@@ -140,11 +140,12 @@ function isVip(userID){
   let is = false;
 
   dbManager.getUser(userID, function(out){
+    logManager.writeDebugLog(out.isVip);
     if(out.isVip == 1){
       is = true;
     }
   });
-
+  logManager.writeDebugLog(is);
   return is;
 }
 
