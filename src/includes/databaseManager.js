@@ -47,7 +47,7 @@ module.exports = {
     },
 
     getUser: function(userID, callback){
-        let connection = establishConnection;
+        let connection = establishConnection();
 
         out = false;
 
@@ -65,7 +65,7 @@ module.exports = {
     },
 
     removeUser: function(userID){
-        let connection = establishConnection;
+        let connection = establishConnection();
 
         out = false;
 
