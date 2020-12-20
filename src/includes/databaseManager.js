@@ -85,7 +85,7 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                callback(results[0]);
             }
         });
         connection.end();
