@@ -1,5 +1,6 @@
 const jsonParser = require('./jsonParser.js');
 const logManager = require('./logManager.js');
+const dbManager = require('./databaseManager.js');
 
 const fs = require('fs');
 let https = require("https");
@@ -129,12 +130,22 @@ function isPending(userID){
 }
 
 function isVip(userID){
-    vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
+    /* vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
     let found = false;
     vip.forEach(vip => {
       if (vip == userID) found = true;
     });
-    return found;
+    return found; */
+
+  let is = false;
+
+  dbManager.getUser(userID, function(out){
+    if(out.isVip == 1){
+      is = true;
+    }
+  });
+
+  return is;
 }
 
 function getLink(userID){
