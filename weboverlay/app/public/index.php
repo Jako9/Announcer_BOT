@@ -65,8 +65,10 @@ function printServer(){
             $pObj->volume = 0.2;
             $pObj->standartRole = "";
 
+            $pobj->instructions = '{"instructions":[{"name":"join","type":"1"},{"name":"leave","type":"2"},{"name":"setVolume","type":"3"},{"name":"volume","type":"4"},{"name":"help","type":"5"},{"name":"set","type":"6"},{"name":"changeRole","type":"7"},{"name":"role","type":"8"},{"name":"setPrefix","type":"9"},{"name":"lock","type":"10"},{"name":"unlock","type":"11"},{"name":"setChannel","type":"12"},{"name":"addReaction","type":"13"},{"name":"changeReactionRole","type":"14"},{"name":"showReactionRole","type":"15"},{"name":"becomeVIP","type":"16"},{"name":"whitelist","type":"17"},{"name":"whitelistAdd","type":"18"},{"name":"whitelistRemove","type":"19"},{"name":"whitelistClear","type":"20"},{"name":"play","type":"21"},{"name":"setJoinSound","type":"22"},{"name":"removeJoinSound","type":"23"}]}';
+
             $jToWrite = json_encode($pObj);
-            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume, $pObj->instructions);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
@@ -350,9 +352,9 @@ function getServersFromDatabase(){
     $connection->close();
 }
 
-function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
+function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume, $instructions){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET prefix='". $prefix ."' WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET prefix='". $prefix ."', rolle='". $role ."' WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
