@@ -52,7 +52,6 @@ function printServer(){
         $showSaveError = false;
 
         $jObj = json_decode(json_encode($server), FALSE);
-        $jObj->instructions = getInstructionsFromDatabase($jObj->guildID);
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
@@ -66,6 +65,7 @@ function printServer(){
             $pObj->volume = 0.2;
             $pObj->standartRole = "";
 
+
             $jToWrite = json_encode($pObj);
             updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
         }
@@ -76,16 +76,6 @@ function printServer(){
 
             $pObj = $jObj;
 
-            for($j=0; $j < sizeof($pObj->instructions); $j++){
-                if(isset($_POST['instruction-input-'. $i . "-" . $j])){
-                    $r = $_POST['instruction-input-'. $i . "-" . $j];
-                    if(strlen($r) >= 1 && !strpos($r, " ") && !in_array($r ,$pObj->instructions)){
-                        $pObj->instructions[$j] = $r;
-                    }else{
-                        $showSaveError = true;
-                    }
-                } 
-            }
 
             if(isset($_POST['volume-range-'. $i])){
                 $val = $_POST['volume-range-'. $i];
@@ -133,12 +123,6 @@ function printServer(){
         $instructions = "";
 
         $j = 0;
-        foreach($jObj->instructions as $instruction){
-
-            $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
-            //$instructions .= $instruction . "<br>";
-            $j++;
-        }
 
         $message = "";
 
@@ -178,14 +162,6 @@ function printServer(){
                                     <input id="reaction-role-'. $i .'" name="reaction-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->standartRole .'" disabled>
                                 </div>
                             <i class="reaction-role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-reaction-role-'. $i .'"></i>
-                            </div>
-                            <div class="server-settings server-instructions">
-                                <h3 class="setting-title">Instruktionen</h3>
-                                <div class="setting-ist">
-                                    <div class="array-box instruction-editor">
-                                        '. $instructions .'
-                                    </div>
-                                </div>
                             </div>
                             <div class="server-settings server-prefix">
                                 <h3 class="setting-title">Prefix</h3>
@@ -353,7 +329,7 @@ function getServersFromDatabase(){
 
 function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET prefix='". $prefix ."' WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET prefix='". $prefix ."', rolle='". $role ."', standartRole='". $reaktionRole ."', volume='". $volume ."'  WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
