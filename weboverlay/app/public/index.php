@@ -122,7 +122,7 @@ function printServer(){
             $jToWrite = json_encode($pObj);
             //file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
-            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
+            echo(updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume));
 
             $showSaveSuccess = !$showSaveError;
         }else{
@@ -358,9 +358,9 @@ function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume
     $result = $connection->query($sql);
     $arr = array();
 
-    echo($mysqli->error);
-
     $connection->close();
+
+    return $connection->error;
 }
 
 function getInstructionsFromDatabase($guild){
