@@ -19,7 +19,7 @@ module.exports = {
 
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
 
-        connection.query(q, (error) => {
+        connection.query(q, (error, results) => {
             if(!error){
                 out = results;
             }
