@@ -38,7 +38,11 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(results){
+                    callback(results);
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
@@ -53,7 +57,11 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results[0]);
+                if(results){
+                    callback(results[0]);
+                }else{
+                    callback(false);
+                }
             }
         });
 
@@ -85,7 +93,11 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results[0].isVip);
+                if(results){
+                    callback(results[0].isVip);
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
