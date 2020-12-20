@@ -278,6 +278,10 @@ module.exports = {
               serverObj["channelSize"] = 0;
               serverObj["whoLocked"] = "";
               serverObj["reactionMessage"] = null;
+              serverObj["instructions"] = JSON.parse(serverObj["instructions"]);
+
+              logManager.writeDebugLog(JSON.stringify(serverObj["instructions"]));
+
               fetchMessage(client, id, serverObj.channelReact);
 
               servers[id] = serverObj;
