@@ -42,7 +42,7 @@ function connectToDatabase(){
 
 function updatePaymentStatus($transID, $state){
     $connection = connectToDatabase();
-    $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID=" . $transID;
+    $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID='" . $transID . "'";
 
     $result = $connection->query($sql);
     if(!$result){
