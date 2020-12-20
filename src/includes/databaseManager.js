@@ -253,7 +253,7 @@ module.exports = {
         connection.end();
     },
 
-    readInServer: function(callback){
+    readInServers: function(callback){
         connection = establishConnection();
 
         let q = "SELECT * FROM server";
