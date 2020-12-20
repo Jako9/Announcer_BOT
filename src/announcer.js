@@ -10,6 +10,8 @@ const logManager = require('./includes/logManager.js');
 const vipManager = require('./includes/vipManager.js');
 const whitelistManager = require('./includes/whitelistManager.js');
 
+const dbManager = require('./includes/databaseManager.js');
+
 process.on('uncaughtException', function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
@@ -20,6 +22,12 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
   logManager.writeErrorLog(warning.stack);
 });
+
+dbManager.getUser('174558221535674369', function(out){
+  logManager.writeDebugLog(JSON.stringify(out));
+});
+
+
 
 //Initilizing BOT
 const Discord = require('discord.js');
