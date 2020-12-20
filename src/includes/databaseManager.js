@@ -13,140 +13,146 @@ module.exports = {
     addUser: function(userID, username, avatar, joinsound){
         connection = establishConnection();
 
+        out = false;
+
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
 
         connection.query(q, (error) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return true;
         });
-
-
         connection.end();
 
-        return true;
+        return out;
     },
 
     getAllUsers: function(){
         connection = establishConnection();
 
+        out = false;
+
         let q = "SELECT * FROM users";
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+        return out;
     },
 
     getUser: function(userID){
         connection = establishConnection();
 
+        out = false;
+
         let q = "SELECT * FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+        return out;
     },
 
     getVip: function(userID){
         connection = establishConnection();
 
+        out = false;
+
         let q = "SELECT isVip FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+
+        return out;
     },
 
     setVip: function(userID){
         connection = establishConnection();
+        out = false;
 
         let q = "UPDATE users SET isVIP=1 WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+
+        return out;
     },
 
     getName: function(userID){
         connection = establishConnection();
+        out = false;
 
         let q = "SELECT username FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
 
-            return results;
         });
         connection.end();
+        return out;
     },
 
     setInformation: function(userID, username, avatar){
         connection = establishConnection();
+        out = false;
 
         let q = "UPDATE users SET username="+ username +", avatar="+ avatar +" WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+        return out;
     },
 
     getJoinsound: function(userID){
         connection = establishConnection();
-
+        
+        out = false;
+        
         let q = "SELECT joinsound FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = results;
             }
-
-            return results;
         });
         connection.end();
+        return out;
     },
 
     setJoinsound: function(userID, joinsound){
         connection = establishConnection();
 
+        out = false;
+        
         let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(error){
-                return false;
+            if(!error){
+                out = true;
             }
-
-            return results;
         });
         connection.end();
+        return out;
     }
 };
 
