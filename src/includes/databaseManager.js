@@ -165,7 +165,7 @@ module.exports = {
 };
 
 function establishConnection(){
-    connection = mysql.createConnection({
+    let connection = mysql.createConnection({
         host : 'localhost',
         database : database,
         user     : user,
