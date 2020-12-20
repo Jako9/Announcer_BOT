@@ -183,7 +183,7 @@ function getInstructionsFromDatabase($guild){
     $arr = array();
 
     if($result){
-        while ($row = mysqli_fetch($result)) {
+        while ($row = mysqli_fetch_array($result)) {
             array_push($arr, $row);
         }
     }
