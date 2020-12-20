@@ -13,13 +13,19 @@ const PROBAILITY = 65;
 var vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
 
 //Gibt wieder, ob die Person ein VIP ist
-function isVip(userID){
-    vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
-    let found = false;
-    vip.forEach(vip => {
-      if (vip == userID) found = true;
-    });
-    return found;
+function isVip(userID, callback){
+  dbManager.getVip(userID, function(out){
+    logManager.writeDebugLog(out.isVip);
+    if(out){
+      if(out == 1){
+        callback(true);
+      }else{
+        callback(false);
+      }
+    }else{
+      callback(false);
+    }
+  });
 }
 
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
@@ -83,21 +89,25 @@ module.exports = {
           //if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
 
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
-          if(isVip(newState.member.id)){
+          /* if(isVip(newState.member.id)){
             serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
             file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
 
             newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             return;
-          }
+          } */
 
-          //TODO Hat er überhaupt einen Joinsound?
-          let sound = dbManager.getJoinsound(newState.member.id);
+          isVip(newState.member.id, function(){
+            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
+          });
 
-          //Bot soll joinen
-          serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+          dbManager.getJoinsound(newState.member.id, function(out){
+            serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+            newUserChannel.join().then(connection => bot_join(newUserChannel, connection, out));
+          });
 
-          newUserChannel.join().then(connection => bot_join(newUserChannel, connection, sound));
+          
           return;
         }
         //Es handelt sich um ein Verlassen

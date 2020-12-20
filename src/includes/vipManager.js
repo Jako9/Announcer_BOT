@@ -142,7 +142,6 @@ function isVip(userID, callback){
       callback(false);
     }
   });
-  
 }
 
 function getLink(userID){

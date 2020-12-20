@@ -116,7 +116,15 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results[0]);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
@@ -132,7 +140,15 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results[0].username);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
@@ -147,7 +163,15 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results[0]);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
@@ -162,7 +186,15 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results[0].joinsound);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
@@ -177,7 +209,15 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                if(typeof results !== 'undefined' && results !== null){
+                    if(results.length != 0){
+                        callback(results[0]);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    callback(false);
+                }
             }
         });
         connection.end();
