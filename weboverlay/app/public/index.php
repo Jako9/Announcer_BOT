@@ -236,7 +236,39 @@ function printServer(){
 
 
 function printVips(){
-   echo print_r(getVipsFromDatabase(), true);
+    $i = 0;
+
+    $vips = getVipsFromDatabase();
+
+    foreach($vips as $vip) {
+
+        $id = $vip['userID'];
+        $name = $vip['username'];
+        $vipAvatar = $vip['avatar'];
+
+        $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
+
+        echo('
+            <div class="vip-element">
+                <div class="card mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <div class="vip-avatar" style="'. $vipStyle .'">
+
+                        </div>
+                        <div class="vip-name">
+                            '. $name .'
+                        </div>
+                    </div>
+                    <div class="card-body text-dark">
+                    <div class="card-text vip-sound-card">
+                        <i class="fas fa-volume-up sound-icon" id="sound-button-'. $i .'" data-id="'. $id .'"></i>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        ');
+        $i++;
+    }
 }
 
 function readLogFile($file){
@@ -283,9 +315,9 @@ function connectToDatabase(){
     return $conn;
 }
 
-function getVipsFromDatabase(){
+function getVipsFromDatabase($connection){
     $connection = connectToDatabase();
-    $sql = "SELECT username, avatar FROM users WHERE isVip=1";
+    $sql = "SELECT userID, username, avatar FROM users WHERE isVip=1";
 
     $result = $connection->query($sql);
     $arr = array();
@@ -297,7 +329,6 @@ function getVipsFromDatabase(){
     }
 
     return $arr;
-
     $connection->close();
 }
 
