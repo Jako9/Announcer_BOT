@@ -95,8 +95,10 @@ module.exports = {
               newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             }else{
               dbManager.getJoinsound(newState.member.id, function(out){
-                serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                newUserChannel.join().then(connection => bot_join(newUserChannel, connection, out));
+                if(out){
+                  serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
+                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, out));
+                }
               });
             }
           });
