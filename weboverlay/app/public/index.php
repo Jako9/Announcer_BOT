@@ -240,6 +240,8 @@ function printVips(){
 
     $vips = getVipsFromDatabase();
 
+    echo(print_r($vips, true));
+
     foreach($vips as $vip) {
 
         $id = $vip['userID'];
