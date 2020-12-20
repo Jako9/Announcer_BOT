@@ -52,7 +52,7 @@ function printServer(){
         $showSaveError = false;
 
         $jObj = json_decode(json_encode($server), FALSE);
-        $jObj->instructions = getInstructionsFromDatabase();
+        $jObj->instructions = getInstructionsFromDatabase($jObj->guildID);
 
         echo(print_r($jObj, true));
     }
