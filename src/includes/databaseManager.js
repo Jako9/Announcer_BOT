@@ -180,7 +180,7 @@ module.exports = {
     setInformation: function(userID, username, avatar, callback){
         connection = establishConnection();
 
-        let q = "UPDATE users SET username="+ username +", avatar="+ avatar +" WHERE userID=" + userID;
+        let q = "UPDATE users SET username='"+ username +"', avatar='"+ avatar +"' WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
             if(error){
@@ -203,7 +203,7 @@ module.exports = {
         let volume= server.volume;
         let standartRole= server.standartRole;
         let channelReact= server.channelReact;
-        let q = "UPDATE server SET name="+ name + ",avatar=" + avatar +", rolle="+ rolle + ", instructions="+ instructions +", prefix="+ prefix + ", volume="+ volume +", standartRole="+ standartRole + ", channelReact="+ channelReact +" WHERE guildID=" + id;
+        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', rolle="+ rolle + ", instructions="+ instructions +", prefix="+ prefix + ", volume="+ volume +", standartRole="+ standartRole + ", channelReact="+ channelReact +" WHERE guildID=" + id;
 
         connection.query(q, (error, results) => {
             if(error){
