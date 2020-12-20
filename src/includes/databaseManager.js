@@ -154,7 +154,7 @@ module.exports = {
         connection.end();
     },
 
-    getName: function(callback){
+    getVips: function(callback){
         connection = establishConnection();
 
         let q = "SELECT userID FROM users WHERE isVip=1";
