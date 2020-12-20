@@ -360,7 +360,7 @@ function getInstructionsFromDatabase($guild){
 
     if($result){
         while ($row = mysqli_fetch_array($result)) {
-            array_push($arr, $row);
+            array_push($arr, $row[0]);
         }
     }
 
