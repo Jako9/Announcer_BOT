@@ -136,11 +136,12 @@ module.exports = {
         }else{
           if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
             message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
-            dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
-
-            message.reply("Dein Joinsound wurde erfolgreich geupdatet");
-
           }
+          else{
+            dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
+            message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+          }
+
         }
       })
     },
@@ -153,6 +154,6 @@ module.exports = {
           dbManager.removeUser(message.member.id);
           message.reply("Der Bot begleitet dich nun nicht mehr");
         }
-      });   
+      });
     }
 }
