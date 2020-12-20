@@ -88,7 +88,7 @@ function changeVIPSound(message, file){
         jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
 
         //Füge VIP hinzu
-        dbManager.isVip(message.author.id, function(vip){
+        dbManager.getVip(message.author.id, function(vip){
           if(vip){
             message.author.send("Your joinsound has been updated successfully!");
           }
@@ -119,7 +119,7 @@ function unMergeArrays(a){
 
 module.exports = {
     becomeVIP: function(message){
-      dbManager.isVip(message.author.id, function(is){
+      dbManager.getVip(message.author.id, function(is){
         if(is){
           message.author.send("Du bist schon VIP!").catch();
         }else{
@@ -168,7 +168,7 @@ module.exports = {
 
   fileReceived: function(message, file){
 
-    dbManager.isVip(message.author.id, function(vip){
+    dbManager.getVip(message.author.id, function(vip){
       if(vip){
         //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
         changeVIPSound(message, file);
