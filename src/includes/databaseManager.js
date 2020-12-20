@@ -75,7 +75,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 callback(results);
             }
