@@ -145,7 +145,7 @@ module.exports = {
               }
               else{
                 dbManager.setJoinsound(message.author.id,message.content.split(' ')[1], function(successfull){
-                  logManager.writeDebugLog(successfull);
+                  logManager.writeDebugLog("Success = " + successfull);
                   if(successfull){
                     message.reply("Dein Joinsound wurde erfolgreich geupdatet");
                   }
