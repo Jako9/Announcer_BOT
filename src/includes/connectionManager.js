@@ -7,10 +7,8 @@ const dbManager = require('./databaseManager.js');
 //Sound Files
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 const SUFFIX = '.mp3';
-const LOGIN_SOUND = PATH + "/resources/default/default" + SUFFIX;
 const PROBAILITY = 65;
 
-var vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
 
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID, callback){
