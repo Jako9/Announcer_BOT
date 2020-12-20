@@ -97,7 +97,7 @@ module.exports = {
               dbManager.getJoinsound(newState.member.id, function(out){
                 if(out){
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, out));
+                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + ".mp3"));
                 }
               });
             }
