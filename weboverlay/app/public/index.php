@@ -61,14 +61,13 @@ function printServer(){
 
             $pObj = $jObj;
 
-            $pObj->rolle = $defaultSettings->rolle;
-            $pObj->instructions = $defaultSettings->instructions;
-            $pObj->prefix = $defaultSettings->prefix;
-            $pObj->volume = $defaultSettings->volume;
-            $pObj->standartRole = $defaultSettings->standartRole;
+            $pObj->rolle = "";
+            $pObj->prefix = ".";
+            $pObj->volume = 0.2;
+            $pObj->standartRole = "";
 
             $jToWrite = json_encode($pObj);
-            file_put_contents('../../../config/guilds/' . $file, $jToWrite);
+            updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $jToWrite->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
