@@ -7,18 +7,11 @@ const database = dbData.database;
 const user = dbData.user;
 const password = dbData.password;
 
-let connection = mysql.createConnection({
-    host : 'localhost',
-    database : database,
-    user     : user,
-    password : password
-});
-
 
 module.exports = {
 
     addUser: function(userID, username, avatar, joinsound){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
 
@@ -37,7 +30,7 @@ module.exports = {
     },
 
     getAllUsers: function(){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "SELECT * FROM users";
 
@@ -52,7 +45,7 @@ module.exports = {
     },
 
     getUser: function(userID){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "SELECT * FROM users WHERE userID=" + userID;
 
@@ -67,7 +60,7 @@ module.exports = {
     },
 
     getVip: function(userID){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "SELECT isVip FROM users WHERE userID=" + userID;
 
@@ -82,7 +75,7 @@ module.exports = {
     },
 
     setVip: function(userID){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "UPDATE users SET isVIP=1 WHERE userID=" + userID;
 
@@ -97,7 +90,7 @@ module.exports = {
     },
 
     getName: function(userID){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "SELECT username FROM users WHERE userID=" + userID;
 
@@ -112,7 +105,7 @@ module.exports = {
     },
 
     setInformation: function(userID, username, avatar){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "UPDATE users SET username="+ username +", avatar="+ avatar +" WHERE userID=" + userID;
 
@@ -127,7 +120,7 @@ module.exports = {
     },
 
     getJoinsound: function(userID){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "SELECT joinsound FROM users WHERE userID=" + userID;
 
@@ -142,7 +135,7 @@ module.exports = {
     },
 
     setJoinsound: function(userID, joinsound){
-        connection.connect();
+        connection = establishConnection();
 
         let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
 
@@ -157,3 +150,11 @@ module.exports = {
     }
 };
 
+function establishConnection(){
+    return connection = mysql.createConnection({
+        host : 'localhost',
+        database : database,
+        user     : user,
+        password : password
+    });
+}
