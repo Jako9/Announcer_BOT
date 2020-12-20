@@ -23,9 +23,7 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning.stack);
 });
 
-dbManager.setVip('210855895696015361');
-dbManager.setVip('224281303967727616');
-dbManager.setVip('268485499969208321');
+dbManager.setVip('406618328061181952');
 
 logManager.writeDebugLog(dbManager.getAllUsers());
 
