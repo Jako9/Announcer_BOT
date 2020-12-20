@@ -130,13 +130,6 @@ function isPending(userID){
 }
 
 function isVip(userID, callback){
-    /* vip = unMergeArrays(jsonParser.read(PATH + "/config/vips.json").vips);
-    let found = false;
-    vip.forEach(vip => {
-      if (vip == userID) found = true;
-    });
-    return found; */
-
   dbManager.getVip(userID, function(out){
     logManager.writeDebugLog(out.isVip);
     if(out){
