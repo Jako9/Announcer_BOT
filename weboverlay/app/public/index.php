@@ -54,7 +54,7 @@ function printServer(){
         $jObj = json_decode(json_encode($server), FALSE);
         $jObj->instructions = getInstructionsFromDatabase($jObj->guildID);
 
-        echo(print_r($jObj, true));
+        echo(print_r($jObj->instructions, true));
     }
 }
 
