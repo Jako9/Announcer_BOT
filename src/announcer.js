@@ -24,7 +24,7 @@ process.on('warning', function(warning) {
 });
 
 
-logManager.writeDebugLog(dbManager.getAllUsers());
+logManager.writeDebugLog(dbManager.getUser());
 
 
 //Initilizing BOT
