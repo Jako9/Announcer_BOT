@@ -133,9 +133,10 @@ function printServer(){
 
         $j = 0;
         foreach(json_decode($jObj->instructions) as $instruction){
-            $instructions .= print_r($instruction, true);
+            
         }
 
+        $instructions = print_r(json_decode($jObj->instructions), true);
 
         $message = "";
 
