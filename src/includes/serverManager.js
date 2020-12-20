@@ -272,6 +272,7 @@ module.exports = {
     readInServers: function (client){
         dbManager.readInServers(function(dbServers){
             dbServers.forEach(dbServer => {
+            let id = dbServer.guildID;
             dbServer["timeLastJoin"] = 0;
             dbServer["channelSize"] = 0;
             dbServer["whoLocked"] = "";
