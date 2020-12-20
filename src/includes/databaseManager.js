@@ -194,7 +194,6 @@ module.exports = {
 
     saveServer: function(server, id, callback){
         connection = establishConnection();
-        let id = id;
         let name = server.name;
         let avatar= server.avatar;
         let rolle= server.rolle;
