@@ -2,6 +2,7 @@ const jsonParser = require('./jsonParser.js');
 const serverManager = require('./serverManager.js');
 const logManager = require('./logManager.js');
 const statisticsManager = require('./statisticsManager.js');
+const dbManager = require('./databaseManager.js');
 
 //Sound Files
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
@@ -90,18 +91,13 @@ module.exports = {
             return;
           }
 
-          //Der Server hat keine Rolle festgelegt
-          if(!rolle) return;
-
-          //Hat der Nutzer die passende Rolle?
-          let role = newState.guild.roles.cache.find(role => role.name === rolle);
-          //Nicht interessant
-          if(!newState.member.roles.cache.has(role.id)) return;
+          //TODO Hat er überhaupt einen Joinsound?
+          let sound = dbManager.getJoinsound(newState.member.id);
 
           //Bot soll joinen
           serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
 
-          newUserChannel.join().then(connection => bot_join(newUserChannel, connection, LOGIN_SOUND));
+          newUserChannel.join().then(connection => bot_join(newUserChannel, connection, sound));
           return;
         }
         //Es handelt sich um ein Verlassen
@@ -120,11 +116,6 @@ module.exports = {
         message.reply("Du bist in keinem Channel.");
         return;
       }
-      logManager.writeDebugLog("Message = " + message.content.split(' ')[1]);
-      logManager.writeDebugLog("Länge = " + message.content.split(' ').length);
-      logManager.writeDebugLog("Number = " + !isNaN(message.content.split(' ')[1]));
-      logManager.writeDebugLog("Lower = " + message.content.split(' ')[1] <0);
-      logManager.writeDebugLog("Upper = " + message.content.split(' ')[1] > 9);
       if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
         message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
         return;
@@ -134,7 +125,18 @@ module.exports = {
     },
 
     setJoinSound: function(message, prefix, instructions){
+      if(isVip(message.member.id)){
+        message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+        return;
+      }
 
+      if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+        return;
+      }
+
+      dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
+      message.reply("Dein Joinsound wurde erfolgreich geupdatet");
     },
 
     removeJoinSound: function(message){
@@ -142,7 +144,7 @@ module.exports = {
         message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
         return;
       }
-      serverManager.removeUser(message.member.id);
+      dbManager.removeUser(message.member.id);
       message.reply("Der Bot begleitet dich nun nicht mehr");
     }
 }

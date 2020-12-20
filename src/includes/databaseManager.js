@@ -64,6 +64,23 @@ module.exports = {
         connection.end();
     },
 
+    removeUser: function(userID){
+        let connection = establishConnection;
+
+        out = false;
+
+        let q = "DELETE * FROM users WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw err;
+            }else{
+            }
+        });
+
+        connection.end();
+    },
+
     getVip: function(userID){
         connection = establishConnection();
 
@@ -130,9 +147,9 @@ module.exports = {
 
     getJoinsound: function(userID){
         connection = establishConnection();
-        
+
         out = false;
-        
+
         let q = "SELECT joinsound FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
@@ -148,7 +165,7 @@ module.exports = {
         connection = establishConnection();
 
         out = false;
-        
+
         let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
