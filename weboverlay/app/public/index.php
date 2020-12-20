@@ -353,7 +353,7 @@ function getServersFromDatabase(){
 
 function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET rolle=" . $role . ", standartRole=" . $reaktionRole . "prefix=" . $prefix . "volume=" . $volume . "WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET rolle='" . $role . "', standartRole='" . $reaktionRole . "' prefix='" . $prefix . "' volume='" . $volume . "' WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
