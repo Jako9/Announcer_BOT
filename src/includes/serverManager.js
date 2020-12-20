@@ -92,7 +92,7 @@ module.exports = {
 
         for(i=1; i <= instructions.length; i++){
             instructionsTmp.push({
-                "name": instructionsFirst[i-1][0],
+                "name": instructions[i-1][0],
                 "type": i
             });
         }
