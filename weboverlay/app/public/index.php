@@ -236,40 +236,7 @@ function printServer(){
 
 
 function printVips(){
-    $i = 0;
-
-    $vip_file = readFromJSON('../vips.json');
-    $vips = $vip_file->vips;
-
-    foreach($vips as $vip) {
-
-        $id = $vip[0];
-        $name = $vip[1];
-        $vipAvatar = $vip[2];
-
-        $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
-
-        echo('
-            <div class="vip-element">
-                <div class="card mb-3" style="max-width: 18rem;">
-                    <div class="card-header">
-                        <div class="vip-avatar" style="'. $vipStyle .'">
-
-                        </div>
-                        <div class="vip-name">
-                            '. $name .'
-                        </div>
-                    </div>
-                    <div class="card-body text-dark">
-                    <div class="card-text vip-sound-card">
-                        <i class="fas fa-volume-up sound-icon" id="sound-button-'. $i .'" data-id="'. $id .'"></i>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        ');
-        $i++;
-    }
+    print_r(getVipsFromDatabase(), true);
 }
 
 function readLogFile($file){
@@ -300,7 +267,39 @@ function clearLogFile($file){
     file_put_contents($logPath, "");
 }
 
+function connectToDatabase(){
+    $creds = readFromJSON('../database.json');
+    $username = $creds->user;
+    $password = $creds->password;
+    $database = $creds->database;
 
+    $conn = new mysqli('localhost', $username, $password, $database);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+function getVipsFromDatabase(){
+    $connection = connectToDatabase();
+    $sql = "SELECT username, avatar FROM users WHERE isVip=1";
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($arr, $row);
+        }
+    }
+
+    return $arr;
+
+    $connection->close();
+}
 
 function printActions(){
     echo("");
