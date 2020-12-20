@@ -47,7 +47,12 @@ module.exports = {
     },
 
     getUser: function(userID){
-        connection = establishConnection();
+        let connection = mysql.createConnection({
+            host : 'localhost',
+            database : database,
+            user     : user,
+            password : password
+        });
 
         out = false;
 
