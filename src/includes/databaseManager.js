@@ -41,7 +41,6 @@ module.exports = {
                 out = results;
             }
 
-            logManager.writeDebugLog(error);
         });
         connection.end();
         return out;
