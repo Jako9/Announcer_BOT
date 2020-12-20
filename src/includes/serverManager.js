@@ -328,7 +328,7 @@ function saveServer(id){
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
 
-    dbManager.saveServer(servers[id], id, function(worked){});
+    dbManager.saveServer(servers[id], id function(worked){});
     //jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
     servers[id].reactionMessage = message;
 }
