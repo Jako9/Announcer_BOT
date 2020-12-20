@@ -132,7 +132,7 @@ function printServer(){
         $instructions = "";
 
         $j = 0;
-        foreach($jObj->instructions as json_decode($instruction)){
+        foreach(json_decode($jObj->instructions) as $instruction){
 
             $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction->name .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
             //$instructions .= $instruction . "<br>";
