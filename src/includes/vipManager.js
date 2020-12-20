@@ -48,7 +48,7 @@ function buildEmbed(link){
   return embed;
 }
 
-function changeVIPSound(message, file, transactionsJSON, transactions, transaction, vipsJSON){
+function changeVIPSound(message, file){
   //File zu groß
   if(file.size > (1024 * 700)){
     message.author.send("The file is too big. The maximum filesize must be at most 700kb");
@@ -88,19 +88,16 @@ function changeVIPSound(message, file, transactionsJSON, transactions, transacti
         jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
 
         //Füge VIP hinzu
-        if(vipsJSON != null){
-          message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
-          vipsJSON.vips.push([message.author.id,message.author.username, message.author.avatarURL()]);
-          const index = transactions.indexOf(transaction);
-          transactions.splice(index,1);
-          transactionsJSON.transactions = transactions
-
-          jsonParser.write(PATH + "/config/vips.json", vipsJSON);
-          jsonParser.write(PATH + "/config/pendingPayments.json",transactionsJSON);
-        }
-        else{
-          message.author.send("Your joinsound has been updated successfully!");
-        }
+        dbManager.isVip(message.author.id, function(vip){
+          if(vip){
+            message.author.send("Your joinsound has been updated successfully!");
+          }
+          else{
+            message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+            dbManager.setVip(message.author.id, function(worked){});
+            dbManager.deletePayment(message.author.id, function(worked){});
+          }
+        });
       }
     jsonParser.delete(pathToCheck);
     });
@@ -120,89 +117,48 @@ function unMergeArrays(a){
   return merged;
 }
 
-function isPending(userID){
-  pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
-  let found = false;
-  pending.forEach(transaction => {
-    if (transaction.userID == userID) found = true;
-  });
-  return found;
-}
-
-function isVip(userID, callback){
-  dbManager.getVip(userID, function(out){
-    logManager.writeDebugLog(out.isVip);
-    if(out){
-      if(out == 1){
-        callback(true);
-      }else{
-        callback(false);
-      }
-    }else{
-      callback(false);
-    }
-  });
-}
-
-function getLink(userID){
-  pending = jsonParser.read(PATH + "/config/pendingPayments.json").transactions;
-  let link = "";
-  pending.forEach(transaction => {
-    if (transaction.userID == userID) link = transaction.link;
-  });
-  return link;
-}
-
 module.exports = {
     becomeVIP: function(message){
-      isVip(message.author.id, function(is){
+      dbManager.isVip(message.author.id, function(is){
         if(is){
           message.author.send("Du bist schon VIP!").catch();
         }else{
-          if(isPending(message.author.id)){
-            let link = getLink(message.author.id);
-            let embed = buildEmbed(link);
-            message.author.send({ embed: embed}).catch();
-            if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
-            return;
-          }
-    
-          logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
-    
-          https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
-          let data = '';
-    
-           //Antwort
-          resp.on('data', (chunk) => {
-            data += chunk;
-          });
-    
-          // The whole response has been received. Print out the result.
-          resp.on('end', () => {
-            let jsonData = JSON.parse(data);
-            let link = jsonData.paypalLink;
-            if(link){
-              let transactions = jsonParser.read(PATH + "/config/pendingPayments.json");
-              let transaction = transactions.transactions;
-              let transID = jsonData.transID;
-              let userID = message.author.id;
-              transaction.push({
-                "transID" : transID,
-                "userID" : userID,
-                "link" : link,
-                "status" : "Pending"
+          dbManager.getUserPayment(userID,function(exists){
+            if(exists){
+              dbManager.getPaymentLink(userID, function(link){
+                let embed = buildEmbed(link);
+                message.author.send({ embed: embed}).catch();
+                if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
               });
-              transactions.transactions = transaction;
-              jsonParser.write(PATH + "/config/pendingPayments.json", transactions);
-              let embed = buildEmbed(link);
-              message.author.send({ embed: embed}).catch();
-              if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
-            }else{
-              message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
             }
+            else{
+              logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
+        
+              https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
+              let data = '';
+        
+              //Antwort
+              resp.on('data', (chunk) => {
+                data += chunk;
+              });
+        
+              // The whole response has been received. Print out the result.
+              resp.on('end', () => {
+                let jsonData = JSON.parse(data);
+                let link = jsonData.paypalLink;
+                if(link){
+                  dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
+                  let embed = buildEmbed(link);
+                  message.author.send({ embed: embed}).catch();
+                  if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+                
+                }else{
+                  message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
+                }
+              });
     
-          });
-    
+            });
+          }
         }).on("error", (err) => {
           console.log("Error: " + err.message);
         });
@@ -211,44 +167,33 @@ module.exports = {
   },
 
   fileReceived: function(message, file){
-    let transactionsJSON = jsonParser.read(PATH + "/config/pendingPayments.json");
-    let transactions = transactionsJSON.transactions;
-    let vipsJSON = jsonParser.read(PATH + "/config/vips.json");
-    let vips = unMergeArrays(vipsJSON.vips);
-    let found = false;
 
-    //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
-    vips.forEach(vip => {
-      if(vip == message.author.id){
-        changeVIPSound(message, file, null, null, null, null);
-        found = true;
+    dbManager.isVip(message.author.id, function(vip){
+      if(vip){
+        //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
+        changeVIPSound(message, file);
+      }
+      else{
+        //Der Nutzer hat eine Bezahlung am laufen (erledigt oder nicht)
+        dbManager.getPaymentStatus(message.author.id, function(status){
+          if(!status){
+            //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
+            message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.");
+          }
+          //Zahlung noch nicht erfolgt
+          else if(status == "Pending"){
+            message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+          }
+          //Zahlung erfolgreich
+          else if(transaction.status == "approved"){
+            changeVIPSound(message, file);
+          }
+          //Das sollte nicht passieren
+          else{
+            message.author.reply("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+          }
+        });
       }
     });
-
-    if(found) return;
-
-    //Der Nutzer hat eine Bezahlung am laufen (erledigt oder nicht)
-    transactions.forEach(transaction =>{
-      if(transaction.userID == message.author.id){
-        //Zahlung noch nicht erfolgt
-        if(transaction.status == "Pending"){
-          message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
-        }
-        //Zahlung erfolgreich
-        else if(transaction.status == "approved"){
-          changeVIPSound(message, file, transactionsJSON, transactions, transaction, vipsJSON);
-        }
-        //Das sollte nicht passieren
-        else{
-          message.author.reply("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
-        }
-        found = true;
-      }
-    });
-
-    if(found) return;
-
-    //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
-    message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.");
   }
 }

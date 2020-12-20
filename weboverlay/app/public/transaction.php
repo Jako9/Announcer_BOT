@@ -15,25 +15,7 @@ if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
         $pendingPayments = readFromJSON('pendingPayments.json');
         $pendingPaymentsArray = $pendingPayments->transactions;
 
-        if($pendingPaymentsArray != null){
-            for ($i = 0; $i < count($pendingPaymentsArray); $i++) {
-                
-                $transaction = $pendingPaymentsArray[$i];
-        
-                if($transaction->transID != null){
-                    if(strval($transaction->transID) == strval($transactionId)){
-                        $transaction->status = $state;
-                        $pendingPaymentsArray[$i] = $transaction;
-                    }
-                }
-                
-            }
-
-            $pendingPayments->transactions = $pendingPaymentsArray;
-
-            $encodedArrray = json_encode($pendingPayments);
-            file_put_contents('../../../config/pendingPayments.json', $encodedArrray);
-        }
+        updatePaymentStatus($transactionId, $state);
     }
 }
 
@@ -43,5 +25,30 @@ function readFromJSON($file){
     return json_decode($json);
 }
 
+function connectToDatabase(){
+    $creds = readFromJSON('database.json');
+    $username = $creds->user;
+    $password = $creds->password;
+    $database = $creds->database;
+
+    $conn = new mysqli('localhost', $username, $password, $database);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+function updatePaymentStatus($transID, $state){
+    $connection = connectToDatabase();
+    $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID=" . $transID;
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    $connection->close();
+}
 
 ?>

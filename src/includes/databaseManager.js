@@ -289,6 +289,98 @@ module.exports = {
             }
         });
         connection.end();
+    },
+
+    createPendingPayment: function(transactionID, userID, link, status,  callback){
+        connection = establishConnection();
+
+        let q = "INSERT INTO pending_payments (transID, userID, link, status) VALUES ('"+ transactionID + "', '" + userID + "', '" + link + "', '" + status + "')";
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(true);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
+
+    getPaymentLink: function(userID, callback){
+        connection = establishConnection();
+
+        let q = "SELECT link FROM pending_payments WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(results[0].link);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
+
+    getPaymentStatus: function(userID, callback){
+        connection = establishConnection();
+
+        let q = "SELECT status FROM pending_payments WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(results[0].status);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
+
+    getUserPayment: function(userID, callback){
+        connection = establishConnection();
+
+        let q = "SELECT * FROM pending_payments WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(true);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
+
+    deletePayment: function(userID, callback){
+        let connection = establishConnection();
+
+        let q = "DELETE FROM pending_payments WHERE userID=" + userID;
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                callback(results);
+            }
+        });
+
+        connection.end();
     }
 };
 
