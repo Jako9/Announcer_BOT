@@ -163,7 +163,7 @@ function getLink(userID){
 
 module.exports = {
     becomeVIP: function(message){
-      isVip(3, function(is){
+      isVip(message.author.id, function(is){
         if(is){
           message.author.send("Du bist schon VIP!").catch();
         }else{
