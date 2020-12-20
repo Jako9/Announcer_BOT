@@ -46,7 +46,7 @@ module.exports = {
         return out;
     },
 
-    getUser: function(userID){
+    getUser: function(userID, callback){
         let connection = mysql.createConnection({
             host : 'localhost',
             database : database,
@@ -60,7 +60,7 @@ module.exports = {
             if(err) throw err;
             let q = "SELECT * FROM users WHERE userID=" + userID;
 
-            connection.query(q, [true], (error, results, fields) => {
+            connection.query(q, (error, results) => {
                 if(error){
                     throw err;
                 }else{
@@ -69,7 +69,7 @@ module.exports = {
             });
          });
         connection.end();
-        return out;
+        callback(out);
     },
 
     getVip: function(userID){

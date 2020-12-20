@@ -23,8 +23,11 @@ process.on('warning', function(warning) {
   logManager.writeErrorLog(warning.stack);
 });
 
+dbManager.getUser('174558221535674369', function(out){
+  logManager.writeDebugLog(out);
+});
 
-logManager.writeDebugLog(dbManager.getUser('174558221535674369'));
+
 
 
 //Initilizing BOT
