@@ -34,10 +34,10 @@ module.exports = {
 
         out = false;
 
-        let q = "SELECT * FROM users";
+        let q = "SELECT userID FROM users";
 
         connection.query(q, (error, results) => {
-            if(!error){
+            if(!error && results){
                 out = results;
             }
 
