@@ -354,7 +354,7 @@ function saveServer(id){
     servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
 
     dbManager.saveServer(servers[id], id, function(worked){});
-    server[id].instructions = instructionsTmp;
+    servers[id].instructions = instructionsTmp;
     servers[id].reactionMessage = message;
 }
 
