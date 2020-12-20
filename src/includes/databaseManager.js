@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const jsonParser = require('./jsonParser');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
-const logManager = require('./includes/logManager.js');
+const logManager = require('./logManager.js');
 
 const dbData = jsonParser.read(PATH + "/config/database.json");
 const database = dbData.database;
