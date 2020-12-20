@@ -45,9 +45,6 @@ function updatePaymentStatus($transID, $state){
     $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID='" . $transID . "'";
 
     $result = $connection->query($sql);
-    if(!$result){
-        echo($connection->error);
-    }
 
     $connection->close();
 }

@@ -184,7 +184,7 @@ module.exports = {
             message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
           }
           //Zahlung erfolgreich
-          else if(transaction.status == "approved"){
+          else if(status == "approved"){
             changeVIPSound(message, file);
           }
           //Das sollte nicht passieren
