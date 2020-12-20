@@ -5,6 +5,7 @@ const dbManager = require('./databaseManager.js');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
+let descriptions = [];
 
 module.exports = {
     addServer: function(guild) {
@@ -70,8 +71,11 @@ module.exports = {
      * @param {string} id Id des Servers
      */
     getInstructions: function(id){
-        instructions = servers[id].instructions;
-        descriptions = jsonParser.read(PATH + "/config/default.json").descriptions;
+        instructions = [];
+        for(let i = 0; i < servers[id].instructions.length; i++){
+            instructions.push(servers[id].instructions[i].name);
+        }
+
         return mergeArrays(instructions, descriptions);
     },
 
@@ -84,7 +88,17 @@ module.exports = {
     setInstructions: function(id, instructions){
         if(!instructions) return;
 
-        servers[id].instructions = unMergeArrays(instructions);
+        instructionsTmp = [];
+
+        for(i=1; i <= instructions.length; i++){
+            instructionsTmp.push({
+                "name": instructions[i-1],
+                "type": i
+            });
+        }
+
+        servers[id].instructions = instructionsTmp;
+
         saveServer(id);
 
     },
@@ -278,9 +292,7 @@ module.exports = {
             dbServer["whoLocked"] = "";
             dbServer["reactionMessage"] = null;
 
-            //dbServer.instructions = JSON.parse(dbServer.instructions);
-
-            logManager.writeDebugLog(dbServer.instructions);
+            dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
 
             fetchMessage(client, id, dbServer.channelReact);
 
@@ -288,6 +300,14 @@ module.exports = {
             servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
             servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
             saveServer(id);
+            });
+        });
+    },
+
+    readInDescriptions: function (){
+        dbManager.readInDescriptions(function(descs){
+            descs.forEach(desc =>{
+                descriptions[desc.explanationID-1] = desc.explanation;
             });
         });
     },
@@ -330,8 +350,11 @@ function saveServer(id){
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
 
+    servers[id].instructions = JSON.stringify(servers[id].instructions);
+
     dbManager.saveServer(servers[id], id, function(worked){});
     //jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
+    servers[id].instructions = server[id].
     servers[id].reactionMessage = message;
 }
 

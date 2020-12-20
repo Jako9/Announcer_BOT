@@ -198,7 +198,7 @@ module.exports = {
         let avatar= server.avatar;
         let rolle= server.rolle;
         let whitelist = server.whitelist;
-        let instructions= server.instructions;
+        let instructions= {"instructions" : server.instructions};
         let prefix= server.prefix;
         let volume= server.volume;
         let standartRole= server.standartRole;
@@ -271,6 +271,25 @@ module.exports = {
         });
         connection.end();
     },
+
+    readInDescriptions: function(callback){
+        connection = establishConnection();
+
+        let q = "SELECT * FROM instruction_explanation";
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(results);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    }
 };
 
 function establishConnection(){

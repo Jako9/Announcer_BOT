@@ -60,6 +60,7 @@ client.on('ready', () =>{
   //Fetch all existing Servers and their settings
   logManager.writeBootLog("Beginne mit dem Einlesen der Server...");
   serverManager.readInServers(client);
+  serverManager.readInDescriptions();
   serverManager.updateUser(client);
   client.user.setActivity("v1.0", {
     type: "STREAMING",
