@@ -270,27 +270,26 @@ module.exports = {
     },
 
     readInServers: function (client){
-        fs.readdirSync(PATH + "/config/guilds/").forEach(file => {
-          try{
-              id = file.split(".")[0];
-              serverObj = jsonParser.read(PATH + "/config/guilds/" + "/" + file);
-              serverObj["timeLastJoin"] = 0;
-              serverObj["channelSize"] = 0;
-              serverObj["whoLocked"] = "";
-              serverObj["reactionMessage"] = null;
-              serverObj["instructions"] = JSON.parse(serverObj["instructions"]);
+        dbManager.readInServers(function(dbServers){
+            dbServers.forEach(dbServer => {
+            dbServer["timeLastJoin"] = 0;
+            dbServer["channelSize"] = 0;
+            dbServer["whoLocked"] = "";
+            dbServer["reactionMessage"] = null;
 
-              logManager.writeDebugLog(JSON.stringify(serverObj["instructions"]));
 
-              fetchMessage(client, id, serverObj.channelReact);
 
-              servers[id] = serverObj;
-              servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
-              servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
-              saveServer(id);
-            }
-            catch(e){
-            }
+            dbServer.instructions = JSON.parse(dbServer.instructions);
+
+            logManager.writeDebugLog(dbServer.instructions);
+
+            fetchMessage(client, id, dbServer.channelReact);
+
+            servers[id] = dbServer;
+            servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
+            servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+            saveServer(id);
+            });
         });
     },
 

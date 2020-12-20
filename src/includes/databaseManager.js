@@ -251,7 +251,26 @@ module.exports = {
             }
         });
         connection.end();
-    }
+    },
+
+    readInServer: function(callback){
+        connection = establishConnection();
+
+        let q = "SELECT * FROM server";
+
+        connection.query(q, (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results){
+                    callback(results);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
 };
 
 function establishConnection(){
