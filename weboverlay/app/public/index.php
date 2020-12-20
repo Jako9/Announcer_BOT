@@ -52,7 +52,6 @@ function printServer(){
         $showSaveError = false;
 
         $jObj = json_decode(json_encode($server), FALSE);
-        $jObj->instructions = getInstructionsFromDatabase($jObj->guildID);
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
@@ -135,7 +134,7 @@ function printServer(){
         $j = 0;
         foreach($jObj->instructions as $instruction){
 
-            $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
+            $instructions .= '<div><input class="server-settings-input-disabled instruction-input instruction-input-'. $i . '" id="instruction-input-'. $i . "-" . $j . '" name="instruction-input-'. $i . "-" . $j . '" value="'. $instruction->name .'" disabled><i class="instructions-edit-button fas fa-pencil-alt" id="edit-instructions-'. $i . "-". $j .'"></i></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
         }
