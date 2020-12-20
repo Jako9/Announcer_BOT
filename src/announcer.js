@@ -29,7 +29,6 @@ dbManager.getUser('174558221535674369', function(out){
 
 
 
-
 //Initilizing BOT
 const Discord = require('discord.js');
 const client = new Discord.Client();

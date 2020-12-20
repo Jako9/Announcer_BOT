@@ -36,7 +36,7 @@ module.exports = {
 
         let q = "SELECT userID FROM users";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, (error, results) => {//Hier überall callbacks einbauen........
             if(!error && results != null){
                 out = results;
             }
@@ -47,12 +47,7 @@ module.exports = {
     },
 
     getUser: function(userID, callback){
-        let connection = mysql.createConnection({
-            host : 'localhost',
-            database : database,
-            user     : user,
-            password : password
-        });
+        let connection = establishConnection;
 
         out = false;
 
@@ -62,7 +57,7 @@ module.exports = {
             if(error){
                 throw err;
             }else{
-                callback(results);
+                callback(results[0]);
             }
         });
 
