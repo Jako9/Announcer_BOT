@@ -123,9 +123,9 @@ module.exports = {
         if(is){
           message.author.send("Du bist schon VIP!").catch();
         }else{
-          dbManager.getUserPayment(userID,function(exists){
+          dbManager.getUserPayment(message.author.id,function(exists){
             if(exists){
-              dbManager.getPaymentLink(userID, function(link){
+              dbManager.getPaymentLink(message.author.id, function(link){
                 let embed = buildEmbed(link);
                 message.author.send({ embed: embed}).catch();
                 if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
