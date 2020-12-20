@@ -36,7 +36,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(results){
                     callback(results);
@@ -55,7 +55,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(results){
                     callback(results[0]);
@@ -91,7 +91,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
@@ -114,7 +114,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
@@ -138,7 +138,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
@@ -161,7 +161,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
@@ -184,7 +184,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
               callback(true);
             }
@@ -203,11 +203,11 @@ module.exports = {
         let volume= server.volume;
         let standartRole= server.standartRole;
         let channelReact= server.channelReact;
-        let q = "UPDATE server SET name="+ name + "avatar=" + avatar +", rolle="+ rolle + "instructions="+ instructions +", prefix="+ prefix + "volume="+ volume +", standartRole="+ standartRole + "channelReact="+ channelReact +" WHERE guildID=" + id;
+        let q = "UPDATE server SET name="+ name + ",avatar=" + avatar +", rolle="+ rolle + ", instructions="+ instructions +", prefix="+ prefix + ", volume="+ volume +", standartRole="+ standartRole + ", channelReact="+ channelReact +" WHERE guildID=" + id;
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
               callback(true);
             }
@@ -222,7 +222,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
                 if(typeof results !== 'undefined' && results !== null){
                     if(results.length != 0){
@@ -245,7 +245,7 @@ module.exports = {
 
         connection.query(q, (error, results) => {
             if(error){
-                throw err;
+                throw error;
             }else{
               callback(true);
             }
