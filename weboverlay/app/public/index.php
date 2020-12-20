@@ -123,6 +123,7 @@ function printServer(){
             $jToWrite = json_encode($pObj);
             //file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
+            updateServerInDatabase($jToWrite->guildID, $jToWrite->rolle, $jToWrite->standartRole, $jToWrite->prefix, $jToWrite->volume);
 
             $showSaveSuccess = !$showSaveError;
         }else{
@@ -348,6 +349,16 @@ function getServersFromDatabase(){
     }
 
     return $arr;
+    $connection->close();
+}
+
+function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
+    $connection = connectToDatabase();
+    $sql = "UPDATE server SET rolle=" . $role . ", standartRole=" . $reaktionRole . "prefix=" . $prefix . "volume=" . $volume . "WHERE guildID=" . $guildID;
+
+    $result = $connection->query($sql);
+    $arr = array();
+
     $connection->close();
 }
 
