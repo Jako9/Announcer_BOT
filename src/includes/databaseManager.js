@@ -205,7 +205,7 @@ module.exports = {
 
         let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
 
-        connection.query(q, (error, results, callback) => {
+        connection.query(q, (error, results) => {
             if(error){
                 throw err;
             }else{

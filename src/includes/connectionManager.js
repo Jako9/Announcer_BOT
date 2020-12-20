@@ -144,8 +144,15 @@ module.exports = {
                 message.reply("Der Bot begleitet dich nun!");
               }
               else{
-                dbManager.setJoinsound(message.author.id,message.content.split(' ')[1]);
-                message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+                dbManager.setJoinsound(message.author.id,message.content.split(' ')[1], function(successfull){
+                  if(successfull){
+                    message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+                  }
+                  else{
+                    message.reply("Irgendetwas ist schief gelaufen!");
+                  }
+
+                });
               }
             });
           }
