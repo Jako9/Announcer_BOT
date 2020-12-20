@@ -86,7 +86,7 @@ module.exports = {
         if((oldUserChannel == undefined) && (newUserChannel != undefined)){
 
           //Antispamschutz => Bot ist gerade erst gejoint
-          //if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
+          if((Date.now() - serverManager.getTimeLastJoin(newUserChannel.guild.id)) < 20000) return;
 
           //Prüft, ob der Member  ein  VIP ist und somit seinen eigenen Sound  bekommt
           /* if(isVip(newState.member.id)){
@@ -137,18 +137,19 @@ module.exports = {
     },
 
     setJoinSound: function(message, prefix, instructions){
-      if(isVip(message.member.id)){
-        message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
-        return;
-      }
+      isVip(message.member.id, function(is){
+        if(is){
+          message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+        }else{
+          if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
+            message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+            dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
 
-      if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
-        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
-        return;
-      }
+            message.reply("Dein Joinsound wurde erfolgreich geupdatet");
 
-      dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
-      message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+          }
+        }
+      })
     },
 
     removeJoinSound: function(message){
