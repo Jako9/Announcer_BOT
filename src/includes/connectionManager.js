@@ -166,8 +166,15 @@ module.exports = {
         if(is){
           message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
         }else{
-          dbManager.removeUser(message.member.id);
-          message.reply("Der Bot begleitet dich nun nicht mehr");
+          dbManager.removeUser(message.member.id, function(succ){
+            if(succ){
+              message.reply("Der Bot begleitet dich nun nicht mehr");
+            }
+            else{
+              message.reply("Irgendetwas ist schief gelaufen!");
+            }
+          });
+
         }
       });
     }
