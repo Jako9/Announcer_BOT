@@ -29,27 +29,23 @@ module.exports = {
         return out;
     },
 
-    getAllUsers: function(){
+    getAllUsers: function(callback){
         connection = establishConnection();
-
-        out = false;
 
         let q = "SELECT userID FROM users";
 
-        connection.query(q, (error, results) => {//Hier überall callbacks einbauen........
-            if(!error && results != null){
-                out = results;
+        connection.query(q, (error, results) => {
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
-
         });
         connection.end();
-        return out;
     },
 
     getUser: function(userID, callback){
         let connection = establishConnection();
-
-        out = false;
 
         let q = "SELECT * FROM users WHERE userID=" + userID;
 
@@ -64,10 +60,8 @@ module.exports = {
         connection.end();
     },
 
-    removeUser: function(userID){
+    removeUser: function(userID, callback){
         let connection = establishConnection();
-
-        out = false;
 
         let q = "DELETE * FROM users WHERE userID=" + userID;
 
@@ -75,106 +69,102 @@ module.exports = {
             if(error){
                 throw err;
             }else{
+                callback(results);
             }
         });
 
         connection.end();
     },
 
-    getVip: function(userID){
+    getVip: function(userID, callback){
         connection = establishConnection();
-
-        out = false;
 
         let q = "SELECT isVip FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = results;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
         });
         connection.end();
-
-        return out;
     },
 
-    setVip: function(userID){
+    setVip: function(userID, callback){
         connection = establishConnection();
-        out = false;
 
         let q = "UPDATE users SET isVIP=1 WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = results;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
         });
         connection.end();
 
-        return out;
     },
 
-    getName: function(userID){
+    getName: function(userID, callback){
         connection = establishConnection();
-        out = false;
 
         let q = "SELECT username FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = results;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
-
         });
         connection.end();
-        return out;
     },
 
-    setInformation: function(userID, username, avatar){
+    setInformation: function(userID, username, avatar, callback){
         connection = establishConnection();
-        out = false;
 
         let q = "UPDATE users SET username="+ username +", avatar="+ avatar +" WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = results;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
         });
         connection.end();
-        return out;
     },
 
-    getJoinsound: function(userID){
+    getJoinsound: function(userID, callback){
         connection = establishConnection();
-
-        out = false;
 
         let q = "SELECT joinsound FROM users WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = results;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
         });
         connection.end();
-        return out;
     },
 
-    setJoinsound: function(userID, joinsound){
+    setJoinsound: function(userID, joinsound, callback){
         connection = establishConnection();
-
-        out = false;
 
         let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
 
         connection.query(q, (error, results) => {
-            if(!error){
-                out = true;
+            if(error){
+                throw err;
+            }else{
+                callback(results);
             }
         });
         connection.end();
-        return out;
     }
 };
 
