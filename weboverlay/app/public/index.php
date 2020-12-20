@@ -122,8 +122,6 @@ function printServer(){
             $jToWrite = json_encode($pObj);
             //file_put_contents('../../../config/guilds/' . $file, $jToWrite);
 
-            error_log("Lorem Lorem");
-
             updateServerInDatabase($pObj->guildID, $pObj->rolle, $pObj->standartRole, $pObj->prefix, $pObj->volume);
 
             $showSaveSuccess = !$showSaveError;
@@ -355,7 +353,7 @@ function getServersFromDatabase(){
 
 function updateServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET rolle='" . $role . "', standartRole='" . $reaktionRole . "' prefix='" . $prefix . "' volume='" . $volume . "' WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET prefix='". $prefix ."' WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
