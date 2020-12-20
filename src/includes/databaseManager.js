@@ -278,7 +278,8 @@ function establishConnection(){
         host : 'localhost',
         database : database,
         user     : user,
-        password : password
+        password : password,
+        charset : 'utf8'
     });
 
     return connection;
