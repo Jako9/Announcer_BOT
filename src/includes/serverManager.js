@@ -349,12 +349,12 @@ function saveServer(id){
     delete toWrite.channelSize;
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
+    let instructionsTmp = servers[id].instructions;
 
-    servers[id].instructions = JSON.stringify(servers[id].instructions);
+    servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
 
     dbManager.saveServer(servers[id], id, function(worked){});
-    //jsonParser.write(PATH + "/config/guilds/" + "/" + id + ".json", toWrite);
-    servers[id].instructions = server[id].
+    server[id].instructions = instructionsTmp;
     servers[id].reactionMessage = message;
 }
 
