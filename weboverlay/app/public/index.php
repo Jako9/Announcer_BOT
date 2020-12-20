@@ -240,36 +240,36 @@ function printVips(){
 
     $vips = getVipsFromDatabase();
 
-    echo(print_r($vips, true));
+    if(count($vips) > 0){
+        foreach($vips as $vip) {
 
-    foreach($vips as $vip) {
-
-        $id = $vip['userID'];
-        $name = $vip['username'];
-        $vipAvatar = $vip['avatar'];
-
-        $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
-
-        echo('
-            <div class="vip-element">
-                <div class="card mb-3" style="max-width: 18rem;">
-                    <div class="card-header">
-                        <div class="vip-avatar" style="'. $vipStyle .'">
-
+            $id = $vip['userID'];
+            $name = $vip['username'];
+            $vipAvatar = $vip['avatar'];
+    
+            $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
+    
+            echo('
+                <div class="vip-element">
+                    <div class="card mb-3" style="max-width: 18rem;">
+                        <div class="card-header">
+                            <div class="vip-avatar" style="'. $vipStyle .'">
+    
+                            </div>
+                            <div class="vip-name">
+                                '. $name .'
+                            </div>
                         </div>
-                        <div class="vip-name">
-                            '. $name .'
+                        <div class="card-body text-dark">
+                        <div class="card-text vip-sound-card">
+                            <i class="fas fa-volume-up sound-icon" id="sound-button-'. $i .'" data-id="'. $id .'"></i>
                         </div>
-                    </div>
-                    <div class="card-body text-dark">
-                    <div class="card-text vip-sound-card">
-                        <i class="fas fa-volume-up sound-icon" id="sound-button-'. $i .'" data-id="'. $id .'"></i>
-                    </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        ');
-        $i++;
+            ');
+            $i++;
+        }
     }
 }
 
