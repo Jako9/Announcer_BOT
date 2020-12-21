@@ -66,5 +66,16 @@ module.exports = {
       channels.forEach(channel => msg += (channel + "\n"));
       msg += "```";
       message.reply(msg);
+    },
+
+    addLockable: function(message){
+      let channels = serverManager.getLockable(message.guild.id);
+      if(!message.member.voice.channel){
+        message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befhel erneut aus.");
+        return;
+      }
+      channels.push(message.member.voice.channel.name);
+      serverManager.setLockable(message.guild.id, channels);
+      message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
     }
 }
