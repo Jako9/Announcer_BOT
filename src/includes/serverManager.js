@@ -10,13 +10,22 @@ let descriptions = [];
 module.exports = {
     addServer: function(guild) {
 
-      dbManager.addServer(guild.id, guild.name,guild.iconURL(), function(res){});
-      servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
-      servers[guild.id].name = guild.name;
-      servers[guild.id].avatar = guild.iconURL();
-      servers[guild.id].whitelist = [];
-      logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
-      saveServer(guild.id);
+      dbManager.addServer(guild.id, guild.name,guild.iconURL(), function(res){
+        dbManager.getServer(guild.id, function(dbServer){
+          let id = dbServer.guildID;
+          dbServer["timeLastJoin"] = 0;
+          dbServer["channelSize"] = 0;
+          dbServer["whoLocked"] = "";
+          dbServer["reactionMessage"] = null;
+
+          dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
+          dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
+
+          servers[id] = dbServer;
+          logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
+          saveServer(guild.id);
+        });
+      });
     },
 
     removeServer: function(guild) {
