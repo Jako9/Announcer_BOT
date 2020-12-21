@@ -87,12 +87,17 @@ module.exports = {
 
           isVip(newState.member.id, function(out){
             if(out){
+              logManager.writeDebugLog("IST VIP");
               serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
               file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
               newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             }else{
+              logManager.writeDebugLog("IST KEIN VIP");
               dbManager.getJoinsound(newState.member.id, function(out){
-                if(out){
+                logManager.writeDebugLog("Sound = " + out);
+                if(!out){
+                }
+                else{
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
                   newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + ".mp3"));
                 }
