@@ -352,12 +352,15 @@ function saveServer(id){
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
     let instructionsTmp = servers[id].instructions;
+    let whitelist = server[id].whitelist;
+    server[id].whitelist = JSON.stringify({"whitelist":server[id].whitelist});
 
     servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
 
     dbManager.saveServer(servers[id], id, function(worked){});
     servers[id].instructions = instructionsTmp;
     servers[id].reactionMessage = message;
+    server[id].whitelist = whitelist;
 }
 
 function mergeArrays(a, b){
