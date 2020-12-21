@@ -92,7 +92,6 @@ module.exports = {
               newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             }else{
               dbManager.getJoinsound(newState.member.id, function(out){
-                logManager.writeDebugLog("Sound = " + out);
                 if(out === false){
                 }
                 else{
