@@ -13,8 +13,9 @@ function delRole(reaction,role,member){
 
 module.exports = {
   giveReaction: function(reaction, user){
+
     let id = reaction.message.guild.id;
-    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || reaction.message.id != serverManager.getReactionMessage(id).id) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
@@ -37,14 +38,13 @@ module.exports = {
 
   removeReaction: function(reaction, user){
     //Uninteressant
-    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel) return;
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || reaction.message.id != serverManager.getReactionMessage(id).id) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
     reaction.message.guild.members.fetch(user).then(member => delRole(reaction, role,member)).catch();
 },
 
-  //Das Funktioniert nicht ganz, sollte neu gemacht werden
   addReactor: function(message){
     let id = message.guild.id;
     if(serverManager.getChannelReact(message.guild) == null){

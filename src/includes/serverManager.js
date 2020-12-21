@@ -226,7 +226,7 @@ module.exports = {
      * @param {number} id Id des Servers
      */
     getChannelReact: function(guild){
-        return guild.channels.cache.find(channel => channel.id == servers[guild.id].channelReact);
+        return guild.channels.cache.find(channel => channel.name == servers[guild.id].channelReact);
     },
 
     /**
@@ -236,7 +236,7 @@ module.exports = {
      * @param {string} channelReact standartChannel des Servers
      */
     setChannelReact: function(id, channelReact){
-        servers[id].channelReact = (channelReact) ? channelReact.id : servers[id].channelReact;
+        servers[id].channelReact = (channelReact) ? channelReact.name : servers[id].channelReact;
         saveServer(id);
 
     },
@@ -338,7 +338,7 @@ function fetchMessage(client, id, channelReact){
   client.guilds.fetch(id).then(guild => {
     guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
-        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(foo => true);
+        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact).messages.cache.find(message => message.pinned);
       });
     });
   });
