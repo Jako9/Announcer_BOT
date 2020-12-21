@@ -2,11 +2,11 @@ const serverManager = require('./serverManager.js');
 const logManager = require('./logManager.js');
 
 //Schließ einen abgeschlossenen Raum wieder auf
-function lockChannel (member){
-  let channel = member.voice.channel;
+function lockChannel (message){
+  let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,member.id);
-  channel.setUserLimit(1);
+  channel.setUserLimit(message.member.voice.channel.members.size);
 }
 
 //Schließt einen Raum ab
@@ -35,7 +35,7 @@ module.exports = {
         message.reply('Es ist schon abgeschlossen.');
         return;
       }
-      lockChannel(message.member);
+      lockChannel(message);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde abgeschlossen.");
       message.reply('Abgeschlossen');
     },
