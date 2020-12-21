@@ -7,7 +7,7 @@ function lockChannel (message){
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
   channel.setUserLimit(message.member.voice.channel.members.size);
-  channel.setName("[DnD] " + channel.name).catch();
+  //channel.setName("[DnD] " + channel.name).catch();
 }
 
 //Schließt einen Raum ab
@@ -15,8 +15,7 @@ function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
   voiceChannel.setUserLimit(serverManager.getChannelSize(id));
-  if(!voiceChannel.name.startsWith("[DnD] ")) return;
-  voiceChannel.setName(voiceChannel.name.substring(6,voiceChannel.name.length)).catch();
+
 }
 
 module.exports = {
