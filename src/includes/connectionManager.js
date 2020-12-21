@@ -13,7 +13,6 @@ const PROBAILITY = 65;
 //Gibt wieder, ob die Person ein VIP ist
 function isVip(userID, callback){
   dbManager.getVip(userID, function(out){
-    logManager.writeDebugLog(out.isVip);
     if(out){
       if(out == 1){
         callback(true);
@@ -143,7 +142,6 @@ module.exports = {
               }
               else{
                 dbManager.setJoinsound(message.author.id,message.content.split(' ')[1], function(successfull){
-                  logManager.writeDebugLog("Success = " + successfull);
                   if(successfull){
                     message.reply("Dein Joinsound wurde erfolgreich geupdatet");
                   }
