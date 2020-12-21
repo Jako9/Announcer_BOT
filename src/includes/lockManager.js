@@ -71,7 +71,7 @@ module.exports = {
     addLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befhel erneut aus.");
+        message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befehl erneut aus.");
         return;
       }
       if(channels.includes(message.member.voice.channel.name)){
@@ -86,7 +86,7 @@ module.exports = {
     removeLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befhel erneut aus.");
+        message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befehl erneut aus.");
         return;
       }
       if(!channels.includes(message.member.voice.channel.name)){
