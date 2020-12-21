@@ -252,17 +252,17 @@ client.on('message', message => {
   }
 
   //lockableAdd
-  else if(message.content.startsWith(prefix + instructions[21][0])){
+  else if(message.content.startsWith(prefix + instructions[24][0])){
     //connectionManager.setJoinSound(message, prefix, instructions);
   }
 
   //lockableRemove
-  else if(message.content.startsWith(prefix + instructions[21][0])){
+  else if(message.content.startsWith(prefix + instructions[25][0])){
     //connectionManager.setJoinSound(message, prefix, instructions);
   }
 
   //lockableClear
-  else if(message.content === prefix + instructions[23][0]){
+  else if(message.content === prefix + instructions[26][0]){
     lockManager.lockableClear(message);
   }
 
