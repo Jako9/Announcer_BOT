@@ -303,6 +303,26 @@ module.exports = {
 
     },
 
+    getServer: function(guildID, callback){
+      let connection = establishConnection();
+
+      let q = "SELECT * FROM server WHERE guildID=" + guildID;
+
+      connection.query(q, (error, results) => {
+          if(error){
+              throw error;
+          }else{
+              if(results){
+                  callback(results[0]);
+              }else{
+                  callback(false);
+              }
+          }
+      });
+
+      connection.end();
+    },
+
     readInDescriptions: function(callback){
         connection = establishConnection();
 
