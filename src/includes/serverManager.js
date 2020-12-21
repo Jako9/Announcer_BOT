@@ -333,7 +333,8 @@ module.exports = {
 
 function fetchMessage(client, id, channelReact){
   if(channelReact == "") return;
-
+  logManager.writeDebugLog("ID : " + id);
+  logManager.writeDebugLog("ID : " + channelReact);
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
     guild.channels.cache.find(channel => channel.id == channelReact).messages.fetch().then(messages => {
