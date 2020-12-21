@@ -98,6 +98,7 @@ module.exports = {
                 if(!out){
                 }
                 else{
+                  logManager.writeDebugLog("Er soll joinen");
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
                   newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + ".mp3"));
                 }
