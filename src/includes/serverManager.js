@@ -353,7 +353,7 @@ function saveServer(id){
     delete toWrite.reactionMessage;
     let instructionsTmp = servers[id].instructions;
     let whitelist = servers[id].whitelist;
-    server[id].whitelist = JSON.stringify({"whitelist":servers[id].whitelist});
+    servers[id].whitelist = JSON.stringify({"whitelist":servers[id].whitelist});
 
     servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
 
