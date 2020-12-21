@@ -7,7 +7,9 @@ function lockChannel (message){
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
   channel.setUserLimit(message.member.voice.channel.members.size);
-  channel.setName("[DnD] " + channel.name).catch();
+  channel.setName("[DnD] " + channel.name).catch(err => {
+    logManager.writeDebugLog("FEHLER: " + err);
+  });
 }
 
 //Schließt einen Raum ab
