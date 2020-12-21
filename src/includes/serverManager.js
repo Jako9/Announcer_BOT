@@ -20,6 +20,7 @@ module.exports = {
 
           dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
           dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
+          dbServer.whitelist = JSON.parse(dbServer.lockable).lockable;
 
           servers[id] = dbServer;
           logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
@@ -278,6 +279,27 @@ module.exports = {
     },
 
     /**
+     * Gibt die Liste aller Channel, die man abschließen darf des Servers zurück
+     *
+     * @param {number} id Id des Servers
+     */
+    getLockable: function(id){
+        return servers[id].lockable;
+    },
+
+    /**
+     * Setzt die channel, die man abschließen darf auf lockable
+     *
+     * @param {string} id Id des Servers
+     * @param {string} lockable whitelist des Servers
+     */
+    setLockable: function(id, lockable){
+        servers[id].lockable = lockable;
+        saveServer(id);
+
+    },
+
+    /**
      * Setzt die ReactionMessage des Servers
      *
      * @param {string} id Id des Servers
@@ -301,6 +323,8 @@ module.exports = {
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
 
             dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
+
+            dbServer.lockable = JSON.parse(dbServer.lockable).lockable;
 
             fetchMessage(client, id, dbServer.channelReact);
 
@@ -358,7 +382,10 @@ function saveServer(id){
     delete toWrite.reactionMessage;
     let instructionsTmp = servers[id].instructions;
     let whitelist = servers[id].whitelist;
+    let lockable = servers[id].lockable;
     servers[id].whitelist = JSON.stringify({"whitelist":servers[id].whitelist});
+
+    servers[id].lockable = JSON.stringify({"lockable":servers[id].lockable});
 
     servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
 
@@ -366,6 +393,7 @@ function saveServer(id){
     servers[id].instructions = instructionsTmp;
     servers[id].reactionMessage = message;
     servers[id].whitelist = whitelist;
+    servers[id].lockable = lockable;
 }
 
 function mergeArrays(a, b){

@@ -203,7 +203,8 @@ module.exports = {
         let volume= server.volume;
         let standartRole= server.standartRole;
         let channelReact= server.channelReact;
-        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', rolle='"+ rolle + "', instructions='"+ instructions + "', whitelist='" + whitelist + "', prefix='"+ prefix + "', volume="+ volume +", standartRole='"+ standartRole + "', channelReact='"+ channelReact +"' WHERE guildID=" + id;
+        let lockable= server.lockable;
+        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', rolle='"+ rolle + "', instructions='"+ instructions + "', whitelist='" + whitelist + "', prefix='"+ prefix + "', volume="+ volume +", standartRole='"+ standartRole + "', channelReact='"+ channelReact + "', lockable='" lockable +"' WHERE guildID=" + id;
 
         connection.query(q, (error, results) => {
             if(error){
