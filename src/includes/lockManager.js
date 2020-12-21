@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
       //Channel nicht abschließbar
-      if(!serverManager.getLockable(message.guild.id).include(message.member.voice.channel.name)){
+      if(!serverManager.getLockable(message.guild.id).includes(message.member.voice.channel.name)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
         message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
         return;
