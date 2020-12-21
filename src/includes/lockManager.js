@@ -7,8 +7,11 @@ function lockChannel (message){
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
   channel.setUserLimit(message.member.voice.channel.members.size).then(limChannel =>{
+    logManager.writeDebugLog("1 Umbenannt");
     let name = "🔒 " + channel.name;
     limChannel.setName(name).catch();
+  }).catch(err => {
+    logManager.writeDebugLog("1 NICHT Umbenannt: " + err);
   });
 }
 
@@ -18,9 +21,12 @@ function unlockChannel(voiceChannel){
   serverManager.setWhoLocked(id, null);
   voiceChannel.setUserLimit(serverManager.getChannelSize(id)).then(unlimChannel =>{
     if(unlimChannel.name.startsWith("🔒 ")){
+      logManager.writeDebugLog("2 Umbenannt");
       let name = unlimChannel.name.substring(2,unlimChannel.name.length);
       unlimChannel.setName(name).catch();
     }
+  }).catch(err => {
+    logManager.writeDebugLog("2 NICHT Umbenannt: " + err);
   });
 }
 
