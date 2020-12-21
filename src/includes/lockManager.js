@@ -18,9 +18,16 @@ function unlockChannel(voiceChannel){
 
 module.exports = {
     lock: function (message){
+      //User in keinem Channel
       if(!message.member.voice.channel){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Benutzer sitzt in keinem Channel).");
         message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
+        return;
+      }
+      //Channel nicht abschließbar
+      if(!serverManager.getLockable.include(message.member.voice.channel.name)){
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
+        message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
         return;
       }
       if(serverManager.setWhoLocked(message.guild.id)){
