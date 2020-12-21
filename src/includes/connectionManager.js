@@ -95,7 +95,7 @@ module.exports = {
               logManager.writeDebugLog("IST KEIN VIP");
               dbManager.getJoinsound(newState.member.id, function(out){
                 logManager.writeDebugLog("Sound = " + out);
-                if(!out){
+                if(out === false){
                 }
                 else{
                   logManager.writeDebugLog("Er soll joinen");
