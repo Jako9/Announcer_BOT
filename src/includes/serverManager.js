@@ -30,9 +30,10 @@ module.exports = {
 
     removeServer: function(guild) {
 
-      dbManager.deleteServer(guild.id, function(res){});
-      logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
-      delete servers.id;
+      dbManager.deleteServer(guild.id, function(res){
+        logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
+        delete servers.id;
+      });
     },
 
     getServers: function() {
