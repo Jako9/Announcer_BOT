@@ -177,12 +177,12 @@ client.on('message', message => {
   }
 
   // Lock Room
-  else if(message.content.startsWith(prefix + instructions[9][0])){
+  else if(message.content === prefix + instructions[9][0]){
     lockManager.lock(message);
   }
 
   // Unlock Room
-  else if(message.content.startsWith(prefix + instructions[10][0])){
+  else if(message.content === prefix + instructions[10][0]){
     lockManager.unlock(message);
   }
 
@@ -202,7 +202,7 @@ client.on('message', message => {
   }
 
   //show Reaction role
-  else if(message.content.startsWith(prefix + instructions[14][0])){
+  else if(message.content === prefix + instructions[14][0]){
     roleManager.showReactionRole(message);
   }
 
@@ -227,7 +227,7 @@ client.on('message', message => {
   }
 
   //whitelistClear
-  else if(message.content == (prefix + instructions[19][0])){
+  else if(message.content === prefix + instructions[19][0]){
     whitelistManager.clear(message);
   }
 
@@ -242,8 +242,28 @@ client.on('message', message => {
   }
 
   //removeJoinSound
-  else if(message.content == (prefix + instructions[22][0])){
+  else if(message.content === prefix + instructions[22][0]){
     connectionManager.removeJoinSound(message);
+  }
+
+  //lockable
+  else if(message.content === prefix + instructions[23][0]){
+    lockManager.showLockable(message);
+  }
+
+  //lockableAdd
+  else if(message.content.startsWith(prefix + instructions[21][0])){
+    //connectionManager.setJoinSound(message, prefix, instructions);
+  }
+
+  //lockableRemove
+  else if(message.content.startsWith(prefix + instructions[21][0])){
+    //connectionManager.setJoinSound(message, prefix, instructions);
+  }
+
+  //lockableClear
+  else if(message.content === prefix + instructions[23][0]){
+    lockManager.lockableClear(message);
   }
 
   // Falsche Eingabe

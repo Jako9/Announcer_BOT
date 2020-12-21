@@ -49,4 +49,22 @@ module.exports = {
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde aufgeschlossen.");
       message.reply('Aufgeschlossen');
     },
+
+    lockableClear: function(message){
+      serverManager.setLockable(message.guild.id, []);
+      logManager.writeDebugLog(message.guild.name + ": Die abzuschließenden Channel wurden zurückgesetzt.");
+      message.reply("Die abzuschließenden Channel wurden zurückgesetzt.");
+    },
+
+    showLockable: function(message){
+      let channels = serverManager.getLockable(message.guild.id);
+      if(channels.length == 0){
+        message.reply("Es gibt keine Channel, die man abschließen darf");
+        return;
+      }
+      let msg = "```"
+      channels.forEach(channel => msg += (channel + "\n"));
+      msg += "```";
+      message.reply(msg);
+    }
 }
