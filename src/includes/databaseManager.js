@@ -272,6 +272,37 @@ module.exports = {
         connection.end();
     },
 
+    deleteServer: function(guildID, callback){
+      connection = establishConnection();
+
+      let q = "DELETE FROM server WHERE guildID=" + guildID;
+
+      connection.query(q, (error, results) => {
+          if(error){
+              throw error;
+          }else{
+              callback(results);
+          }
+      });
+
+      connection.end();
+
+    },
+
+    addServer: function(guildID, guildName, avatar, callback){
+        connection = establishConnection();
+
+        let q = "INSERT INTO server (guildID, name, avatar) VALUES ('"+ guildID + "', '" + guildName + "', '" + avatar + "')";
+
+        connection.query(q, (error, results) => {
+            if(!error){
+                callback(results);
+            }
+        });
+        connection.end();
+
+    },
+
     readInDescriptions: function(callback){
         connection = establishConnection();
 

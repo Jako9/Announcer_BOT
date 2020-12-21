@@ -9,10 +9,8 @@ let descriptions = [];
 
 module.exports = {
     addServer: function(guild) {
-      //Server existiert schon
-      if(fs.existsSync(PATH + "/config/guilds/" + guild.id + ".json")) return;
 
-      jsonParser.copy(PATH + "/config/template.json", PATH + "/config/guilds/" + guild.id + ".json");
+      dbManager.addServer(guild.id, guild.name,guild.iconURL(), function(res){});
       servers[guild.id] = jsonParser.read(PATH + "/config/guilds/" + guild.id + ".json");
       servers[guild.id].name = guild.name;
       servers[guild.id].avatar = guild.iconURL();
@@ -22,10 +20,8 @@ module.exports = {
     },
 
     removeServer: function(guild) {
-      //Server existiert nicht
-      if(!fs.existsSync(PATH + "/config/guilds/" + guild.id + ".json")) return;
 
-      jsonParser.delete(PATH + "/config/guilds/" + guild.id + ".json");
+      dbManager.deleteServer(guild.id, function(res){});
       logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
       delete servers.id;
     },
