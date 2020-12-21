@@ -6,19 +6,21 @@ function lockChannel (message){
   let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
-  channel.setUserLimit(message.member.voice.channel.members.size);
-  let name = "🔒 " + channel.name;
-  channel.setName(name).catch();
+  channel.setUserLimit(message.member.voice.channel.members.size).then(
+    channel.setName(name).catch();
+  );
 }
 
 //Schließt einen Raum ab
 function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
-  voiceChannel.setUserLimit(serverManager.getChannelSize(id));
-  if(!voiceChannel.name.startsWith("🔒 ")) return;
-  let name = voiceChannel.name.substring(2,voiceChannel.name.length);
-  channel.setName(name).catch();
+  voiceChannel.setUserLimit(serverManager.getChannelSize(id)).then(
+    if(voiceChannel.name.startsWith("🔒 ")){
+      let name = voiceChannel.name.substring(2,voiceChannel.name.length);
+      voiceChannel.setName(name).catch();
+    }
+  );
 }
 
 module.exports = {
