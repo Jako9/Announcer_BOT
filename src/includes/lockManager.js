@@ -95,7 +95,7 @@ module.exports = {
       }
       let index = channels.indexOf(message.member.voice.channel.name);
       channels.splice(index, 1);
-      serverManager.setLockable(id, channels);
+      serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun nicht mehr abschließbar!");
     }
 }
