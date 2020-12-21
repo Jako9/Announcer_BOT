@@ -1,4 +1,5 @@
 const serverManager = require('./serverManager.js');
+const logManager = require('./logManager.js');
 
 //Schließ einen abgeschlossenen Raum wieder auf
 function lockChannel (member){
