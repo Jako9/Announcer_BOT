@@ -6,6 +6,7 @@ function lockChannel (message){
   let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
+  let name = "🔒 " + channel.name;
   channel.setUserLimit(message.member.voice.channel.members.size).then(limChannel =>{
     limChannel.setName(name).catch();
   });
