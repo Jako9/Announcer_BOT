@@ -81,5 +81,21 @@ module.exports = {
       channels.push(message.member.voice.channel.name);
       serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
+    },
+
+    addLockable: function(message){
+      let channels = serverManager.getLockable(message.guild.id);
+      if(!message.member.voice.channel){
+        message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befhel erneut aus.");
+        return;
+      }
+      if(!channels.includes(message.member.voice.channel.name)){
+        message.reply("Der Channel ist überhaupt nicht abschließbar.");
+        return;
+      }
+      let index = channels.indexOf(message.member.voice.channel.name);
+      channels.splice(index, 1);
+      serverManager.setLockable(id, channels);
+      message.reply(message.member.voice.channel.name + " ist nun nicht mehr abschließbar!");
     }
 }

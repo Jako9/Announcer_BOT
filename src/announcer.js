@@ -257,8 +257,8 @@ client.on('message', message => {
   }
 
   //lockableRemove
-  else if(message.content.startsWith(prefix + instructions[25][0])){
-    //connectionManager.setJoinSound(message, prefix, instructions);
+  else if(message.content === prefix + instructions[25][0]){
+    lockManager.removeLockable(message);
   }
 
   //lockableClear
