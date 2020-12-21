@@ -83,7 +83,7 @@ module.exports = {
       message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
     },
 
-    lockableRemove: function(message){
+    removeLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
         message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befhel erneut aus.");
