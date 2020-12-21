@@ -74,6 +74,10 @@ module.exports = {
         message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befhel erneut aus.");
         return;
       }
+      if(channels.includes(message.member.voice.channel.name)){
+        message.reply("Der Channel ist schon abschließbar.");
+        return;
+      }
       channels.push(message.member.voice.channel.name);
       serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
