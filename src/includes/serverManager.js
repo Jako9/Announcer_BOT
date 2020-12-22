@@ -17,6 +17,7 @@ module.exports = {
           dbServer["channelSize"] = 0;
           dbServer["whoLocked"] = "";
           dbServer["reactionMessage"] = null;
+          dbServer["lockedChannel"] = null;
 
           dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
           dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
@@ -279,6 +280,25 @@ module.exports = {
     },
 
     /**
+     * Gibt den abgeschlossenen Channel des Servers zurück (falls nicht abgeschlossen => null)
+     *
+     * @param {number} id Id des Servers
+     */
+    getLockedChannel: function(id){
+        return servers[id].lockedChannel;
+    },
+
+    /**
+     * Setzt den abgeschlossenen Channel des Servers
+     *
+     * @param {string} id Id des Servers
+     * @param {string} lockedChannel abgeschlossener des Servers
+     */
+    setLockedChannel: function(id, lockedChannel){
+        servers[id].lockedChannel = lockedChannel;
+    },
+
+    /**
      * Gibt die Liste aller Channel, die man abschließen darf des Servers zurück
      *
      * @param {number} id Id des Servers
@@ -319,6 +339,7 @@ module.exports = {
             dbServer["channelSize"] = 0;
             dbServer["whoLocked"] = null;
             dbServer["reactionMessage"] = null;
+            dbServer["lockedChannel"] = null;
 
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
 
@@ -374,12 +395,14 @@ function fetchMessage(client, id, channelReact){
 }
 
 function saveServer(id){
-    toWrite = servers[id];
-    message = servers[id].reactionMessage;
+    let toWrite = servers[id];
+    let message =  servers[id].reactionMessage;
+    let lockedChannel = servers[id].lockedChannel;
     delete toWrite.timeLastJoin;
     delete toWrite.channelSize;
     delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
+    delete toWrite.lockedChannel;
     let instructionsTmp = servers[id].instructions;
     let whitelist = servers[id].whitelist;
     let lockable = servers[id].lockable;
@@ -394,6 +417,7 @@ function saveServer(id){
     servers[id].reactionMessage = message;
     servers[id].whitelist = whitelist;
     servers[id].lockable = lockable;
+    servers[id].lockedChannel = lockedChannel;
 }
 
 function mergeArrays(a, b){

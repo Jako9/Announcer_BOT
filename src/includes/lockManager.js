@@ -6,14 +6,15 @@ function lockChannel (message){
   let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
+  serverManager.setLockedChannel(channel.guild.id, message.member.voice.channel);
   channel.setUserLimit(message.member.voice.channel.members.size);
-
 }
 
 //Schließt einen Raum ab
 function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
+  serverManager.setLockedChannel(channel.guild.id, null);
   voiceChannel.setUserLimit(serverManager.getChannelSize(id));
 }
 
@@ -80,6 +81,12 @@ module.exports = {
     forceUnlock: function(voiceState){
       if(serverManager.getWhoLocked(voiceState.guild.id) == voiceState.member.id){
         unlockChannel(voiceState.channel);
+      }
+    },
+
+    crashUnlock: function(id){
+      if(serverManager.getLockedChannel(id) != null){
+        unlockChannel(serverManager.getLockedChannel(id));
       }
     },
 
