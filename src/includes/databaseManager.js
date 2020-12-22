@@ -198,7 +198,7 @@ module.exports = {
       for(let i = 0; i < ids.length; i++){
         q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
       }
-      let q = q.substring(0,q.length-1);
+      q = q.substring(0,q.length-1);
       logManager.writeDebugLog(q);
 
       connection.query(q, (error, results) => {
