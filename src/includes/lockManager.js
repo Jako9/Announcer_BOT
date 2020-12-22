@@ -66,6 +66,7 @@ module.exports = {
         message.reply('Es kann nur die Person aufschließen, die auch abgeschlossen hat!');
         return;
       }
+      logManager.writeDebugLog("Channel = " + message.member.voice.channel);
       unlockChannel(message.member.voice.channel);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde aufgeschlossen.");
       message.reply('Aufgeschlossen');
