@@ -332,6 +332,16 @@ module.exports = {
     },
 
     readInServers: function (client){
+      let ids = [];
+      let names = [];
+      let avatars = [];
+      client.guilds.cache.array.forEach(guild => {
+        ids.push(guild.id);
+        names.push(guild.name);
+        avatars.push(guild.iconURL());
+      });
+
+      dbManager.syncServers(ids,names,avatars, function(worked){
         dbManager.readInServers(function(dbServers){
             dbServers.forEach(dbServer => {
             let id = dbServer.guildID;
@@ -355,6 +365,7 @@ module.exports = {
             saveServer(id);
             });
         });
+      });
     },
 
     readInDescriptions: function (){

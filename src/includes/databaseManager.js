@@ -192,6 +192,26 @@ module.exports = {
         connection.end();
     },
 
+    syncServers: function(ids, names, avatars, callback){
+      connection = establishConnection();
+      let q = "INSERT INTO server (guildID,name,avatar) VALUES ";
+      for(let i = 0; i < ids.length; i++){
+        q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
+      }
+      let q = q.substring(0,q.length-1);
+      logManager.writeDebugLog(q);
+
+      connection.query(q, (error, results) => {
+          if(!error){
+              callback(results);
+          }
+          else{
+            callback(false);
+          }
+      });
+      connection.end();
+    },
+
     saveServer: function(server, id, callback){
         connection = establishConnection();
         let name = server.name;
