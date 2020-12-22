@@ -202,6 +202,8 @@ module.exports = {
       logManager.writeDebugLog(q);
 
       connection.query(q, (error, results) => {
+        logManager.writeDebugLog("Error: " + error);
+        logManager.writeDebugLog("Results: " + results);
           if(!error){
               callback(results);
           }
