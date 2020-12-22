@@ -19,7 +19,7 @@ process.on('uncaughtException', function(err) {
   }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
-
+null.hallo;
   //TODO programm schließen, nachdem auf crashUnlock gewartet wurde..
   //process.exit();
 });
