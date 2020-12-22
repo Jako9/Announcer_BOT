@@ -6,12 +6,7 @@ function lockChannel (message){
   let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
-  let name = "🔒 " + channel.name;
-  let size = message.member.voice.channel.members.size;
-  channel.edit({
-    name: name,
-    userLimit: size
-  });
+  channel.setUserLimit(member.voice.channel.members.size);
 
 }
 
@@ -19,12 +14,7 @@ function lockChannel (message){
 function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
-  let name = voiceChannel.name.startsWith("🔒 ") ? voiceChannel.name.substring(2,voiceChannel.name.length) : voiceChannel.name;
-  let size = serverManager.getChannelSize(id);
-  voiceChannel.edit({
-    name: name,
-    userLimit: size
-  });
+  voiceChannel.setUserLimit(serverManager.getChannelSize(id));
 }
 
 module.exports = {
