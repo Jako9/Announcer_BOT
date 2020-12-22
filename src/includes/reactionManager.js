@@ -64,6 +64,7 @@ module.exports = {
       if(param[i].startsWith('<') && param[i].endsWith('>') && param[i].split(':').length == 3){
         ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1));
       }
+      //TODO All umfassende Regex
       else if(/\p{Extended_Pictographic}/u.test(param[i])){
         ids.push(param[i]);
       }
