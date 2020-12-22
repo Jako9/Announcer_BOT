@@ -6,17 +6,13 @@ function lockChannel (message){
   let channel = message.member.voice.channel;
   serverManager.setChannelSize(channel.guild.id, channel.userLimit);
   serverManager.setWhoLocked(channel.guild.id,message.member.id);
-  channel.setUserLimit(message.member.voice.channel.members.size).then(limChannel =>{
-    logManager.writeDebugLog("1 Umbenannt");
-    let name = "🔒 " + channel.name;
-    limChannel.setName(name).then(limChannel2 => {
-      logManager.writeDebugLog("Channelname = " + limChannel2.name);
-    }).catch(err => {
-      logManager.writeDebugLog("ERROR: " + err);
-    });
-  }).catch(err => {
-    logManager.writeDebugLog("1 NICHT Umbenannt: " + err);
+  let name = "🔒 " + channel.name;
+  let size = message.member.voice.channel.members.size;
+  channel.edit({
+    name: name,
+    userLimit: size
   });
+    
 }
 
 //Schließt einen Raum ab
