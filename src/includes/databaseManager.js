@@ -199,6 +199,7 @@ module.exports = {
         q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
       }
       q = q.substring(0,q.length-1);
+      q += "ON DUPLICATE KEY UPDATE guildID=guildID";
       logManager.writeDebugLog(q);
 
       connection.query(q, (error, results) => {
