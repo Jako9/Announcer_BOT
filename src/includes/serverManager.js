@@ -335,7 +335,7 @@ module.exports = {
       let ids = [];
       let names = [];
       let avatars = [];
-      client.guilds.cache.array.forEach(guild => {
+      client.guilds.cache.array().forEach(guild => {
         ids.push(guild.id);
         names.push(guild.name);
         avatars.push(guild.iconURL());
