@@ -65,7 +65,7 @@ module.exports = {
         ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1));
       }
       //TODO All umfassende Regex
-      else if(/\p{Extended_Pictographic}/u.test(param[i])){
+      else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[i])){
         ids.push(param[i]);
       }
       else if(param[i].length == 0){
