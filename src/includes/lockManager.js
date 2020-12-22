@@ -79,7 +79,6 @@ module.exports = {
 
     forceUnlock: function(voiceState){
       if(serverManager.getWhoLocked(voiceState.guild.id) == voiceState.member.id){
-        logManager.writeDebugLog("ES WIRD ZWANGSWEISE AUFGESCHLOSSEN");
         unlockChannel(voiceState.channel);
       }
     },
