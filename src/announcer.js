@@ -85,7 +85,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
   let rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
   connectionManager.triggerJoin(oldState,newState,rolle);
 
-  if((oldState.channel !== undefined) && (newState.channel === undefined)){
+  if(oldState.channel !== undefined){
     lockManager.forceUnlock(oldState);
   }
 });
