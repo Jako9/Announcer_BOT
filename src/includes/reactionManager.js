@@ -59,30 +59,28 @@ module.exports = {
       return;
     }
 
-    let ids = [];
-    for(let i = 1; i < param.length; i++){
-      if(param[i].startsWith('<') && param[i].endsWith('>') && param[i].split(':').length == 3){
-        ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1));
-      }
-      //TODO All umfassende Regex
-      else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[i])){
-        ids.push(param[i]);
-      }
-      else if(param[i].length == 0){
-        continue;
-      }
-      else{
-        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-        message.reply('Reaktionen konnten nicht hinzugefügt werden.');
-        return;
-      }
+    let reaction = '';
+    if(param.length != 2){
+
     }
-    //Geforderte Reaktionen hinzufügen
-    for(let i = 0; i < ids.length; i++){
-      serverManager.getReactionMessage(id).react(ids[i]);
+    //Ein custom Emoji
+    if(param[1].startsWith('<') && param[1].endsWith('>') && param[1].split(':').length == 3){
+      reaction = param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1);
     }
-    logManager.writeDebugLog(message.guild.name + ": Die Reaktion[en] wurden erfolgreich hinzugefügt.");
-    message.reply('Reaktion[en] hinzugefügt.');
+    //Ein StandartEmoji
+    else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[2])){
+      reaction = param[2];
+    }
+    else{
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
+      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      return;
+    }
+    }
+    //Geforderte Reaktion hinzufügen
+    serverManager.getReactionMessage(id).react(reaction);
+    logManager.writeDebugLog(message.guild.name + ": Die Reaktion wurden erfolgreich hinzugefügt.");
+    message.reply('Reaktion hinzugefügt.');
   },
 
   setupListener: function(message, client, prefix, instructions){
