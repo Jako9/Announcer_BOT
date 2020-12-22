@@ -20,7 +20,7 @@ process.on('uncaughtException', function(err) {
   }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
-  process.exit();
+  //process.exit();
 });
 
 process.on('warning', function(warning) {
