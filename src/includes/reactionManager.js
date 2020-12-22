@@ -59,9 +59,20 @@ module.exports = {
       return;
     }
 
+    let ids = [];
+    for(let i = 1; i < param.length; i++){
+      if(param[i].startsWith('<') && param[i].endsWith('>') && param[i].split(':').length == 3){
+        ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length));
+        logManager.writeDebugLog("ReaktionsID = " + ids[i]);
+      }
+      else{
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
+        message.reply('Reaktion[en] hinzugefügt.');
+      }
+    }
     //Geforderte Reaktionen hinzufügen
-    for(var i = 1; i < param.length; i++){
-      serverManager.getReactionMessage(id).react(param[i]);
+    for(let i = 1; i < ids; i++){
+      serverManager.getReactionMessage(id).react(ids[i]);
     }
     logManager.writeDebugLog(message.guild.name + ": Die Reaktion[en] wurden erfolgreich hinzugefügt.");
     message.reply('Reaktion[en] hinzugefügt.');
