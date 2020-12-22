@@ -73,7 +73,8 @@ module.exports = {
     }
     //Geforderte Reaktionen hinzufügen
     for(let i = 0; i < ids; i++){
-      serverManager.getReactionMessage(id).react(ids[i]).catch();
+      logManager.writeDebugLog("ReaktionsID = " + ids[i]);
+      serverManager.getReactionMessage(id).react(ids[i]);
     }
     logManager.writeDebugLog(message.guild.name + ": Die Reaktion[en] wurden erfolgreich hinzugefügt.");
     message.reply('Reaktion[en] hinzugefügt.');
