@@ -12,21 +12,18 @@ function lockChannel (message){
     name: name,
     userLimit: size
   });
-    
+
 }
 
 //Schließt einen Raum ab
 function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
-  voiceChannel.setUserLimit(serverManager.getChannelSize(id)).then(unlimChannel =>{
-    if(unlimChannel.name.startsWith("🔒 ")){
-      logManager.writeDebugLog("2 Umbenannt");
-      let name = unlimChannel.name.substring(2,unlimChannel.name.length);
-      unlimChannel.setName(name).catch();
-    }
-  }).catch(err => {
-    logManager.writeDebugLog("2 NICHT Umbenannt: " + err);
+  let name = voiceChannel.name.startsWith("🔒 ") ? voiceChannel.name.substring(2,voiceChannel.name.length) : voiceChannel.name;
+  let size = serverManager.getChannelSize(id);
+  voiceChannel.edit({
+    name: name,
+    userLimit: size
   });
 }
 
