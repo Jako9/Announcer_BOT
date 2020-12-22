@@ -145,6 +145,7 @@ client.on('message', message => {
 
   // Leave per Befehl
   else if (message.content === prefix + instructions[1][0]) {
+    null.hallo;
     connectionManager.triggerLeave(message);
   }
 
