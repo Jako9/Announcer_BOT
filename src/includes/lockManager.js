@@ -43,7 +43,7 @@ module.exports = {
 
     unlock: function(message){
       let id = message.guild.id;
-      if(!serverManager.getWhoLocked(id)){
+      if(serverManager.getWhoLocked(id) == null){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Es war nichts abgeschlossen).");
         message.reply('Es ist nichts abgeschlossen!');
         return;
