@@ -317,7 +317,7 @@ module.exports = {
             let id = dbServer.guildID;
             dbServer["timeLastJoin"] = 0;
             dbServer["channelSize"] = 0;
-            dbServer["whoLocked"] = "";
+            dbServer["whoLocked"] = null;
             dbServer["reactionMessage"] = null;
 
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
