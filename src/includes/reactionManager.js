@@ -61,15 +61,17 @@ module.exports = {
 
     let reaction = '';
     if(param.length != 2){
-
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
+      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      return;
     }
     //Ein custom Emoji
     if(param[1].startsWith('<') && param[1].endsWith('>') && param[1].split(':').length == 3){
-      reaction = param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1);
+      reaction = param[1].split(':')[2].substring(0,param[1].split(':')[2].length -1);
     }
     //Ein StandartEmoji
-    else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[2])){
-      reaction = param[2];
+    else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[1])){
+      reaction = param[1];
     }
     else{
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
