@@ -15,11 +15,12 @@ const dbManager = require('./includes/databaseManager.js');
 process.on('uncaughtException', function(err) {
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
-    console.log(arr[i].id);
     lockManager.crashUnlock(arr[i].id);
   }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
+
+  //TODO programm schließen, nachdem auf crashUnlock gewartet wurde..
   //process.exit();
 });
 
@@ -146,7 +147,6 @@ client.on('message', message => {
 
   // Leave per Befehl
   else if (message.content === prefix + instructions[1][0]) {
-    null.hallo;
     connectionManager.triggerLeave(message);
   }
 

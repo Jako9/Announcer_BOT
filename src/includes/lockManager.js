@@ -85,9 +85,7 @@ module.exports = {
     },
 
     crashUnlock: function(id){
-      logManager.writeDebugLog("BIN IM CRASH VON: " + id);
       if(serverManager.getLockedChannel(id) != null){
-        logManager.writeDebugLog("Channel ist: " + serverManager.getLockedChannel(id).name);
         unlockChannel(serverManager.getLockedChannel(id));
       }
     },
