@@ -67,11 +67,12 @@ module.exports = {
       }
       else{
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-        message.reply('Reaktion[en] hinzugefügt.');
+        message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+        return;
       }
     }
     //Geforderte Reaktionen hinzufügen
-    for(let i = 1; i < ids; i++){
+    for(let i = 0; i < ids; i++){
       serverManager.getReactionMessage(id).react(ids[i]);
     }
     logManager.writeDebugLog(message.guild.name + ": Die Reaktion[en] wurden erfolgreich hinzugefügt.");
