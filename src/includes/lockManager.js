@@ -9,7 +9,11 @@ function lockChannel (message){
   channel.setUserLimit(message.member.voice.channel.members.size).then(limChannel =>{
     logManager.writeDebugLog("1 Umbenannt");
     let name = "🔒 " + channel.name;
-    limChannel.setName(name).catch();
+    limChannel.setName(name).then(limChannel2 => {
+      logManager.writeDebugLog("Channelname = " + limChannel2.name);
+    }).catch(err => {
+      logManager.writeDebugLog("ERROR: " + err);
+    });
   }).catch(err => {
     logManager.writeDebugLog("1 NICHT Umbenannt: " + err);
   });
