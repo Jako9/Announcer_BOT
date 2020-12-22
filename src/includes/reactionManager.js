@@ -63,7 +63,6 @@ module.exports = {
     for(let i = 1; i < param.length; i++){
       if(param[i].startsWith('<') && param[i].endsWith('>') && param[i].split(':').length == 3){
         ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1));
-        logManager.writeDebugLog("ReaktionsID = " + param[i].split(':')[2].substring(0,param[i].split(':')[2].length-1));
       }
       else{
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
@@ -72,7 +71,7 @@ module.exports = {
       }
     }
     //Geforderte Reaktionen hinzufügen
-    for(let i = 0; i < ids; i++){
+    for(let i = 0; i < ids.length; i++){
       logManager.writeDebugLog("ReaktionsID = " + ids[i]);
       serverManager.getReactionMessage(id).react(ids[i]);
     }
