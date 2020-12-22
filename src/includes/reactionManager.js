@@ -76,7 +76,6 @@ module.exports = {
       message.reply('Reaktionen konnten nicht hinzugefügt werden.');
       return;
     }
-    }
     //Geforderte Reaktion hinzufügen
     serverManager.getReactionMessage(id).react(reaction);
     logManager.writeDebugLog(message.guild.name + ": Die Reaktion wurden erfolgreich hinzugefügt.");
