@@ -204,7 +204,7 @@ module.exports = {
      * @param {number} whoLocked UserId der den Server zuletzt gelockt hat
      */
     setWhoLocked: function(id, whoLocked){
-        servers[id].whoLocked = (whoLocked) ? whoLocked : servers[id].whoLocked;
+        servers[id].whoLocked =  whoLocked;
     },
 
     /**
