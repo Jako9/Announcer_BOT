@@ -200,11 +200,8 @@ module.exports = {
       }
       q = q.substring(0,q.length-1);
       q += "ON DUPLICATE KEY UPDATE guildID=guildID";
-      logManager.writeDebugLog(q);
 
       connection.query(q, (error, results) => {
-        logManager.writeDebugLog("Error: " + error);
-        logManager.writeDebugLog("Results: " + results);
           if(!error){
               callback(results);
           }
