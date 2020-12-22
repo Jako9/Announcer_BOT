@@ -78,10 +78,18 @@ module.exports = {
       message.reply('Reaktionen konnten nicht hinzugefügt werden.');
       return;
     }
-    //Geforderte Reaktion hinzufügen
-    serverManager.getReactionMessage(id).react(reaction);
-    logManager.writeDebugLog(message.guild.name + ": Die Reaktion wurden erfolgreich hinzugefügt.");
-    message.reply('Reaktion hinzugefügt.');
+    try{
+      //Geforderte Reaktion hinzufügen
+      serverManager.getReactionMessage(id).react(reaction);
+      logManager.writeDebugLog(message.guild.name + ": Die Reaktion wurden erfolgreich hinzugefügt.");
+      message.reply('Reaktion hinzugefügt.');
+    }
+    catch(e){
+      //Reaktion ungültig
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
+      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      return;
+    }
   },
 
   setupListener: function(message, client, prefix, instructions){
