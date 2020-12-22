@@ -81,7 +81,7 @@ module.exports = {
       if(serverManager.getWhoLocked(voiceState.channel.guild) == voiceState.member.id){
         unlockChannel(voiceState.channel);
       }
-    }
+    },
 
     addLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
