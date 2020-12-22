@@ -68,6 +68,9 @@ module.exports = {
         ids.push(param[i]);
         logManager.writeDebugLog("Ist Emoji");
       }
+      else if(param[i].lenght == 0){
+        continue;
+      }
       else{
         logManager.writeDebugLog(message.guild.name + ": " + param[i] + " ist kein emoji.");
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
