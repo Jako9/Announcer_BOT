@@ -64,8 +64,9 @@ module.exports = {
       if(param[i].startsWith('<') && param[i].endsWith('>') && param[i].split(':').length == 3){
         ids.push(param[i].split(':')[2].substring(0,param[i].split(':')[2].length -1));
       }
-      else if(/\p{Extended_Pictographic}/u.test('flowers 🌼🌺🌸')){
-        logManager.writeDebugLog("YEEEEEE");
+      else if(/\p{Extended_Pictographic}/u.test(param[i])){
+        ids.push(param[i]);
+        logManager.writeDebugLog("Ist Emoji");
       }
       else{
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
