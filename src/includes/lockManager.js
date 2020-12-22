@@ -31,7 +31,7 @@ module.exports = {
         message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
         return;
       }
-      if(serverManager.getWhoLocked(message.guild.id) == null){
+      if(serverManager.getWhoLocked(message.guild.id) != null){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Es ist schon abgeschlossen).");
         message.reply('Es ist schon abgeschlossen.');
         return;
