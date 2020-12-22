@@ -14,7 +14,7 @@ function lockChannel (message){
 function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
-  serverManager.setLockedChannel(channel.guild.id, null);
+  serverManager.setLockedChannel(voiceChannel.guild.id, null);
   voiceChannel.setUserLimit(serverManager.getChannelSize(id));
 }
 
