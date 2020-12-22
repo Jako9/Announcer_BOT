@@ -71,8 +71,8 @@ module.exports = {
       else if(param[i].length == 0){
         continue;
       }
-      logManager.writeDebugLog("Länge = " + param[i].length);
       else{
+        logManager.writeDebugLog("Länge = " + param[i].length);
         logManager.writeDebugLog(message.guild.name + ": " + param[i] + " ist kein emoji.");
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
         message.reply('Reaktionen konnten nicht hinzugefügt werden.');
