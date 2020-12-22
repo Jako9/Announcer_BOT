@@ -110,6 +110,7 @@ client.on('messageReactionRemove', (reaction, user) => {
 // BEFEHL-ABFRAGE
 client.on('message', message => {
 
+logManager.writeDebugLog(message.guild.name + ": " + message.content);
   // DM => becomeVIP Regelung
   if (!message.guild) {
     if(message.content.startsWith('Er9')){
