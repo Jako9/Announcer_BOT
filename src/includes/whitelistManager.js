@@ -9,7 +9,7 @@ module.exports = {
       message.reply("Die Whitelist ist leer. Der Bot hört auf jeden Channel");
       return;
     }
-    let msg = "```"
+    let msg = "```\n"
     channels.forEach(channel => msg += (channel.name + "\n"));
     msg += "```";
     message.reply(msg);
