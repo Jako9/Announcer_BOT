@@ -21,6 +21,7 @@ module.exports = {
           dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
           dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
           dbServer.whitelist = JSON.parse(dbServer.lockable).lockable;
+          dbServer.manageRolle = JSON.parse(dbServer.manageRolle);
 
           servers[id] = dbServer;
           logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
@@ -363,6 +364,8 @@ module.exports = {
 
             dbServer.lockable = JSON.parse(dbServer.lockable).lockable;
 
+            dbServer.manageRolle = JSON.parse(dbServer.manageRolle);
+
             fetchMessage(client, id, dbServer.channelReact);
 
             servers[id] = dbServer;
@@ -402,7 +405,6 @@ module.exports = {
 function fetchMessage(client, id, channelReact){
   channelReact.replace(/(\r\n|\n|\r)/gm,"");
   if(channelReact == "") return;
-  logManager.writeDebugLog("Channel :" + channelReact);
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
     guild.channels.cache.find(channel => channel.name == channelReact).messages.fetch().then(messages => {
@@ -425,11 +427,14 @@ function saveServer(id){
     let instructionsTmp = servers[id].instructions;
     let whitelist = servers[id].whitelist;
     let lockable = servers[id].lockable;
+    let manageRolle = servers[id].manageRolle;
     servers[id].whitelist = JSON.stringify({"whitelist":servers[id].whitelist});
 
     servers[id].lockable = JSON.stringify({"lockable":servers[id].lockable});
 
     servers[id].instructions = JSON.stringify({"instructions" : servers[id].instructions});
+
+    servers[id].manageRolle = JSON.stringify(servers[id].manageRolle);
 
     dbManager.saveServer(servers[id], id, function(worked){});
     servers[id].instructions = instructionsTmp;
@@ -437,6 +442,7 @@ function saveServer(id){
     servers[id].whitelist = whitelist;
     servers[id].lockable = lockable;
     servers[id].lockedChannel = lockedChannel;
+    servers[id].manageRolle = manageRolle;
 }
 
 function mergeArrays(a, b){

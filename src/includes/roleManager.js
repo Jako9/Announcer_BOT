@@ -13,24 +13,25 @@ module.exports = {
     let rolle = message.mentions.roles.find(role => true);
 
     let rollenName = rolle.name;
+    let rollenID = rolle.id;
     //Die Rolle existiert nicht
-    if(message.guild.roles.cache.find(role => role.name === rollenName) == null){
+    if(message.guild.roles.cache.find(role => role.id === rollenID) == null){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Die Rolle existiert nicht).");
       message.reply('Die Rolle \'' + rollenName + '\' existiert nicht!');
       return;
     }
     if(reaction){
-      serverManager.setStandartRole(message.guild.id, rollenName);
+      serverManager.setStandartRole(message.guild.id,rollenName);
     }
     else{
-      serverManager.setRolle(message.guild.id, rollenName);
+      serverManager.setRolle(message.guild.id,  JSON.parse({'name':rollenName,'id':rollenID}));
     }
     logManager.writeDebugLog(message.guild.name + ": Die Rolle wurde erfolgreich geändert.");
     message.reply('Die Rolle \'' + rollenName + '\' wurde erfolgreich hinzugefügt');
   },
 
   showRole: function(rolle){
-      return rolle.length != 0? rolle :  'Es gibt aktuell keine aktiven Rollen!';
+      return rolle.id != ""? rolle.name :  'Es gibt aktuell keine aktiven Rollen!';
   },
 
   showReactionRole: function(message){
