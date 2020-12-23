@@ -24,7 +24,7 @@ module.exports = {
       serverManager.setStandartRole(message.guild.id,rollenName);
     }
     else{
-      serverManager.setRolle(message.guild.id,  {'name':"'" + rollenName + "'",'id':"'"+rollenID+"'"});
+      serverManager.setRolle(message.guild.id,  {'name': rollenName,'id':rollenID});
     }
     logManager.writeDebugLog(message.guild.name + ": Die Rolle wurde erfolgreich geändert.");
     message.reply('Die Rolle \'' + rollenName + '\' wurde erfolgreich hinzugefügt');
