@@ -21,7 +21,7 @@ module.exports = {
       return;
     }
     if(reaction){
-      serverManager.setStandartRole(message.guild.id,rollenName);
+      serverManager.setStandartRole(message.guild.id,{'name': rollenName,'id':rollenID});
     }
     else{
       serverManager.setRolle(message.guild.id,  {'name': rollenName,'id':rollenID});
@@ -36,6 +36,6 @@ module.exports = {
 
   showReactionRole: function(message){
     rolle = serverManager.getStandartRole(message.guild.id);
-    message.reply(rolle == "" ? "Es gibt aktuell keine Rolle für Reaktionen!" : "Die aktuelle Rolle für Reaktionen ist: " + rolle + ".");
+    message.reply(rolle.id == "" ? "Es gibt aktuell keine Rolle für Reaktionen!" : "Die aktuelle Rolle für Reaktionen ist: " + rolle.name + ".");
   }
 }
