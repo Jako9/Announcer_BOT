@@ -285,6 +285,11 @@ client.on('message', message => {
     reactionManager.removeChannelReact(message);
   }
 
+  //removeReactionRole
+  else if(message.content === prefix + instructions[29][0]){
+    roleManager.removeReactionRole(message);
+  }
+
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[4][0] + '\' für eine Liste aller Befehle!');

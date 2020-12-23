@@ -37,5 +37,10 @@ module.exports = {
   showReactionRole: function(message){
     rolle = serverManager.getStandartRole(message.guild.id);
     message.reply(rolle.id == "" ? "Es gibt aktuell keine Rolle für Reaktionen!" : "Die aktuelle Rolle für Reaktionen ist: " + rolle.name + ".");
+  },
+
+  removeReactionRole: function(message){
+    serverManager.setStandartRole(message.guild.id, {"name":"","id":""});
+    message.reply("Die Standartrolle für Reaktionen wurde erfolgreich entfernt.");
   }
 }
