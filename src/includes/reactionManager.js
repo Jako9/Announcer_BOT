@@ -118,5 +118,10 @@ module.exports = {
       return;
     }
     message.reply(serverManager.getChannelReact(message.guild).name);
+  },
+
+  removeChannelReact: function(message){
+    serverManager.setChannelReact("");
+    message.reply("Es gibt nun keinen Channel mehr, in dem auf Reaktionen gehorcht wird.");
   }
 }
