@@ -276,12 +276,12 @@ client.on('message', message => {
   }
 
   //showChannelReact
-  else if(message.content === prefix + instructions[26][0]){
+  else if(message.content === prefix + instructions[27][0]){
     reactionManager.showChannelReact(message);
   }
 
   //removeChannelReact
-  else if(message.content === prefix + instructions[26][0]){
+  else if(message.content === prefix + instructions[28][0]){
     lockManager.lockableClear(message);
   }
 
