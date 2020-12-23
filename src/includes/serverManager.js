@@ -410,12 +410,12 @@ module.exports = {
 
 function fetchMessage(client, id, channelReact){
   channelReact.replace(/(\r\n|\n|\r)/gm,"");
-  if(channelReact == "") return;
+  if(channelReact.id == "") return;
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
-    guild.channels.cache.find(channel => channel.name == channelReact).messages.fetch().then(messages => {
+    guild.channels.cache.find(channel => channel.id == channelReact.id).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
-        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.name == channelReact).messages.cache.find(message => message.pinned);
+        servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact.id).messages.cache.find(message => message.pinned);
       });
     });
   });
