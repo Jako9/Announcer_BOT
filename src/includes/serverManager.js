@@ -23,6 +23,7 @@ module.exports = {
           dbServer.lockable = JSON.parse(dbServer.lockable).lockable;
           dbServer.manageRolle = JSON.parse(dbServer.manageRolle);
           dbServer.standartRole = JSON.parse(dbServer.standartRole);
+          dbServer.channelReact = JSON.parse(dbServer.channelReact);
 
           servers[id] = dbServer;
           logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich hinzugefügt.");
@@ -235,7 +236,7 @@ module.exports = {
      * @param {number} id Id des Servers
      */
     getChannelReact: function(guild){
-        return guild.channels.cache.find(channel => channel.name == servers[guild.id].channelReact);
+        return guild.channels.cache.find(channel => channel.id == servers[guild.id].channelReact.id);
     },
 
     /**
@@ -246,12 +247,12 @@ module.exports = {
      */
     setChannelReact: function(id, channelReact){
       if(channelReact == null){
-        servers[id].channelReact = "";
+        servers[id].channelReact = {"name": "", "id":""}};
         servers[id].reactionMessage = null;
         saveServer(id);
       }
       else{
-        servers[id].channelReact = channelReact.name;
+        servers[id].channelReact = {"name":channelReact.name, "id": channelReact.id};
         saveServer(id);
       }
 
@@ -369,6 +370,8 @@ module.exports = {
 
             dbServer.standartRole = JSON.parse(dbServer.standartRole);
 
+            dbServer.channelReact = JSON.parse(dbServer.channelReact);
+
             fetchMessage(client, id, dbServer.channelReact);
 
             servers[id] = dbServer;
@@ -432,6 +435,7 @@ function saveServer(id){
     let lockable = servers[id].lockable;
     let manageRolle = servers[id].manageRolle;
     let standartRole = servers[id].standartRole;
+    let channelReact = servers[id].channelReact;
     servers[id].whitelist = JSON.stringify({"whitelist":servers[id].whitelist});
 
     servers[id].lockable = JSON.stringify({"lockable":servers[id].lockable});
@@ -442,6 +446,8 @@ function saveServer(id){
 
     servers[id].standartRole = JSON.stringify(servers[id].standartRole);
 
+    servers[id].channelReact = JSON.stringify(servers[id].channelReact);
+
     dbManager.saveServer(servers[id], id, function(worked){});
     servers[id].instructions = instructionsTmp;
     servers[id].reactionMessage = message;
@@ -450,6 +456,7 @@ function saveServer(id){
     servers[id].lockedChannel = lockedChannel;
     servers[id].manageRolle = manageRolle;
     servers[id].standartRole = standartRole;
+    servers[id].channelReact = channelReact;
 }
 
 function mergeArrays(a, b){
