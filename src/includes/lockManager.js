@@ -100,7 +100,11 @@ module.exports = {
         message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befehl erneut aus.");
         return;
       }
-      if(channels.includes(message.member.voice.channel.name)){
+      let ids = []
+      channels.forEach(channel => {
+        ids.push(channel.id);
+      });
+      if(!ids.includes(message.member.voice.channel.id)){
         message.reply("Der Channel ist schon abschließbar.");
         return;
       }
