@@ -359,10 +359,10 @@ module.exports = {
             dbServer["whoLocked"] = null;
             dbServer["reactionMessage"] = null;
             dbServer["lockedChannel"] = null;
-            logManager.writeDebugLog("Server: " + dbManager.name);
+            logManager.writeDebugLog("Server: " + dbServer.name);
             logManager.writeDebugLog("JSON: " + dbServer.instructions);
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
-
+            logManager.writeDebugLog("WORKED");
             dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
 
             dbServer.lockable = JSON.parse(dbServer.lockable).lockable;
