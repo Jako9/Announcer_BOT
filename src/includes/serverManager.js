@@ -18,7 +18,6 @@ module.exports = {
           dbServer["whoLocked"] = "";
           dbServer["reactionMessage"] = null;
           dbServer["lockedChannel"] = null;
-
           dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
           dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
           dbServer.whitelist = JSON.parse(dbServer.lockable).lockable;
@@ -80,9 +79,9 @@ module.exports = {
      */
     getInstructions: function(id){
         instructions = [];
-        for(let i = 0; i < servers[id].instructions.length; i++){
-            instructions.push(servers[id].instructions[i].name);
-        }
+        servers[id].instructions.forEach(inst =>{
+            instructions[inst.type-1] = inst.name;
+        });
 
         return mergeArrays(instructions, descriptions);
     },
