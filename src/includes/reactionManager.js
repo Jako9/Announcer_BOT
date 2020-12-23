@@ -113,10 +113,10 @@ module.exports = {
   },
 
   showChannelReact: function(message){
-    if(serverManager.getChannelReact(id) == null){
+    if(serverManager.getChannelReact(message.guil.id) == null){
       messag.reply("Aktuell gibt es keinen Channel, in dem auf Reaktionen gehorcht wird.");
       return;
     }
-    message.reply(serverManager.getChannelReact(id));
+    message.reply(serverManager.getChannelReact(message.guild.id));
   }
 }
