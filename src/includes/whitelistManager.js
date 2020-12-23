@@ -40,7 +40,7 @@ module.exports = {
 
     if(ids.includes(channel.id)){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden. (Der Channel ist schon gewhitelistet)");
-      message.reply('Der Channel konnte nicht gefunden werden');
+      message.reply('Dieser Channel ist schon gewhitelistet');
       return;
     }
 
@@ -72,7 +72,7 @@ module.exports = {
       ids.push(tmpChannel.id);
     });
 
-    if(ids.includes(channel.id)){
+    if(!ids.includes(channel.id)){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel ist nicht gewhitelistet.");
       message.reply('Dieser Channel ist nicht gewhitelistet.');
       return;
