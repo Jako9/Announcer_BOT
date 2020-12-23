@@ -27,7 +27,11 @@ module.exports = {
         return;
       }
       //Channel nicht abschließbar
-      if(!serverManager.getLockable(message.guild.id).includes(message.member.voice.channel.name)){
+      let ids = []
+      serverManager.getLockable(message.guild.id).forEach(channel => {
+        ids.push(channel.id);
+      });
+      if(!ids.includes(message.member.voice.channel.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
         message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
         return;
@@ -111,12 +115,15 @@ module.exports = {
         message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befehl erneut aus.");
         return;
       }
-      let remove = {"name":message.member.voice.channel.name,"id":message.member.voice.channel.id};
-      if(!remove){
+      let ids = []
+      serverManager.getLockable(message.guild.id).forEach(channel => {
+        ids.push(channel.id);
+      });
+      if(!ids.include(message.member.voice.channel.id)){
         message.reply("Der Channel ist überhaupt nicht abschließbar.");
         return;
       }
-      let index = channels.indexOf(remove);
+      let index = ids.indexOf(message.member.voice.channel.id);
       channels.splice(index, 1);
       serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun nicht mehr abschließbar!");
