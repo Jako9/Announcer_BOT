@@ -275,6 +275,16 @@ client.on('message', message => {
     lockManager.lockableClear(message);
   }
 
+  //showChannelReact
+  else if(message.content === prefix + instructions[26][0]){
+    reactionManager.showChannelReact(message);
+  }
+
+  //removeChannelReact
+  else if(message.content === prefix + instructions[26][0]){
+    lockManager.lockableClear(message);
+  }
+
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
     message.reply('Diesen Befehl kenne ich leider nicht :(   Tippe \'' + prefix + instructions[4][0] + '\' für eine Liste aller Befehle!');

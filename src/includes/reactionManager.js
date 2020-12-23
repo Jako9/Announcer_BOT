@@ -110,5 +110,13 @@ module.exports = {
     serverManager.setReactionMessage(id, serverManager.getChannelReact(message.guild).messages.cache.find(message => message.pinned));
     logManager.writeDebugLog(message.guild.name + ": Der Channel wurde erfolgreich aufgesetzt.");
     message.reply('Setup Erfolgreich.');
+  },
+
+  showChannelReact: function(message){
+    if(serverManager.getChannelReact(id) == null){
+      messag.reply("Aktuell gibt es keinen Channel, in dem auf Reaktionen gehorcht wird.");
+      return;
+    }
+    message.reply(serverManager.getChannelReact(id));
   }
 }
