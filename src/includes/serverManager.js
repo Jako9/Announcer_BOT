@@ -243,8 +243,14 @@ module.exports = {
      * @param {string} channelReact standartChannel des Servers
      */
     setChannelReact: function(id, channelReact){
+      if(channelReact == ""){
+        servers[id].channelReact == null;
+        saveServer(id);
+      }
+      else{
         servers[id].channelReact = channelReact.name;
         saveServer(id);
+      }
 
     },
 
