@@ -400,7 +400,7 @@ module.exports = {
 }
 
 function fetchMessage(client, id, channelReact){
-  logManager.writeDebugLog("Channel :" + channelReact);
+  channelReact.replace(/(\r\n|\n|\r)/gm,"");
   if(channelReact == "") return;
   logManager.writeDebugLog("Channel :" + channelReact);
   //Ich schwöre Lambda wtf reicht auch
