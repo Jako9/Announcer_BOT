@@ -76,7 +76,7 @@ module.exports = {
         message.reply("Es gibt keine Channel, die man abschließen darf");
         return;
       }
-      let msg = "```"
+      let msg = "```\n"
       channels.forEach(channel => msg += (channel.name + "\n"));
       msg += "```";
       message.reply(msg);
