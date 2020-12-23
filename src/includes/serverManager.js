@@ -244,7 +244,8 @@ module.exports = {
      */
     setChannelReact: function(id, channelReact){
       if(channelReact == null){
-        servers[id].channelReact == null;
+        servers[id].channelReact = null;
+        servers[id].reactionMessage = null;
         saveServer(id);
       }
       else{
