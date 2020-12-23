@@ -119,7 +119,7 @@ module.exports = {
       serverManager.getLockable(message.guild.id).forEach(channel => {
         ids.push(channel.id);
       });
-      if(!ids.include(message.member.voice.channel.id)){
+      if(!ids.includes(message.member.voice.channel.id)){
         message.reply("Der Channel ist überhaupt nicht abschließbar.");
         return;
       }
