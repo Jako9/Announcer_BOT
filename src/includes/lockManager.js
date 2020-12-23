@@ -73,7 +73,7 @@ module.exports = {
         return;
       }
       let msg = "```"
-      channels.forEach(channel => msg += (channel + "\n"));
+      channels.forEach(channel => msg += (channel.name + "\n"));
       msg += "```";
       message.reply(msg);
     },
@@ -100,7 +100,7 @@ module.exports = {
         message.reply("Der Channel ist schon abschließbar.");
         return;
       }
-      channels.push(message.member.voice.channel.name);
+      channels.push({"name":message.member.voice.channel.name, "id":message.member.voice.channel.id});
       serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
     },
@@ -111,11 +111,12 @@ module.exports = {
         message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befehl erneut aus.");
         return;
       }
-      if(!channels.includes(message.member.voice.channel.name)){
+      let remove = {"name":message.member.voice.channel.name,"id":message.member.voice.channel.id};
+      if(!remove){
         message.reply("Der Channel ist überhaupt nicht abschließbar.");
         return;
       }
-      let index = channels.indexOf(message.member.voice.channel.name);
+      let index = channels.indexOf(remove);
       channels.splice(index, 1);
       serverManager.setLockable(message.guild.id, channels);
       message.reply(message.member.voice.channel.name + " ist nun nicht mehr abschließbar!");
