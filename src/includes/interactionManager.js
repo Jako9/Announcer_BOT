@@ -15,9 +15,6 @@ module.exports = {
     if(message.content.split(' ').length == 2 && !isNaN(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
     }
-    logManager.writeDebugLog("Seite = " + page);
-    logManager.writeDebugLog("Ist eine Nummer = " + !isNaN(message.content.split(' ')[1]));
-    logManager.writeDebugLog("Länge gleich 2 = " + (message.content.split(' ').length == 2));
     var msg = '``` \n------------------------------------------------------------- \n' +
               'The bot should connect and disconnect automatically but if there are ' +
               'any problems \nor if you want to customize usage you can use the following commands' +
