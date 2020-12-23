@@ -10,7 +10,7 @@ module.exports = {
       return;
     }
     let msg = "```"
-    channels.forEach(channel => msg += (channel + "\n"));
+    channels.forEach(channel => msg += (channel.name + "\n"));
     msg += "```";
     message.reply(msg);
   },
@@ -27,12 +27,24 @@ module.exports = {
     let channel = message.mentions.channels.find(channel => true);
 
     if(!channel) {
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden.");
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden. (Der Channel wurde nicht gefunden)");
       message.reply('Der Channel konnte nicht gefunden werden');
       return;
     }
 
-    channels.push(channel.name);
+    let ids = [];
+
+    channels.forEach(tmpChannel => {
+      ids.push(tmpChannel.id);
+    });
+
+    if(ids.includes(channel.id)){
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden. (Der Channel ist schon gewhitelistet)");
+      message.reply('Der Channel konnte nicht gefunden werden');
+      return;
+    }
+
+    channels.push({"name":channel.name,"id":channel.id});
     serverManager.setWhitelist(id, channels);
     message.reply("Der Channel wurde erfolgreich hinzugefügt");
   },
@@ -54,13 +66,19 @@ module.exports = {
       return;
     }
 
-    if(!channels.includes(channel.name)) {
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht gefunden werden.");
-      message.reply('Der Channel konnte nicht gefunden werden');
+    let ids = [];
+
+    channels.forEach(tmpChannel => {
+      ids.push(tmpChannel.id);
+    });
+
+    if(ids.includes(channel.id)){
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel ist nicht gewhitelistet.");
+      message.reply('Dieser Channel ist nicht gewhitelistet.');
       return;
     }
 
-    let index = channels.indexOf(channel.name);
+    let index = ids.indexOf(channel.id);
     channels.splice(index, 1);
     serverManager.setWhitelist(id, channels);
     message.reply("Der Channel wurde erfolgreich entfernt");
@@ -78,7 +96,7 @@ module.exports = {
 
     let found = false;
     channels.forEach(channel => {
-      if (channel == message.channel.name) found = true;
+      if (channel.id == message.channel.id) found = true;
     });
 
     return found;
