@@ -282,7 +282,7 @@ client.on('message', message => {
 
   //removeChannelReact
   else if(message.content === prefix + instructions[28][0]){
-    lockManager.lockableClear(message);
+    reactionManager.removeChannelReact(message);
   }
 
   // Falsche Eingabe
