@@ -409,7 +409,6 @@ module.exports = {
 }
 
 function fetchMessage(client, id, channelReact){
-  channelReact.replace(/(\r\n|\n|\r)/gm,"");
   if(channelReact.id == "") return;
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
