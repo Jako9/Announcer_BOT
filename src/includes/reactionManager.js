@@ -25,7 +25,7 @@ module.exports = {
       return;
     }
 
-    let defaultRole = reaction.message.guild.roles.cache.find(role => role.name == serverManager.getStandartRole(id));
+    let defaultRole = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(id).id);
     if(defaultRole){
       logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
       member.roles.add([role.id,defaultRole.id]);
