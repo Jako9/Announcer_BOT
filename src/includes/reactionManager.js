@@ -121,7 +121,7 @@ module.exports = {
   },
 
   removeChannelReact: function(message){
-    serverManager.setChannelReact("");
+    serverManager.setChannelReact(null);
     message.reply("Es gibt nun keinen Channel mehr, in dem auf Reaktionen gehorcht wird.");
   }
 }
