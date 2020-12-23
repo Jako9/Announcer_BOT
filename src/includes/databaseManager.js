@@ -216,7 +216,7 @@ module.exports = {
         connection = establishConnection();
         let name = server.name;
         let avatar= server.avatar;
-        let rolle= server.rolle;
+        let manageRolle= server.manageRolle;
         let whitelist = server.whitelist;
         let instructions= server.instructions;
         let prefix= server.prefix;
@@ -224,7 +224,7 @@ module.exports = {
         let standartRole= server.standartRole;
         let channelReact= server.channelReact;
         let lockable= server.lockable;
-        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', rolle='"+ rolle + "', instructions='"+ instructions + "', whitelist='" + whitelist + "', prefix='"+ prefix + "', volume="+ volume +", standartRole='"+ standartRole + "', channelReact='"+ channelReact + "', lockable='" + lockable +"' WHERE guildID=" + id;
+        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', manageRolle='"+ manageRolle + "', instructions='"+ instructions + "', whitelist='" + whitelist + "', prefix='"+ prefix + "', volume="+ volume +", standartRole='"+ standartRole + "', channelReact='"+ channelReact + "', lockable='" + lockable +"' WHERE guildID=" + id;
 
         connection.query(q, (error, results) => {
             if(error){

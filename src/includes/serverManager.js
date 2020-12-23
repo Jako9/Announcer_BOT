@@ -58,7 +58,7 @@ module.exports = {
      * @param {string} id Id des Servers
      */
     getRolle: function(id){
-        return servers[id].rolle;
+        return servers[id].manageRolle;
     },
 
     /**
@@ -67,8 +67,8 @@ module.exports = {
      * @param {string} id Id des Servers
      * @param {String} role Rolle des Servers
      */
-    setRolle: function(id, role){
-        servers[id].rolle = (role) ? role : servers[id].rolle;
+    setRolle: function(id, manageRolle){
+        servers[id].manageRolle = rolee;
         saveServer(id);
     },
 
