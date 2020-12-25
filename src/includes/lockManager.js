@@ -129,9 +129,9 @@ module.exports = {
 
     crashUnlock: async function(id){
       let channels = serverManager.getLockedChannels(id);
-      channels.forEach(channel => {
-        await unlockChannel(channel);
-      });
+      for(let i = 0; i < channels.length; i++){
+        await unlockChannel(channels[i]);
+      }
 
     },
 
