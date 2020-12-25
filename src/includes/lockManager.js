@@ -8,7 +8,7 @@ function lockChannel (message){
   channel.members.forEach(member => {
     members.push(member.id);
   });
-  let lockedChannels = {"channel":channel,"whoLocked":message.member.id,"size":channel.userLimit,"members":members};
+  let lockedChannel = {"channel":channel,"whoLocked":message.member.id,"size":channel.userLimit,"members":members};
   serverManager.setLockedChannels(channel.guild.id, serverManager.getLockedChannels(channel.guild.id).push(lockedChannel));
   channel.setUserLimit(message.member.voice.channel.members.size);
 }
