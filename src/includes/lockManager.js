@@ -1,5 +1,6 @@
 const serverManager = require('./serverManager.js');
 const logManager = require('./logManager.js');
+const announcer = require('./../announcer.js');
 
 //Schließ einen abgeschlossenen Raum wieder auf
 function lockChannel (message){
@@ -15,7 +16,9 @@ function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
   serverManager.setLockedChannel(voiceChannel.guild.id, null);
-  voiceChannel.setUserLimit(serverManager.getChannelSize(id));
+  voiceChannel.setUserLimit(serverManager.getChannelSize(id)).then(channel => {
+    announcer.lockedFin();
+  });
 }
 
 module.exports = {
@@ -91,7 +94,9 @@ module.exports = {
     crashUnlock: function(id){
       if(serverManager.getLockedChannel(id) != null){
         unlockChannel(serverManager.getLockedChannel(id));
+        return;
       }
+      announcer.lockedFin();
     },
 
     addLockable: function(message){
