@@ -122,6 +122,7 @@ hasAccessRights = function(member, level){
       return member.hasPermission(ADMINISTRATOR);
     //Sollte nicht passieren
     default:
+    logManager.writeDebugLog("Keine Berechtigung erkannt");
       return false;
 
   }
