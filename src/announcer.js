@@ -13,10 +13,10 @@ const whitelistManager = require('./includes/whitelistManager.js');
 const dbManager = require('./includes/databaseManager.js');
 
 process.on('uncaughtException', async function(err) {
-/*  let arr = client.guilds.cache.array();
+  let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
     await lockManager.crashUnlock(arr[i].id);
-  }*/
+  }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
 
