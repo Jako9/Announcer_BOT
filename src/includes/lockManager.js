@@ -122,7 +122,7 @@ module.exports = {
       let channels = serverManager.getLockable(member.guild.id);
       channels.forEach(channel => {
         channel.members = channel.members.filter(lockMember => {
-          lockMember != member.id;
+          return lockMember != member.id;
         });
       });
 
