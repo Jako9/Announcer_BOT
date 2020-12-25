@@ -175,7 +175,6 @@ client.on('message', message => {
   // Leave per Befehl
   else if (message.content.toLowerCase() === prefix + instructions[1][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
-    syntax.fehler;
     if(!hasAccessRights(message, instructions[1][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[1][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
