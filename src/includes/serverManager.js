@@ -83,7 +83,7 @@ module.exports = {
     getInstructions: function(id){
         instructions = [];
         servers[id].instructions.forEach(inst =>{
-            instructions[inst.type-1] = inst.name;
+            instructions[inst.type-1] = {"name":inst.name,"security":inst.security};
         });
 
         return mergeArrays(instructions, descriptions);
@@ -102,8 +102,9 @@ module.exports = {
 
         for(i=1; i <= instructions.length; i++){
             instructionsTmp.push({
-                "name": instructions[i-1][0],
-                "type": i
+                "name": instructions[i-1][0].name,
+                "type": i,
+                "security": instructions[i-1][0].security
             });
         }
 
