@@ -115,7 +115,9 @@ hasAccessRights = function(message, level){
     case 1:
       logManager.writeDebugLog("Berechtigung 1 erkannt");
       if(message.member.hasPermission("ADMINISTRATOR")) return true;
-      return message.member.roles.cache.get(serverManager.getRolle(message.guild.id)) != undefined;
+      logManager.writeDebugLog("ID = " + serverManager.getRolle(message.guild.id).id);
+      logManager.writeDebugLog("ROLLE = " + message.member.roles.cache.get(serverManager.getRolle(message.guild.id).id));
+      return message.member.roles.cache.get(serverManager.getRolle(message.guild.id).id) != undefined;
     //HighSec => Nur Admins dürfen diesen Befehl verwenden
     case 2:
       logManager.writeDebugLog("Berechtigung 2 erkannt");
