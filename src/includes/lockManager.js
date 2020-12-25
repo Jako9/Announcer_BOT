@@ -4,18 +4,36 @@ const logManager = require('./logManager.js');
 //Schließ einen abgeschlossenen Raum wieder auf
 function lockChannel (message){
   let channel = message.member.voice.channel;
-  serverManager.setChannelSize(channel.guild.id, channel.userLimit);
-  serverManager.setWhoLocked(channel.guild.id,message.member.id);
-  serverManager.setLockedChannel(channel.guild.id, message.member.voice.channel);
+  let members = [];
+  channel.members.forEach(member => {
+    members.push(member.id);
+  });
+  let lockedChannels = {"channel":channel,"whoLocked":message.member.id,"size":channel.userLimit,"members":members};
+  serverManager.setLockedChannels(channel.guild.id, serverManager.getLockedChannels(channel.guild.id).push(lockedChannel));
   channel.setUserLimit(message.member.voice.channel.members.size);
 }
 
 //Schließt einen Raum ab
-async function unlockChannel(voiceChannel){
-  let id = voiceChannel.guild.id;
-  serverManager.setWhoLocked(id, null);
-  serverManager.setLockedChannel(voiceChannel.guild.id, null);
-  await voiceChannel.setUserLimit(serverManager.getChannelSize(id));
+async function unlockChannel(channel){
+  let id = channel.guild.id;
+
+  //Channel ist gar nicht abgeschlossen
+  if(!isLocked(channel)) return;
+  let channelSize = channel.size;
+
+  //Lösche Channel aus den abgeschlossenen Channels
+  serverManager.setLockedChannels(serverManager.getLockedChannels(id).filter(channel => {
+    return channel.channel.id != channel.channel.id;
+  }));
+  await channel.setUserLimit(channelSize);
+}
+
+function isLocked(channel){
+  let channels = serverManager.getLockedChannels(channel.guild.id);
+  for(let i = 0; i < channels.length; i++){
+    if(channels[i].channel.id == channel.id) return true;
+  }
+  return false;
 }
 
 module.exports = {
@@ -36,9 +54,12 @@ module.exports = {
         message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
         return;
       }
-      if(serverManager.getWhoLocked(message.guild.id) != null){
-        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Es ist schon abgeschlossen).");
-        message.reply('Es ist schon abgeschlossen.');
+      let channels = serverManager.getLockedChannels(message.guild.id);
+      if(channels.find(channel => {
+        channel.channel.id == message.member.voice.channel.id;
+      }) != undefined){
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Dieser Channel ist schon abgeschlossen).");
+        message.reply('Dieser Channel ist schon abgeschlossen.');
         return;
       }
       lockChannel(message);
@@ -48,18 +69,24 @@ module.exports = {
 
     unlock: function(message){
       let id = message.guild.id;
-      if(serverManager.getWhoLocked(id) == null){
-        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Es war nichts abgeschlossen).");
-        message.reply('Es ist nichts abgeschlossen!');
+      let channels = serverManager.getLockedChannels(id);
+      if(channels.find(channel => {
+        channel.channel.id == message.member.voice.channel.id;
+      }) == undefined){
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel ist nicht abgeschlossen).");
+        message.reply('Dieser Channel ist nicht abgeschlossen!');
         return;
       }
-      if(message.member != serverManager.getWhoLocked(id)){
-        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel wurde von einem anderen Benutzer abgeschlossen).");
-        message.reply('Es kann nur die Person aufschließen, die auch abgeschlossen hat!');
+      let channel = channels.find(channel => {
+        channel.channel.id == message.member.voice.channel.id;
+      });
+      if(!channel.members.includes(message.member.id)){
+        logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Nutzer darf den Channel nicht aufschließen).");
+        message.reply('Du darfst den Channel nicht aufschließen! Es dürfen nur Personen aufschließen, die bei dem abschließen dabei waren.');
         return;
       }
       logManager.writeDebugLog("Channel = " + message.member.voice.channel);
-      unlockChannel(message.member.voice.channel);
+      unlockChannel(channel);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde aufgeschlossen.");
       message.reply('Aufgeschlossen');
     },
@@ -73,7 +100,7 @@ module.exports = {
     showLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(channels.length == 0){
-        message.reply("Es gibt keine Channel, die man abschließen darf");
+        message.reply("Es gibt keine Channel, die abgeschlossen werden dürfen.");
         return;
       }
       let msg = "```\n"
@@ -82,16 +109,30 @@ module.exports = {
       message.reply(msg);
     },
 
+    removeMember: function(member){
+      let channels = serverManager.getLockable(member.guild.id);
+      channels.forEach(channel => {
+        channel.members = channel.members.filter(lockMember => {
+          lockMember != member.id;
+        });
+      });
+
+      serverManager.setLockedChannels(member.id, channels);
+    }
+
     forceUnlock: function(voiceState){
-      if(serverManager.getWhoLocked(voiceState.guild.id) == voiceState.member.id){
-        unlockChannel(voiceState.channel);
-      }
+      let channels = serverManager.getLockedChannels(voiceState.guild.id);
+      channels.forEach(channel => {
+        if(channel.whoLocked == voiceState.member.id) unlockChannel(channel);
+      });
     },
 
     crashUnlock: async function(id){
-      if(serverManager.getLockedChannel(id) != null){
-        await unlockChannel(serverManager.getLockedChannel(id));
-      }
+      let channels = serverManager.getLockedChannels(id);
+      channels.forEach(channel => {
+        await unlockChannel(channel);
+      });
+
     },
 
     addLockable: function(message){

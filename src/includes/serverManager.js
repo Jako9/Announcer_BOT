@@ -14,10 +14,8 @@ module.exports = {
         dbManager.getServer(guild.id, function(dbServer){
           let id = dbServer.guildID;
           dbServer["timeLastJoin"] = 0;
-          dbServer["channelSize"] = 0;
-          dbServer["whoLocked"] = "";
+          dbServer["lockedChannels"] = [];
           dbServer["reactionMessage"] = null;
-          dbServer["lockedChannel"] = null;
           dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
           dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
           dbServer.lockable = JSON.parse(dbServer.lockable).lockable;
@@ -174,44 +172,6 @@ module.exports = {
     },
 
     /**
-     * Gibt die Channelsize des Servers zurück
-     *
-     * @param {string} id Id des Servers
-     */
-    getChannelSize: function(id){
-        return servers[id].channelSize;
-    },
-
-    /**
-     * Setzt die Channelsize des Servers
-     *
-     * @param {string} id Id des Servers
-     * @param {number} channelSize Channelsize des Servers
-     */
-    setChannelSize: function(id, channelSize){
-        servers[id].channelSize = (channelSize !== undefined) ? channelSize : servers[id].channelSize;
-    },
-
-    /**
-     * Gibt die UserId des Users zurück der gelockt hat des Servers zurück
-     *
-     * @param {string} id Id des Servers
-     */
-    getWhoLocked: function(id){
-        return servers[id].whoLocked;
-    },
-
-    /**
-     * Setzt die Channelsize des Servers
-     *
-     * @param {string} id Id des Servers
-     * @param {number} whoLocked UserId der den Server zuletzt gelockt hat
-     */
-    setWhoLocked: function(id, whoLocked){
-        servers[id].whoLocked =  whoLocked;
-    },
-
-    /**
      * Gibt den StandartRole des Servers zurück
      *
      * @param {number} id Id des Servers
@@ -294,18 +254,18 @@ module.exports = {
      *
      * @param {number} id Id des Servers
      */
-    getLockedChannel: function(id){
-        return servers[id].lockedChannel;
+    getLockedChannels: function(id){
+        return servers[id].lockedChannels;
     },
 
     /**
      * Setzt den abgeschlossenen Channel des Servers
      *
      * @param {string} id Id des Servers
-     * @param {string} lockedChannel abgeschlossener des Servers
+     * @param {string} lockedChannels abgeschlossener des Servers
      */
-    setLockedChannel: function(id, lockedChannel){
-        servers[id].lockedChannel = lockedChannel;
+    setLockedChannels: function(id, lockedChannels){
+        servers[id].lockedChannels = lockedChannels;
     },
 
     /**
@@ -356,10 +316,8 @@ module.exports = {
             dbServers.forEach(dbServer => {
             let id = dbServer.guildID;
             dbServer["timeLastJoin"] = 0;
-            dbServer["channelSize"] = 0;
-            dbServer["whoLocked"] = null;
+            dbServer["lockedChannels"] = [];
             dbServer["reactionMessage"] = null;
-            dbServer["lockedChannel"] = null;
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
             dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
 
@@ -422,12 +380,10 @@ function fetchMessage(client, id, channelReact){
 function saveServer(id){
     let toWrite = servers[id];
     let message =  servers[id].reactionMessage;
-    let lockedChannel = servers[id].lockedChannel;
+    let lockedChannels = servers[id].lockedChannels;
     delete toWrite.timeLastJoin;
-    delete toWrite.channelSize;
-    delete toWrite.whoLocked;
     delete toWrite.reactionMessage;
-    delete toWrite.lockedChannel;
+    delete toWrite.lockedChannels;
     let instructionsTmp = servers[id].instructions;
     let whitelist = servers[id].whitelist;
     let lockable = servers[id].lockable;
@@ -451,7 +407,7 @@ function saveServer(id){
     servers[id].reactionMessage = message;
     servers[id].whitelist = whitelist;
     servers[id].lockable = lockable;
-    servers[id].lockedChannel = lockedChannel;
+    servers[id].lockedChannels = lockedChannels;
     servers[id].manageRolle = manageRolle;
     servers[id].standartRole = standartRole;
     servers[id].channelReact = channelReact;

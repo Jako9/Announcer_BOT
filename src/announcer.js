@@ -91,6 +91,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 
   if(oldState.channel !== undefined){
     lockManager.forceUnlock(oldState);
+    lockManager.removeMember(oldState.member);
   }
 });
 
