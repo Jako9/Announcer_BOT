@@ -105,7 +105,7 @@ client.on('messageReactionRemove', (reaction, user) => {
 });
 
 
-hasAccessRights = function(member, level){
+hasAccessRights = function(message, level){
   switch (parseInt(level)) {
     //Lowlever => Jeder hat Zugriff
     case 0:
@@ -114,12 +114,12 @@ hasAccessRights = function(member, level){
     //Moderat: Nur Admins oder Manager dürfen diesen Befehl benutzen
     case 1:
       logManager.writeDebugLog("Berechtigung 1 erkannt");
-      if(member.hasPermission("ADMINISTRATOR")) return true;
-      return member.roles.cache.get(serverManager.getRolle(message.guild.id)) != undefined;
+      if(message.member.hasPermission("ADMINISTRATOR")) return true;
+      return message.member.roles.cache.get(serverManager.getRolle(message.guild.id)) != undefined;
     //HighSec => Nur Admins dürfen diesen Befehl verwenden
     case 2:
       logManager.writeDebugLog("Berechtigung 2 erkannt");
-      return member.hasPermission("ADMINISTRATOR");
+      return message.member.hasPermission("ADMINISTRATOR");
     //Sollte nicht passieren
     default:
     logManager.writeDebugLog("Keine Berechtigung erkannt");
@@ -163,7 +163,7 @@ client.on('message', message => {
   // Join per Befehl
   if (message.content === prefix + instructions[0][0].name) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[0][0].security)){
+    if(!hasAccessRights(message, instructions[0][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[0][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -174,7 +174,7 @@ client.on('message', message => {
   // Leave per Befehl
   else if (message.content === prefix + instructions[1][0].name) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[1][0].security)){
+    if(!hasAccessRights(message, instructions[1][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[1][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -184,7 +184,7 @@ client.on('message', message => {
   // setVolume
   else if (message.content.startsWith(prefix + instructions[2][0].name)) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[2][0].security)){
+    if(!hasAccessRights(message, instructions[2][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[2][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -194,7 +194,7 @@ client.on('message', message => {
   // getVolume
   else if (message.content === prefix + instructions[3][0].name) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[3][0].security)){
+    if(!hasAccessRights(message, instructions[3][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[3][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -204,7 +204,7 @@ client.on('message', message => {
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content.startsWith(prefix + instructions[4][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[4][0].security)){
+    if(!hasAccessRights(message, instructions[4][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[4][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -214,7 +214,7 @@ client.on('message', message => {
   // Personalisiere Befehle mit 'set'
   else  if(message.content.startsWith(prefix + instructions[5][0].name  + ' ')){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[5][0].security)){
+    if(!hasAccessRights(message, instructions[5][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[5][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -224,7 +224,7 @@ client.on('message', message => {
   // Aktive Rolle ändern
   else if (message.content.startsWith(prefix + instructions[6][0].name  + ' ')) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[6][0].security)){
+    if(!hasAccessRights(message, instructions[6][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[6][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -234,7 +234,7 @@ client.on('message', message => {
   // Aktive Rolle anzeigen
   else if (message.content === prefix + instructions[7][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[7][0].security)){
+    if(!hasAccessRights(message, instructions[7][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[7][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -244,7 +244,7 @@ client.on('message', message => {
   // Präfix ändern
   else if(message.content.startsWith(prefix + instructions[8][0].name  + ' ')){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[8][0].security)){
+    if(!hasAccessRights(message, instructions[8][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[8][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -255,7 +255,7 @@ client.on('message', message => {
   // Lock Room
   else if(message.content === prefix + instructions[9][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[9][0].security)){
+    if(!hasAccessRights(message, instructions[9][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[9][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -265,7 +265,7 @@ client.on('message', message => {
   // Unlock Room
   else if(message.content === prefix + instructions[10][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[10][0].security)){
+    if(!hasAccessRights(message, instructions[10][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[10][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -275,7 +275,7 @@ client.on('message', message => {
   //Reaction Listener
   else if(message.content.startsWith(prefix + instructions[11][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[11][0].security)){
+    if(!hasAccessRights(message, instructions[11][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[11][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -285,7 +285,7 @@ client.on('message', message => {
   //Reaction Emojis
   else if(message.content.startsWith(prefix + instructions[12][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[12][0].security)){
+    if(!hasAccessRights(message, instructions[12][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[12][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -295,7 +295,7 @@ client.on('message', message => {
   //change Reaction Role
   else if(message.content.startsWith(prefix + instructions[13][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[13][0].security)){
+    if(!hasAccessRights(message, instructions[13][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[13][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -305,7 +305,7 @@ client.on('message', message => {
   //show Reaction role
   else if(message.content === prefix + instructions[14][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[14][0].security)){
+    if(!hasAccessRights(message, instructions[14][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[14][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -315,7 +315,7 @@ client.on('message', message => {
   //becomeVIP
   else if(message.content === prefix + instructions[15][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[15][0].security)){
+    if(!hasAccessRights(message, instructions[15][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[15][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -325,7 +325,7 @@ client.on('message', message => {
   //showWhitelist
   else if(message.content === prefix + instructions[16][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[16][0].security)){
+    if(!hasAccessRights(message, instructions[16][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[16][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -335,7 +335,7 @@ client.on('message', message => {
   //whitelistAdd
   else if(message.content.startsWith(prefix + instructions[17][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[17][0].security)){
+    if(!hasAccessRights(message, instructions[17][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[17][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -345,7 +345,7 @@ client.on('message', message => {
   //whitelistRemove
   else if(message.content.startsWith(prefix + instructions[18][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[18][0].security)){
+    if(!hasAccessRights(message, instructions[18][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[18][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -355,7 +355,7 @@ client.on('message', message => {
   //whitelistClear
   else if(message.content === prefix + instructions[19][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[19][0].security)){
+    if(!hasAccessRights(message, instructions[19][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[19][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -365,7 +365,7 @@ client.on('message', message => {
   //play
   else if(message.content.startsWith(prefix + instructions[20][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[20][0].security)){
+    if(!hasAccessRights(message, instructions[20][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[20][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -375,7 +375,7 @@ client.on('message', message => {
   //setJoinSound
   else if(message.content.startsWith(prefix + instructions[21][0].name)){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[21][0].security)){
+    if(!hasAccessRights(message, instructions[21][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[21][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -385,7 +385,7 @@ client.on('message', message => {
   //removeJoinSound
   else if(message.content === prefix + instructions[22][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[22][0].security)){
+    if(!hasAccessRights(message, instructions[22][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[22][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -395,7 +395,7 @@ client.on('message', message => {
   //lockable
   else if(message.content === prefix + instructions[23][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[23][0].security)){
+    if(!hasAccessRights(message, instructions[23][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[23][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -405,7 +405,7 @@ client.on('message', message => {
   //lockableAdd
   else if(message.content === prefix + instructions[24][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[24][0].security)){
+    if(!hasAccessRights(message, instructions[24][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[24][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -415,7 +415,7 @@ client.on('message', message => {
   //lockableRemove
   else if(message.content === prefix + instructions[25][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[25][0].security)){
+    if(!hasAccessRights(message, instructions[25][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[25][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -425,7 +425,7 @@ client.on('message', message => {
   //lockableClear
   else if(message.content === prefix + instructions[26][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[26][0].security)){
+    if(!hasAccessRights(message, instructions[26][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[26][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -435,7 +435,7 @@ client.on('message', message => {
   //showChannelReact
   else if(message.content === prefix + instructions[27][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[27][0].security)){
+    if(!hasAccessRights(message, instructions[27][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[27][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -445,7 +445,7 @@ client.on('message', message => {
   //removeChannelReact
   else if(message.content === prefix + instructions[28][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[28][0].security)){
+    if(!hasAccessRights(message, instructions[28][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[28][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
@@ -455,7 +455,7 @@ client.on('message', message => {
   //removeReactionRole
   else if(message.content === prefix + instructions[29][0].name){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message.member, instructions[29][0].security)){
+    if(!hasAccessRights(message, instructions[29][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[29][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
