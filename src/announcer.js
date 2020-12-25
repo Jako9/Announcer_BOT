@@ -306,7 +306,7 @@ client.on('message', message => {
 
 module.exports = {
 
-    unlockFin: function(){
+    lockedFin: function(){
       if(unlocked == 0) return;
       unlocked--;
     }
