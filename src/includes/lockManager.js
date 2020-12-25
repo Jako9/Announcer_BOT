@@ -104,7 +104,7 @@ module.exports = {
       channels.forEach(channel => {
         ids.push(channel.id);
       });
-      if(!ids.includes(message.member.voice.channel.id)){
+      if(ids.includes(message.member.voice.channel.id)){
         message.reply("Der Channel ist schon abschließbar.");
         return;
       }
