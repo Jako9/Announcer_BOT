@@ -17,7 +17,7 @@ function lockChannel (message){
 
 //Schließt einen Raum ab
 async function unlockChannel(channel){
-  let id = channel.guild.id;
+  let id = channel.channel.guild.id;
 
   //Channel ist gar nicht abgeschlossen
   if(!isLocked(channel)) return;
@@ -31,9 +31,9 @@ async function unlockChannel(channel){
 }
 
 function isLocked(channel){
-  let channels = serverManager.getLockedChannels(channel.guild.id);
+  let channels = serverManager.getLockedChannels(channel.channel.guild.id);
   for(let i = 0; i < channels.length; i++){
-    if(channels[i].channel.id == channel.id) return true;
+    if(channels[i].channel.id == channel.channel.id) return true;
   }
   return false;
 }
