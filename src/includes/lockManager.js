@@ -126,7 +126,7 @@ module.exports = {
         });
       });
 
-      serverManager.setLockedChannels(member.id, channels);
+      serverManager.setLockedChannels(member.guild.id, channels);
     },
 
     forceUnlock: function(voiceState){
