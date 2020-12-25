@@ -78,6 +78,9 @@ module.exports = {
         channel.channel.id == message.member.voice.channel.id;
       }));
       if(channels.find(channel => {
+        logManager.writeDebugLog("Abgeschlossen: " + channel.channel.id);
+        logManager.writeDebugLog("Current: " + message.member.voice.channel.id);
+        logManager.writeDebugLog("Equal: " +(channel.channel.id == message.member.voice.channel.id));
         channel.channel.id == message.member.voice.channel.id;
       }) == undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel ist nicht abgeschlossen).");
