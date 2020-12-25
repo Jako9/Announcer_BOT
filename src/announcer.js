@@ -12,20 +12,10 @@ const whitelistManager = require('./includes/whitelistManager.js');
 
 const dbManager = require('./includes/databaseManager.js');
 
-//Ob ein Channel im Falle eines Crashes alles wieder aufgeschlossen hat.
-let fin = false;
-
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', async function(err) {
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
-    fin = false;
-    logManager.writeDebugLog("Schalte Channel in Server frei...");
-    lockManager.crashUnlock(arr[i].id).then(() => {
-      logManager.writeDebugLog("FREIGESCHALTET");
-      finished();
-    });
-    logManager.writeDebugLog("Warte auf Abschluss...");
-    while(!fin);
+    await lockManager.crashUnlock(arr[i].id);
   }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
@@ -33,10 +23,6 @@ process.on('uncaughtException', function(err) {
   //TODO programm schließen, nachdem auf crashUnlock gewartet wurde..
   process.exit();
 });
-
-finished = function(){
-  fin = true;
-}
 
 process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
