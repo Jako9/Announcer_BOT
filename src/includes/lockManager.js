@@ -118,7 +118,7 @@ module.exports = {
       });
 
       serverManager.setLockedChannels(member.id, channels);
-    }
+    },
 
     forceUnlock: function(voiceState){
       let channels = serverManager.getLockedChannels(voiceState.guild.id);
