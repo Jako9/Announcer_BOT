@@ -61,7 +61,6 @@ const ENDUNGEN = [
   ".aa"
 ];
 
-
 logManager.writeBootLog("Logge den Bot ein...");
 //BOT booten
 client.login(KEY);
@@ -154,6 +153,7 @@ client.on('message', message => {
 
   // Leave per Befehl
   else if (message.content === prefix + instructions[1][0]) {
+    syntaxfehler.hallo;
     connectionManager.triggerLeave(message);
   }
 
