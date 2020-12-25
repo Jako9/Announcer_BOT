@@ -120,10 +120,10 @@ module.exports = {
 
     removeMember: function(member){
       let channels = serverManager.getLockable(member.guild.id);
-      logManager.writeDebugLog("Channel: " + channels.channel);
-      logManager.writeDebugLog("WhoLocked: " + channels.whoLocked);
-      logManager.writeDebugLog("Size: " + channels.size);
-      logManager.writeDebugLog("Members: " + channels.members);
+      logManager.writeDebugLog("Channel: " + channels[0].channel);
+      logManager.writeDebugLog("WhoLocked: " + channels[0].whoLocked);
+      logManager.writeDebugLog("Size: " + channels[0].size);
+      logManager.writeDebugLog("Members: " + channels[0].members);
       channels.forEach(channel => {
         channel.members = channel.members.filter(lockMember => {
           return lockMember != member.id;
