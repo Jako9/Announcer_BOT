@@ -309,6 +309,4 @@ function lockedFin(){
     unlocked--;
 }
 
-module.exports = {
-  lockedFin: lockedFin
-}
+module.exports = lockedFin;
