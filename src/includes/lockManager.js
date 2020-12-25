@@ -11,11 +11,11 @@ function lockChannel (message){
 }
 
 //Schließt einen Raum ab
-async function unlockChannel(voiceChannel){
+function unlockChannel(voiceChannel){
   let id = voiceChannel.guild.id;
   serverManager.setWhoLocked(id, null);
   serverManager.setLockedChannel(voiceChannel.guild.id, null);
-  await voiceChannel.setUserLimit(serverManager.getChannelSize(id));
+  voiceChannel.setUserLimit(serverManager.getChannelSize(id));
 }
 
 module.exports = {
@@ -88,9 +88,9 @@ module.exports = {
       }
     },
 
-    crashUnlock: async function(id){
+    crashUnlock: function(id){
       if(serverManager.getLockedChannel(id) != null){
-        await unlockChannel(serverManager.getLockedChannel(id));
+        unlockChannel(serverManager.getLockedChannel(id));
       }
     },
 
