@@ -74,6 +74,9 @@ module.exports = {
       let channels = serverManager.getLockedChannels(id);
       logManager.writeDebugLog("Channels = " + channels);
       logManager.writeDebugLog("Größe = " + channels.length);
+      logManager.writeDebugLog("Channel = " + channels.find(channel => {
+        channel.channel.id == message.member.voice.channel.id;
+      }));
       if(channels.find(channel => {
         channel.channel.id == message.member.voice.channel.id;
       }) == undefined){
