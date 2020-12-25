@@ -27,7 +27,7 @@ async function unlockChannel(channel){
   serverManager.setLockedChannels(channel.channel.guild.id, serverManager.getLockedChannels(id).filter(channel => {
     return channel.channel.id != channel.channel.id;
   }));
-  await channel.setUserLimit(channelSize);
+  await channel.channel.setUserLimit(channelSize);
 }
 
 function isLocked(channel){
