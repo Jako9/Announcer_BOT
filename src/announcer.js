@@ -9,6 +9,7 @@ const serverManager = require('./includes/serverManager.js');
 const logManager = require('./includes/logManager.js');
 const vipManager = require('./includes/vipManager.js');
 const whitelistManager = require('./includes/whitelistManager.js');
+const logManager = require('./includes/logManager.js');
 
 const dbManager = require('./includes/databaseManager.js');
 
