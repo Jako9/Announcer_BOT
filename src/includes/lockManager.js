@@ -4,12 +4,14 @@ const logManager = require('./logManager.js');
 //Schließ einen abgeschlossenen Raum wieder auf
 function lockChannel (message){
   let channel = message.member.voice.channel;
+  let channels = serverManager.getLockedChannels(channel.guild.id);
   let members = [];
   channel.members.forEach(member => {
     members.push(member.id);
   });
   let lockedChannel = {"channel":channel,"whoLocked":message.member.id,"size":channel.userLimit,"members":members};
-  serverManager.setLockedChannels(channel.guild.id, serverManager.getLockedChannels(channel.guild.id).push(lockedChannel));
+  channels.push(lockedChannel);
+  serverManager.setLockedChannels(channel.guild.id, channels);
   channel.setUserLimit(message.member.voice.channel.members.size);
 }
 
