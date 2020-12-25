@@ -360,6 +360,7 @@ module.exports = {
             dbServer["whoLocked"] = null;
             dbServer["reactionMessage"] = null;
             dbServer["lockedChannel"] = null;
+            logManager.writeDebugLog("Server": dbServer.name);
             dbServer.instructions = JSON.parse(dbServer.instructions).instructions;
             dbServer.whitelist = JSON.parse(dbServer.whitelist).whitelist;
 
