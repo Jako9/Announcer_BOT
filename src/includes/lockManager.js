@@ -57,9 +57,10 @@ module.exports = {
         return;
       }
       let channels = serverManager.getLockedChannels(message.guild.id);
-      if(channels.find(channel => {
+      let channel = channels.find(channel => {
         channel.channel.id == message.member.voice.channel.id;
-      }) != undefined){
+      });
+      if(channel != undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Dieser Channel ist schon abgeschlossen).");
         message.reply('Dieser Channel ist schon abgeschlossen.');
         return;
@@ -77,12 +78,13 @@ module.exports = {
       logManager.writeDebugLog("Channel = " + channels.find(channel => {
         channel.channel.id == message.member.voice.channel.id;
       }));
-      if(channels.find(channel => {
+      let channel = channels.find(channel => {
         logManager.writeDebugLog("Abgeschlossen: " + channel.channel.id);
         logManager.writeDebugLog("Current: " + message.member.voice.channel.id);
         logManager.writeDebugLog("Equal: " +(channel.channel.id == message.member.voice.channel.id));
         channel.channel.id == message.member.voice.channel.id;
-      }) == undefined){
+      });
+      if(channel == undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel ist nicht abgeschlossen).");
         message.reply('Dieser Channel ist nicht abgeschlossen!');
         return;
