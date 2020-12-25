@@ -109,13 +109,16 @@ hasAccessRights = function(member, level){
   switch (level) {
     //Lowlever => Jeder hat Zugriff
     case 0:
+      logManager.writeDebugLog("Berechtigung 0 erkannt");
       return true;
     //Moderat: Nur Admins oder Manager dürfen diesen Befehl benutzen
     case 1:
+      logManager.writeDebugLog("Berechtigung 1 erkannt");
       if(member.hasPermission(ADMINISTRATOR)) return true;
       return member.roles.cache.get(serverManager.getRolle(message.guild.id)) != undefined;
     //HighSec => Nur Admins dürfen diesen Befehl verwenden
     case 2:
+      logManager.writeDebugLog("Berechtigung 2 erkannt");
       return member.hasPermission(ADMINISTRATOR);
     //Sollte nicht passieren
     default:
