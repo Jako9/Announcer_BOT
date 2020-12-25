@@ -119,7 +119,7 @@ module.exports = {
     },
 
     removeMember: function(member){
-      let channels = serverManager.getLockable(member.guild.id);
+      let channels = serverManager.getLockedChannels(member.guild.id);
       logManager.writeDebugLog("Channel: " + channels[0].channel);
       logManager.writeDebugLog("WhoLocked: " + channels[0].whoLocked);
       logManager.writeDebugLog("Size: " + channels[0].size);
