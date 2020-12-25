@@ -144,7 +144,6 @@ client.on('message', message => {
 
   // Leave per Befehl
   else if (message.content === prefix + instructions[1][0]) {
-    syntaxfehler.hallo;
     connectionManager.triggerLeave(message);
   }
 
