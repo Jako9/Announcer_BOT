@@ -17,7 +17,11 @@ const dbManager = require('./includes/databaseManager.js');
 process.on('uncaughtException', function(err) {
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
-    await lockManager.crashUnlock(arr[i].id);
+    let fin = false;
+    lockManager.crashUnlock(arr[i].id).then(() => {
+      fin = true;
+    });
+    while(!fin);
   }
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
