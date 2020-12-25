@@ -70,6 +70,8 @@ module.exports = {
     unlock: function(message){
       let id = message.guild.id;
       let channels = serverManager.getLockedChannels(id);
+      logManager.writeDebugLog("Channels = " + channels);
+      logManager.writeDebugLog("Größe = " + channels.length);
       if(channels.find(channel => {
         channel.channel.id == message.member.voice.channel.id;
       }) == undefined){
