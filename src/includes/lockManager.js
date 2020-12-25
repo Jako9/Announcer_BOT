@@ -58,7 +58,7 @@ module.exports = {
       }
       let channels = serverManager.getLockedChannels(message.guild.id);
       let channel = channels.find(channel => {
-        channel.channel.id == message.member.voice.channel.id;
+        return channel.channel.id == message.member.voice.channel.id;
       });
       if(channel != undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Dieser Channel ist schon abgeschlossen).");
