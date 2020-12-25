@@ -24,7 +24,7 @@ async function unlockChannel(channel){
   let channelSize = channel.size;
 
   //Lösche Channel aus den abgeschlossenen Channels
-  serverManager.setLockedChannels(serverManager.getLockedChannels(id).filter(channel => {
+  serverManager.setLockedChannels(channel.channel.guild.id, serverManager.getLockedChannels(id).filter(channel => {
     return channel.channel.id != channel.channel.id;
   }));
   await channel.setUserLimit(channelSize);
