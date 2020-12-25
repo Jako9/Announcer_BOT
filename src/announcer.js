@@ -106,7 +106,7 @@ client.on('messageReactionRemove', (reaction, user) => {
 
 
 hasAccessRights = function(member, level){
-  switch (level) {
+  switch (parseInt(level)) {
     //Lowlever => Jeder hat Zugriff
     case 0:
       logManager.writeDebugLog("Berechtigung 0 erkannt");
