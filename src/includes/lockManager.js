@@ -89,9 +89,6 @@ module.exports = {
         message.reply('Dieser Channel ist nicht abgeschlossen!');
         return;
       }
-      let channel = channels.find(channel => {
-        channel.channel.id == message.member.voice.channel.id;
-      });
       if(!channel.members.includes(message.member.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Nutzer darf den Channel nicht aufschließen).");
         message.reply('Du darfst den Channel nicht aufschließen! Es dürfen nur Personen aufschließen, die bei dem abschließen dabei waren.');
