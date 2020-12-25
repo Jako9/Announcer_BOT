@@ -6,7 +6,7 @@ module.exports = {
     //Falsche Syntax
     if(message.content.split(' ').length < 2 || message.mentions.roles.size != 1){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle konnte nicht geändert werden (Fehlerhafte Argumente).");
-        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[13][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[13][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
       return;
     }
 

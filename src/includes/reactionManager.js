@@ -96,7 +96,7 @@ module.exports = {
     let id = message.guild.id;
     if(message.content.split(' ').length < 2 || message.mentions.channels.size != 1){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Fehlerhafte Argumente).");
-      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[11][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.');
+      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[11][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
       return;
     }
     let channel = message.mentions.channels.find(channel => true);

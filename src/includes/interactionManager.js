@@ -20,7 +20,7 @@ module.exports = {
               'any problems \nor if you want to customize usage you can use the following commands' +
               ' \n------------------------------------------------------------- \n  \n';
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
-      msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0] + '\'' + instructions[i][1] + '\n \n');
+      msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0].name + '\'(Access ' + instructions[i][0].security + ") " + instructions[i][1] + '\n \n');
     }
     return msg + "Seite: " + page + '```';
   },
@@ -30,7 +30,7 @@ module.exports = {
     // Syntax für 'set' Befehl ist nicht korrekt
     if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Fehlerhafte Argumente).");
-      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', schreibe \'' + prefix +  instructions[4][0] + '\' für korrekte Syntax.';
+      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.';
     }
 
     if(contains(instructions, msg[2])){
@@ -38,8 +38,8 @@ module.exports = {
       return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
     }
 
-    var oldBefehl = instructions[msg[1]][0];
-    instructions[msg[1]][0] = msg[2];
+    var oldBefehl = instructions[msg[1]][0].name;
+    instructions[msg[1]][0].name = msg[2];
     serverManager.setInstructions(message.guild.id, instructions);
     logManager.writeDebugLog(message.guild.name + ": Der Befehl: " + oldBefehl + " wurde zu: " + msg[2] + " umbennant.");
     return 'Der Befehl \'' + prefix + oldBefehl + '\' heißt nun \'' + prefix + msg[2] + '\'';
@@ -49,7 +49,7 @@ module.exports = {
   changePrefix: function (message, prefix, instructions){
     var param = message.content.split(' ');
     if(param.length != 2 || param[1].length != 1){
-      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0] + '\', schreibe \'' + prefix + instructions[4][0] + '\' für korrekte Syntax.');
+      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0].name + '\', schreibe \'' + prefix + instructions[4][0].name + '\' für korrekte Syntax.');
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
       return null;
     }
