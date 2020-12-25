@@ -19,9 +19,12 @@ process.on('uncaughtException', function(err) {
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
     fin = false;
+    logManger.writeDebugLog("Schalte Channel in Server frei...");
     lockManager.crashUnlock(arr[i].id).then(() => {
+      logManger.writeDebugLog("FREIGESCHALTET");
       finished();
     });
+    logManger.writeDebugLog("Warte auf Abschluss...");
     while(!fin);
   }
   logManager.writeErrorLog(err);
