@@ -67,7 +67,7 @@ client.on('ready', () =>{
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
   client.user.setActivity(".help", {
-    type: "CUSTOM_STATUS",
+    type: "COMPETING",
     url: "http://announcer.jmk.cloud"
   });
   logManager.writeBootLog("------------------------------");
