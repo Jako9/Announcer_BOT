@@ -67,7 +67,7 @@ client.on('ready', () =>{
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
   client.user.setActivity(".help", {
-    type: "WATCHING",
+    type: "LISTENING",
     url: "http://announcer.jmk.cloud"
   });
   logManager.writeBootLog("------------------------------");
