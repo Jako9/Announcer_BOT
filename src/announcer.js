@@ -66,9 +66,9 @@ client.on('ready', () =>{
   serverManager.readInServers(client);
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
-  client.user.setActivity("v1.0", {
-    type: "STREAMING",
-    url: "https://www.twitch.tv/jako9"
+  client.user.setActivity(".help", {
+    type: "CUSTOM_STATUS",
+    url: "http://announcer.jmk.cloud"
   });
   logManager.writeBootLog("------------------------------");
 });
