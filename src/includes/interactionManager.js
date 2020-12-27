@@ -8,7 +8,7 @@ function contains(arr, word){
   return false;
 }
 
-function buildEmbed(page){
+function buildEmbed(commands, page){
   let hyperlink = '[website](http://announcer.jmk.cloud \"become VIP\")';
   let embed = {
     color: 0x0099ff,
@@ -26,7 +26,7 @@ function buildEmbed(page){
     fields: [
   		{
   			name: 'help',
-  			value: 'TESTING'
+  			value: commands
   		},
       {
         name: '\u200B',
@@ -49,15 +49,12 @@ module.exports = {
     if(message.content.split(' ').length == 2 && !isNaN(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
     }
-    var msg = '``` \n------------------------------------------------------------- \n' +
-              'The bot should connect and disconnect automatically but if there are ' +
-              'any problems \nor if you want to customize usage you can use the following commands' +
-              ' \n------------------------------------------------------------- \n  \n';
+    var msg = '';
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
-      //msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0].name + '\'(Access ' + instructions[i][0].security + ") " + instructions[i][1] + '\n \n');
+      msg += ('``[' + i + ']`` ' +  '\'' + prefix + instructions[i][0].name + '\'(Access ' + instructions[i][0].security + ") " + instructions[i][1] + '\n \n');
     }
 
-    message.reply({ embed: buildEmbed(page)}).catch();
+    message.reply({ embed: buildEmbed(msg, page)}).catch();
   },
 
   changeCommands: function (message, prefix, instructions){
