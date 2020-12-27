@@ -19,7 +19,7 @@ function buildEmbed(commands, page){
   		icon_url: 'https://i.imgur.com/wSTFkRM.png',
   		url: 'http://announcer.jmk.cloud'
   	},
-    description: 'You need some help? \n If you want to know HOW and WHEN to use these commands, check out our ' + hyperlink + ' and follow the steps provided!',
+    description: 'If you want to know **how** or **when** to use these commands,\ncheck out our _' + hyperlink + '_ and follow the steps provided!',
     thumbnail: {
   		url: 'https://i.imgur.com/wSTFkRM.png'
   	},
