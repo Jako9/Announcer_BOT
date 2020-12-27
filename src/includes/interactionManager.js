@@ -33,10 +33,6 @@ function buildEmbed(page){
         value: '\u200B'
       }
   	],
-    image: {
-  		url: 'https://www.paypalobjects.com/webstatic/icon/pp258.png'
-  	},
-    timestamp: new Date(),
     footer: {
   		text: 'Page ' + page,
   		icon_url: 'https://i.imgur.com/wSTFkRM.png'
