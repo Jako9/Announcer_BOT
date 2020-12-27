@@ -27,11 +27,7 @@ function buildEmbed(commands, page){
   		{
   			name: 'Commands',
   			value: commands
-  		},
-      {
-        name: '\u200B',
-        value: '\u200B'
-      }
+  		}
   	],
     footer: {
   		text: 'Page ' + page,
