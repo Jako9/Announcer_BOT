@@ -11,7 +11,7 @@ function contains(arr, word){
 function buildEmbed(commands, page){
   let hyperlink = '[website](http://announcer.jmk.cloud \"become VIP\")';
   let embed = {
-    color: 0x0099ff,
+    color: 0x161616,
     title: 'Get some help',
     url: "http://announcer.jmk.cloud",
     author: {
