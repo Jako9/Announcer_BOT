@@ -25,7 +25,7 @@ function buildEmbed(commands, page){
   	},
     fields: [
   		{
-  			name: 'help',
+  			name: 'Commands',
   			value: commands
   		},
       {
