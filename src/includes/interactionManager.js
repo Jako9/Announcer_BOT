@@ -49,10 +49,11 @@ module.exports = {
     if(message.content.split(' ').length == 2 && !isNaN(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
     }
-    var msg = '\n';
+    var msg = '';
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
       msg += ('_' + i + '._ ' +  '``' + prefix + instructions[i][0].name + "`` _" + instructions[i][1] + '_\n\n');
     }
+    msg = msg.substring(0,msg.length - 4);
     logManager.writeDebugLog(msg.length);
     message.reply({ embed: buildEmbed(msg, page)}).catch();
   },
