@@ -51,7 +51,7 @@ module.exports = {
     }
     var msg = '';
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
-      msg += ('_[' + i + ']_ ' +  '``' + prefix + instructions[i][0].name + "``*" + instructions[i][1] + '*\n');
+      msg += ('_[' + i + ']_ ' +  '``' + prefix + instructions[i][0].name + "`` *" + instructions[i][1] + '*\n');
     }
     logManager.writeDebugLog(msg.length);
     message.reply({ embed: buildEmbed(msg, page)}).catch();
