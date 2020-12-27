@@ -161,10 +161,10 @@ client.on('message', message => {
   if(!whitelistManager.isValid(message)) return;
 
   // Join per Befehl
-  if (message.content.toLowerCase() === prefix + instructions[0][0].name.toLowerCase()) {
+  if (message.content.toLowerCase() === prefix + instructions[6][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[0][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[0][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[6][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[6][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     // Wenn in einem gültigen Channel, join
@@ -172,80 +172,80 @@ client.on('message', message => {
   }
 
   // Leave per Befehl
-  else if (message.content.toLowerCase() === prefix + instructions[1][0].name.toLowerCase()) {
+  else if (message.content.toLowerCase() === prefix + instructions[7][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[1][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[1][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[7][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[7][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     connectionManager.triggerLeave(message);
   }
 
   // setVolume
-  else if (message.content.toLowerCase().startsWith(prefix + instructions[2][0].name.toLowerCase())) {
+  else if (message.content.toLowerCase().startsWith(prefix + instructions[18][0].name.toLowerCase())) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[2][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[2][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[18][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[18][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     interactionManager.setVolume(message);
   }
 
   // getVolume
-  else if (message.content.toLowerCase() === prefix + instructions[3][0].name.toLowerCase()) {
+  else if (message.content.toLowerCase() === prefix + instructions[11][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[3][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[3][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[11][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[11][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     message.reply("Die Lautstärke ist auf " + (100 * interactionManager.getVolume(message)) + "%.");
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content.toLowerCase().startsWith(prefix + instructions[4][0].name.toLowerCase())){
+  else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase())){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[4][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[4][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[8][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[8][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     interactionManager.help(message, prefix, instructions);
   }
 
-  // Personalisiere Befehle mit 'set'
-  else  if(message.content.toLowerCase().startsWith(prefix + instructions[5][0].name.toLowerCase()  + ' ')){
+  // Personalisiere Befehle
+  else  if(message.content.toLowerCase().startsWith(prefix + instructions[17][0].name.toLowerCase()  + ' ')){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[5][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[5][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[17][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[17][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     message.reply(interactionManager.changeCommands(message, prefix, instructions));
   }
 
-  // Aktive Rolle ändern
-  else if (message.content.toLowerCase().startsWith(prefix + instructions[6][0].name.toLowerCase()  + ' ')) {
+  // MoRolle ändern
+  else if (message.content.toLowerCase().startsWith(prefix + instructions[10][0].name.toLowerCase()  + ' ')) {
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[6][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[6][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[10][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[10][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     roleManager.changeRole(message, JOIN, prefix, instructions);
   }
 
-  // Aktive Rolle anzeigen
-  else if (message.content.toLowerCase() === prefix + instructions[7][0].name.toLowerCase()){
+  // ModRolle anzeigen
+  else if (message.content.toLowerCase() === prefix + instructions[9][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[7][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[7][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[9][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[9][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     message.reply(roleManager.showRole(serverManager.getRolle(id)));
   }
 
   // Präfix ändern
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase()  + ' ')){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[16][0].name.toLowerCase()  + ' ')){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[8][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[8][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[16][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[16][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     let newPrefix = interactionManager.changePrefix(message, prefix, instructions);
@@ -253,210 +253,210 @@ client.on('message', message => {
   }
 
   // Lock Room
-  else if(message.content.toLowerCase() === prefix + instructions[9][0].name.toLowerCase()){
+  else if(message.content.toLowerCase() === prefix + instructions[3][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[9][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[9][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[3][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[3][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     lockManager.lock(message);
   }
 
   // Unlock Room
-  else if(message.content.toLowerCase() === prefix + instructions[10][0].name.toLowerCase()){
+  else if(message.content.toLowerCase() === prefix + instructions[4][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[10][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[10][0].security + "] um auf diesen Befehl zuzugreifen.");
+    if(!hasAccessRights(message, instructions[4][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[4][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     lockManager.unlock(message);
   }
 
-  //Reaction Listener
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[11][0].name.toLowerCase())){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[11][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[11][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    reactionManager.setupListener(message, client, prefix, instructions);
-  }
-
-  //Reaction Emojis
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[12][0].name.toLowerCase())){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[12][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[12][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    reactionManager.addReactor(message);
-  }
-
-  //change Reaction Role
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[13][0].name.toLowerCase())){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[13][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[13][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    roleManager.changeRole(message, REACTION, prefix, instructions);
-  }
-
-  //show Reaction role
-  else if(message.content.toLowerCase() === prefix + instructions[14][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[14][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[14][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    roleManager.showReactionRole(message);
-  }
-
-  //becomeVIP
-  else if(message.content.toLowerCase() === prefix + instructions[15][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[15][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[15][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    vipManager.becomeVIP(message);
-  }
-
-  //showWhitelist
-  else if(message.content.toLowerCase() === prefix + instructions[16][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[16][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[16][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    whitelistManager.show(message);
-  }
-
-  //whitelistAdd
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[17][0].name.toLowerCase())){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[17][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[17][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    whitelistManager.addElem(message, prefix, instructions);
-  }
-
-  //whitelistRemove
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[18][0].name.toLowerCase())){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[18][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[18][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    whitelistManager.removeElem(message, prefix, instructions);
-  }
-
-  //whitelistClear
-  else if(message.content.toLowerCase() === prefix + instructions[19][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[19][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[19][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    whitelistManager.clear(message);
-  }
-
-  //play
+  //Set Reaction Channel
   else if(message.content.toLowerCase().startsWith(prefix + instructions[20][0].name.toLowerCase())){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[20][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[20][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
-    connectionManager.play(message, prefix, instructions);
+    reactionManager.setupListener(message, client, prefix, instructions);
   }
 
-  //setJoinSound
+  //Add Reaction
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[23][0].name.toLowerCase())){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[23][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[23][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    reactionManager.addReactor(message);
+  }
+
+  //change Reaction Role
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[19][0].name.toLowerCase())){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[19][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[19][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    roleManager.changeRole(message, REACTION, prefix, instructions);
+  }
+
+  //show Reaction role
+  else if(message.content.toLowerCase() === prefix + instructions[12][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[12][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[12][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    roleManager.showReactionRole(message);
+  }
+
+  //becomeVIP
+  else if(message.content.toLowerCase() === prefix + instructions[5][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[5][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[5][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    vipManager.becomeVIP(message);
+  }
+
+  //showWhitelist
+  else if(message.content.toLowerCase() === prefix + instructions[14][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[14][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[14][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    whitelistManager.show(message);
+  }
+
+  //whitelistAdd
   else if(message.content.toLowerCase().startsWith(prefix + instructions[21][0].name.toLowerCase())){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[21][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[21][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
-    connectionManager.setJoinSound(message, prefix, instructions);
+    whitelistManager.addElem(message, prefix, instructions);
   }
 
-  //removeJoinSound
-  else if(message.content.toLowerCase() === prefix + instructions[22][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[22][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[22][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    connectionManager.removeJoinSound(message);
-  }
-
-  //lockable
-  else if(message.content.toLowerCase() === prefix + instructions[23][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[23][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[23][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    lockManager.showLockable(message);
-  }
-
-  //lockableAdd
-  else if(message.content.toLowerCase() === prefix + instructions[24][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[24][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[24][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    lockManager.addLockable(message);
-  }
-
-  //lockableRemove
-  else if(message.content.toLowerCase() === prefix + instructions[25][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[25][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[25][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    lockManager.removeLockable(message);
-  }
-
-  //lockableClear
-  else if(message.content.toLowerCase() === prefix + instructions[26][0].name.toLowerCase()){
+  //whitelistRemove
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[26][0].name.toLowerCase())){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[26][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[26][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
-    lockManager.lockableClear(message);
+    whitelistManager.removeElem(message, prefix, instructions);
   }
 
-  //showChannelReact
-  else if(message.content.toLowerCase() === prefix + instructions[27][0].name.toLowerCase()){
-    //Hat Zugriffsrechte?
-    if(!hasAccessRights(message, instructions[27][0].security)){
-      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[27][0].security + "] um auf diesen Befehl zuzugreifen.");
-      return;
-    }
-    reactionManager.showChannelReact(message);
-  }
-
-  //removeChannelReact
+  //whitelistClear
   else if(message.content.toLowerCase() === prefix + instructions[28][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[28][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[28][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
-    reactionManager.removeChannelReact(message);
+    whitelistManager.clear(message);
   }
 
-  //removeReactionRole
+  //play
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[0][0].name.toLowerCase())){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[0][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[0][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    connectionManager.play(message, prefix, instructions);
+  }
+
+  //setJoinSound
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[1][0].name.toLowerCase())){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[1][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[1][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    connectionManager.setJoinSound(message, prefix, instructions);
+  }
+
+  //removeJoinSound
+  else if(message.content.toLowerCase() === prefix + instructions[2][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[2][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[2][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    connectionManager.removeJoinSound(message);
+  }
+
+  //lockable
+  else if(message.content.toLowerCase() === prefix + instructions[15][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[15][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[15][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    lockManager.showLockable(message);
+  }
+
+  //lockableAdd
+  else if(message.content.toLowerCase() === prefix + instructions[22][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[22][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[22][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    lockManager.addLockable(message);
+  }
+
+  //lockableRemove
+  else if(message.content.toLowerCase() === prefix + instructions[27][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[27][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[27][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    lockManager.removeLockable(message);
+  }
+
+  //lockableClear
   else if(message.content.toLowerCase() === prefix + instructions[29][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[29][0].security)){
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[29][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    lockManager.lockableClear(message);
+  }
+
+  //showChannelReact
+  else if(message.content.toLowerCase() === prefix + instructions[13][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[13][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[13][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    reactionManager.showChannelReact(message);
+  }
+
+  //removeChannelReact
+  else if(message.content.toLowerCase() === prefix + instructions[25][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[25][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[25][0].security + "] um auf diesen Befehl zuzugreifen.");
+      return;
+    }
+    reactionManager.removeChannelReact(message);
+  }
+
+  //removeReactionRole
+  else if(message.content.toLowerCase() === prefix + instructions[24][0].name.toLowerCase()){
+    //Hat Zugriffsrechte?
+    if(!hasAccessRights(message, instructions[24][0].security)){
+      message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[24][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
     roleManager.removeReactionRole(message);
