@@ -38,6 +38,10 @@ module.exports = {
     let page = 1;
     if(message.content.split(' ').length == 2 && !isNaN(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
+      if(message.content.split(' ')[1] > 3){
+        message.reply("There is only 3 pages :(");
+        return;
+      }
     }
     //var msg = '';
     var msg = [];
