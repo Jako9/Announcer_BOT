@@ -14,7 +14,7 @@ const webApi = jsonParser.read(PATH + "/config/api.json");
 function buildEmbed(link){
   let hyperlink = '[here](' + link + ' \"become VIP\")';
   let embed = {
-    color: 0x0099ff,
+    color: 0x161616,
     title: 'Become a VIP',
     url: link,
     author: {
@@ -133,15 +133,15 @@ module.exports = {
             }
             else{
               logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
-        
+
               https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
               let data = '';
-        
+
               //Antwort
               resp.on('data', (chunk) => {
                 data += chunk;
               });
-        
+
               // The whole response has been received. Print out the result.
               resp.on('end', () => {
                 let jsonData = JSON.parse(data);
@@ -151,7 +151,7 @@ module.exports = {
                   let embed = buildEmbed(link);
                   message.author.send({ embed: embed}).catch();
                   if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
-                
+
                 }else{
                   message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
                 }
