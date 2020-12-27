@@ -25,8 +25,7 @@ function buildEmbed(commands, page){
   	},
     fields: commands,
     footer: {
-  		text: 'Page ' + page,
-  		icon_url: 'https://i.imgur.com/wSTFkRM.png'
+  		text: 'Page ' + page
   	}
   };
   return embed;
