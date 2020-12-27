@@ -7,6 +7,44 @@ function contains(arr, word){
   }
   return false;
 }
+
+function buildEmbed(page){
+  let hyperlink = '[website](http://announcer.jmk.cloud \"become VIP\")';
+  let embed = {
+    color: 0x0099ff,
+    title: 'Get some help',
+    url: "http://announcer.jmk.cloud",
+    author: {
+  		name: 'Announcer_BOT',
+  		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+  		url: 'http://announcer.jmk.cloud'
+  	},
+    description: 'You need some help? \n If you want to know HOW and WHEN to use these commands, check out our ' + hyperlink + ' and follow the steps provided!',
+    thumbnail: {
+  		url: 'https://i.imgur.com/wSTFkRM.png'
+  	},
+    fields: [
+  		{
+  			name: 'help',
+  			value: 'TESTING'
+  		},
+      {
+        name: '\u200B',
+        value: '\u200B'
+      }
+  	],
+    image: {
+  		url: 'https://www.paypalobjects.com/webstatic/icon/pp258.png'
+  	},
+    timestamp: new Date(),
+    footer: {
+  		text: 'Page ' + page,
+  		icon_url: 'https://i.imgur.com/wSTFkRM.png'
+  	}
+  };
+  return embed;
+}
+
 module.exports = {
 
   //Create a list of all commands and their usage
@@ -20,9 +58,10 @@ module.exports = {
               'any problems \nor if you want to customize usage you can use the following commands' +
               ' \n------------------------------------------------------------- \n  \n';
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
-      msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0].name + '\'(Access ' + instructions[i][0].security + ") " + instructions[i][1] + '\n \n');
+      //msg += ('[' + i + '] ' +  '\'' + prefix + instructions[i][0].name + '\'(Access ' + instructions[i][0].security + ") " + instructions[i][1] + '\n \n');
     }
-    return msg + "Seite: " + page + '```';
+
+    message.reply({ embed: buildEmbed(page)}).catch();
   },
 
   changeCommands: function (message, prefix, instructions){

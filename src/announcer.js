@@ -208,7 +208,7 @@ client.on('message', message => {
       message.reply("Du hast nicht die Berechtigung [LEVEL" + instructions[4][0].security + "] um auf diesen Befehl zuzugreifen.");
       return;
     }
-    message.reply(interactionManager.help(message, prefix, instructions));
+    interactionManager.help(message, prefix, instructions);
   }
 
   // Personalisiere Befehle mit 'set'
