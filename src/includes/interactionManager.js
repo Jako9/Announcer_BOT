@@ -3,7 +3,7 @@ const logManager = require('./logManager.js');
 
 function contains(arr, word){
   for(let i = 0; i < arr.length; i++){
-    if(arr[i][0] == word) return true;
+    if(arr[i][0].name == word) return true;
   }
   return false;
 }
@@ -62,6 +62,11 @@ module.exports = {
     if(contains(instructions, msg[2])){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Den Namen gibt es schon).");
       return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
+    }
+
+    if(msg[2].length > 40){
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Der Name ist zu lang).");
+      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', der Alias ist zu lang.';
     }
 
     var oldBefehl = instructions[msg[1]][0].name;
