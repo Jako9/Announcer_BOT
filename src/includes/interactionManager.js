@@ -53,7 +53,7 @@ module.exports = {
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
       msg += ('_' + i + '._ ' +  '``' + prefix + instructions[i][0].name + "`` _" + instructions[i][1] + '_\n\n');
     }
-    msg = msg.substring(0,msg.length - 4);
+    msg = msg.substring(0,msg.length - 3);
     logManager.writeDebugLog(msg.length);
     message.reply({ embed: buildEmbed(msg, page)}).catch();
   },
