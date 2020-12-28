@@ -49,8 +49,7 @@ module.exports = {
 
     restartAnnounce: function(client){
       client.user.setActivity("BOT WILL BE IN DEBUG MODE. Any unsafe operations might cause glitches in the future... Please wait until after the restart", {
-        type: "STREAMING",
-        url: "announcer.jmk.cloud"
+        type: "STREAMING"
       });
     },
 
