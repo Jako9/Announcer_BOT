@@ -6,7 +6,7 @@ module.exports = {
     //Falsche Syntax
     if(message.content.split(' ').length < 2 || message.mentions.roles.size != 1){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle konnte nicht geändert werden (Fehlerhafte Argumente).");
-        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[13][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
+        message.reply('Incorrect usage of \'' + prefix +  instructions[10][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
       return;
     }
 
@@ -17,7 +17,7 @@ module.exports = {
     //Die Rolle existiert nicht
     if(message.guild.roles.cache.find(role => role.id === rollenID) == null){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Die Rolle existiert nicht).");
-      message.reply('Die Rolle \'' + rollenName + '\' existiert nicht!');
+      message.reply('The role \'' + rollenName + '\' doesn\'t exist!');
       return;
     }
     if(reaction){
@@ -27,20 +27,20 @@ module.exports = {
       serverManager.setRolle(message.guild.id,  {'name': rollenName,'id':rollenID});
     }
     logManager.writeDebugLog(message.guild.name + ": Die Rolle wurde erfolgreich geändert.");
-    message.reply('Die Rolle \'' + rollenName + '\' wurde erfolgreich hinzugefügt');
+    message.reply('The modRole has been set to \'' + rollenName + '\'.');
   },
 
   showRole: function(rolle){
-      return rolle.id != ""? rolle.name :  'Es gibt aktuell keine aktiven Rollen!';
+      return rolle.id != ""? rolle.name :  'There is no active modRole!';
   },
 
   showReactionRole: function(message){
     rolle = serverManager.getStandartRole(message.guild.id);
-    message.reply(rolle.id == "" ? "Es gibt aktuell keine Rolle für Reaktionen!" : "Die aktuelle Rolle für Reaktionen ist: " + rolle.name + ".");
+    message.reply(rolle.id == "" ? "There is no standart role for reaction!" : "The standart role for reactions is: " + rolle.name + ".");
   },
 
   removeReactionRole: function(message){
     serverManager.setStandartRole(message.guild.id, {"name":"","id":""});
-    message.reply("Die Standartrolle für Reaktionen wurde erfolgreich entfernt.");
+    message.reply("The standart role for reactions has been removed successfully.");
   }
 }

@@ -44,7 +44,7 @@ module.exports = {
       //User in keinem Channel
       if(!message.member.voice.channel){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Benutzer sitzt in keinem Channel).");
-        message.reply('Du musst erst einem Channel beitreten, der abgeschlossen werden darf!');
+        message.reply('You must first join a channel that is lockable!');
         return;
       }
       //Channel nicht abschließbar
@@ -54,7 +54,7 @@ module.exports = {
       });
       if(!ids.includes(message.member.voice.channel.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
-        message.reply('Den Channel in dem du dich befindest, darf man nicht abschließen. Wenn du dies ändern willst, rede mit einem Admin.');
+        message.reply('The current voicechannel is not lockable.');
         return;
       }
       let channels = serverManager.getLockedChannels(message.guild.id);
@@ -63,42 +63,33 @@ module.exports = {
       });
       if(channel != undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Dieser Channel ist schon abgeschlossen).");
-        message.reply('Dieser Channel ist schon abgeschlossen.');
+        message.reply('This channel is locked already.');
         return;
       }
       lockChannel(message);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde abgeschlossen.");
-      message.reply('Abgeschlossen');
+      message.reply('The channel has been locked');
     },
 
     unlock: function(message){
       let id = message.guild.id;
       let channels = serverManager.getLockedChannels(id);
-      logManager.writeDebugLog("Channels = " + channels);
-      logManager.writeDebugLog("Größe = " + channels.length);
-      logManager.writeDebugLog("Channel = " + channels.find(channel => {
-        channel.channel.id == message.member.voice.channel.id;
-      }));
       let channel = channels.find(channel => {
-        logManager.writeDebugLog("Abgeschlossen: " + channel.channel.id);
-        logManager.writeDebugLog("Current: " + message.member.voice.channel.id);
-        logManager.writeDebugLog("Equal: " +(channel.channel.id == message.member.voice.channel.id));
         return channel.channel.id == message.member.voice.channel.id;
       });
       if(channel == undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel ist nicht abgeschlossen).");
-        message.reply('Dieser Channel ist nicht abgeschlossen!');
+        message.reply('This channel is not locked!');
         return;
       }
       if(!channel.members.includes(message.member.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Nutzer darf den Channel nicht aufschließen).");
-        message.reply('Du darfst den Channel nicht aufschließen! Es dürfen nur Personen aufschließen, die bei dem abschließen dabei waren.');
+        message.reply('You don\'t have the permission to unlock this channel! Only people who have been present while locking the channel may unlock it.');
         return;
       }
-      logManager.writeDebugLog("Channel = " + message.member.voice.channel);
       unlockChannel(channel);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde aufgeschlossen.");
-      message.reply('Aufgeschlossen');
+      message.reply('Unlocked!');
     },
 
     lockableClear: function(message){
@@ -110,7 +101,7 @@ module.exports = {
     showLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(channels.length == 0){
-        message.reply("Es gibt keine Channel, die abgeschlossen werden dürfen.");
+        message.reply("There are no channels, which may be locked.");
         return;
       }
       let msg = "```\n"
@@ -148,7 +139,7 @@ module.exports = {
     addLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Betrete erst den Channel, den du abschließbar machen willst und führe dann diesen Befehl erneut aus.");
+        message.reply("Please enter the channel you want to be lockable.");
         return;
       }
       let ids = []
@@ -156,18 +147,18 @@ module.exports = {
         ids.push(channel.id);
       });
       if(ids.includes(message.member.voice.channel.id)){
-        message.reply("Der Channel ist schon abschließbar.");
+        message.reply("This channel is lockable already.");
         return;
       }
       channels.push({"name":message.member.voice.channel.name, "id":message.member.voice.channel.id});
       serverManager.setLockable(message.guild.id, channels);
-      message.reply(message.member.voice.channel.name + " ist nun abschließbar!");
+      message.reply(message.member.voice.channel.name + " is now lockable!");
     },
 
     removeLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Betrete erst den Channel, den du entfernen willst und führe dann diesen Befehl erneut aus.");
+        message.reply("Please enter the channel you want to no longer be lockable.");
         return;
       }
       let ids = []
@@ -175,12 +166,12 @@ module.exports = {
         ids.push(channel.id);
       });
       if(!ids.includes(message.member.voice.channel.id)){
-        message.reply("Der Channel ist überhaupt nicht abschließbar.");
+        message.reply("This channel is not lockable.");
         return;
       }
       let index = ids.indexOf(message.member.voice.channel.id);
       channels.splice(index, 1);
       serverManager.setLockable(message.guild.id, channels);
-      message.reply(message.member.voice.channel.name + " ist nun nicht mehr abschließbar!");
+      message.reply(message.member.voice.channel.name + " is no longer lockable!");
     }
 }

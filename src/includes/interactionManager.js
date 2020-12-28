@@ -60,36 +60,36 @@ module.exports = {
     // Syntax für 'set' Befehl ist nicht korrekt
     if(msg.length !== 3 || msg[1] < 0 || msg[1] >= instructions.length){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#BF616A;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Fehlerhafte Argumente).");
-      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.';
+      return 'Incorrect usage of \'' + prefix + instructions[17][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.';
     }
 
     if(contains(instructions, msg[2])){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Den Namen gibt es schon).");
-      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', den Befehl \'' + msg[2] + '\' gibt es schon.';
+      return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the alias \'' + msg[2] + '\' does already exist.';
     }
 
     if(msg[2].length > 40){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Der Name ist zu lang).");
-      return 'Ungültige Eingabe für \'' + prefix + instructions[5][0] + '\', der Alias ist zu lang.';
+      return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the alias is too long.';
     }
 
     var oldBefehl = instructions[msg[1]][0].name;
     instructions[msg[1]][0].name = msg[2];
     serverManager.setInstructions(message.guild.id, instructions);
     logManager.writeDebugLog(message.guild.name + ": Der Befehl: " + oldBefehl + " wurde zu: " + msg[2] + " umbennant.");
-    return 'Der Befehl \'' + prefix + oldBefehl + '\' heißt nun \'' + prefix + msg[2] + '\'';
+    return 'The alias \'' + prefix + oldBefehl + '\' has been changed to \'' + prefix + msg[2] + '\'';
 
   },
 
   changePrefix: function (message, prefix, instructions){
     var param = message.content.split(' ');
     if(param.length != 2 || param[1].length != 1){
-      message.reply('Ungültige Eingabe für \'' +  prefix +  instructions[8][0].name + '\', schreibe \'' + prefix + instructions[4][0].name + '\' für korrekte Syntax.');
+      message.reply('Incorrect usage of \'' +  prefix +  instructions[16][0].name + '\', type \'' + prefix + instructions[8][0].name + '\' for the correct syntax.');
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
       return null;
     }
     logManager.writeDebugLog(message.guild.name + ": Der Präfix wurde erfolgreich auf: \"" + param[1] + "\" gesetzt.");
-    message.reply('Der neue Präfix wurde erfolgreich auf \'' + param[1] + '\' gesetzt');
+    message.reply('The prefix has been updated succesfully to \'' + param[1] + '\'.');
     return param[1];
   },
 
@@ -98,7 +98,7 @@ module.exports = {
     //Ungültige Anzahl an Argumenten
     if (param.length != 2){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-      message.reply("Falsche Eingabe..");
+      message.reply("Incorrect input...");
       return;
     }
 

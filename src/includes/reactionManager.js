@@ -49,7 +49,7 @@ module.exports = {
     let id = message.guild.id;
     if(serverManager.getChannelReact(message.guild) == null){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Reaktion konnte nicht hinzugefügt werden (Es gibt keinen gültigen Channel).");
-      message.reply('Du musst erst einen Channel auswählen.');
+      message.reply('You must select a channel first.');
       return;
     }
     let param = message.content.split(' ');
@@ -62,7 +62,7 @@ module.exports = {
     let reaction = '';
     if(param.length != 2){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      message.reply('The reaction could not be added.');
       return;
     }
     //Ein custom Emoji
@@ -75,19 +75,19 @@ module.exports = {
     }
     else{
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      message.reply('The reaction could not be added.');
       return;
     }
     try{
       //Geforderte Reaktion hinzufügen
       serverManager.getReactionMessage(id).react(reaction);
       logManager.writeDebugLog(message.guild.name + ": Die Reaktion wurden erfolgreich hinzugefügt.");
-      message.reply('Reaktion hinzugefügt.');
+      message.reply('The reaction has been added successfully.');
     }
     catch(e){
       //Reaktion ungültig
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('Reaktionen konnten nicht hinzugefügt werden.');
+      message.reply('The reaction could not be added.');
       return;
     }
   },
@@ -96,25 +96,25 @@ module.exports = {
     let id = message.guild.id;
     if(message.content.split(' ').length < 2 || message.mentions.channels.size != 1){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Fehlerhafte Argumente).");
-      message.reply('Ungültige Eingabe für \'' + prefix +  instructions[11][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
+      message.reply('Incorrect usage of \'' + prefix +  instructions[20][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
       return;
     }
     let channel = message.mentions.channels.find(channel => true);
     if(!channel) {
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Der Channel konnte nicht hinzugefügt werden).");
-      message.reply('Der Channel konnte nicht gefunden werden');
+      message.reply('The channel could not be found');
       return;
     }
     serverManager.setChannelReact(id, channel);
     serverManager.getChannelReact(message.guild).messages.fetch();
     serverManager.setReactionMessage(id, serverManager.getChannelReact(message.guild).messages.cache.find(message => message.pinned));
     logManager.writeDebugLog(message.guild.name + ": Der Channel wurde erfolgreich aufgesetzt.");
-    message.reply('Setup Erfolgreich.');
+    message.reply('Setup successful.');
   },
 
   showChannelReact: function(message){
     if(serverManager.getChannelReact(message.guild) == null){
-      message.reply("Aktuell gibt es keinen Channel, in dem auf Reaktionen gehorcht wird.");
+      message.reply("There is no reaction channel active.");
       return;
     }
     message.reply(serverManager.getChannelReact(message.guild).name);
@@ -122,6 +122,6 @@ module.exports = {
 
   removeChannelReact: function(message){
     serverManager.setChannelReact(message.guild.id, null);
-    message.reply("Es gibt nun keinen Channel mehr, in dem auf Reaktionen gehorcht wird.");
+    message.reply("The reaction channel has been removed.");
   }
 }

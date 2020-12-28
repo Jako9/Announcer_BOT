@@ -71,7 +71,7 @@ function changeVIPSound(message, file){
     logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
     mp3Duration(pathToCheck, function (err, duration) {
       if(err){
-        message.author.send("1: Your submitted file is not a valid mp3. Please try again!");
+        message.author.send("Something went wrong...");
         failed = true;
       }
 
@@ -93,7 +93,7 @@ function changeVIPSound(message, file){
             message.author.send("Your joinsound has been updated successfully!");
           }
           else{
-            message.author.send("Hey you have recieved the VIP-Status! :D Your joinsound has been uploaded successfully.");
+            message.author.send("Hey you have received the VIP-Status! :D Your joinsound has been uploaded successfully.");
             dbManager.setVip(message.author.id, function(worked){});
             dbManager.deletePayment(message.author.id, function(worked){});
           }
@@ -104,7 +104,7 @@ function changeVIPSound(message, file){
 
 
     }).catch(err => {
-      message.author.send("2: Your submitted file is not a valid mp3. Please try again!");
+      message.author.send("Your submitted file is not a valid mp3. Please try again!");
     });
 }
 
@@ -121,7 +121,7 @@ module.exports = {
     becomeVIP: function(message){
       dbManager.getVip(message.author.id, function(is){
         if(is){
-          message.author.send("Du bist schon VIP!").catch();
+          message.author.send("You are already VIP!").catch();
         }else{
           dbManager.getUserPayment(message.author.id,function(exists){
             if(exists){
@@ -153,7 +153,7 @@ module.exports = {
                   if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
 
                 }else{
-                  message.author.send("Fehler bei der Transaktion, bitte versuche es erneut!");
+                  message.author.send("Transaction failure, please try again!");
                 }
               }).on("error", (err) => {
                 console.log("Error: " + err.message);
