@@ -50,7 +50,7 @@ module.exports = {
     restartAnnounce: function(client){
       client.user.setActivity("DEBUGGING SOON...", {
         type: "STREAMING",
-        url: "https://www.twitch.tv/monstercat"
+        url: "http://announcer.jmk.cloud"
       });
     },
 
