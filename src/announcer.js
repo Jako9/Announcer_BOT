@@ -140,6 +140,8 @@ client.on('message', message => {
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
     }
+    logManager.writeDebugLog("Message: " + message.content);
+    logManager.writeDebugLog("ID: " + message.author.id);
     else if(message.content === "restart" && message.author.id == "255064680417067019"){
       errorManager.restartAnnounce(client);
     }
