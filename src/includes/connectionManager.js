@@ -117,11 +117,11 @@ module.exports = {
     play: function(message, prefix, instructions){
       let channel = message.member.voice.channel;
       if(!channel){
-        message.reply("Du bist in keinem Channel.");
+        message.reply("Please enter a channel first.");
         return;
       }
       if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
-        message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
+        message.reply('Incorrect syntax for \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the currect syntax.');
         return;
       }
       let sound = message.content.split(' ')[1];
@@ -131,24 +131,24 @@ module.exports = {
     setJoinSound: function(message, prefix, instructions){
       isVip(message.member.id, function(is){
         if(is){
-          message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.");
         }else{
           if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
-            message.reply('Ungültige Eingabe für \'' + prefix +  instructions[20][0].name + '\', schreibe \'' + prefix +  instructions[4][0].name + '\' für korrekte Syntax.');
+            message.reply('Incorrect syntax for \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the currect syntax.');
           }
           else{
             dbManager.getUser(message.author.id, function(user){
               if(!user){
                 dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1]);
-                message.reply("Der Bot begleitet dich nun!");
+                message.reply("The bot will now acompany you.");
               }
               else{
                 dbManager.setJoinsound(message.author.id,message.content.split(' ')[1], function(successfull){
                   if(successfull){
-                    message.reply("Dein Joinsound wurde erfolgreich geupdatet");
+                    message.reply("Your joinsound has been updated successfully");
                   }
                   else{
-                    message.reply("Irgendetwas ist schief gelaufen!");
+                    message.reply("Something went wrong!");
                   }
 
                 });
@@ -163,14 +163,14 @@ module.exports = {
     removeJoinSound: function(message){
       isVip(message.member.id, function(is){
         if(is){
-          message.reply("Du bist VIP! Wenn du deinen Joinsound ändern möchtest, schicke ihn einfach als pn an den Bot.");
+          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.");
         }else{
           dbManager.removeUser(message.member.id, function(succ){
             if(succ){
-              message.reply("Der Bot begleitet dich nun nicht mehr");
+              message.reply("The bot will now no longer acompany you :(");
             }
             else{
-              message.reply("Irgendetwas ist schief gelaufen!");
+              message.reply("Something went wrong!");
             }
           });
 
