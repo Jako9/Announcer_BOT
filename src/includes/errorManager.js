@@ -50,7 +50,7 @@ module.exports = {
     restartAnnounce: function(client){
       client.user.setActivity("DEBUGGING SOON...", {
         type: "STREAMING",
-        url: "http://announcer.jmk.cloud"
+        url: "https://www.twitch.tv/jako9"
       });
     },
 
