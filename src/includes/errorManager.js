@@ -48,8 +48,9 @@ module.exports = {
     },
 
     restartAnnounce: function(client){
-      client.user.setActivity("BOT WILL BE IN DEBUG MODE. Any unsafe operations might cause glitches in the future... Please wait until after the restart", {
-        type: "STREAMING"
+      client.user.setActivity("DEBUGGING SOON...", {
+        type: "STREAMING",
+        url: "https://www.twitch.tv/monstercat"
       });
     },
 
