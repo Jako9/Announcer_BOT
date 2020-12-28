@@ -142,7 +142,7 @@ client.on('message', message => {
     }
     logManager.writeDebugLog("Message: " + message.content);
     logManager.writeDebugLog("ID: " + message.author.id);
-    else if(message.content === "restart" && message.author.id == "255064680417067019"){
+    if(message.content === "restart" && message.author.id == "255064680417067019"){
       errorManager.restartAnnounce(client);
     }
     else if(message.content === "abort" && message.author.id == "255064680417067019"){
