@@ -45,6 +45,19 @@ module.exports = {
           logManager.writeDebugLog(message.author.username + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle konnte nicht vergeben werden, warscheinlich ist die Rolle des Bots nicht hoch genug in der Hirarchie.");
           message.reply('Die Rolle konnte nicht hinzugefügt werden.');
         });
+    },
+
+    restartAnnounce: function(client){
+      client.user.setActivity("BOT WILL BE IN DEBUG MODE. Any unsafe operations might cause glitches in the future... Please wait until after the restart", {
+        type: "STREAMING",
+        url: "announcer.jmk.cloud"
+      });
+    },
+
+    restartAnnounceRemove: function(client){
+      client.user.setActivity(".help", {
+        type: "WATCHING"
+      });
     }
 
 }

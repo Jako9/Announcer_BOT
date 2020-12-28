@@ -15,7 +15,7 @@ const dbManager = require('./includes/databaseManager.js');
 process.on('uncaughtException', async function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
-  
+
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
     await lockManager.crashUnlock(arr[i].id);
@@ -139,6 +139,12 @@ client.on('message', message => {
     }
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
+    }
+    else if(message.content === "restart" && message.author.id == "255064680417067019"){
+      errorManager.restartAnnounce(client);
+    }
+    else if(message.content === "abort" && message.author.id == "255064680417067019"){
+      errorManager.restartAnnounceRemove(client);
     }
     else if(message.attachments.size == 1){
       let attachment = message.attachments.find(foo => true);
