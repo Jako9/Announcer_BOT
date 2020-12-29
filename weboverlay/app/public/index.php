@@ -38,12 +38,9 @@ if(isServerRunning()) {
 
 
 function printServer(){
-    $files = preg_grep('/^([^.])/', scandir('../../../config/guilds'));
     $i = 0;
 
     $servers = getServersFromDatabase();
-
-    $defaultSettings = readFromJSON('../template.json');
 
     foreach($servers as $server) {
         
@@ -152,7 +149,7 @@ function printServer(){
                             <div class="server-settings server-roles">
                                 <h3 class="setting-title">Rolle</h3>
                                 <div class="setting-ist">
-                                    <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->rolle .'" disabled>
+                                    <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->manageRolle .'" disabled>
                                 </div>
                             <i class="role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-role-'. $i .'"></i>
                             </div>
