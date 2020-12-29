@@ -48,9 +48,11 @@ function printServer(){
         $showResetSuccess = false;
         $showSaveError = false;
 
-        $serverObject = (object) $server;
+        $jObj = new stdClass();
+        foreach ($server as $key => $value) {
+            $$jObj->{$key} = $value;
+        }
 
-        $jObj = json_decode($serverObject);
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
