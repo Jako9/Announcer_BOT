@@ -62,7 +62,7 @@ module.exports = {
     let reaction = '';
     if(param.length != 2){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('The reaction could not be added.');
+      message.reply('The reaction could not be added. (incorrect Syntax)');
       return;
     }
     //Ein custom Emoji
@@ -76,8 +76,8 @@ module.exports = {
       return;
     }
     else{
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('The reaction could not be added.');
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Kein Emoji gefunden).");
+      message.reply('The reaction could not be added. (No emoji found)');
       return;
     }
     try{
