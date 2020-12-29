@@ -27,7 +27,7 @@ module.exports = {
       serverManager.setRolle(message.guild.id,  {'name': rollenName,'id':rollenID});
     }
     logManager.writeDebugLog(message.guild.name + ": Die Rolle wurde erfolgreich geändert.");
-    message.reply('The modRole has been set to \'' + rollenName + '\'.');
+    message.reply('The role has been set to \'' + rollenName + '\'.');
   },
 
   showRole: function(rolle){
