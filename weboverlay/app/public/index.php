@@ -149,7 +149,7 @@ function printServer(){
                             <div class="server-settings server-roles">
                                 <h3 class="setting-title">Rolle</h3>
                                 <div class="setting-ist">
-                                    <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->manageRolle .'" disabled>
+                                    <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. json_decode($jObj->manageRolle)->name .'" disabled>
                                 </div>
                             <i class="role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-role-'. $i .'"></i>
                             </div>
