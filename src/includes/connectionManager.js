@@ -121,7 +121,7 @@ module.exports = {
         return;
       }
       if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
-        message.reply('Incorrect usage of \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
+        message.reply('Incorrect usage of \'' + prefix +  instructions[0][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
         return;
       }
       let sound = message.content.split(' ')[1];
