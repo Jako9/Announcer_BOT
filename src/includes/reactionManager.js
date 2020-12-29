@@ -71,7 +71,9 @@ module.exports = {
     }
     //Ein StandartEmoji
     else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[1])){
-      reaction = param[1];
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine custom Reaction).");
+      message.reply('The reaction could not be added. (The reaction must be custom. It needs to be added via serversettings => emoji => upload emoji)');
+      return;
     }
     else{
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
