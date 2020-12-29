@@ -50,7 +50,7 @@ function printServer(){
 
         $jObj = new stdClass();
         foreach ($server as $key => $value) {
-            $$jObj->{$key} = $value;
+            $jObj->{$key} = $value;
         }
 
 
