@@ -196,7 +196,7 @@
     <div class="container-fluid documentation" id="documentation">
             <h2 class="documentation-headline">Documentation</h2>
             <i class="fab fa-github documenation-icon"></i>
-            <p class="lead">Need help? Refer to the 'help' command, or head over to our YouTube channel and watch one of our tutorials. </p>
+            <p class="lead">Need help? Refer to the 'help' command, or head over to the github wiki. </p>
     </div>
     <div class="container-fluid statistics" id="statistics">
         <div class="statistics-block">
