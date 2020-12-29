@@ -182,10 +182,10 @@ client.on('message', message => {
   else if (message.content.toLowerCase() === prefix + instructions[7][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[7][0].security)){
-      hallo.sd;
       message.reply("You don\'t have permission [LEVEL" + instructions[7][0].security + "] to use this command.");
       return;
     }
+    hallo.sdg;
     connectionManager.triggerLeave(message);
   }
 
