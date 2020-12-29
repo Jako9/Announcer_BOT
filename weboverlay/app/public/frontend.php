@@ -88,7 +88,7 @@
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/icon.svg"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -107,7 +107,7 @@
                 <a class="nav-link" href="#features">Features</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#documentation">Documentation</a>
+                <a class="nav-link" href="#help">Help</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#statistics">Statistics</a>
@@ -193,8 +193,8 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid documentation" id="documentation">
-            <h2 class="documentation-headline">Documentation</h2>
+    <div class="container-fluid documentation" id="help">
+            <h2 class="documentation-headline">Help</h2>
             <a href="https://github.com/Jako9/Announcer_BOT/wiki/home"><i class="fab fa-github documenation-icon"></i></a>
             <p class="lead">You want to <a href="https://github.com/Jako9/Announcer_BOT/wiki/setup">setup</a> the bot for your server or you need an <a href="https://github.com/Jako9/Announcer_BOT/wiki/usage">explanation</a>? Then refer to the 'help' command, or head over to the <a href="https://github.com/Jako9/Announcer_BOT/wiki/">github wiki</a>. </p>
     </div>
