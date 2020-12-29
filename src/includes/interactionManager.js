@@ -16,12 +16,12 @@ function buildEmbed(commands, page){
     url: "http://announcer.jmk.cloud",
     author: {
   		name: 'Announcer_BOT',
-  		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+  		icon_url: 'http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico',
   		url: 'http://announcer.jmk.cloud'
   	},
     description: 'If you want to know **how** or **when** to use these commands \nor how to **setup** the bot correctly, \ncheck out our _' + hyperlink + '_ and follow the steps provided!',
     thumbnail: {
-  		url: 'https://i.imgur.com/wSTFkRM.png'
+  		url: 'http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico'
   	},
     fields: commands,
     footer: {
