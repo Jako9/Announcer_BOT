@@ -19,12 +19,12 @@ function buildEmbed(link){
     url: link,
     author: {
   		name: 'Announcer_BOT',
-  		icon_url: 'https://i.imgur.com/wSTFkRM.png',
+  		icon_url: 'https://cdn.discordapp.com/avatars/541676543525519360/467df76a7b65d78bf1d1a900cf6d2189.png?size=256',
   		url: 'http://announcer.jmk.cloud'
   	},
     description: 'You want to become a VIP? \n Just follow the instructions and you will have a custom joinsound in no time!',
     thumbnail: {
-  		url: 'https://i.imgur.com/wSTFkRM.png'
+  		url: 'https://cdn.discordapp.com/avatars/541676543525519360/467df76a7b65d78bf1d1a900cf6d2189.png?size=256'
   	},
     fields: [
   		{
@@ -38,11 +38,6 @@ function buildEmbed(link){
   	],
     image: {
   		url: 'https://www.paypalobjects.com/webstatic/icon/pp258.png'
-  	},
-    timestamp: new Date(),
-    footer: {
-  		text: 'Some footer text here',
-  		icon_url: 'https://i.imgur.com/wSTFkRM.png'
   	}
   };
   return embed;
