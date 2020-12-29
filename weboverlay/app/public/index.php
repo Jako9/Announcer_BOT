@@ -141,14 +141,14 @@ function printServer(){
         $whitelist = "";
         $lockable = "";
 
-        foreach($jObj->whitelist->whitelist as $listelm){
+        foreach($jObj->whitelist-> as $listelm){
 
             $whitelist .= '<div><input class="server-settings-input-disabled whitelist-input whitelist-input-'. $i . '" id="whitelist-input-'. $i . "-" . $j . '" name="whitelist-input-'. $i . "-" . $j . '" value="'. $listelm->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
         }
 
-        foreach($jObj->lockable->lockable as $lockalm){
+        foreach($jObj->lockable-> as $lockalm){
 
             $lockable .= '<div><input class="server-settings-input-disabled lockable-input lockable-input-'. $i . '" id="lockable-input-'. $i . "-" . $j . '" name="lockable-input-'. $i . "-" . $j . '" value="'. $lockalm->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
