@@ -18,7 +18,11 @@ process.on('uncaughtException', async function(err) {
 
   let arr = client.guilds.cache.array();
   for(let i = 0; i < arr.length; i++){
-    await lockManager.crashUnlock(arr[i].id);
+    try{
+      await lockManager.crashUnlock(arr[i].id);
+    }
+    catch(e){
+    }
   }
 
   process.exit();
@@ -178,6 +182,7 @@ client.on('message', message => {
   else if (message.content.toLowerCase() === prefix + instructions[7][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[7][0].security)){
+      hallo.sd;
       message.reply("You don\'t have permission [LEVEL" + instructions[7][0].security + "] to use this command.");
       return;
     }
