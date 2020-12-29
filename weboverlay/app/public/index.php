@@ -84,9 +84,14 @@ function printServer(){
 
 
             resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable), $pObj->prefix, $pObj->volume);
+            $pObj->manageRolle = json_decode($pObj->manageRolle);
+            $pObj->whitelist = json_decode($pObj->whitelist);
+            $pObj->standartRole = json_decode($pObj->standartRole);
+            $pObj->channelReact = json_decode($pObj->channelReact);
+            $pObj->lockable = json_decode($pObj->lockable);
+
             $jObj = $pObj;
         }
-
 
         if(isset($_POST['submit-server-settings-' . $i])){
 
