@@ -48,9 +48,9 @@ module.exports = {
     for(var i = (10 * page) - 10; i < instructions.length &&  i < (10 * page); i++){
       //msg += ('_' + i + '._ ' +  '``' + prefix + instructions[i][0].name + "`` _" + instructions[i][1] + '_\n\n');
       let arguments = "";
-      instructions[i][1].arguments.forEach(explanation =>
+      instructions[i][1].arguments.forEach(argument =>
       {
-        arguments += "[" + explanation + "] ";
+        arguments += "[" + argument + "] ";
       });
 
       let command = {"name": i + ' ``' + prefix + instructions[i][0].name + "`` " + arguments,"value":instructions[i][1].explanation};
