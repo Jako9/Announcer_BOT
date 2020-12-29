@@ -494,6 +494,14 @@ body {
     justify-content: center;
 }
 
+.github-link{
+    color: black;
+}
+
+.github-link:hover{
+    text-decoration: none;
+}
+
 .ich-hasse-links:hover{
     text-decoration: none;
 }

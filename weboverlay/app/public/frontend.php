@@ -194,7 +194,7 @@
         </div>
     </div>
     <div class="container-fluid documentation" id="documentation">
-            <h2 class="documentation-headline"><a href="https://github.com/Jako9/Announcer_BOT/wiki/">Documentation</a></h2>
+            <h2 class="documentation-headline"><a href="https://github.com/Jako9/Announcer_BOT/wiki/" class="github-link">Documentation</a></h2>
             <i class="fab fa-github documenation-icon"></i>
             <p class="lead">Need help? Refer to the 'help' command, or head over to the github wiki. </p>
     </div>
