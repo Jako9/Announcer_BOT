@@ -338,8 +338,12 @@ body {
 }
 
 #stage-mic{
-    font-size: 128px;
     margin-bottom: 50px;
+
+    background: url(icon.svg);
+    height: 128px;
+    width: 128px;
+    display: block;
 }
 
 #stage-title{
@@ -525,6 +529,9 @@ body {
     margin-bottom: 0px;
 }
 
-.custom-mic{
-    background: url('icon.svg');
+.custom-nav-mic{
+    background: url(icon.svg);
+    height: 40px;
+    width: 40px;
+    display: block;
 }
