@@ -118,6 +118,14 @@ function printServer(){
 
         $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
         $instructions = "";
+        $whitelist = "";
+
+        foreach(json_decode($jObj->whitelist)->whitelist as $listelm){
+
+            $whitelist .= '<div><input class="server-settings-input-disabled whitelist-input whitelist-input-'. $i . '" id="whitelist-input-'. $i . "-" . $j . '" name="whitelist-input-'. $i . "-" . $j . '" value="'. $listelm->name .'" disabled></div>';
+            //$instructions .= $instruction . "<br>";
+            $j++;
+        }
 
         $j = 0;
 
@@ -151,14 +159,34 @@ function printServer(){
                                 <div class="setting-ist">
                                     <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. json_decode($jObj->manageRolle)->name .'" disabled>
                                 </div>
-                            <i class="role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-role-'. $i .'"></i>
                             </div>
                             <div class="server-settings server-reaction-role">
                                 <h3 class="setting-title">Reaktion<br>Rolle</h3>
                                 <div class="setting-ist">
                                     <input id="reaction-role-'. $i .'" name="reaction-role-'. $i .'" class="server-settings-input-disabled" value="'. json_decode($jObj->standartRole)->name .'" disabled>
                                 </div>
-                            <i class="reaction-role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-reaction-role-'. $i .'"></i>
+                            </div>
+                            <div class="server-settings channel-react">
+                                <h3 class="setting-title">Reaktion Channel</h3>
+                                <div class="setting-ist">
+                                    <input id="standard-role-'. $i .'" name="standard-role-'. $i .'" class="server-settings-input-disabled" value="'. json_decode($jObj->channelReact)->name .'" disabled>
+                                </div>
+                            </div>
+                            <div class="server-settings server-whitelist">
+                                <h3 class="setting-title">Whitelist</h3>
+                                <div class="setting-ist">
+                                    <div class="array-box whitelist-editor">
+                                        '. $whitelist .'
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="server-settings server-lockable">
+                                <h3 class="setting-title">Lockable</h3>
+                                <div class="setting-ist">
+                                    <div class="array-box lockable-editor">
+                                        '. $instructions .'
+                                    </div>
+                                </div>
                             </div>
                             <div class="server-settings server-prefix">
                                 <h3 class="setting-title">Prefix</h3>
