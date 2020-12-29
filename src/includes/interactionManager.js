@@ -50,10 +50,10 @@ module.exports = {
       let arguments = "";
       instructions[i][1].arguments.forEach(argument =>
       {
-        arguments += argument + " ";
+        arguments += "[" + argument + "] ";
       });
 
-      let command = {"name": i + ' ``' + prefix + instructions[i][0].name + "`` " + arguments,"value":instructions[i][1].explanation};
+      let command = {"name": i + ' ``' + prefix + instructions[i][0].name + " " + arguments + "``","value":instructions[i][1].explanation};
       msg.push(command);
     }
     //msg = msg.substring(0,msg.length - 3);
