@@ -80,8 +80,7 @@ function printServer(){
             $pObj->channelReact->name = "";
 
             $pObj->lockable = new stdClass();
-            $pObj->lockable->id = "";
-            $pObj->lockable->name = "";
+            $pObj->lockable->lockable = [];
 
 
             resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable), $pObj->prefix, $pObj->volume);
