@@ -524,3 +524,7 @@ body {
 .status-text{
     margin-bottom: 0px;
 }
+
+.custom-mic{
+    background: url('icon.svg');
+}
