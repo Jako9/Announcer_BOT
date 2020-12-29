@@ -16,12 +16,12 @@ function buildEmbed(commands, page){
     url: "http://announcer.jmk.cloud",
     author: {
   		name: 'Announcer_BOT',
-  		icon_url: 'https://cdn.discordapp.com/avatars/541676543525519360/467df76a7b65d78bf1d1a900cf6d2189.png?size=256',
+  		icon_url: 'https://cdn.discordapp.com/avatars/541676543525519360/f7ee86514955577f12f1a9aca6001371.png?size=256',
   		url: 'http://announcer.jmk.cloud'
   	},
     description: 'If you want to know **how** or **when** to use these commands \nor how to **setup** the bot correctly, \ncheck out our _' + hyperlink + '_ and follow the steps provided!',
     thumbnail: {
-  		url: 'https://cdn.discordapp.com/avatars/541676543525519360/467df76a7b65d78bf1d1a900cf6d2189.png?size=256'
+  		url: 'https://cdn.discordapp.com/avatars/541676543525519360/f7ee86514955577f12f1a9aca6001371.png?size=256'
   	},
     fields: commands,
     footer: {
