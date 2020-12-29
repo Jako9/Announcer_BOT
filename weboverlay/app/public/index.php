@@ -48,7 +48,7 @@ function printServer(){
         $showResetSuccess = false;
         $showSaveError = false;
 
-        $jObj = json_decode(json_encode($server), FALSE);
+        $jObj = json_decode($server);
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
@@ -80,7 +80,7 @@ function printServer(){
             $pObj->lockable->name = "";
 
 
-            resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable), $pObj->prefix, $pbj->volume);
+            resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable), $pObj->prefix, $pObj->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
@@ -137,14 +137,14 @@ function printServer(){
         $whitelist = "";
         $lockable = "";
 
-        foreach(json_decode($jObj->whitelist)->whitelist as $listelm){
+        foreach($jObj->whitelist->whitelist as $listelm){
 
             $whitelist .= '<div><input class="server-settings-input-disabled whitelist-input whitelist-input-'. $i . '" id="whitelist-input-'. $i . "-" . $j . '" name="whitelist-input-'. $i . "-" . $j . '" value="'. $listelm->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
         }
 
-        foreach(json_decode($jObj->lockable)->lockable as $lockalm){
+        foreach($jObj->lockable->lockable as $lockalm){
 
             $lockable .= '<div><input class="server-settings-input-disabled lockable-input lockable-input-'. $i . '" id="lockable-input-'. $i . "-" . $j . '" name="lockable-input-'. $i . "-" . $j . '" value="'. $lockalm->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
