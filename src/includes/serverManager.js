@@ -343,7 +343,7 @@ module.exports = {
     readInDescriptions: function (){
         dbManager.readInDescriptions(function(descs){
             descs.forEach(desc =>{
-                descriptions[desc.explanationID-1] = {"explanation" : desc.explanation, "arguments": JSON.decode(desc.arguments).arguments};
+                descriptions[desc.explanationID-1] = {"explanation" : desc.explanation, "arguments": JSON.parse(desc.arguments).arguments};
             });
         });
     },
