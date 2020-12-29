@@ -56,13 +56,14 @@ module.exports = {
     //Keine Nachricht zum reagieren
     if(!serverManager.getReactionMessage(id)){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Es gibt keine gültige Nachricht).");
+      message.reply('There is no pinned message in this channel. If you need help with the setup, refer to our website @setup');
       return;
     }
 
     let reaction = '';
     if(param.length != 2){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('The reaction could not be added. (incorrect Syntax)');
+      message.reply('The reaction could not be added. (incorrect Syntax). If you need help with the setup, refer to our website @setup');
       return;
     }
     //Ein custom Emoji
@@ -72,12 +73,12 @@ module.exports = {
     //Ein StandartEmoji
     else if(/(?=\p{Emoji})(?!\p{Number})/u.test(param[1])){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine custom Reaction).");
-      message.reply('The reaction could not be added. (The reaction must be custom. It needs to be added via serversettings => emoji => upload emoji)');
+      message.reply('The reaction could not be added. . If you need help with the setup, refer to our website @setup');
       return;
     }
     else{
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Kein Emoji gefunden).");
-      message.reply('The reaction could not be added. (No emoji found)');
+      message.reply('The reaction could not be added. (No emoji found). If you need help with the setup, refer to our website @setup');
       return;
     }
     try{
@@ -89,7 +90,7 @@ module.exports = {
     catch(e){
       //Reaktion ungültig
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Keine korrekte Syntax).");
-      message.reply('The reaction could not be added.');
+      message.reply('The reaction could not be added. If you need help with the setup, refer to our website @setup');
       return;
     }
   },
@@ -98,13 +99,13 @@ module.exports = {
     let id = message.guild.id;
     if(message.content.split(' ').length < 2 || message.mentions.channels.size != 1){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Fehlerhafte Argumente).");
-      message.reply('Incorrect usage of \'' + prefix +  instructions[20][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
+      message.reply('Incorrect usage of \'' + prefix +  instructions[20][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax. If you need help with the setup, refer to our website @setup');
       return;
     }
     let channel = message.mentions.channels.find(channel => true);
     if(!channel) {
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Channel konnte nicht aufgesetzt werden(Der Channel konnte nicht hinzugefügt werden).");
-      message.reply('The channel could not be found');
+      message.reply('The channel could not be found. If you need help with the setup, refer to our website @setup');
       return;
     }
     serverManager.setChannelReact(id, channel);
