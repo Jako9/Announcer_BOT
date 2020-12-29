@@ -119,10 +119,18 @@ function printServer(){
         $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
         $instructions = "";
         $whitelist = "";
+        $lockable = "";
 
         foreach(json_decode($jObj->whitelist)->whitelist as $listelm){
 
             $whitelist .= '<div><input class="server-settings-input-disabled whitelist-input whitelist-input-'. $i . '" id="whitelist-input-'. $i . "-" . $j . '" name="whitelist-input-'. $i . "-" . $j . '" value="'. $listelm->name .'" disabled></div>';
+            //$instructions .= $instruction . "<br>";
+            $j++;
+        }
+
+        foreach(json_decode($jObj->lockable)->lockable as $lockalm){
+
+            $lockable .= '<div><input class="server-settings-input-disabled lockable-input lockable-input-'. $i . '" id="lockable-input-'. $i . "-" . $j . '" name="lockable-input-'. $i . "-" . $j . '" value="'. $lockable->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
         }
@@ -184,7 +192,7 @@ function printServer(){
                                 <h3 class="setting-title">Lockable</h3>
                                 <div class="setting-ist">
                                     <div class="array-box lockable-editor">
-                                        '. $instructions .'
+                                        '. $lockable .'
                                     </div>
                                 </div>
                             </div>
