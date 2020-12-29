@@ -93,7 +93,7 @@
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
-        <i class="fas fa-microphone" id="mic"></i>
+        <span class="custom-nav-mic" id="mic"></span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -160,7 +160,7 @@
   <body>
     <div class="jumbotron jumbotron-fluid">
     <div class="container" id="stage">
-        <i class="fas fa-microphone" id="stage-mic"></i>
+        <span id="stage-mic"></span>
         <h1 class="display-4" id="stage-title">Announcer Bot</h1>
         <p class="lead">Your Discord server is very quiet? You always dreamed of some cool announcement sound while joining? Hold up and invite this bot.</p>
         <a class="ich-hasse-links" href="https://discord.com/api/oauth2/authorize?client_id=541676543525519360&permissions=8&scope=bot">
