@@ -80,7 +80,7 @@ function printServer(){
             $pObj->lockable->name = "";
 
 
-            resetServerInDatabase($pObj->guildID, json_encode('{"name":"","id":""}'), json_encode('{"whitelist":[]}'), json_encode('{"name":"","id":""}'), json_encode('{"name":"","id":""}'), json_encode('{"lockable":[]}'), $pObj->prefix, $pObj->volume);
+            resetServerInDatabase($pObj->guildID, json_decode('{"name":"","id":""}'), json_decode('{"whitelist":[]}'), json_decode('{"name":"","id":""}'), json_decode('{"name":"","id":""}'), json_decode('{"lockable":[]}'), $pObj->prefix, $pObj->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
