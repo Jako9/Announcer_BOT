@@ -195,8 +195,8 @@
     </div>
     <div class="container-fluid documentation" id="documentation">
             <h2 class="documentation-headline">Documentation</h2>
-            <a href="https://github.com/Jako9/Announcer_BOT/wiki/"><i class="fab fa-github documenation-icon"></i></a>
-            <p class="lead">You want to setup the bot for your server or you need an explanation? Then refer to the 'help' command, or head over to the <a href="https://github.com/Jako9/Announcer_BOT/wiki/">github wiki</a>. </p>
+            <a href="https://github.com/Jako9/Announcer_BOT/wiki/home"><i class="fab fa-github documenation-icon"></i></a>
+            <p class="lead">You want to <a href="https://github.com/Jako9/Announcer_BOT/wiki/setup">setup</a> the bot for your server or you need an <a href="https://github.com/Jako9/Announcer_BOT/wiki/usage">explanation</a>? Then refer to the 'help' command, or head over to the <a href="https://github.com/Jako9/Announcer_BOT/wiki/">github wiki</a>. </p>
     </div>
     <div class="container-fluid statistics" id="statistics">
         <div class="statistics-block">
