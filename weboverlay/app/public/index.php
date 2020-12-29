@@ -57,25 +57,30 @@ function printServer(){
 
             $pObj = $jObj;
 
+            $pObj->manageRolle = new stdClass();
             $pObj->manageRolle->id = "";
             $pObj->manageRolle->name = "";
 
             $pObj->prefix = ".";
             $pObj->volume = 0.2;
 
+            $pObj->whitelist = new stdClass();
             $pObj->whitelist->whitelist = [];
 
+            $pObj->standartRole = new stdClass();
             $pObj->standartRole->id = "";
             $pObj->standartRole->name = "";
 
+            $pObj->channelReact = new stdClass();
             $pObj->channelReact->id = "";
             $pObj->channelReact->name = "";
 
+            $pObj->lockable = new stdClass();
             $pObj->lockable->id = "";
             $pObj->lockable->name = "";
 
 
-            resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable));
+            resetServerInDatabase($pObj->guildID, json_encode($pObj->manageRolle), json_encode($pObj->whitelist), json_encode($pObj->standartRole), json_encode($pObj->channelReact), json_encode($pObj->lockable), $pobj->prefix, $pobj->volume);
         }
 
         if(isset($_POST['submit-server-settings-' . $i])){
@@ -371,9 +376,9 @@ function getServersFromDatabase(){
     $connection->close();
 }
 
-function updateServerInDatabase($guildID, $manageRolle, $whitelist, $standartRole, $channelReact, $lockable){
+function updateServerInDatabase($guildID, $prefix, $volume){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET manageRolle='". $manageRolle ."', whitelist='". $whitelist ."', standartRole='". $standartRole ."', channelReact='". $channelReact ."', lockable='". $lockable ."'  WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET prefix='". $prefix ."', volume='". $volume ."'  WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
@@ -381,9 +386,11 @@ function updateServerInDatabase($guildID, $manageRolle, $whitelist, $standartRol
     $connection->close();
 }
 
-function resetServerInDatabase($guildID, $role, $reaktionRole, $prefix, $volume){
+
+
+function resetServerInDatabase($guildID, $manageRolle, $whitelist, $standartRole, $channelReact, $lockable, $prefix, $volume){
     $connection = connectToDatabase();
-    $sql = "UPDATE server SET prefix='". $prefix ."', volume='". $volume ."'  WHERE guildID=" . $guildID;
+    $sql = "UPDATE server SET manageRolle='". $manageRolle ."', whitelist='". $whitelist ."', standartRole='". $standartRole ."', channelReact='". $channelReact ."', lockable='". $lockable ."', prefix='". $prefix ."', volume='". $volume ."'  WHERE guildID=" . $guildID;
 
     $result = $connection->query($sql);
     $arr = array();
