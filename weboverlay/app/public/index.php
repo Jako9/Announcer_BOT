@@ -48,7 +48,9 @@ function printServer(){
         $showResetSuccess = false;
         $showSaveError = false;
 
-        $jObj = json_decode($server);
+        $serverObject = (object) $server;
+
+        $jObj = json_decode($serverObject);
 
         if(isset($_POST['reset-server-settings-'. $i])){
             $showResetSuccess = true;
