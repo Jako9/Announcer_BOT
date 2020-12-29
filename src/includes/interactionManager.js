@@ -25,7 +25,7 @@ function buildEmbed(commands, page){
   	},
     fields: commands,
     footer: {
-  		text: 'Page ' + page
+  		text: 'Page ' + page + ' of 3'
   	}
   };
   return embed;
