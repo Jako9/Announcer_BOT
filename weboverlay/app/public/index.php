@@ -156,7 +156,7 @@ function printServer(){
                             <div class="server-settings server-reaction-role">
                                 <h3 class="setting-title">Reaktion<br>Rolle</h3>
                                 <div class="setting-ist">
-                                    <input id="reaction-role-'. $i .'" name="reaction-role-'. $i .'" class="server-settings-input-disabled" value="'. $jObj->standartRole .'" disabled>
+                                    <input id="reaction-role-'. $i .'" name="reaction-role-'. $i .'" class="server-settings-input-disabled" value="'. json_decode($jObj->standartRole)->name .'" disabled>
                                 </div>
                             <i class="reaction-role-edit-button fas fa-pencil-alt" data-toggle="modal" data-target="#roles-modal-'. $i .'" id="edit-reaction-role-'. $i .'"></i>
                             </div>
