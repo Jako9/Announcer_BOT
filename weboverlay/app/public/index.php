@@ -130,7 +130,7 @@ function printServer(){
 
         foreach(json_decode($jObj->lockable)->lockable as $lockalm){
 
-            $lockable .= '<div><input class="server-settings-input-disabled lockable-input lockable-input-'. $i . '" id="lockable-input-'. $i . "-" . $j . '" name="lockable-input-'. $i . "-" . $j . '" value="'. $lockable->name .'" disabled></div>';
+            $lockable .= '<div><input class="server-settings-input-disabled lockable-input lockable-input-'. $i . '" id="lockable-input-'. $i . "-" . $j . '" name="lockable-input-'. $i . "-" . $j . '" value="'. $lockalm->name .'" disabled></div>';
             //$instructions .= $instruction . "<br>";
             $j++;
         }
