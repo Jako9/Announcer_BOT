@@ -108,17 +108,17 @@ module.exports = {
       //Nummer nicht im gültigen bereich
       if (volume < 0 || volume > 100){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-        message.reply("Die Lautstärke muss zwischen 0 und 100 liegen.");
+        message.reply("The volume must be beteween 0 and 100.");
         return;
       }
 
       serverManager.setVolume(message.guild.id, volume / 100.0);
       logManager.writeDebugLog(message.guild.name + ": Die Lautstärke wurde erfolgreich auf " + volume + "% gesetzt.");
-      message.reply("Das Volume wurde auf " + volume +"% gesetzt.");
+      message.reply("The volume has been set to :" + volume +"%.");
     }
     catch(e){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-      message.reply("Die Lautstärke muss eine ganze Zahl sein! " + e);
+      message.reply("The volume has to be a whole number! " + e);
       return;
     }
 

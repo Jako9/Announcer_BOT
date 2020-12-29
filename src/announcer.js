@@ -201,7 +201,7 @@ client.on('message', message => {
       message.reply("You don\'t have permission [LEVEL" + instructions[11][0].security + "] to use this command.");
       return;
     }
-    message.reply("The volume has been set to " + (100 * interactionManager.getVolume(message)) + "%.");
+    message.reply("The volume is " + (100 * interactionManager.getVolume(message)) + "%.");
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
@@ -224,7 +224,7 @@ client.on('message', message => {
     message.reply(interactionManager.changeCommands(message, prefix, instructions));
   }
 
-  // MoRolle ändern
+  // ModRolle ändern
   else if (message.content.toLowerCase().startsWith(prefix + instructions[10][0].name.toLowerCase()  + ' ')) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[10][0].security)){
