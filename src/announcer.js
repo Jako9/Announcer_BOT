@@ -185,7 +185,6 @@ client.on('message', message => {
       message.reply("You don\'t have permission [LEVEL" + instructions[7][0].security + "] to use this command.");
       return;
     }
-    hallo.sdg;
     connectionManager.triggerLeave(message);
   }
 
