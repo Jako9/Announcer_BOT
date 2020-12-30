@@ -19,7 +19,7 @@ function buildEmbed(commands, page, maxPage){
   		icon_url: 'https://cdn.discordapp.com/avatars/541676543525519360/f7ee86514955577f12f1a9aca6001371.png?size=256',
   		url: 'http://announcer.jmk.cloud'
   	},
-    description: 'If you want to know **how** or **when** to use these commands \nor how to **setup** the bot correctly, \ncheck out our _' + hyperlink + '_ and follow the steps provided!',
+    description: 'If you want to know **how** or **when** to use these commands \nor how to **setup** the bot correctly, \ncheck out our ' + hyperlink + ' and follow the steps provided!',
     thumbnail: {
   		url: 'https://cdn.discordapp.com/avatars/541676543525519360/f7ee86514955577f12f1a9aca6001371.png?size=256'
   	},
