@@ -161,8 +161,14 @@ client.on('message', message => {
   }
   //Fetch atrributes for current guild
   var id = message.guild.id;
-  var prefix = serverManager.getPrefix(id);
-  var instructions = serverManager.getInstructions(id);
+  try{
+    var prefix = serverManager.getPrefix(id);
+    var instructions = serverManager.getInstructions(id);
+  }
+  catch(e){
+    logManager.writeDebugLog(message.guild.name + ": Der Bot ist noch nicht hochgefahren");
+    return;
+  }
 
   //Channel ist nicht gewhitelisted
   if(!whitelistManager.isValid(message)) return;
