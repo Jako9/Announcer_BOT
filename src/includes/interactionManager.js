@@ -8,7 +8,7 @@ function contains(arr, word){
   return false;
 }
 
-function buildEmbed(commands, page){
+function buildEmbed(commands, page, maxPage){
   let hyperlink = '[website](http://announcer.jmk.cloud \"become VIP\")';
   let embed = {
     color: 0x161616,
@@ -25,7 +25,7 @@ function buildEmbed(commands, page){
   	},
     fields: commands,
     footer: {
-  		text: 'Page ' + page + ' of 3'
+  		text: 'Page ' + page + ' of ' + maxPage
   	}
   };
   return embed;
@@ -38,8 +38,12 @@ module.exports = {
     let page = 1;
     if(message.content.split(' ').length == 2 && !isNaN(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
-      if(message.content.split(' ')[1] > 3){
-        message.reply("There is only 3 pages :(");
+      let maxPage = (instructions.length / 10) + 1
+      if (instructions.length % 10 == 0){
+        maxPage--;
+      }
+      if(message.content.split(' ')[1] > maxPage){
+        message.reply("There is only " + maxPage+ " pages :(");
         return;
       }
     }
@@ -58,7 +62,7 @@ module.exports = {
     }
     //msg = msg.substring(0,msg.length - 3);
     logManager.writeDebugLog(msg.length);
-    message.reply({ embed: buildEmbed(msg, page)}).catch();
+    message.reply({ embed: buildEmbed(msg, page, maxPage)}).catch();
   },
 
   changeCommands: function (message, prefix, instructions){
