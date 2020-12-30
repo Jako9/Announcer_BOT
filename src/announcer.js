@@ -209,7 +209,7 @@ client.on('message', message => {
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase() + " ")){
+  else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase() + " ") || message.content.toLowerCase() === (prefix + instructions[8][0].name.toLowerCase()))){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[8][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[8][0].security + "] to use this command.");

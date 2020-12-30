@@ -9,7 +9,7 @@ function contains(arr, word){
 }
 
 function buildEmbed(commands, page, maxPage){
-  let hyperlink = '[website](http://announcer.jmk.cloud \"become VIP\")';
+  let hyperlink = '[wiki](https://github.com/Jako9/Announcer_BOT/wiki \"help\")';
   let embed = {
     color: 0x161616,
     title: 'Get some help',
