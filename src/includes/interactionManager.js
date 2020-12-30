@@ -61,7 +61,6 @@ module.exports = {
       msg.push(command);
     }
     //msg = msg.substring(0,msg.length - 3);
-    logManager.writeDebugLog(msg.length);
     message.reply({ embed: buildEmbed(msg, page, maxPage)}).catch();
   },
 
