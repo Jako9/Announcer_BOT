@@ -189,7 +189,7 @@ client.on('message', message => {
   }
 
   // setVolume
-  else if (message.content.toLowerCase().startsWith(prefix + instructions[18][0].name.toLowerCase())) {
+  else if (message.content.toLowerCase().startsWith(prefix + instructions[18][0].name.toLowerCase() + " ")) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[18][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[18][0].security + "] to use this command.");
@@ -209,7 +209,7 @@ client.on('message', message => {
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
-  else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase())){
+  else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[8][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[8][0].security + "] to use this command.");
@@ -280,7 +280,7 @@ client.on('message', message => {
   }
 
   //Set Reaction Channel
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[20][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[20][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[20][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[20][0].security + "] to use this command.");
@@ -290,7 +290,7 @@ client.on('message', message => {
   }
 
   //Add Reaction
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[23][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[23][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[23][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[23][0].security + "] to use this command.");
@@ -300,7 +300,7 @@ client.on('message', message => {
   }
 
   //change Reaction Role
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[19][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[19][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[19][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[19][0].security + "] to use this command.");
@@ -340,7 +340,7 @@ client.on('message', message => {
   }
 
   //whitelistAdd
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[21][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[21][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[21][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[21][0].security + "] to use this command.");
@@ -350,7 +350,7 @@ client.on('message', message => {
   }
 
   //whitelistRemove
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[26][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[26][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[26][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[26][0].security + "] to use this command.");
@@ -370,7 +370,7 @@ client.on('message', message => {
   }
 
   //play
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[0][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[0][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[0][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[0][0].security + "] to use this command.");
@@ -380,7 +380,7 @@ client.on('message', message => {
   }
 
   //setJoinSound
-  else if(message.content.toLowerCase().startsWith(prefix + instructions[1][0].name.toLowerCase())){
+  else if(message.content.toLowerCase().startsWith(prefix + instructions[1][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[1][0].security)){
       message.reply("You don\'t have permission [LEVEL" + instructions[1][0].security + "] to use this command.");
