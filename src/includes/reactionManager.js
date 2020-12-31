@@ -21,6 +21,8 @@ async function removeForeignReactions(message, reaction){
     });
     if(user == undefined) {
       tmpReaction.remove();
+      logManager.writeDebugLog("ID 1 = " + reaction.emoji.id);
+      logManager.writeDebugLog("ID 2 = " + tmpReaction.emoji.id);
       if(reaction.emoji.id == tmpReaction.emoji.id){
         removed = true
       }
