@@ -11,8 +11,9 @@ function delRole(reaction,role,member){
   member.roles.remove(role.id);
 }
 
-async function removeForeignReactions(message){
-  if(!message) return;
+async function removeForeignReactions(message, reaction){
+  if(!message) return false;
+  let removed = false;
   message.reactions.cache.array().forEach(async tmpReaction =>{
     await tmpReaction.users.fetch();
     let user = tmpReaction.users.cache.array().find(user => {
@@ -20,8 +21,12 @@ async function removeForeignReactions(message){
     });
     if(user == undefined) {
       tmpReaction.remove();
+      if(reaction == tmpReaction){
+        removed = true
+      }
     }
   });
+  return removed;
 }
 
 module.exports = {
@@ -29,8 +34,8 @@ module.exports = {
 
     let id = reaction.message.guild.id;
 
-    await removeForeignReactions(serverManager.getReactionMessage(id));
-    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == null || reaction.message.id != serverManager.getReactionMessage(id).id || !serverManager.getReactionMessage(id).reactions.cache.array().includes(reaction)) return;
+    let removed = await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
+    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == null || reaction.message.id != serverManager.getReactionMessage(id).id || removed) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
     let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
