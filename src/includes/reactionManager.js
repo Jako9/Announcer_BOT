@@ -14,20 +14,21 @@ function delRole(reaction,role,member){
 async function removeForeignReactions(message, reaction){
   if(!message) return false;
   let removed = false;
-  await message.reactions.cache.array().forEach(async tmpReaction =>{
-    await tmpReaction.users.fetch();
-    let user = tmpReaction.users.cache.array().find(user => {
+  let reactions = message.reactions.cache.array();
+  for(let i = 0; i < reactions.length; i++){}
+    await reactions[i].users.fetch();
+    let user = reactions[i].users.cache.array().find(user => {
       return user.bot;
     });
     if(user == undefined) {
-      tmpReaction.remove();
+      reactions[i].remove();
       logManager.writeDebugLog("ID 1 = " + reaction.emoji.id);
-      logManager.writeDebugLog("ID 2 = " + tmpReaction.emoji.id);
-      if(reaction.emoji.id == tmpReaction.emoji.id){
+      logManager.writeDebugLog("ID 2 = " + reactions[i].emoji.id);
+      if(reaction.emoji.id == reactions[i].emoji.id){
         removed = true
       }
     }
-  });
+  }
   logManager.writeDebugLog("Removed = " + removed);
   return removed;
 }
