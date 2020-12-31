@@ -36,7 +36,6 @@ module.exports = {
     let id = reaction.message.guild.id;
 
     let removed = await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
-    logManager.writeDebugLog("Removed = " + removed);
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == null || reaction.message.id != serverManager.getReactionMessage(id).id || removed) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
