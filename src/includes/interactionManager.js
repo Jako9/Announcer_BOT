@@ -54,7 +54,7 @@ module.exports = {
       let arguments = "";
       instructions[i][1].arguments.forEach(argument =>
       {
-        arguments += " [" + argument + "]";
+        arguments += " \[" + argument + "\]";
       });
       arguments = arguments.substring(0, arguments.length -1);
       let command = {"name": i + ' ``' + prefix + instructions[i][0].name + arguments + "``","value":instructions[i][1].explanation};
