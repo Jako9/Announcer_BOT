@@ -13,6 +13,7 @@ function delRole(reaction,role,member){
 
 async function removeForeignReactions(message, reaction){
   if(!message) return false;
+  if(!message.reactions) return false;
   let removed = false;
   let reactions = message.reactions.cache.array();
   for(let i = 0; i < reactions.length; i++){
