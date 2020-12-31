@@ -13,7 +13,7 @@ function buildEmbed(commands, page, maxPage){
   let embed = {
     color: 0x161616,
     title: 'Get some help',
-    url: "http://announcer.jmk.cloud",
+    url: "https://github.com/Jako9/Announcer_BOT/wiki",
     author: {
   		name: 'Announcer_BOT',
   		icon_url: 'https://cdn.discordapp.com/avatars/541676543525519360/f7ee86514955577f12f1a9aca6001371.png?size=256',
