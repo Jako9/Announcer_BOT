@@ -20,6 +20,7 @@ function removeForeignReactions(message, reaction){
       logManager.writeDebugLog("Bot: " + user.bot);
       return user.bot;
     });
+    logManager.writeDebugLog("User: " + user);
     if(user == null) {
       tmpReaction.remove();
       if(reaction == tmpReaction){
