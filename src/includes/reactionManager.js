@@ -16,6 +16,8 @@ function removeForeignReactions(message, reaction){
   let removed = false;
   message.reactions.cache.array().forEach(tmpReaction =>{
     if(!tmpReaction.users.cache.array().find(user => {
+      logManager.writeDebugLog("User: " + user.username);
+      logManager.writeDebugLog("Bot: " + user.bot);
       return user.bot;
     }) == null) {
       tmpReaction.remove();
