@@ -478,6 +478,6 @@ client.on('message', message => {
 
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
-    message.reply('I don\'t know this command :( Type \'' + prefix + instructions[8][0].name + '\' for a list of all the available commands!');
+    message.reply('Either I don\'t know this command or you\'ve forgotten the parameters :( Type \'' + prefix + instructions[8][0].name + '\' for a list of all the available commands with their parameters!');
   }
 });
