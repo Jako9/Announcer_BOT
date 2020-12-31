@@ -15,7 +15,7 @@ async function removeForeignReactions(message, reaction){
   if(!message) return false;
   let removed = false;
   let reactions = message.reactions.cache.array();
-  for(let i = 0; i < reactions.length; i++){}
+  for(let i = 0; i < reactions.length; i++){
     await reactions[i].users.fetch();
     let user = reactions[i].users.cache.array().find(user => {
       return user.bot;
