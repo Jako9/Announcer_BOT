@@ -111,7 +111,7 @@ module.exports = {
         connection = establishConnection();
 
         let q = "INSERT INTO users (userID,username,avatar,isVIP) VALUES ('"+ user.id + "', '" + user.username + "', '" + user.avatarURL() + "', '1')";
-        q += "ON DUPLICATE KEY UPDATE userID=userID";
+        q += "ON DUPLICATE KEY UPDATE userID=" + user.id;
 
         connection.query(q, (error, results) => {
             if(error){
