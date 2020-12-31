@@ -111,7 +111,7 @@ module.exports = {
         connection = establishConnection();
 
         let q = "INSERT INTO users (userID,username,avatar,isVIP) VALUES ('"+ user.id + "', '" + user.username + "', '" + user.avatarURL() + "', '1')";
-        q += " ON DUPLICATE KEY UPDATE userID=" + user.id;
+        q += " ON DUPLICATE KEY UPDATE";
 
         connection.query(q, (error, results) => {
             if(error){
@@ -200,7 +200,7 @@ module.exports = {
         q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
       }
       q = q.substring(0,q.length-1);
-      q += "ON DUPLICATE KEY UPDATE guildID=guildID";
+      q += "ON DUPLICATE KEY UPDATE";
 
       connection.query(q, (error, results) => {
           if(!error){
