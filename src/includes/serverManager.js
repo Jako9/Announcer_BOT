@@ -372,6 +372,7 @@ function fetchMessage(client, id, channelReact){
     guild.channels.cache.find(channel => channel.id == channelReact.id).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact.id).messages.cache.find(message => message.pinned);
+        reactionManager.removeForeignReactions(id);
       });
     });
   });

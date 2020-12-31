@@ -59,6 +59,7 @@ module.exports = {
 
   removeReaction: function(reaction, user){
     //Uninteressant
+    removeForeignReactions(serverManager.getReactionMessage(reaction.message.guild.id), reaction);
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || reaction.message.id != serverManager.getReactionMessage(reaction.message.guild.id).id) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
@@ -67,6 +68,7 @@ module.exports = {
 },
 
   addReactor: function(message){
+    removeForeignReactions(serverManager.getReactionMessage(message.guild.id), null);
     let id = message.guild.id;
     if(serverManager.getChannelReact(message.guild) == null){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Reaktion konnte nicht hinzugefügt werden (Es gibt keinen gültigen Channel).");
@@ -147,5 +149,9 @@ module.exports = {
   removeChannelReact: function(message){
     serverManager.setChannelReact(message.guild.id, null);
     message.reply("The reaction channel has been removed.");
+  },
+
+  removeForeignReactions: function(id){
+    removeForeignReactions(id, null);
   }
 }
