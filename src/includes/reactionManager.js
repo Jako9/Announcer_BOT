@@ -14,7 +14,7 @@ function delRole(reaction,role,member){
 async function removeForeignReactions(message, reaction){
   if(!message) return;
   let removed = false;
-  await message.reactions.cache.fetch();
+  await message.reactions.fetch();
   message.reactions.cache.array().forEach(tmpReaction =>{
     let user = tmpReaction.users.cache.array().find(user => {
       logManager.writeDebugLog("User: " + user.username);
