@@ -34,7 +34,7 @@ function removeForeignReactions(message, reaction){
 }
 
 module.exports = {
-  giveReaction: async function(reaction, user){
+  giveReaction: function(reaction, user){
 
     let id = reaction.message.guild.id;
 
