@@ -21,7 +21,7 @@ function removeForeignReactions(message, reaction){
       return user.bot;
     });
     logManager.writeDebugLog("User: " + user);
-    if(user == null) {
+    if(user == undefined) {
       tmpReaction.remove();
       if(reaction == tmpReaction){
         removed = true;
