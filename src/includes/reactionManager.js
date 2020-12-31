@@ -22,14 +22,11 @@ async function removeForeignReactions(message, reaction){
     });
     if(user == undefined) {
       reactions[i].remove();
-      logManager.writeDebugLog("ID 1 = " + reaction.emoji.id);
-      logManager.writeDebugLog("ID 2 = " + reactions[i].emoji.id);
       if(reaction.emoji.id == reactions[i].emoji.id){
         removed = true
       }
     }
   }
-  logManager.writeDebugLog("Removed = " + removed);
   return removed;
 }
 
@@ -39,6 +36,7 @@ module.exports = {
     let id = reaction.message.guild.id;
 
     let removed = await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
+    logManager.writeDebugLog("Removed = " + removed);
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == null || reaction.message.id != serverManager.getReactionMessage(id).id || removed) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
