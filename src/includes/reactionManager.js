@@ -150,9 +150,5 @@ module.exports = {
   removeChannelReact: function(message){
     serverManager.setChannelReact(message.guild.id, null);
     message.reply("The reaction channel has been removed.");
-  },
-
-  removeForeignReactions: function(id){
-    removeForeignReactions(id, null);
   }
 }

@@ -2,7 +2,6 @@ const fs = require('fs');
 const jsonParser = require('./jsonParser');
 const logManager = require('./logManager.js');
 const dbManager = require('./databaseManager.js');
-const reactionManager = require('./reactionManager.js');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
@@ -373,7 +372,6 @@ function fetchMessage(client, id, channelReact){
     guild.channels.cache.find(channel => channel.id == channelReact.id).messages.fetch().then(messages => {
       client.guilds.fetch(id).then(guild => {
         servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact.id).messages.cache.find(message => message.pinned);
-        reactionManager.removeForeignReactions(id);
       });
     });
   });
