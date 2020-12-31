@@ -8,7 +8,7 @@ function delRole(reaction,role,member){
   }
 
   logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich entfernt.");
-  member.roles.remove(role.id);
+  member.roles.remove(role.id).catch();
 }
 
 async function removeForeignReactions(message, reaction){
@@ -50,11 +50,11 @@ module.exports = {
     let defaultRole = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(id).id);
     if(defaultRole){
       logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
-      member.roles.add([role.id,defaultRole.id]);
+      member.roles.add([role.id,defaultRole.id]).catch();
     }
     else{
       logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
-      member.roles.add(role.id);
+      member.roles.add(role.id).catch();
     }
   },
 
