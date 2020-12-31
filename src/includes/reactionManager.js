@@ -26,6 +26,7 @@ async function removeForeignReactions(message, reaction){
       }
     }
   });
+  logManager.writeDebugLog("Removed = " + removed);
   return removed;
 }
 
