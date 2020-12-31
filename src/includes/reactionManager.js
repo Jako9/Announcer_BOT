@@ -11,10 +11,26 @@ function delRole(reaction,role,member){
   member.roles.remove(role.id);
 }
 
+function removeForeignReactions(message, reaction){
+  if(!message) return;
+  let removed = false;
+  message.reactions.cache.array.forEach(tmpReaction =>{
+    if(!tmpReaction.me) {
+      tmpReaction.remove();
+      if(reaction == tmpReaction){
+        removed = true;
+      }
+    }
+  });
+  return removed;
+}
+
 module.exports = {
   giveReaction: function(reaction, user){
 
     let id = reaction.message.guild.id;
+
+    if(removeForeignReactions(serverManager.getReactionMessage(id), reaction)) return;
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || reaction.message.id != serverManager.getReactionMessage(id).id) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
