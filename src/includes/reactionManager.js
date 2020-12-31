@@ -11,17 +11,15 @@ function delRole(reaction,role,member){
   member.roles.remove(role.id);
 }
 
-async function removeForeignReactions(message, reaction){
+async function removeForeignReactions(message){
   if(!message) return;
   message.reactions.cache.array().forEach(async tmpReaction =>{
     await tmpReaction.users.fetch();
     let user = tmpReaction.users.cache.array().find(user => {
       return user.bot;
-    )};
+    });
     if(user == undefined) {
       tmpReaction.remove();
-      if(reaction == tmpReaction){
-      }
     }
   });
 }
@@ -31,7 +29,7 @@ module.exports = {
 
     let id = reaction.message.guild.id;
 
-    await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
+    await removeForeignReactions(serverManager.getReactionMessage(id));
     if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == null || reaction.message.id != serverManager.getReactionMessage(id).id || !serverManager.getReactionMessage(id).reactions.cache.array().includes(reaction)) return;
 
     let roleName = reaction.emoji.name.toLowerCase();
