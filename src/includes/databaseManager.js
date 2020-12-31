@@ -107,10 +107,11 @@ module.exports = {
         connection.end();
     },
 
-    setVip: function(userID, callback){
+    setVip: function(user, callback){
         connection = establishConnection();
 
-        let q = "UPDATE users SET isVIP=1 WHERE userID=" + userID;
+        let q = "INSERT INTO users (userID,username,avatar,isVIP) VALUES ('"+ user.id + "', '" + user.username + "', '" + user.avatarURL() + "', '1')";
+        q += "ON DUPLICATE KEY UPDATE userID=userID";
 
         connection.query(q, (error, results) => {
             if(error){

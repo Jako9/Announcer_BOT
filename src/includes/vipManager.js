@@ -89,7 +89,7 @@ function changeVIPSound(message, file){
           }
           else{
             message.author.send("Hey you have received the VIP-Status! :D Your joinsound has been uploaded successfully.");
-            dbManager.setVip(message.author.id, function(worked){});
+            dbManager.setVip(message.author, function(worked){});
             dbManager.deletePayment(message.author.id, function(worked){});
           }
         });
