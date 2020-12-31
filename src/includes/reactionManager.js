@@ -15,19 +15,20 @@ async function removeForeignReactions(message, reaction){
   if(!message) return;
   let removed = false;
   message.reactions.cache.array().forEach(tmpReaction =>{
-    await tmpReaction.users.fetch();
-    let user = tmpReaction.users.cache.array().find(user => {
-      logManager.writeDebugLog("User: " + user.username);
-      logManager.writeDebugLog("Bot: " + user.bot);
-      return user.bot;
-    });
-    logManager.writeDebugLog("User: " + user);
-    if(user == undefined) {
-      tmpReaction.remove();
-      if(reaction == tmpReaction){
-        removed = true;
+    tmpReaction.users.fetch().then(() => {
+      let user = tmpReaction.users.cache.array().find(user => {
+        logManager.writeDebugLog("User: " + user.username);
+        logManager.writeDebugLog("Bot: " + user.bot);
+        return user.bot;
+      });
+      logManager.writeDebugLog("User: " + user);
+      if(user == undefined) {
+        tmpReaction.remove();
+        if(reaction == tmpReaction){
+          removed = true;
+        }
       }
-    }
+    }).catch();
   });
   return removed;
 }
