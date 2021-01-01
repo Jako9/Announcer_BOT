@@ -201,7 +201,7 @@ module.exports = {
       }
       q = q.substring(0,q.length-1);
       //TODO Sevrer updaten
-      q += "ON DUPLICATE KEY UPDATE guildID = guildID";
+      q += "ON DUPLICATE KEY UPDATE name = name, avatar = avatar";
 
       connection.query(q, (error, results) => {
           if(!error){
