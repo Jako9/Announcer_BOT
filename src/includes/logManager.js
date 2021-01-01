@@ -41,7 +41,7 @@ module.exports = {
                 if (err) throw err;
             });
         } catch(err) {
-            //console.error('Error while logging to the errorlog. Please check the write access to the logs folder!')
+            console.error('Error while logging to the errorlog. Please check the write access to the logs folder!')
         }
     }
 }
