@@ -200,7 +200,6 @@ module.exports = {
         q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
       }
       q = q.substring(0,q.length-1);
-      //TODO Sevrer updaten
       q += "ON DUPLICATE KEY UPDATE name = name, avatar = avatar";
 
       connection.query(q, (error, results) => {
