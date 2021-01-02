@@ -142,7 +142,6 @@ module.exports = {
       serverManager.setVolume(message.guild.id, volume / 100.0);
       logManager.writeDebugLog(message.guild.name + ": Die Lautstärke wurde erfolgreich auf " + volume + "% gesetzt.");
       message.reply("The volume has been set to " + volume +"%.");
-    }
 
   },
 
