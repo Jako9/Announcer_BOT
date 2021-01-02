@@ -17,9 +17,14 @@ module.exports = {
 
         out = false;
 
-        let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES ('"+ userID + "', '" + username + "', '" + avatar + "', '0', '"+ joinsound + "')";
+        let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES (:userID , :username , :avatar , :joinsound)";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, {
+          userID: userID,
+          username: username,
+          avatar: avatar,
+          joinsound: joinsound
+        } ,(error, results) => {
             if(!error){
                 out = results;
             }
