@@ -134,7 +134,7 @@ module.exports = {
     }
     channel.messages.fetch();
     if(channel.messages.cache.find(message => message.pinned) == null){
-      message.reply("I didn\'t find any pinned messages in this channel. Be sure to first pin the message, you want to be reacted on.");
+      message.reply("I didn\'t find any pinned messages in this channel. Be sure to first pin the message you want to be reacted on.");
       return;
     }
     serverManager.setChannelReact(id, channel);
