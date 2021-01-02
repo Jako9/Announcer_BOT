@@ -12,10 +12,9 @@ const password = dbData.password;
 
 module.exports = {
 
-    addUser: function(userID, username, avatar, joinsound){
+    addUser: function(userID, username, avatar, joinsound, callback){
         connection = establishConnection();
 
-        out = false;
         logManager.writeDebugLog("1");
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES (? , ? , ? , ?)";
         logManager.writeDebugLog("2");
@@ -28,7 +27,10 @@ module.exports = {
           logManager.writeDebugLog("3: " + error);
           logManager.writeDebugLog("4: " + results);
             if(error == undefined){
-                out = results;
+                callback(results);
+            }
+            else{
+              callback(false);
             }
         });
         connection.end();
