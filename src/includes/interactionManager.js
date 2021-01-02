@@ -31,6 +31,13 @@ function buildEmbed(commands, page, maxPage){
   return embed;
 }
 
+function isInteger(string){
+  for(let i = 0; i < string.length; i++){
+    ['0','1','2','3','4','5','6','7','8','9'].includes(string.charAt(i)) ? continue : return false;
+  }
+  return true;
+}
+
 module.exports = {
 
   //Create a list of all commands and their usage
@@ -40,8 +47,8 @@ module.exports = {
     if (instructions.length % 10 == 0){
       maxPage--;
     }
-    logManager.writeDebugLog("isNUmber= " + Number.isInteger(message.content.split(' ')[1]));
-    if(message.content.split(' ').length == 2 && Number.isInteger(message.content.split(' ')[1])){
+    logManager.writeDebugLog("isNUmber= " + isInteger(message.content.split(' ')[1]));
+    if(message.content.split(' ').length == 2 && isInteger(message.content.split(' ')[1])){
       page = message.content.split(' ')[1];
       if(message.content.split(' ')[1] > maxPage){
         message.reply("There is only " + maxPage+ " pages :(");
