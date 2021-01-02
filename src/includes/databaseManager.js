@@ -27,7 +27,7 @@ module.exports = {
         ] ,(error, results) => {
           logManager.writeDebugLog("3: " + error);
           logManager.writeDebugLog("4: " + results);
-            if(error != undefined){
+            if(error == undefined){
                 out = results;
             }
         });
