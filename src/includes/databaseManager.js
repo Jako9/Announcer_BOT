@@ -15,23 +15,17 @@ module.exports = {
     addUser: function(userID, username, avatar, joinsound, callback){
         connection = establishConnection();
 
-        logManager.writeDebugLog("1");
         let q = "INSERT INTO users (userID, username, avatar, joinsound) VALUES (? , ? , ? , ?)";
-        logManager.writeDebugLog("2");
         connection.query(q, [
           userID,
           username,
           avatar,
           joinsound
         ] ,(error, results) => {
-          logManager.writeDebugLog("3: " + error);
-          logManager.writeDebugLog("4: " + results);
-            if(error == undefined){
-              logManager.writeDebugLog("result");
+            if(error == null){
               callback(results);
             }
             else{
-              logManager.writeDebugLog("error");
               callback(false);
             }
         });
