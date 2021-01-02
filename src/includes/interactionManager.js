@@ -33,7 +33,9 @@ function buildEmbed(commands, page, maxPage){
 
 function isInteger(string){
   for(let i = 0; i < string.length; i++){
-    ['0','1','2','3','4','5','6','7','8','9'].includes(string.charAt(i)) ? continue : return false;
+    if(!['0','1','2','3','4','5','6','7','8','9'].includes(string.charAt(i))){
+      return false;
+    }
   }
   return true;
 }
