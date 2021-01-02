@@ -34,8 +34,6 @@ module.exports = {
             }
         });
         connection.end();
-
-        return out;
     },
 
     getAllUsers: function(callback){
