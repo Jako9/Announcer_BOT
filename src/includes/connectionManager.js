@@ -25,6 +25,16 @@ function isVip(userID, callback){
   });
 }
 
+function isInteger(string){
+  if(string === undefined || string === null) return false;
+  for(let i = 0; i < string.length; i++){
+    if(!['0','1','2','3','4','5','6','7','8','9'].includes(string.charAt(i))){
+      return false;
+    }
+  }
+  return true;
+}
+
 // Ton spielen wenn bereit und danach den Channel wieder verlassen
 function bot_join(vc, connection, file){
   logManager.writeDebugLog(vc.guild.name + ": Bot soll dem Server betreten. " + "File = " + file);
@@ -120,7 +130,7 @@ module.exports = {
         message.reply("Please enter a channel first.");
         return;
       }
-      if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
+      if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9 || !isInteger(message.content.split(' ')[1])) {
         message.reply('Incorrect usage of \'' + prefix +  instructions[0][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
         return;
       }
@@ -133,7 +143,7 @@ module.exports = {
         if(is){
           message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.");
         }else{
-          if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9) {
+          if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9 || !isInteger(message.content.split(' ')[1])) {
             message.reply('Incorrect usage of \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
           }
           else{
