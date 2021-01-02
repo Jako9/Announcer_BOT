@@ -27,9 +27,11 @@ module.exports = {
           logManager.writeDebugLog("3: " + error);
           logManager.writeDebugLog("4: " + results);
             if(error == undefined){
-                callback(results);
+              logManager.writeDebugLog("result");
+              callback(results);
             }
             else{
+              logManager.writeDebugLog("error");
               callback(false);
             }
         });
