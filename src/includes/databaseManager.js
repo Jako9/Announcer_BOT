@@ -16,14 +16,14 @@ module.exports = {
         connection = establishConnection();
 
         logManager.writeDebugLog("1");
-        let q = "INSERT INTO users (userID, username, avatar, joinsound) VALUES (:userID, :username, :avatar, :joinsound)";
+        let q = "INSERT INTO users (userID, username, avatar, joinsound) VALUES (? , ? , ? , ?)";
         logManager.writeDebugLog("2");
-        connection.query(q, {
-          userID: userID,
-          username: username,
-          avatar: avatar,
-          joinsound: joinsound
-        } ,(error, results) => {
+        connection.query(q, [
+          userID,
+          username,
+          avatar,
+          joinsound
+        ] ,(error, results) => {
           logManager.writeDebugLog("3: " + error);
           logManager.writeDebugLog("4: " + results);
             if(error == undefined){
