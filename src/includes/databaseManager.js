@@ -16,15 +16,17 @@ module.exports = {
         connection = establishConnection();
 
         out = false;
-
+        logManager.writeDebugLog("1");
         let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES (? , ? , ? , ?)";
-
+        logManager.writeDebugLog("2");
         connection.query(q, [
           userID,
           username,
           avatar,
           joinsound
         ] ,(error, results) => {
+          logManager.writeDebugLog("3: " + error);
+          logManager.writeDebugLog("4: " + results);
             if(!error){
                 out = results;
             }
