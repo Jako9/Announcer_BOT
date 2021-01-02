@@ -54,9 +54,11 @@ module.exports = {
     getUser: function(userID, callback){
         let connection = establishConnection();
 
-        let q = "SELECT * FROM users WHERE userID=" + userID;
+        let q = "SELECT * FROM users WHERE userID= ?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ],(error, results) => {
             if(error){
                 throw error;
             }else{
@@ -74,9 +76,11 @@ module.exports = {
     removeUser: function(userID, callback){
         let connection = establishConnection();
 
-        let q = "DELETE FROM users WHERE userID=" + userID;
+        let q = "DELETE FROM users WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -90,9 +94,11 @@ module.exports = {
     getVip: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT isVip FROM users WHERE userID=" + userID;
+        let q = "SELECT isVip FROM users WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -113,10 +119,14 @@ module.exports = {
     setVip: function(user, callback){
         connection = establishConnection();
 
-        let q = "INSERT INTO users (userID,username,avatar,isVIP) VALUES ('"+ user.id + "', '" + user.username + "', '" + user.avatarURL() + "', '1')";
+        let q = "INSERT INTO users (userID,username,avatar,isVIP) VALUES (?,?,?,'1')";
         q += " ON DUPLICATE KEY UPDATE isVIP = 1";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          user.id,
+          user.username,
+          user.avatarURL()
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -138,9 +148,11 @@ module.exports = {
     getName: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT username FROM users WHERE userID=" + userID;
+        let q = "SELECT username FROM users WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -184,9 +196,13 @@ module.exports = {
     setInformation: function(userID, username, avatar, callback){
         connection = establishConnection();
 
-        let q = "UPDATE users SET username='"+ username +"', avatar='"+ avatar +"' WHERE userID=" + userID;
+        let q = "UPDATE users SET username=?, avatar=? WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          username,
+          avatar,
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -200,12 +216,18 @@ module.exports = {
       connection = establishConnection();
       let q = "INSERT INTO server (guildID,name,avatar) VALUES ";
       for(let i = 0; i < ids.length; i++){
-        q += "(" + ids[i] + ", '" + names[i] + "','" + avatars[i] + "'),";
+        q += "(?, ?,?),";
       }
       q = q.substring(0,q.length-1);
       q += "ON DUPLICATE KEY UPDATE name = name, avatar = avatar";
 
-      connection.query(q, (error, results) => {
+      let replacements = [];
+      for(let i = 0; i < ids.length; i++){
+        replacements.push(ids[i]);
+        replacements.push(names[i]);
+        replacements.push(avatars[i]);
+      }
+      connection.query(q, replacements, (error, results) => {
           if(!error){
               callback(results);
           }
@@ -218,19 +240,21 @@ module.exports = {
 
     saveServer: function(server, id, callback){
         connection = establishConnection();
-        let name = server.name;
-        let avatar= server.avatar;
-        let manageRolle= server.manageRolle;
-        let whitelist = server.whitelist;
-        let instructions= server.instructions;
-        let prefix= server.prefix;
-        let volume= server.volume;
-        let standartRole= server.standartRole;
-        let channelReact= server.channelReact;
-        let lockable= server.lockable;
-        let q = "UPDATE server SET name='"+ name + "',avatar='" + avatar +"', manageRolle='"+ manageRolle + "', instructions='"+ instructions + "', whitelist='" + whitelist + "', prefix='"+ prefix + "', volume="+ volume +", standartRole='"+ standartRole + "', channelReact='"+ channelReact + "', lockable='" + lockable +"' WHERE guildID=" + id;
+        let q = "UPDATE server SET name=?,avatar=?, manageRolle=?, instructions=?, whitelist=?, prefix=?, volume=?, standartRole=?, channelReact=?, lockable=? WHERE guildID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          server.name,
+          server.avatar,
+          server.manageRolle,
+          server.instructions,
+          server.whitelist,
+          server.prefix,
+          server.volume,
+          server.standartRole,
+          server.channelReact,
+          server.lockable,
+          id
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -243,9 +267,11 @@ module.exports = {
     getJoinsound: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT joinsound FROM users WHERE userID=" + userID;
+        let q = "SELECT joinsound FROM users WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -266,9 +292,12 @@ module.exports = {
     setJoinsound: function(userID, joinsound, callback){
         connection = establishConnection();
 
-        let q = "UPDATE users SET joinsound="+ joinsound +" WHERE userID=" + userID;
+        let q = "UPDATE users SET joinsound=? WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          joinsound,
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -300,9 +329,11 @@ module.exports = {
     deleteServer: function(guildID, callback){
       connection = establishConnection();
 
-      let q = "DELETE FROM server WHERE guildID=" + guildID;
+      let q = "DELETE FROM server WHERE guildID=?";
 
-      connection.query(q, (error, results) => {
+      connection.query(q, [
+        guildID
+      ], (error, results) => {
           if(error){
               throw error;
           }else{
@@ -317,9 +348,13 @@ module.exports = {
     addServer: function(guildID, guildName, avatar, callback){
         connection = establishConnection();
 
-        let q = "INSERT INTO server (guildID, name, avatar) VALUES ('"+ guildID + "', '" + guildName + "', '" + avatar + "')";
+        let q = "INSERT INTO server (guildID, name, avatar) VALUES (?, ?, ?)";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          guildID,
+          guildName,
+          avatar
+        ], (error, results) => {
             if(!error){
                 callback(results);
             }
@@ -331,9 +366,11 @@ module.exports = {
     getServer: function(guildID, callback){
       let connection = establishConnection();
 
-      let q = "SELECT * FROM server WHERE guildID=" + guildID;
+      let q = "SELECT * FROM server WHERE guildID=?";
 
-      connection.query(q, (error, results) => {
+      connection.query(q, [
+        guildID
+      ], (error, results) => {
           if(error){
               throw error;
           }else{
@@ -370,9 +407,14 @@ module.exports = {
     createPendingPayment: function(transactionID, userID, link, status,  callback){
         connection = establishConnection();
 
-        let q = "INSERT INTO pending_payments (transID, userID, link, status) VALUES ('"+ transactionID + "', '" + userID + "', '" + link + "', '" + status + "')";
+        let q = "INSERT INTO pending_payments (transID, userID, link, status) VALUES (?, ?, ?, ?)";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          transactionID,
+          userID,
+          link,
+          status
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -389,9 +431,11 @@ module.exports = {
     getPaymentLink: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT link FROM pending_payments WHERE userID=" + userID;
+        let q = "SELECT link FROM pending_payments WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -408,9 +452,11 @@ module.exports = {
     getPaymentStatus: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT status FROM pending_payments WHERE userID=" + userID;
+        let q = "SELECT status FROM pending_payments WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -427,9 +473,11 @@ module.exports = {
     getUserPayment: function(userID, callback){
         connection = establishConnection();
 
-        let q = "SELECT * FROM pending_payments WHERE userID=" + userID;
+        let q = "SELECT * FROM pending_payments WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
@@ -446,9 +494,11 @@ module.exports = {
     deletePayment: function(userID, callback){
         let connection = establishConnection();
 
-        let q = "DELETE FROM pending_payments WHERE userID=" + userID;
+        let q = "DELETE FROM pending_payments WHERE userID=?";
 
-        connection.query(q, (error, results) => {
+        connection.query(q, [
+          userID
+        ], (error, results) => {
             if(error){
                 throw error;
             }else{
