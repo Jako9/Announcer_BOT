@@ -16,7 +16,7 @@ module.exports = {
         connection = establishConnection();
 
         logManager.writeDebugLog("1");
-        let q = "INSERT INTO users (userID, username, avatar, isVip, joinsound) VALUES (? , ? , ? , ?)";
+        let q = "INSERT INTO users (userID, username, avatar, joinsound) VALUES (? , ? , ? , ?)";
         logManager.writeDebugLog("2");
         connection.query(q, [
           userID,
