@@ -40,6 +40,10 @@ module.exports = {
   },
 
   removeReactionRole: function(message){
+    if(serverManager.getStandartRole(message.guild.id).id == ""){
+      message.reply("There is no reaction role setup that can be removed.");
+      return;
+    }
     serverManager.setStandartRole(message.guild.id, {"name":"","id":""});
     message.reply("The standart role for reactions has been removed successfully.");
   }

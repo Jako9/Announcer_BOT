@@ -148,6 +148,10 @@ module.exports = {
   },
 
   removeChannelReact: function(message){
+    if(serverManager.getChannelReact(message.guild.id) == null){
+      message.reply("There is no reaction channel setup that can be removed.");
+      return;
+    }
     serverManager.setChannelReact(message.guild.id, null);
     message.reply("The reaction channel has been removed.");
   }
