@@ -92,6 +92,11 @@ module.exports = {
       return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the alias is too long.';
     }
 
+    if(isInteger(msg[1])){
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Die ID ist keine Nummer).");
+      return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the ID must be a number.';
+    }
+
     var oldBefehl = instructions[msg[1]][0].name;
     instructions[msg[1]][0].name = msg[2];
     serverManager.setInstructions(message.guild.id, instructions);
@@ -122,9 +127,12 @@ module.exports = {
     }
 
     //Keine Nummer
-    try{
-      volume = parseInt(param[1]);
-      //Nummer nicht im gültigen bereich
+    let volume = param[1];
+    if(!isInteger(volume)){
+      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
+      message.reply("The volume has to be a whole number! " + e);
+      return;
+    }
       if (volume < 0 || volume > 100){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
         message.reply("The volume must be beteween 0 and 100.");
@@ -134,11 +142,6 @@ module.exports = {
       serverManager.setVolume(message.guild.id, volume / 100.0);
       logManager.writeDebugLog(message.guild.name + ": Die Lautstärke wurde erfolgreich auf " + volume + "% gesetzt.");
       message.reply("The volume has been set to " + volume +"%.");
-    }
-    catch(e){
-      logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-      message.reply("The volume has to be a whole number! " + e);
-      return;
     }
 
   },
