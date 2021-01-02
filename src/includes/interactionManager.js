@@ -92,7 +92,7 @@ module.exports = {
       return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the alias is too long.';
     }
 
-    if(isInteger(msg[1])){
+    if(!isInteger(msg[1])){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Befehl konnte nicht umbenannt werden (Die ID ist keine Nummer).");
       return 'Incorrect usage of \'' + prefix + instructions[17][0] + '\', the ID must be a number.';
     }
