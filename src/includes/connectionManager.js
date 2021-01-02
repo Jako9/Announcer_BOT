@@ -139,7 +139,7 @@ module.exports = {
           else{
             dbManager.getUser(message.author.id, function(user){
               if(!user){
-                dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1], function(successful){
+                dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1], function(successfull){
                   if(successfull){
                     message.reply("The bot will now acompany you.");
                   }
