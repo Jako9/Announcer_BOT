@@ -132,8 +132,12 @@ module.exports = {
       message.reply('The channel could not be found. If you need help with the setup, refer to our website @setup');
       return;
     }
+    channel.messages.fetch();
+    if(channel.messages.cache.find(message => message.pinned) == null){
+      message.reply("I didn\'t find any pinned messages in this channel. Be sure to first pin the message, you want to be reacted on.");
+      return;
+    }
     serverManager.setChannelReact(id, channel);
-    serverManager.getChannelReact(message.guild).messages.fetch();
     serverManager.setReactionMessage(id, serverManager.getChannelReact(message.guild).messages.cache.find(message => message.pinned));
     logManager.writeDebugLog(message.guild.name + ": Der Channel wurde erfolgreich aufgesetzt.");
     message.reply('Setup successful.');
