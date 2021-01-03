@@ -106,7 +106,7 @@ module.exports = {
                 }
                 else{
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + ".mp3"));
+                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + SUFFIX));
                 }
               });
             }
