@@ -50,7 +50,7 @@ module.exports = {
     if (instructions.length % 10 == 0){
       maxPage--;
     }
-    if(message.content.split(' ').length == 2 && isInteger(message.content.split(' ')[1])){
+    if(message.content.split(' ').length == 2 && isInteger(message.content.split(' ')[1]) && message.content.split(' ')[1] != 0){
       page = message.content.split(' ')[1];
       if(message.content.split(' ')[1] > maxPage){
         message.reply("There is only " + maxPage+ " pages :(");
