@@ -54,12 +54,12 @@ function bot_join(vc, connection, file){
       }
     }
 
-    const dispatcher = connection.play(file);
+    const dispatcher = connection.play(file).catch();
     statisticsManager.joined();
     dispatcher.setVolume(serverManager.getVolume(vc.guild.id));
     dispatcher.on("finish", end => {
       statisticsManager.addToPlaytime(dispatcher.streamTime);
-      leave(vc);
+      leave(vc).catch();
     });
 }
 
