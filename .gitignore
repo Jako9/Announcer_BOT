@@ -12,7 +12,7 @@
 */webConfig.json
 
 config/
-
+.idea/
 **/weboverlay/conf
 **/weboverlay/logs
 
