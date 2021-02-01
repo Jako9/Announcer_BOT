@@ -71,7 +71,7 @@ client.on('ready', () =>{
   serverManager.readInServers(client);
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
-  client.user.setActivity(".help.....", {
+  client.user.setActivity(".help", {
     type: "WATCHING"
   });
   logManager.writeBootLog("------------------------------");
