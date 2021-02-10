@@ -90,7 +90,12 @@ client.on("guildDelete", guild => {
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
   //Fetch roles in case they are needed (on voiceChannelJoinEvent)
-  let rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
+  try{
+    let rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
+  }
+  catch(e){
+    return;
+  }
   connectionManager.triggerJoin(oldState,newState,rolle);
 
   if(oldState.channel !== undefined){
