@@ -28,6 +28,10 @@ process.on('uncaughtException', async function(err) {
   process.exit();
 });
 
+client.guilds.cache.array().forEach(guild => {
+  serverManager.addServer(guild);
+});
+
 process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
   logManager.writeErrorLog(warning.stack);
