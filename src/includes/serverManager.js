@@ -313,6 +313,7 @@ module.exports = {
 
       dbManager.syncServers(ids,names,avatars, function(worked){
         dbManager.readInServers(function(dbServers){
+          try{
             dbServers.forEach(dbServer => {
             let id = dbServer.guildID;
             dbServer["timeLastJoin"] = 0;
@@ -332,7 +333,6 @@ module.exports = {
             fetchMessage(client, id, dbServer.channelReact);
             console.log("id: " + id);
             console.log("server: " + servers[id]);
-            try{
               servers[id] = dbServer;
               servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
               servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
