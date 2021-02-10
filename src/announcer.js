@@ -28,10 +28,6 @@ process.on('uncaughtException', async function(err) {
   process.exit();
 });
 
-client.guilds.cache.array().forEach(guild => {
-  serverManager.addServer(guild);
-});
-
 process.on('warning', function(warning) {
   logManager.writeErrorLog(warning);
   logManager.writeErrorLog(warning.stack);
@@ -75,6 +71,9 @@ client.on('ready', () =>{
   serverManager.readInServers(client);
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
+  client.guilds.cache.array().forEach(guild => {
+    serverManager.addServer(guild);
+  });
   client.user.setActivity(".help", {
     type: "WATCHING"
   });
