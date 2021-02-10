@@ -337,6 +337,7 @@ module.exports = {
               saveServer(id);
               });
             }
+          }
         });
       });
     },
