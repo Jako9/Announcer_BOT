@@ -330,14 +330,11 @@ module.exports = {
             dbServer.channelReact = JSON.parse(dbServer.channelReact);
 
             fetchMessage(client, id, dbServer.channelReact);
-            try{
               servers[id] = dbServer;
               servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
               servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
               saveServer(id);
               });
-            }
-            catch(e){
             }
             }
         });
