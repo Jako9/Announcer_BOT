@@ -177,6 +177,7 @@ client.on('message', message => {
   catch(e){
     //Falls noch nicht alle Server eingelesen sind
     logManager.writeDebugLog(message.guild.name + ": Der Bot ist noch nicht hochgefahren");
+    serverManager.addServer(message.guild);
     return;
   }
 
