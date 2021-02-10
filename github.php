@@ -7,12 +7,12 @@ function run() {
     $postBody = $_POST['payload'];
     $payload = json_decode($postBody);
 
-    if ($payload->repository->url == 'https://github.com/Jako9/Announcer_BOT' && $payload->ref == 'refs/heads/master') {
+    if ($payload->repository->url == 'https://github.com/Jako9/Announcer_BOT' && $payload->ref == 'refs/heads/production') {
 
         //shell_exec("killall node");
         //shell_exec("git pull");
         shell_exec("./git.sh");
-        
+
         return true;
     }
 
