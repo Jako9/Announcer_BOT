@@ -103,7 +103,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
       lockManager.forceUnlock(oldState);
       lockManager.removeMember(oldState.member);
     }
-    catch(){
+    catch(e){
     }
   }
 });
