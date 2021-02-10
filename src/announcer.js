@@ -71,9 +71,7 @@ client.on('ready', () =>{
   serverManager.readInServers(client);
   serverManager.readInDescriptions();
   serverManager.updateUser(client);
-  client.guilds.cache.array().forEach(guild => {
-    console.log(guild.name);
-  });
+  console.log(client.guilds.cache.array());
   client.user.setActivity(".help", {
     type: "WATCHING"
   });
