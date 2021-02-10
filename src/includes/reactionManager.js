@@ -35,26 +35,29 @@ module.exports = {
   giveReaction: async function(reaction, user){
 
     let id = reaction.message.guild.id;
+    try{
+      let removed = await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
+      if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == undefined || reaction.message.id != serverManager.getReactionMessage(id).id || removed) return;
 
-    let removed = await removeForeignReactions(serverManager.getReactionMessage(id), reaction);
-    if(user.bot || !serverManager.getChannelReact(reaction.message.guild) || serverManager.getChannelReact(reaction.message.guild) != reaction.message.channel || serverManager.getReactionMessage(id) == undefined || reaction.message.id != serverManager.getReactionMessage(id).id || removed) return;
+      let roleName = reaction.emoji.name.toLowerCase();
+      let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
+      let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
+      if(!role || !member) {
+        logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Die Rolle oder der Nutzer existieren nicht).");
+        return;
+      }
 
-    let roleName = reaction.emoji.name.toLowerCase();
-    let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === roleName);
-    let member = reaction.message.guild.members.cache.find(member => member.id === user.id);
-    if(!role || !member) {
-      logManager.writeDebugLog(reaction.message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Rolle der Reaktion konnte nicht vergeben werden (Die Rolle oder der Nutzer existieren nicht).");
-      return;
+      let defaultRole = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(id).id);
+      if(defaultRole){
+        logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
+        member.roles.add([role.id,defaultRole.id]).catch();
+      }
+      else{
+        logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
+        member.roles.add(role.id).catch();
+      }
     }
-
-    let defaultRole = reaction.message.guild.roles.cache.find(role => role.id == serverManager.getStandartRole(id).id);
-    if(defaultRole){
-      logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
-      member.roles.add([role.id,defaultRole.id]).catch();
-    }
-    else{
-      logManager.writeDebugLog(reaction.message.guild.name + ": Die Rolle der Reaktion wurde erfolgreich vergeben.");
-      member.roles.add(role.id).catch();
+    catch(e){
     }
   },
 
