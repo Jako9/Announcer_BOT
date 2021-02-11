@@ -77,6 +77,7 @@ client.on('ready', () =>{
   client.user.setActivity(".help", {
     type: "WATCHING"
   });
+  console.log("Caches Servers: " + client.guilds.cache.array().length);
   logManager.writeBootLog("------------------------------");
 });
 
