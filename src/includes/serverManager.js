@@ -330,8 +330,13 @@ module.exports = {
 
             fetchMessage(client, id, dbServer.channelReact);
             servers[id] = dbServer;
-            servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
-            servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+            try{
+              servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
+              servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+            }
+            catch(e){
+              dbManager.deleteServer(id);
+            }
             saveServer(id);
             });
             client.guilds.cache.array().forEach(guild => {
