@@ -339,7 +339,7 @@ module.exports = {
               console.log(guild.id);
               console.log(servers[guild.id]);
               if(servers[guild.id] == undefined){
-                this.addServer(guild);
+                serverManager.addServer(guild);
               }
             });
             console.log(servers);
