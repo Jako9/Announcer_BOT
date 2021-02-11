@@ -40,7 +40,7 @@ function isLocked(channel){
 }
 
 module.exports = {
-    lock: function (message){
+    lock: function (message, prefix, instructions){
       //User in keinem Channel
       if(!message.member.voice.channel){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Benutzer sitzt in keinem Channel).");
@@ -54,7 +54,7 @@ module.exports = {
       });
       if(!ids.includes(message.member.voice.channel.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
-        message.reply('The current voicechannel is not lockable.');
+        message.reply('The current voicechannel is not lockable. For more info type: ' + prefix + instructions[8][0].name + " 2" + " or " + prefix + instructions[8][0].name + " 3");
         return;
       }
       let channels = serverManager.getLockedChannels(message.guild.id);
@@ -95,7 +95,7 @@ module.exports = {
     lockableClear: function(message){
       serverManager.setLockable(message.guild.id, []);
       logManager.writeDebugLog(message.guild.name + ": Die abzuschließenden Channel wurden zurückgesetzt.");
-      message.reply("Die abzuschließenden Channel wurden zurückgesetzt.");
+      message.reply("The lockable channels have been reset.");
     },
 
     showLockable: function(message){

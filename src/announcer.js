@@ -285,7 +285,7 @@ client.on('message', message => {
       message.reply("You don\'t have permission [LEVEL" + instructions[3][0].security + "] to use this command.");
       return;
     }
-    lockManager.lock(message);
+    lockManager.lock(message,prefix,instructions);
   }
 
   // Unlock Room
