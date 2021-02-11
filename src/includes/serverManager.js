@@ -9,9 +9,11 @@ let descriptions = [];
 
 module.exports = {
     addServer: function(guild) {
-
+      console.log("Syncing...");
       dbManager.addServer(guild.id, guild.name,guild.iconURL(), function(res){
+        console.log("Syncing...2 " + res);
         dbManager.getServer(guild.id, function(dbServer){
+          console.log("Syncing...3 " + dbServer);
           let id = dbServer.guildID;
           dbServer["timeLastJoin"] = 0;
           dbServer["lockedChannels"] = [];
