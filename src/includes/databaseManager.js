@@ -359,6 +359,7 @@ module.exports = {
                 callback(results);
             }
             else{
+              console.log(guildName);
               console.log(error);
             }
         });
