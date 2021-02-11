@@ -339,11 +339,13 @@ module.exports = {
       });
 
       client.guilds.cache.array().forEach(guild => {
+        console.log(guild.id);
         console.log(servers[guild.id]);
         if(servers[guild.id] == undefined){
           this.addServer(guild);
         }
       });
+      console.log(servers);
     },
 
     readInDescriptions: function (){
