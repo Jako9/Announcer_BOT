@@ -340,7 +340,7 @@ module.exports = {
 
       client.guilds.cache.array().forEach(guild => {
         if(servers[guild.id] == undefined){
-          addServer(guild);
+          this.addServer(guild);
         }
       });
     },
