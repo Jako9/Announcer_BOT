@@ -335,18 +335,17 @@ module.exports = {
             servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
             saveServer(id);
             });
+            client.guilds.cache.array().forEach(guild => {
+              console.log(guild.id);
+              console.log(servers[guild.id]);
+              if(servers[guild.id] == undefined){
+                this.addServer(guild);
+              }
+            });
+            console.log(servers);
+          },
         });
       });
-
-      client.guilds.cache.array().forEach(guild => {
-        console.log(guild.id);
-        console.log(servers[guild.id]);
-        if(servers[guild.id] == undefined){
-          this.addServer(guild);
-        }
-      });
-      console.log(servers);
-    },
 
     readInDescriptions: function (){
         dbManager.readInDescriptions(function(descs){
