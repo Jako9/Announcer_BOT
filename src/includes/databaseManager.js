@@ -358,10 +358,6 @@ module.exports = {
             if(!error){
                 callback(results);
             }
-            else{
-              console.log(guildName);
-              console.log(error);
-            }
         });
         connection.end();
 
