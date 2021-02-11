@@ -337,6 +337,7 @@ module.exports = {
             });
             client.guilds.cache.array().forEach(guild => {
               if(servers[guild.id] == undefined){
+                console.log("Syncing locally saved guild with database: Guild: " + guild.name);
                 module.exports.addServer(guild);
               }
             });
