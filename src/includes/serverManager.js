@@ -305,11 +305,7 @@ module.exports = {
       let ids = [];
       let names = [];
       let avatars = [];
-      console.log(client.guilds.cache.array().length);
       client.guilds.cache.array().forEach(guild => {
-        this.addServer(guild);
-        console.log(guild.id);
-        console.log
         ids.push(guild.id);
         names.push(guild.name);
         avatars.push(guild.iconURL());
@@ -339,6 +335,10 @@ module.exports = {
             servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
             saveServer(id);
             });
+        });
+        console.log(ids.length);
+        client.guilds.cache.array().forEach(guild => {
+          console.log(servers[guild.id] == undefined);
         });
       });
     },
