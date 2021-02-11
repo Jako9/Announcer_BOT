@@ -335,9 +335,10 @@ module.exports = {
             servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
             saveServer(id);
             });
-            console.log(ids.length);
             client.guilds.cache.array().forEach(guild => {
-              console.log(servers[guild.id] == undefined);
+              if(servers[guild.id] == undefined){
+                this.addServer(guild);
+              }
             });
         });
       });
