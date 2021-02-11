@@ -358,6 +358,9 @@ module.exports = {
             if(!error){
                 callback(results);
             }
+            else{
+              console.log(error);
+            }
         });
         connection.end();
 
