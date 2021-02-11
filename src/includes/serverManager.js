@@ -343,9 +343,9 @@ module.exports = {
               }
             });
             console.log(servers);
-          },
         });
       });
+    },
 
     readInDescriptions: function (){
         dbManager.readInDescriptions(function(descs){
