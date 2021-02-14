@@ -1,5 +1,7 @@
 jQuery( document ).ready(function($) {
 
+    $('#server-body').hide();
+
     let lastScrollTop = Cookies.get('reload-log-position');
     if (lastScrollTop) {
         $(window).scrollTop(lastScrollTop);
