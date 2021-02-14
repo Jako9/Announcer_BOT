@@ -2,6 +2,10 @@ jQuery( document ).ready(function($) {
 
     $('#server-body').hide();
 
+    $('#server-header').on('click', function(){
+        $('#server-body').toggle();
+    });
+
     let lastScrollTop = Cookies.get('reload-log-position');
     if (lastScrollTop) {
         $(window).scrollTop(lastScrollTop);
