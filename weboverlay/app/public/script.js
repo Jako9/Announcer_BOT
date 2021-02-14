@@ -3,7 +3,7 @@ jQuery( document ).ready(function($) {
     $('#server-body').hide();
 
     $('#server-header').on('click', function(){
-        $('#server-body').toggle();
+        console.log('Miese Briese');
     });
 
     let lastScrollTop = Cookies.get('reload-log-position');
