@@ -632,10 +632,10 @@ function getStatistics(){
     
     <!--Beginn Server Abschnitt-->
     <div id="server" class="d-board-card">
-        <div class="container-fluid">
+        <div class="container-fluid" >
         <div class="card">
-            <h5 class="card-header">Server</h5>
-            <div class="card-body">
+            <h5 class="card-header" id="server-header">Server</h5>
+            <div class="card-body" id="server-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
 
