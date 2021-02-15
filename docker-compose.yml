@@ -1,0 +1,25 @@
+version: "3.3"
+
+services:
+    webserver:
+        image: nginx
+        volumes:
+            - ./config/statistics/:/statistics
+            - ./resources/:/resources
+            - ./web:/code
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        ports:
+            - 80:80
+        links:
+            - php
+
+    php:
+        build: ./docker/php
+        volumes:
+            - ./config/statistics/:/statistics
+            - ./web:/code
+        environment:
+            - LOGIN=${WEBUSER}
+            - PASSWORD=${WEBPASSWORD}
+            - DBUSER=${DBUSER}
+            - DBPASSWORD=${DBPASSWORD}

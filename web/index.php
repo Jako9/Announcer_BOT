@@ -32,7 +32,7 @@
     }
 
     function getStatistics(){
-    $json = file_get_contents('../../../config/statistics/statistics.json');
+    $json = file_get_contents('/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;

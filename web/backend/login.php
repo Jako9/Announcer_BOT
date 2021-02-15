@@ -12,10 +12,8 @@ if(isset($_POST['login'])){
         $user = $_POST['user'];
         $password = $_POST['password'];
 
-        $confUser = getUserfromConfig();
-
-        $validPassword = ($confUser->password == md5($password)); //Hier noch richtiges hashing implementieren
-        $validUser = ($confUser->user == $user);
+        $validPassword = password_verify($password, $_ENV['PASSWORD']); //Hier noch richtiges hashing implementieren
+        $validUser = ($_ENV['LOGIN'] == $user);
 
 
         if($validPassword && $validUser){
@@ -25,11 +23,6 @@ if(isset($_POST['login'])){
              header("location: index.php");
         }
     }
-}
-
-function getUserfromConfig(){
-    $json = file_get_contents('../../../config/webConfig.json');
-    return json_decode($json);
 }
 
 
@@ -62,7 +55,7 @@ function getUserfromConfig(){
             <div class="card">
                 <div class="card-header home-card-header">
                     <div class="home-header-text" >
-                        <h5>Login</h5>
+                        <h5>Login <?php echo password_hash('admin', PASSWORD_DEFAULT); ?></h5>
                     </div>
                 </div>
                 <div class="card-body">

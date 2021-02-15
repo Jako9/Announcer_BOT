@@ -325,10 +325,9 @@ function clearLogFile($file){
 }
 
 function connectToDatabase(){
-    $creds = readFromJSON('../database.json');
-    $username = $creds->user;
-    $password = $creds->password;
-    $database = $creds->database;
+    $username = $_ENV['DBUSER'];
+    $password = $_ENV['DBPASSWORD'];
+    $database = 'announcer';
 
     $conn = new mysqli('localhost', $username, $password, $database);
 
@@ -464,7 +463,7 @@ function handleLogReset(){
 
 
 function getStatistics(){
-    $json = file_get_contents('../../../config/statistics/statistics.json');
+    $json = file_get_contents('/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;
