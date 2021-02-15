@@ -297,7 +297,7 @@ function printVips(){
 }
 
 function readLogFile($file){
-    $logPath = '../../../logs/' . $file;
+    $logPath = '/announcer/logs/' . $file;
 
     if(file_exists($logPath)){
         $logContent = '';
@@ -320,16 +320,16 @@ function readLogFile($file){
 }
 
 function clearLogFile($file){
-    $logPath = '../../../logs/' . $file;
+    $logPath = '/announcer/logs/' . $file;
     file_put_contents($logPath, "");
 }
 
 function connectToDatabase(){
     $username = $_ENV['DBUSER'];
     $password = $_ENV['DBPASSWORD'];
-    $database = 'announcer';
+    $database = $_ENV['MYSQL_DATABASE'];
 
-    $conn = new mysqli('localhost', $username, $password, $database);
+    $conn = new mysqli('db', $username, $password, $database);
 
     // Check connection
     if ($conn->connect_error) {
@@ -463,7 +463,7 @@ function handleLogReset(){
 
 
 function getStatistics(){
-    $json = file_get_contents('/statistics/statistics.json');
+    $json = file_get_contents('/announcer/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;

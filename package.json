@@ -4,6 +4,7 @@
   "description": "A discord bot, for playing sounds on join and more",
   "main": "./src/announcer.js",
   "scripts": {
+    "start": "node ./src/announcer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
