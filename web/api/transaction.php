@@ -1,8 +1,6 @@
 <?php
 
-$api = readFromJSON('api.json');
-$processPayment = $api->processPayment;
-$password = $processPayment->password;
+$password = getAPICredFromDatabase()[0]['password'];
 
 
 if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
@@ -10,29 +8,52 @@ if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
         $transactionId = rtrim($_POST['transID']);
         $state = $_POST['state'];
 
-        $pendingPayments = readFromJSON('pendingPayments.json');
-        $pendingPaymentsArray = $pendingPayments->transactions;
-
-
         updatePaymentStatus($transactionId, $state);
     }
 }
 
 
-function readFromJSON($file){
-    $json = file_get_contents('../../../config/' . $file);
-    return json_decode($json);
+function getPendingsPaymentsFromDatabase(){
+    $connection = connectToDatabase();
+    $sql = "SELECT * FROM pending_payments";
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($arr, $row);
+        }
+    }
+
+    return $arr;
+    $connection->close();
+}
+
+function getAPICredFromDatabase(){
+    $connection = connectToDatabase();
+    $sql = "SELECT password FROM api_creds WHERE name='processPayment'";
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($arr, $row);
+        }
+    }
+
+    return $arr;
+    $connection->close();
 }
 
 function connectToDatabase(){
-    $creds = readFromJSON('database.json');
-    $username = $creds->user;
-    $password = $creds->password;
-    $database = $creds->database;
+    $username = $_ENV['DBUSER'];
+    $password = $_ENV['DBPASSWORD'];
+    $database = $_ENV['DBNAME'];
 
-    $conn = new mysqli('localhost', $username, $password, $database);
+    $conn = new mysqli('db', $username, $password, $database);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -42,9 +63,9 @@ function connectToDatabase(){
 
 function updatePaymentStatus($transID, $state){
     $connection = connectToDatabase();
-    $sql = "UPDATE pending_payments SET status='". $state ."'  WHERE transID='" . $transID . "'";
+    $connection->prepare("UPDATE pending_payments SET status=? WHERE transID=?");
 
-    $result = $connection->query($sql);
+    $result = $connection->get_result();
 
     $connection->close();
 }

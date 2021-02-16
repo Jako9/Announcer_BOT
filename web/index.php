@@ -1,9 +1,16 @@
 <?php
     function isOnline(){
-        $ausgabe = "";
-        exec('docker ps', $ausgabe);
-        echo print_r($ausgabe);
-        return !empty($pids);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://node:3000/status");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+    
+        $decodedAnswer = json_decode($output);
+    
+        curl_close($ch);
+        error_log(print_r("came here" . $decodedAnswer->running, true));
+    
+        return ($decodedAnswer->running == 1);
     }
 
     function getOnlineColor(){
@@ -89,7 +96,7 @@
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/icon.svg"/>
+    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

@@ -44,7 +44,7 @@ if(isset($_POST['login'])){
 
     <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
     <body>
     

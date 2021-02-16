@@ -1,9 +1,8 @@
 <?php
 
-    $api = readFromJSON('api.json');
-    $handleThankYou = $api->handleThankYou;
-    $link = $handleThankYou->link;
-    $password = $handleThankYou->password;
+    $api = getAPICredFromDatabase();
+    
+    error_log(print_r($api, true));
 
     if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])){
         $ch = curl_init($link ."?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&PayerID=" . $_GET['PayerID'] . "&pass=" . $password);
@@ -15,9 +14,35 @@
         echo $output;
     }
 
-    function readFromJSON($file){
-        $json = file_get_contents('../../../config/' . $file);
-        return json_decode($json);
+    function getAPICredFromDatabase(){
+        $connection = connectToDatabase();
+        $sql = "SELECT password FROM api_creds WHERE name='processPayment'";
+    
+        $result = $connection->query($sql);
+        $arr = array();
+    
+        if($result){
+            while ($row = mysqli_fetch_assoc($result)) {
+                array_push($arr, $row);
+            }
+        }
+    
+        return $arr;
+        $connection->close();
+    }
+    
+    function connectToDatabase(){
+        $username = $_ENV['DBUSER'];
+        $password = $_ENV['DBPASSWORD'];
+        $database = $_ENV['DBNAME'];
+    
+        $conn = new mysqli('db', $username, $password, $database);
+    
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+    
+        return $conn;
     }
 
 ?>

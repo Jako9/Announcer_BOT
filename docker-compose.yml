@@ -18,10 +18,9 @@ services:
         volumes:
             - ./config/statistics/:/announcer/statistics
             - ./resources/:/resources
-            - ./logs/:/announcer/logs
+            - ./logs/:/var/www/logs
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
-            - /var/run/docker.sock:/var/run/docker.sock
         ports:
             - 80:80
         links:
@@ -35,8 +34,7 @@ services:
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics
-            - ./logs/:/announcer/logs
-            - /var/run/docker.sock:/var/run/docker.sock
+            - ./logs/:/var/www/logs
             - ./web:/code
         environment:
             - LOGIN=${WEBUSER}
@@ -44,6 +42,7 @@ services:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
             - DBNAME=${DBNAME}
+            - BRANCH=${BRANCH}
 
     phpmyadmin:
         depends_on:
@@ -58,11 +57,11 @@ services:
 
     node:
         build: .
-        ports: 
-            - 3000:3000
         depends_on: 
             - db
         restart: always
+        ports:
+            - '3000:3000'
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics

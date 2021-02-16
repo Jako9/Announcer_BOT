@@ -2,10 +2,10 @@
   "name": "announcer_bot",
   "version": "1.1.0",
   "description": "A discord bot, for playing sounds on join and more",
-  "main": "announcer.js",
+  "main": "agent.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node announcer.js"
+    "start": "node agent.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "discord.js": "^12.5.1",
+    "express": "^4.17.1",
     "ffmpeg-static": "^4.2.7",
     "mp3-duration": "^1.1.0",
     "mysql": "^2.18.1",

@@ -297,7 +297,7 @@ function printVips(){
 }
 
 function readLogFile($file){
-    $logPath = '/announcer/logs/' . $file;
+    $logPath = '/var/www/logs/' . $file;
 
     if(file_exists($logPath)){
         $logContent = '';
@@ -320,8 +320,15 @@ function readLogFile($file){
 }
 
 function clearLogFile($file){
-    $logPath = '/announcer/logs/' . $file;
-    file_put_contents($logPath, "");
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/log/clear/" . $file);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
 }
 
 function connectToDatabase(){
@@ -421,42 +428,77 @@ function readFromJSON($file){
 }
 
 function isServerRunning(){
-    exec("pgrep node", $pids);
-    return !(empty($pids));
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/status");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
+    error_log(print_r("came here" . $decodedAnswer->running, true));
+
+    return ($decodedAnswer->running == 1);
+}
+
+function startServer(){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/start");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
+    
+}
+
+function stopServer(){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/kill");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
 }
 
 function handleNodeServerActions(){
     if(isset($_POST['shutdown'])){
         if(isServerRunning()) {
             $out = [];
-            exec("../../../shutdown.sh >/dev/null &", $out);
+            stopServer();
             header("Refresh:0");
     
         }else{
             $out = [];
-            exec("../../../launch.sh >/dev/null &", $out);
+            startServer();
             header("Refresh:0");
         }
     }
     
     if(isset($_POST['restart'])){
         $out = [];
-        exec("../../../restart.sh >/dev/null &", $out);
+        stopServer();
+        startServer();
         header("Refresh:0");
     }
 }
 
 function handleLogReset(){
     if(isset($_POST['reset-error-log'])){
-        clearLogFile('error_log.log');
+        clearLogFile('error');
     }
 
     if(isset($_POST['reset-boot-log'])){
-        clearLogFile('boot_log.log');
+        clearLogFile('boot');
     }
 
     if(isset($_POST['reset-debug-log'])){
-        clearLogFile('debug.log');
+        clearLogFile('debug');
     }
 }
 
@@ -516,7 +558,7 @@ function getStatistics(){
 
     <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
 
     <title>Announcer_Bot Admin</title>
     </head>
