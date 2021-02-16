@@ -12,6 +12,9 @@ const whitelistManager = require('./includes/whitelistManager.js');
 
 const dbManager = require('./includes/databaseManager.js');
 
+const Discord = require('discord.js');
+const client = new Discord.Client();
+
 process.on('uncaughtException', async function(err) {
   logManager.writeErrorLog(err);
   logManager.writeErrorLog(err.stack);
@@ -35,9 +38,8 @@ process.on('warning', function(warning) {
 
 
 //Initilizing BOT
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const KEY = process.argv.slice(2)[0];
+
+const KEY = process.env.BOTKEY;
 const JOIN = false;
 const REACTION = true;
 const ENDUNGEN = [

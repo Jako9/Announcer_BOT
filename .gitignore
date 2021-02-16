@@ -11,12 +11,13 @@
 *.mp3
 */webConfig.json
 
-config/
 .idea/
 
 # End of https://www.gitignore.io/api/batch
 
 node_modules/
 package-lock.json
+
+config/statistics/
 
 .env

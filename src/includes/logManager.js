@@ -1,10 +1,9 @@
 const fs = require('fs');
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 module.exports = {
     writeBootLog: function(message) {
 
-        bootLogPath = PATH + "/logs/boot_log.log"
+        bootLogPath = "/announcer/logs/boot_log.log"
 
         try {
             date = new Date().toUTCString();
@@ -19,7 +18,7 @@ module.exports = {
 
     writeDebugLog: function(message) {
 
-        debugLogPath = PATH + "/logs/debug.log"
+        debugLogPath = "/announcer/logs/debug.log"
 
         try {
             date = new Date().toUTCString();
@@ -33,7 +32,7 @@ module.exports = {
 
     writeErrorLog: function(message) {
 
-        errorLogPath = PATH + "/logs/error_log.log"
+        errorLogPath = "/announcer/logs/error_log.log"
 
         try {
             date = new Date().toUTCString();

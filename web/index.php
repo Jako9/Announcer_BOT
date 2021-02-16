@@ -1,7 +1,8 @@
 <?php
-
     function isOnline(){
-        exec("pgrep node", $pids);
+        $ausgabe = "";
+        exec('docker ps', $ausgabe);
+        echo print_r($ausgabe);
         return !empty($pids);
     }
 
@@ -32,7 +33,7 @@
     }
 
     function getStatistics(){
-    $json = file_get_contents('/statistics/statistics.json');
+    $json = file_get_contents('/announcer/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;

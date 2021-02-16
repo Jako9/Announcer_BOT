@@ -9,8 +9,6 @@ let axios = require('axios');
 let mp3Duration = require('mp3-duration');
 const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
-const webApi = jsonParser.read(PATH + "/config/api.json");
-
 function buildEmbed(link){
   let hyperlink = '[here](' + link + ' \"become VIP\")';
   let embed = {
@@ -58,7 +56,7 @@ function changeVIPSound(message, file){
       'Content-Type': 'audio/mpeg',
     },
   }).then((result) => {
-    const outputFilename = PATH + "/resources/.cache/" + message.author.id + ".mp3";
+    const outputFilename = "/announcer/resources/.cache/" + message.author.id + ".mp3";
     fs.writeFileSync(outputFilename, result.data);
     const pathToCheck = outputFilename;
 
@@ -80,7 +78,7 @@ function changeVIPSound(message, file){
 
       if(!failed){
         //copy ins zielverzeichnis
-        jsonParser.copy(pathToCheck, PATH + "/resources/vips/" + message.author.id + ".mp3");
+        jsonParser.copy(pathToCheck, "/announcer/resources/vips/" + message.author.id + ".mp3");
 
         //Füge VIP hinzu
         dbManager.getVip(message.author.id, function(vip){
@@ -127,32 +125,34 @@ module.exports = {
               });
             }
             else{
-              logManager.writeDebugLog(webApi.createPayment.link + "?pass=" + webApi.createPayment.password);
+              dbManager.getAPISpecs('createPayment', function(createPaymentObject){
+                logManager.writeDebugLog(createPaymentObject.link + "?pass=" + createPaymentObject.password);
 
-              https.get(webApi.createPayment.link + "?pass=" + webApi.createPayment.password, (resp) => {
-              let data = '';
+                https.get(createPaymentObject.link + "?pass=" + createPaymentObject.password, (resp) => {
+                let data = '';
 
-              //Antwort
-              resp.on('data', (chunk) => {
-                data += chunk;
-              });
+                //Antwort
+                resp.on('data', (chunk) => {
+                  data += chunk;
+                });
 
-              // The whole response has been received. Print out the result.
-              resp.on('end', () => {
-                let jsonData = JSON.parse(data);
-                let link = jsonData.paypalLink;
-                if(link){
-                  dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
-                  let embed = buildEmbed(link);
-                  message.author.send({ embed: embed}).catch();
-                  if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+                // The whole response has been received. Print out the result.
+                resp.on('end', () => {
+                  let jsonData = JSON.parse(data);
+                  let link = jsonData.paypalLink;
+                  if(link){
+                    dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
+                    let embed = buildEmbed(link);
+                    message.author.send({ embed: embed}).catch();
+                    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
 
-                }else{
-                  message.author.send("Transaction failure, please try again!");
-                }
-              }).on("error", (err) => {
-                console.log("Error: " + err.message);
-              });
+                  }else{
+                    message.author.send("Transaction failure, please try again!");
+                  }
+                }).on("error", (err) => {
+                  console.log("Error: " + err.message);
+                });
+              })
             });
           }
         });

@@ -327,11 +327,10 @@ function clearLogFile($file){
 function connectToDatabase(){
     $username = $_ENV['DBUSER'];
     $password = $_ENV['DBPASSWORD'];
-    $database = $_ENV['MYSQL_DATABASE'];
+    $database = $_ENV['DBNAME'];
 
     $conn = new mysqli('db', $username, $password, $database);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

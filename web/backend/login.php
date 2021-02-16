@@ -55,7 +55,7 @@ if(isset($_POST['login'])){
             <div class="card">
                 <div class="card-header home-card-header">
                     <div class="home-header-text" >
-                        <h5>Login <?php echo password_hash('admin', PASSWORD_DEFAULT); ?></h5>
+                        <h5>Login </h5>
                     </div>
                 </div>
                 <div class="card-body">

@@ -9,17 +9,19 @@ services:
             - ./docker/mysql:/docker-entrypoint-initdb.d
         environment:
             MYSQL_ROOT_PASSWORD: ${DBROOT}
-            MYSQL_DATABASE: announcer
+            MYSQL_DATABASE: ${DBNAME}
             MYSQL_USER: ${DBUSER}
             MYSQL_PASSWORD: ${DBPASSWORD}
 
     webserver:
         image: nginx
         volumes:
-            - ./config/statistics/:/statistics
+            - ./config/statistics/:/announcer/statistics
             - ./resources/:/resources
+            - ./logs/:/announcer/logs
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
+            - /var/run/docker.sock:/var/run/docker.sock
         ports:
             - 80:80
         links:
@@ -33,12 +35,15 @@ services:
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics
+            - ./logs/:/announcer/logs
+            - /var/run/docker.sock:/var/run/docker.sock
             - ./web:/code
         environment:
             - LOGIN=${WEBUSER}
             - PASSWORD=${WEBPASSWORD}
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
+            - DBNAME=${DBNAME}
 
     phpmyadmin:
         depends_on:
@@ -50,3 +55,20 @@ services:
         environment:
             PMA_HOST: db
             MYSQL_ROOT_PASSWORD: ${DBROOT}
+
+    node:
+        build: .
+        ports: 
+            - 3000:3000
+        depends_on: 
+            - db
+        restart: always
+        volumes:
+            - ./resources/:/announcer/resources
+            - ./config/statistics/:/announcer/statistics
+            - ./logs/:/announcer/logs
+        environment:
+            - DBUSER=${DBUSER}
+            - DBPASSWORD=${DBPASSWORD}
+            - BOTKEY=${BOTKEY}
+            - DBNAME=${DBNAME}

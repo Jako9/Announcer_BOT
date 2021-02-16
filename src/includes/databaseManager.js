@@ -1,13 +1,11 @@
 const mysql = require('mysql');
 const jsonParser = require('./jsonParser');
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 const logManager = require('./logManager.js');
 
-const dbData = jsonParser.read(PATH + "/config/database.json");
-const database = dbData.database;
-const user = dbData.user;
-const password = dbData.password;
+const database = process.env.DBNAME;
+const user = process.env.DBUSER;
+const password = process.env.DBPASSWORD;
 
 
 module.exports = {
@@ -507,12 +505,33 @@ module.exports = {
         });
 
         connection.end();
-    }
+    },
+
+    getAPISpecs: function(ressourceName, callback){
+        connection = establishConnection();
+
+        let q = "SELECT * FROM api_creds WHERE name=?";
+
+        connection.query(q, [
+            ressourceName
+        ], (error, results) => {
+            if(error){
+                throw error;
+            }else{
+                if(results.length != 0){
+                    callback(results[0]);
+                }else{
+                    callback(false);
+                }
+            }
+        });
+        connection.end();
+    },
 };
 
 function establishConnection(){
     let connection = mysql.createConnection({
-        host : 'localhost',
+        host : 'db',
         database : database,
         user     : user,
         password : password,
