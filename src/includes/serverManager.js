@@ -336,7 +336,7 @@ module.exports = {
             }
             catch(e){
               dbManager.deleteServer(id, function(res){
-                logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
+                logManager.writeDebugLog(dbServer.name + ": Der Server wurde erfolgreich entfernt.");
               });
             }
             saveServer(id);
