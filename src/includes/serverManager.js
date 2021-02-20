@@ -335,7 +335,9 @@ module.exports = {
               servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
             }
             catch(e){
-              dbManager.deleteServer(id);
+              dbManager.deleteServer(id, function(res){
+                logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
+              });
             }
             saveServer(id);
             });
