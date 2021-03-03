@@ -374,6 +374,38 @@ function getServersFromDatabase(){
     $connection->close();
 }
 
+function getServerCountFromDatabase(){
+    $connection = connectToDatabase();
+    $sql = "SELECT COUNT(*) FROM server";
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        $resarr = $result->fetch_row();
+        return $resarr[0];
+    }
+
+    return null;
+    $connection->close();
+}
+
+function getVIPCountFromDatabase(){
+    $connection = connectToDatabase();
+    $sql = "SELECT COUNT(*) FROM server WHERE isVip=1";
+
+    $result = $connection->query($sql);
+    $arr = array();
+
+    if($result){
+        $resarr = $result->fetch_row();
+        return $resarr[0];
+    }
+
+    return $arr;
+    $connection->close();
+}
+
 function updateServerInDatabase($guildID, $prefix, $volume){
     $connection = connectToDatabase();
     $sql = "UPDATE server SET prefix='". $prefix ."', volume='". $volume ."'  WHERE guildID=" . $guildID;
@@ -634,7 +666,7 @@ function getStatistics(){
     <div id="server" class="d-board-card">
         <div class="container-fluid" >
         <div class="card">
-            <h5 class="card-header" id="server-header">Server</h5>
+            <h5 class="card-header" id="server-header">Server <?php getServerCountFromDatabase() ?></h5>
             <div class="card-body" id="server-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
@@ -655,7 +687,7 @@ function getStatistics(){
     <div id="vips" class="d-board-card">
         <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header">VIPs</h5>
+            <h5 class="card-header">VIPs <?php getVIPCountFromDatabase() ?></h5>
             <div class="card-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
