@@ -392,7 +392,7 @@ function getServerCountFromDatabase(){
 
 function getVIPCountFromDatabase(){
     $connection = connectToDatabase();
-    $sql = "SELECT COUNT(*) FROM server WHERE isVip=1";
+    $sql = "SELECT COUNT(*) FROM users WHERE isVip=1";
 
     $result = $connection->query($sql);
     $arr = array();
