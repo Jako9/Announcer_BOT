@@ -46,7 +46,7 @@ services:
     phpmyadmin:
         depends_on:
             - db
-        image: phpmyadmin/phpmyadmin
+        image: sk278/phpmyadmin-armhf
         restart: always
         ports:
             - '8081:80'
