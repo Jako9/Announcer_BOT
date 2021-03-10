@@ -114,7 +114,7 @@ function unMergeArrays(a){
 
 module.exports = {
     becomeVIP: function(message){
-      message.reply("Sorry becoming is currently disabled due to maintenance work. Please try again after 4AM (MEZ)");
+      message.reply("Sorry becoming VIP is currently disabled due to maintenance work. Please try again after 4AM (MEZ)");
       /* dbManager.getVip(message.author.id, function(is){
         if(is){
           message.author.send("You are already VIP!").catch();
