@@ -4,6 +4,8 @@ services:
     db:
         image: hypriot/rpi-mysql
         restart: always
+        volumes:
+            - ./docker/mysql:/docker-entrypoint-initdb.d
         environment:
             MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
