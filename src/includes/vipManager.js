@@ -114,7 +114,8 @@ function unMergeArrays(a){
 
 module.exports = {
     becomeVIP: function(message){
-      dbManager.getVip(message.author.id, function(is){
+      message.reply("Sorry becoming is currently disabled due to maintenance work. Please try again after 4AM (MEZ)");
+      /* dbManager.getVip(message.author.id, function(is){
         if(is){
           message.author.send("You are already VIP!").catch();
         }else{
@@ -157,7 +158,7 @@ module.exports = {
           }
         });
         }
-      })
+      })*/
   },
 
   fileReceived: function(message, file){
