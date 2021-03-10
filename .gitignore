@@ -4,7 +4,6 @@
 ### Batch ###
 # BatchFiles
 *.bat
-*.sh
 *.cmd
 *.btm
 *.log
