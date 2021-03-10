@@ -74,9 +74,7 @@ client.on('ready', () =>{
   client.guilds.cache.array().forEach(guild => {
     serverManager.addServer(guild);
   });
-  client.user.setActivity(".help", {
-    type: "WATCHING"
-  });
+  client.user.setActivity("Maintenance work between 6PM until 2AM (MEZ)!");
   logManager.writeBootLog("------------------------------");
 });
 
