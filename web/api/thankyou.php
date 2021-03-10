@@ -3,9 +3,9 @@
     $api = getAPICredFromDatabase();
     
     error_log(print_r($api, true));
-    
-    $link = $api->link;
-    $password = $api->password;
+
+    $link = $api["link"];
+    $password = $api["password"];
 
 
     if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])){
