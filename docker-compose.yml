@@ -2,14 +2,15 @@ version: "3.3"
 
 services:
     db:
-        image: hypriot/rpi-mysql
+        image: dordoka/rpi-mysql
         restart: always
         volumes:
-            - ./docker/mysql:/docker-entrypoint-initdb.d/dump.sql
+            - ./docker/mysql:/var/lib/mysql
         environment:
             MYSQL_DATABASE: ${DBNAME}
             MYSQL_USER: ${DBUSER}
             MYSQL_PASS: ${DBPASSWORD}
+            STARTUP_SQL: 'setup.sql'
 
     webserver:
         image: nginx
