@@ -5,12 +5,11 @@ services:
         image: hypriot/rpi-mysql
         restart: always
         volumes:
-            - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/dump.sql
+            - ./docker/mysql:/docker-entrypoint-initdb.d/dump.sql
         environment:
-            MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
             MYSQL_USER: ${DBUSER}
-            MYSQL_PASSWORD: ${DBPASSWORD}
+            MYSQL_PASS: ${DBPASSWORD}
 
     webserver:
         image: nginx
