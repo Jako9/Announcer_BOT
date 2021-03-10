@@ -3,6 +3,10 @@
     $api = getAPICredFromDatabase();
     
     error_log(print_r($api, true));
+    
+    $link = $api->link;
+    $password = $api->password;
+
 
     if(isset($_GET['paymentId']) && isset($_GET['token']) && isset($_GET['PayerID'])){
         $ch = curl_init($link ."?paymentId=". $_GET['paymentId'] . "&token=" . $_GET['token'] . "&PayerID=" . $_GET['PayerID'] . "&pass=" . $password);
@@ -16,18 +20,15 @@
 
     function getAPICredFromDatabase(){
         $connection = connectToDatabase();
-        $sql = "SELECT password FROM api_creds WHERE name='processPayment'";
+        $sql = "SELECT link, password FROM api_creds WHERE name='processPayment'";
     
         $result = $connection->query($sql);
-        $arr = array();
     
         if($result){
-            while ($row = mysqli_fetch_assoc($result)) {
-                array_push($arr, $row);
-            }
+            return $row = $result->fetch_assoc();
         }
     
-        return $arr;
+        return null;
         $connection->close();
     }
     
@@ -134,6 +135,7 @@
         <h1 class="display-4" id="stage-title">Thank your for your Payment</h1>
         <p class="lead">Thank you for your interest in this discord bot. In the next Step you can send your custom sound to the bot. The activation may take up to 30 minutes.<br>You have any questions regarding your purchase, please contact the following email: <a href="mailto:announcer.backend@gmail.com"><i class="far fa-envelope"></i></a></p>
         <a class="ich-hasse-links" href="https://discord.com/api/oauth2/authorize?client_id=541676543525519360&permissions=8&scope=bot">
+        <?php echo(print_r($api, true)) ?>
         </a>
     </div>
     </div>
