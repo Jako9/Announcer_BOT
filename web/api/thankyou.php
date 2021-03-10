@@ -20,7 +20,7 @@
 
     function getAPICredFromDatabase(){
         $connection = connectToDatabase();
-        $sql = "SELECT link, password FROM api_creds WHERE name='processPayment'";
+        $sql = "SELECT link, password FROM api_creds WHERE name='handleThankYou'";
     
         $result = $connection->query($sql);
     

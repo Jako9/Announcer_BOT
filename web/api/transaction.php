@@ -1,6 +1,7 @@
 <?php
 
-$password = getAPICredFromDatabase()[0]['password'];
+$api = getAPICredFromDatabase();
+$password = $api['password'];
 
 
 if(isset($_POST['transID']) && isset($_POST['state']) && isset($_POST['pass'])){
@@ -35,15 +36,12 @@ function getAPICredFromDatabase(){
     $sql = "SELECT password FROM api_creds WHERE name='processPayment'";
 
     $result = $connection->query($sql);
-    $arr = array();
 
     if($result){
-        while ($row = mysqli_fetch_assoc($result)) {
-            array_push($arr, $row);
-        }
+        return $row = $result->fetch_assoc();
     }
 
-    return $arr;
+    return null;
     $connection->close();
 }
 
