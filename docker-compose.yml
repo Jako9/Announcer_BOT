@@ -7,10 +7,10 @@ services:
         volumes:
             - ./docker/mysql:/var/lib/mysql
         environment:
+            MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
             MYSQL_USER: ${DBUSER}
-            MYSQL_PASS: ${DBPASSWORD}
-            STARTUP_SQL: 'setup.sql'
+            MYSQL_PASSWORD: ${DBPASSWORD}
 
     webserver:
         image: nginx
