@@ -22,7 +22,7 @@ services:
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
         ports:
-            - 80:80
+            - 8050:80
         links:
             - php
     
