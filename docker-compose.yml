@@ -4,6 +4,8 @@ services:
     db:
         build: ./docker/mysql
         restart: always
+        volumes:
+            - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/dump.sql
         environment:
             MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
