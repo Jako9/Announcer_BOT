@@ -3,6 +3,7 @@ version: "3.3"
 services:
     db:
         image: hypriot/rpi-mysql
+        command: --default-authentication-plugin=mysql_native_password
         restart: always
         volumes:
             - ./docker/mysql:/docker-entrypoint-initdb.d
