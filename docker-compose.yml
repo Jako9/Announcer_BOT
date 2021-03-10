@@ -9,7 +9,6 @@ services:
             MYSQL_DATABASE: ${DBNAME}
             MYSQL_USER: ${DBUSER}
             MYSQL_PASSWORD: ${DBPASSWORD}
-            MYSQL_ROOT_HOST: '%'
 
     webserver:
         image: nginx
