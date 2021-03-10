@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
     db:
-        image: dordoka/rpi-mysql
+        image: jsurf/rpi-mariadb
         restart: always
         volumes:
             - ./docker/mysql:/docker-entrypoint-initdb.d
