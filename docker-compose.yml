@@ -46,7 +46,7 @@ services:
     adminer:
         depends_on:
             - db
-        image: dockette/adminer
+        image: arm32v7/adminer
         restart: always
         ports:
             - '8081:8080'
