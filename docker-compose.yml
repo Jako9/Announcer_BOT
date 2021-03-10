@@ -43,15 +43,16 @@ services:
             - DBNAME=${DBNAME}
             - BRANCH=${BRANCH}
 
-    adminer:
+    phpmyadmin:
         depends_on:
             - db
-        image: adminer
+        image: ebspace/armhf-phpmyadmin:latest
         restart: always
         ports:
             - '8081:8080'
         environment:
-            ADMINER_DEFAULT_SERVER: db
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: ${DBROOT}
 
     node:
         build: .
