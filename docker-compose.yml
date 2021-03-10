@@ -2,8 +2,7 @@ version: "3.3"
 
 services:
     db:
-        image: biarms/mysql
-        command: --default-authentication-plugin=mysql_native_password
+        image: mariadb
         restart: always
         volumes:
             - ./docker/mysql:/docker-entrypoint-initdb.d
