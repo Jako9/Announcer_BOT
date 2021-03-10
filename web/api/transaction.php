@@ -61,11 +61,12 @@ function connectToDatabase(){
 
 function updatePaymentStatus($transID, $state){
     $connection = connectToDatabase();
-    $connection->prepare("UPDATE pending_payments SET status=? WHERE transID=?");
-    $connection->bind_param("ss", $state, $transID);
+    $prepared = $connection->prepare("UPDATE pending_payments SET status=? WHERE transID=?");
+    $prepared->bind_param("ss", $state, $transID);
 
-    $connection->execute();
+    $prepared->execute();
 
+    $prepared->close();
     $connection->close();
 }
 
