@@ -5,7 +5,7 @@ services:
         image: jsurf/rpi-mariadb
         restart: always
         volumes:
-            - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/
+            - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/init.sql
         environment:
             MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
