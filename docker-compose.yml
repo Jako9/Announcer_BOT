@@ -5,7 +5,7 @@ services:
         image: dordoka/rpi-mysql
         restart: always
         volumes:
-            - ./docker/mysql:/var/lib/mysql
+            - ./docker/mysql:/docker-entrypoint-initdb.d
         environment:
             MYSQL_ROOT_PASSWORD: ${DBROOT}
             MYSQL_DATABASE: ${DBNAME}
