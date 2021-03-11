@@ -1,8 +1,16 @@
 <?php
-
     function isOnline(){
-        exec("pgrep node", $pids);
-        return !empty($pids);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://node:3000/status");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+    
+        $decodedAnswer = json_decode($output);
+    
+        curl_close($ch);
+        error_log(print_r("came here" . $decodedAnswer->running, true));
+    
+        return ($decodedAnswer->running == 1);
     }
 
     function getOnlineColor(){
@@ -32,7 +40,7 @@
     }
 
     function getStatistics(){
-    $json = file_get_contents('../../../config/statistics/statistics.json');
+    $json = file_get_contents('/announcer/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;
@@ -84,11 +92,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     
-    <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
+    <link rel="stylesheet" href="http://announcer.jmk.cloud/overlay.css">
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/icon.svg"/>
+    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

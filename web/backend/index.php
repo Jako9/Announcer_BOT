@@ -130,7 +130,7 @@ function printServer(){
             $showSaveSuccess = false;
         }
 
-        $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-color: white";
+        $serverStyle = ($jObj->avatar != "")? "background-image: url(". $jObj->avatar .")" : "background-image: url(https://cdn.discordapp.com/embed/avatars/0.png)";
         $instructions = "";
         $whitelist = "";
         $lockable = "";
@@ -270,7 +270,7 @@ function printVips(){
             $name = $vip['username'];
             $vipAvatar = $vip['avatar'];
     
-            $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-color: white";
+            $vipStyle = ($vipAvatar != "")? "background-image: url(". $vipAvatar .")" : "background-image: url(https://cdn.discordapp.com/embed/avatars/0.png)";
     
             echo('
                 <div class="vip-element">
@@ -297,7 +297,7 @@ function printVips(){
 }
 
 function readLogFile($file){
-    $logPath = '../../../logs/' . $file;
+    $logPath = '/var/www/logs/' . $file;
 
     if(file_exists($logPath)){
         $logContent = '';
@@ -320,19 +320,24 @@ function readLogFile($file){
 }
 
 function clearLogFile($file){
-    $logPath = '../../../logs/' . $file;
-    file_put_contents($logPath, "");
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/log/clear/" . $file);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
 }
 
 function connectToDatabase(){
-    $creds = readFromJSON('../database.json');
-    $username = $creds->user;
-    $password = $creds->password;
-    $database = $creds->database;
+    $username = $_ENV['DBUSER'];
+    $password = $_ENV['DBPASSWORD'];
+    $database = $_ENV['DBNAME'];
 
-    $conn = new mysqli('localhost', $username, $password, $database);
+    $conn = new mysqli('db', $username, $password, $database);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -455,48 +460,83 @@ function readFromJSON($file){
 }
 
 function isServerRunning(){
-    exec("pgrep node", $pids);
-    return !(empty($pids));
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/status");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
+    error_log(print_r("came here" . $decodedAnswer->running, true));
+
+    return ($decodedAnswer->running == 1);
+}
+
+function startServer(){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/start");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
+    
+}
+
+function stopServer(){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/kill");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
 }
 
 function handleNodeServerActions(){
     if(isset($_POST['shutdown'])){
         if(isServerRunning()) {
             $out = [];
-            exec("../../../shutdown.sh >/dev/null &", $out);
+            stopServer();
             header("Refresh:0");
     
         }else{
             $out = [];
-            exec("../../../launch.sh >/dev/null &", $out);
+            startServer();
             header("Refresh:0");
         }
     }
     
     if(isset($_POST['restart'])){
         $out = [];
-        exec("../../../restart.sh >/dev/null &", $out);
+        stopServer();
+        startServer();
         header("Refresh:0");
     }
 }
 
 function handleLogReset(){
     if(isset($_POST['reset-error-log'])){
-        clearLogFile('error_log.log');
+        clearLogFile('error');
     }
 
     if(isset($_POST['reset-boot-log'])){
-        clearLogFile('boot_log.log');
+        clearLogFile('boot');
     }
 
     if(isset($_POST['reset-debug-log'])){
-        clearLogFile('debug.log');
+        clearLogFile('debug');
     }
 }
 
 
 function getStatistics(){
-    $json = file_get_contents('../../../config/statistics/statistics.json');
+    $json = file_get_contents('/announcer/statistics/statistics.json');
     $stats = json_decode($json);
 
     $timeInMilliSeconds = $stats->totalPlaytime;
@@ -548,9 +588,9 @@ function getStatistics(){
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-    <link rel="stylesheet" href="http://announcer.jmk.cloud/weboverlay/app/public/overlay.css">
+    <link rel="stylesheet" href="./../overlay.css">
 
-    <link rel="shortcut icon" type="image/ico" href="http://announcer.jmk.cloud/weboverlay/app/public/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
 
     <title>Announcer_Bot Admin</title>
     </head>
@@ -687,11 +727,10 @@ function getStatistics(){
     <div id="vips" class="d-board-card">
         <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header">VIPs - <?php echo(getVIPCountFromDatabase()) ?></h5>
-            <div class="card-body">
+            <h5 class="card-header" id="vip-header">VIPs - <?php echo(getVIPCountFromDatabase()) ?></h5>
+            <div class="card-body" id="vip-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
-
                 <div class="vip-container">
                     <?php printVips() ?>
                 </div>
@@ -764,7 +803,7 @@ function getStatistics(){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-    <script type='text/javascript' src="http://announcer.jmk.cloud/weboverlay/app/public/script.js"></script>
+    <script type='text/javascript' src="./../script.js"></script>
     </body>
     </html>
 

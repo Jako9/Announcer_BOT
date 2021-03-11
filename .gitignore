@@ -4,19 +4,21 @@
 ### Batch ###
 # BatchFiles
 *.bat
-*.sh
 *.cmd
 *.btm
 *.log
-*.mp3
 */webConfig.json
 
-config/
 .idea/
-**/weboverlay/conf
-**/weboverlay/logs
 
 # End of https://www.gitignore.io/api/batch
 
 node_modules/
 package-lock.json
+
+config/statistics/
+resources/vips/
+
+.env
+
+docker/mysql/data

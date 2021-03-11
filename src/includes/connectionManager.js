@@ -5,7 +5,6 @@ const statisticsManager = require('./statisticsManager.js');
 const dbManager = require('./databaseManager.js');
 
 //Sound Files
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 const SUFFIX = '.mp3';
 const PROBAILITY = 65;
 
@@ -42,14 +41,14 @@ function bot_join(vc, connection, file){
     if(rdm == 5){
       statisticsManager.rickroll();
       logManager.writeDebugLog(vc.guild.name + ": Rickroll wurde aktiviert.");
-      file = PATH + "/resources/default/rickroll" + SUFFIX;
+      file = "/announcer/resources/default/rickroll" + SUFFIX;
     }else{
       let today = new Date();
 
       if(today.getMonth() == 11){
         if(today.getDate() == 24 || today.getDate() == 25 || today.getDate() == 26){
           logManager.writeDebugLog(vc.guild.name + ": Es ist Weihnachten meine Kerle.");
-          file = PATH + "/resources/default/christmas" + SUFFIX;
+          file = "/announcer/resources/default/christmas" + SUFFIX;
         }
       }
     }
@@ -98,7 +97,7 @@ module.exports = {
           isVip(newState.member.id, function(out){
             if(out){
               serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-              file = PATH + "/resources/vips/"+ newState.member.id + SUFFIX;
+              file = "/announcer/resources/vips/"+ newState.member.id + SUFFIX;
               newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
             }else{
               dbManager.getJoinsound(newState.member.id, function(out){
@@ -106,7 +105,7 @@ module.exports = {
                 }
                 else{
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, PATH + "/resources/default/" + out + SUFFIX));
+                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, "/announcer/resources/default/" + out + SUFFIX));
                 }
               });
             }
@@ -135,7 +134,7 @@ module.exports = {
         return;
       }
       let sound = message.content.split(' ')[1];
-      channel.join().then(connection => bot_join(channel, connection, PATH + "/resources/default/" + sound + SUFFIX));
+      channel.join().then(connection => bot_join(channel, connection, "/announcer/resources/default/" + sound + SUFFIX));
     },
 
     setJoinSound: function(message, prefix, instructions){

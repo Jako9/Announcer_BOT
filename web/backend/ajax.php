@@ -29,14 +29,14 @@ function handleAjax(){
                 echo json_encode($resp);
                 break;
             case 'reset-debug-log':
-                echo clearLogOnAjax('debugLog', 'debug.log');
+                echo clearLogOnAjax('debugLog', 'debug');
                 break;
             case 'reset-boot-log':
-                echo clearLogOnAjax('bootLog', 'boot_log.log');
+                echo clearLogOnAjax('bootLog', 'boot');
                 break;
 
             case 'reset-error-log':
-                echo clearLogOnAjax('errorLog', 'error_log.log');
+                echo clearLogOnAjax('errorLog', 'error');
                 break;
         }
     }
@@ -50,12 +50,19 @@ function clearLogOnAjax($arg, $file){
 }
 
 function clearLogFile($file){
-    $logPath = '../../../logs/' . $file;
-    file_put_contents($logPath, "");
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://node:3000/log/clear/" . $file);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $output = curl_exec($ch);
+
+    $decodedAnswer = json_decode($output);
+
+    curl_close($ch);
 }
 
 function readLogFile($file){
-    $logPath = '../../../logs/' . $file;
+    $logPath = '/var/www/logs/' . $file;
 
     if(file_exists($logPath)){
         $logContent = '';

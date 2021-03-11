@@ -2,7 +2,6 @@ const fs = require('fs');
 const jsonParser = require('./jsonParser');
 const logManager = require('./logManager.js');
 const dbManager = require('./databaseManager.js');
-const PATH = "/var/www/git.jmk.cloud/html/Announcer_BOT";
 
 let servers = {};
 let descriptions = [];
@@ -361,7 +360,8 @@ module.exports = {
 
     updateUser: function(client){
         dbManager.getVips(function(vips){
-          vips.forEach(vip => {
+          if(vips){
+            vips.forEach(vip => {
               let id = vip.userID;
               client.users.fetch(id)
               .then(user => {
@@ -372,6 +372,7 @@ module.exports = {
               })
               .catch();
           });
+          }
         });
     }
 }

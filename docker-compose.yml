@@ -1,0 +1,74 @@
+version: "3.3"
+
+services:
+    db:
+        image: ${DBIMAGE}
+        restart: always
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+            - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/init.sql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DBROOT}
+            MYSQL_DATABASE: ${DBNAME}
+            MYSQL_USER: ${DBUSER}
+            MYSQL_PASSWORD: ${DBPASSWORD}
+
+    webserver:
+        image: nginx
+        volumes:
+            - ./config/statistics/:/announcer/statistics
+            - ./resources/:/code/resources
+            - ./logs/:/var/www/logs
+            - ./web:/code
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        ports:
+            - 80:80
+        links:
+            - php
+    
+
+    php:
+        depends_on:
+            - db
+        build: ./docker/php
+        volumes:
+            - ./resources/:/announcer/resources
+            - ./config/statistics/:/announcer/statistics
+            - ./logs/:/var/www/logs
+            - ./web:/code
+        environment:
+            - LOGIN=${WEBUSER}
+            - PASSWORD=${WEBPASSWORD}
+            - DBUSER=${DBUSER}
+            - DBPASSWORD=${DBPASSWORD}
+            - DBNAME=${DBNAME}
+            - BRANCH=${BRANCH}
+
+    phpmyadmin:
+        depends_on:
+            - db
+        image: jackgruber/phpmyadmin
+        restart: always
+        ports:
+            - '8081:80'
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: ${DBROOT}
+
+    node:
+        build: .
+        depends_on: 
+            - db
+        restart: always
+        ports:
+            - '3000:3000'
+        volumes:
+            - ./resources/:/announcer/resources
+            - ./config/statistics/:/announcer/statistics
+            - ./logs/:/announcer/logs
+            - ./src/:/announcer/code
+        environment:
+            - DBUSER=${DBUSER}
+            - DBPASSWORD=${DBPASSWORD}
+            - BOTKEY=${BOTKEY}
+            - DBNAME=${DBNAME}
