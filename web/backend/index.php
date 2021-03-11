@@ -727,11 +727,10 @@ function getStatistics(){
     <div id="vips" class="d-board-card">
         <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header">VIPs - <?php echo(getVIPCountFromDatabase()) ?></h5>
-            <div class="card-body">
+            <h5 class="card-header" id="vip-header">VIPs - <?php echo(getVIPCountFromDatabase()) ?></h5>
+            <div class="card-body" id="vip-body">
             <div class="card-text server-body">
             <div class="accordion" id="accordionExample">
-
                 <div class="vip-container">
                     <?php printVips() ?>
                 </div>

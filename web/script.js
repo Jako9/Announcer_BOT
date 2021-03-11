@@ -6,6 +6,10 @@ jQuery( document ).ready(function($) {
         $('#server-body').toggle();
     });
 
+    $('#vip-header').on('click', function(){
+        $('#vip-body').toggle();
+    });
+
     let lastScrollTop = Cookies.get('reload-log-position');
     if (lastScrollTop) {
         $(window).scrollTop(lastScrollTop);
