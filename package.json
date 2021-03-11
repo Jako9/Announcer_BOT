@@ -26,5 +26,8 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "opusscript": "0.0.7"
+  },
+  "nodemonConfig": {
+    "ignore": ["statistics/*.json"]
   }
 }
