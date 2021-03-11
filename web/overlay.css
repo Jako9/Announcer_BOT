@@ -539,3 +539,7 @@ body {
 #server-header:hover{
     cursor: pointer !important;
 }
+
+#vip-header:hover{
+    cursor: pointer !important;
+}
