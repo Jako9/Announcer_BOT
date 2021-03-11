@@ -8,6 +8,8 @@ const app = express()
 //Webserver läuft auf Port 3000
 const port = 3000
 
+announcer = spawn('node', ['/announcer/code/announcer.js']);
+
 //Route um den Status der Nodeapplikation zu liefern
 app.get('/status', function (req, res) {
     let running = 0;
@@ -20,7 +22,7 @@ app.get('/status', function (req, res) {
 //Startet die Nodeapplikation
 app.post('/start', function (req, res) {
     //Erstelle einen Childprocess mit einer Nodeapp die den Bot startet
-    announcer = spawn('node', ['announcer.js']);
+    announcer = spawn('node', ['/announcer/code/announcer.js']);
     res.send({"pid": announcer.pid});
 });
 

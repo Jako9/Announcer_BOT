@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
     db:
-        image: jsurf/rpi-mariadb
+        image: ${DBIMAGE}
         restart: always
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
@@ -17,7 +17,7 @@ services:
         image: nginx
         volumes:
             - ./config/statistics/:/announcer/statistics
-            - ./resources/:/resources
+            - ./resources/:/code/resources
             - ./logs/:/var/www/logs
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
@@ -66,6 +66,7 @@ services:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics
             - ./logs/:/announcer/logs
+            - ./src/:/announcer/code
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}

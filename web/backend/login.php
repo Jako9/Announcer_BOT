@@ -42,7 +42,7 @@ if(isset($_POST['login'])){
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-    <link rel="stylesheet" href="http://announcer.jmk.cloud/overlay.css">
+    <link rel="stylesheet" href="./../overlay.css">
 
     <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
@@ -85,6 +85,6 @@ if(isset($_POST['login'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
-    <script type='text/javascript' src="script.js"></script>
+    <script type='text/javascript' src="./../script.js"></script>
     </body>
     </html>
