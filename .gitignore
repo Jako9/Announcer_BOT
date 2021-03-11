@@ -7,7 +7,6 @@
 *.cmd
 *.btm
 *.log
-*.mp3
 */webConfig.json
 
 .idea/
