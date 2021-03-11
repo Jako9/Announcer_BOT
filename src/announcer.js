@@ -76,7 +76,7 @@ client.on('ready', () =>{
   client.guilds.cache.array().forEach(guild => {
     serverManager.addServer(guild);
   });
-  client.user.setActivity("Hello World", {
+  client.user.setActivity(".help", {
     type: "WATCHING"
   });
   logManager.writeBootLog("------------------------------");
