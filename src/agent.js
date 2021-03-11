@@ -8,8 +8,9 @@ const app = express()
 //Webserver läuft auf Port 3000
 const port = 3000
 
+console.log("PID " + announcer.pid);
 announcer = spawn('node', ['announcer.js']);
-
+console.log("PID " + announcer.pid);
 
 //Route um den Status der Nodeapplikation zu liefern
 app.get('/status', function (req, res) {
