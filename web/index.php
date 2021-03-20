@@ -177,6 +177,9 @@
                 <h2 class="invite-text">Invite Bot</h2>
             </div>
         </a>
+        <div class="alert alert-danger" role="alert" style="margin-top:20px">
+              Due to verification delays, inviting our bot may not work temporarily. For more detailed information head to our <a href="https://twitter.com/dc_Announcer">twitter</a> and contact us there!
+        </div>
     </div>
     </div>
     <div class="container-fluid features" id="features">
