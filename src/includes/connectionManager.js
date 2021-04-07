@@ -98,14 +98,14 @@ module.exports = {
             if(out){
               serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
               file = "/announcer/resources/vips/"+ newState.member.id + SUFFIX;
-              newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file));
+              newUserChannel.join().then(connection => bot_join(newUserChannel, connection, file)).catch(err => {logManager.writeErrorLog(err.stack);});
             }else{
               dbManager.getJoinsound(newState.member.id, function(out){
                 if(out === false){
                 }
                 else{
                   serverManager.setTimeLastJoin(newUserChannel.guild.id, Date.now());
-                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, "/announcer/resources/default/" + out + SUFFIX));
+                  newUserChannel.join().then(connection => bot_join(newUserChannel, connection, "/announcer/resources/default/" + out + SUFFIX)).catch(err => {logManager.writeErrorLog(err.stack);});
                 }
               });
             }
@@ -126,44 +126,44 @@ module.exports = {
     play: function(message, prefix, instructions){
       let channel = message.member.voice.channel;
       if(!channel){
-        message.reply("Please enter a channel first.");
+        message.reply("Please enter a channel first.").catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9 || !isInteger(message.content.split(' ')[1])) {
-        message.reply('Incorrect usage of \'' + prefix +  instructions[0][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
+        message.reply('Incorrect usage of \'' + prefix +  instructions[0][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.').catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let sound = message.content.split(' ')[1];
-      channel.join().then(connection => bot_join(channel, connection, "/announcer/resources/default/" + sound + SUFFIX));
+      channel.join().then(connection => bot_join(channel, connection, "/announcer/resources/default/" + sound + SUFFIX)).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     setJoinSound: function(message, prefix, instructions){
       isVip(message.member.id, function(is){
         if(is){
-          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.");
+          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.").catch(err => {logManager.writeErrorLog(err.stack);});
         }else{
           if(message.content.split(' ').length != 2 || isNaN(message.content.split(' ')[1]) || message.content.split(' ')[1] <0 || message.content.split(' ')[1] > 9 || !isInteger(message.content.split(' ')[1])) {
-            message.reply('Incorrect usage of \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.');
+            message.reply('Incorrect usage of \'' + prefix +  instructions[1][0].name + '\', type \'' + prefix +  instructions[8][0].name + '\' for the correct syntax.').catch(err => {logManager.writeErrorLog(err.stack);});
           }
           else{
             dbManager.getUser(message.author.id, function(user){
               if(!user){
                 dbManager.addUser(message.author.id, message.author.username, message.author.avatarURL(), message.content.split(' ')[1], function(successfull){
                   if(successfull){
-                    message.reply("The bot will now acompany you.");
+                    message.reply("The bot will now acompany you.").catch(err => {logManager.writeErrorLog(err.stack);});
                   }
                   else{
-                    message.reply("Something went wrong!");
+                    message.reply("Something went wrong!").catch(err => {logManager.writeErrorLog(err.stack);});
                   }
                 });
               }
               else{
                 dbManager.setJoinsound(message.author.id,message.content.split(' ')[1], function(successfull){
                   if(successfull){
-                    message.reply("Your joinsound has been updated successfully");
+                    message.reply("Your joinsound has been updated successfully").catch(err => {logManager.writeErrorLog(err.stack);});
                   }
                   else{
-                    message.reply("Something went wrong!");
+                    message.reply("Something went wrong!").catch(err => {logManager.writeErrorLog(err.stack);});
                   }
 
                 });
@@ -178,14 +178,14 @@ module.exports = {
     removeJoinSound: function(message){
       isVip(message.member.id, function(is){
         if(is){
-          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.");
+          message.reply("You are a VIP! If you want a different joinsound, just send the file as a dm.").catch(err => {logManager.writeErrorLog(err.stack);});
         }else{
           dbManager.removeUser(message.member.id, function(succ){
             if(succ){
-              message.reply("The bot will now no longer acompany you :(");
+              message.reply("The bot will now no longer acompany you :(").catch(err => {logManager.writeErrorLog(err.stack);});
             }
             else{
-              message.reply("Something went wrong!");
+              message.reply("Something went wrong!").catch(err => {logManager.writeErrorLog(err.stack);});
             }
           });
 
