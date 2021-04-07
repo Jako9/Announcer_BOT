@@ -44,7 +44,7 @@ function buildEmbed(link){
 function changeVIPSound(message, file){
   //File zu groß
   if(file.size > (1024 * 700)){
-    message.author.send("The file is too big. The maximum filesize must be at most 700kb");
+    message.author.send("The file is too big. The maximum filesize must be at most 700kb").catch(err => {logManager.writeErrorLog(err.stack);});
     return;
   }
 
@@ -64,14 +64,14 @@ function changeVIPSound(message, file){
     logManager.writeDebugLog("Die File im Cache liegt im Pfad: " + pathToCheck);
     mp3Duration(pathToCheck, function (err, duration) {
       if(err){
-        message.author.send("Something went wrong...");
+        message.author.send("Something went wrong...").catch(err => {logManager.writeErrorLog(err.stack);});
         failed = true;
       }
 
       logManager.writeDebugLog("Die duration ist: " + duration);
 
       if(duration > 8){
-        message.author.send("The duration of the joinsound has to be less then 8 seconds.");
+        message.author.send("The duration of the joinsound has to be less then 8 seconds.").catch(err => {logManager.writeErrorLog(err.stack);});
         failed = true;
       }
       //File valid, trage den VIP sound ein
@@ -83,10 +83,10 @@ function changeVIPSound(message, file){
         //Füge VIP hinzu
         dbManager.getVip(message.author.id, function(vip){
           if(vip){
-            message.author.send("Your joinsound has been updated successfully!");
+            message.author.send("Your joinsound has been updated successfully!").catch(err => {logManager.writeErrorLog(err.stack);});
           }
           else{
-            message.author.send("Hey you have received the VIP-Status! :D Your joinsound has been uploaded successfully.");
+            message.author.send("Hey you have received the VIP-Status! :D Your joinsound has been uploaded successfully.").catch(err => {logManager.writeErrorLog(err.stack);});
             dbManager.setVip(message.author, function(worked){});
             dbManager.deletePayment(message.author.id, function(worked){});
           }
@@ -97,7 +97,7 @@ function changeVIPSound(message, file){
 
 
     }).catch(err => {
-      message.author.send("Your submitted file is not a valid mp3. Please try again!");
+      message.author.send("Your submitted file is not a valid mp3. Please try again!").catch(err => {logManager.writeErrorLog(err.stack);});
     });
 }
 
@@ -114,14 +114,14 @@ module.exports = {
     becomeVIP: function(message){
       dbManager.getVip(message.author.id, function(is){
         if(is){
-          message.author.send("You are already VIP!").catch();
+          message.author.send("You are already VIP!").catch(err => {logManager.writeErrorLog(err.stack);});
         }else{
           dbManager.getUserPayment(message.author.id,function(exists){
             if(exists){
               dbManager.getPaymentLink(message.author.id, function(link){
                 let embed = buildEmbed(link);
-                message.author.send({ embed: embed}).catch();
-                if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+                message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
+                if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.").catch(err => {logManager.writeErrorLog(err.stack);});
               });
             }
             else{
@@ -143,11 +143,11 @@ module.exports = {
                   if(link){
                     dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
                     let embed = buildEmbed(link);
-                    message.author.send({ embed: embed}).catch();
-                    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.");
+                    message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
+                    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.").catch(err => {logManager.writeErrorLog(err.stack);});
 
                   }else{
-                    message.author.send("Transaction failure, please try again!");
+                    message.author.send("Transaction failure, please try again!").catch(err => {logManager.writeErrorLog(err.stack);});
                   }
                 }).on("error", (err) => {
                   console.log("Error: " + err.message);
@@ -172,11 +172,11 @@ module.exports = {
         dbManager.getPaymentStatus(message.author.id, function(status){
           if(!status){
             //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
-            message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.");
+            message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.").catch(err => {logManager.writeErrorLog(err.stack);});
           }
           //Zahlung noch nicht erfolgt
           else if(status == "Pending"){
-            message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+            message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.").catch(err => {logManager.writeErrorLog(err.stack);});
           }
           //Zahlung erfolgreich
           else if(status == "approved"){
@@ -184,7 +184,7 @@ module.exports = {
           }
           //Das sollte nicht passieren
           else{
-            message.author.reply("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.");
+            message.author.send("Something went horribly wrong and this should not have happened. Please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.").catch(err => {logManager.writeErrorLog(err.stack);});
           }
         });
       }

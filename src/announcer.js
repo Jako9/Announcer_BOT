@@ -126,7 +126,7 @@ client.on('messageReactionRemove', (reaction, user) => {
 
 hasAccessRights = function(message, level){
   switch (parseInt(level)) {
-    //Lowlever => Jeder hat Zugriff
+    //Lowlevel => Jeder hat Zugriff
     case 0:
       return true;
     //Moderat: Nur Admins oder Manager dürfen diesen Befehl benutzen
@@ -192,18 +192,18 @@ client.on('message', message => {
   if (message.content.toLowerCase() === prefix + instructions[6][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[6][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[6][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[6][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     // Wenn in einem gültigen Channel, join
-    message.member.voice.channel ? connectionManager.triggerJoin({"connection" : null}, message.member.voice,serverManager.getRolle(id)) : message.reply('Please enter a channel first!');
+    message.member.voice.channel ? connectionManager.triggerJoin({"connection" : null}, message.member.voice,serverManager.getRolle(id)) : message.reply('Please enter a channel first!').catch(err => {logManager.writeErrorLog(err.stack);});
   }
 
   // Leave per Befehl
   else if (message.content.toLowerCase() === prefix + instructions[7][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[7][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[7][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[7][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     connectionManager.triggerLeave(message);
@@ -213,7 +213,7 @@ client.on('message', message => {
   else if (message.content.toLowerCase().startsWith(prefix + instructions[18][0].name.toLowerCase() + " ")) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[18][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[18][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[18][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     interactionManager.setVolume(message);
@@ -223,17 +223,17 @@ client.on('message', message => {
   else if (message.content.toLowerCase() === prefix + instructions[11][0].name.toLowerCase()) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[11][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[11][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[11][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
-    message.reply("The volume is " + (100 * interactionManager.getVolume(message)) + "%.");
+    message.reply("The volume is " + (100 * interactionManager.getVolume(message)) + "%.").catch(err => {logManager.writeErrorLog(err.stack);});
   }
 
   //  Help -- ALLE  BEFEHLE GELISTET
   else  if(message.content.toLowerCase().startsWith(prefix + instructions[8][0].name.toLowerCase() + " ") || message.content.toLowerCase() === (prefix + instructions[8][0].name.toLowerCase())){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[8][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[8][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[8][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     interactionManager.help(message, prefix, instructions);
@@ -243,17 +243,17 @@ client.on('message', message => {
   else  if(message.content.toLowerCase().startsWith(prefix + instructions[17][0].name.toLowerCase()  + ' ')){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[17][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[17][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[17][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
-    message.reply(interactionManager.changeCommands(message, prefix, instructions));
+    message.reply(interactionManager.changeCommands(message, prefix, instructions)).catch(err => {logManager.writeErrorLog(err.stack);});
   }
 
   // ModRolle ändern
   else if (message.content.toLowerCase().startsWith(prefix + instructions[10][0].name.toLowerCase()  + ' ')) {
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[10][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[10][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[10][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     roleManager.changeRole(message, JOIN, prefix, instructions);
@@ -263,17 +263,17 @@ client.on('message', message => {
   else if (message.content.toLowerCase() === prefix + instructions[9][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[9][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[9][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[9][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
-    message.reply(roleManager.showRole(serverManager.getRolle(id)));
+    message.reply(roleManager.showRole(serverManager.getRolle(id))).catch(err => {logManager.writeErrorLog(err.stack);});
   }
 
   // Präfix ändern
   else if(message.content.toLowerCase().startsWith(prefix + instructions[16][0].name.toLowerCase()  + ' ')){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[16][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[16][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[16][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     let newPrefix = interactionManager.changePrefix(message, prefix, instructions);
@@ -284,7 +284,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[3][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[3][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[3][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[3][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.lock(message,prefix,instructions);
@@ -294,7 +294,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[4][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[4][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[4][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[4][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.unlock(message);
@@ -304,7 +304,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[20][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[20][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[20][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[20][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     reactionManager.setupListener(message, client, prefix, instructions);
@@ -314,7 +314,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[23][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[23][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[23][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[23][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     reactionManager.addReactor(message);
@@ -324,7 +324,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[19][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[19][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[19][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[19][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     roleManager.changeRole(message, REACTION, prefix, instructions);
@@ -334,7 +334,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[12][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[12][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[12][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[12][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     roleManager.showReactionRole(message);
@@ -344,7 +344,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[5][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[5][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[5][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[5][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     vipManager.becomeVIP(message);
@@ -354,7 +354,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[14][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[14][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[14][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[14][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     whitelistManager.show(message);
@@ -364,7 +364,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[21][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[21][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[21][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[21][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     whitelistManager.addElem(message, prefix, instructions);
@@ -374,7 +374,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[26][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[26][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[26][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[26][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     whitelistManager.removeElem(message, prefix, instructions);
@@ -384,7 +384,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[28][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[28][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[28][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[28][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     whitelistManager.clear(message);
@@ -394,7 +394,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[0][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[0][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[0][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[0][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     connectionManager.play(message, prefix, instructions);
@@ -404,7 +404,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase().startsWith(prefix + instructions[1][0].name.toLowerCase() + " ")){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[1][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[1][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[1][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     connectionManager.setJoinSound(message, prefix, instructions);
@@ -414,7 +414,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[2][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[2][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[2][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[2][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     connectionManager.removeJoinSound(message);
@@ -424,7 +424,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[15][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[15][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[15][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[15][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.showLockable(message);
@@ -434,7 +434,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[22][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[22][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[22][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[22][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.addLockable(message);
@@ -444,7 +444,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[27][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[27][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[27][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[27][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.removeLockable(message);
@@ -454,7 +454,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[29][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[29][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[29][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[29][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     lockManager.lockableClear(message);
@@ -464,7 +464,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[13][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[13][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[13][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[13][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     reactionManager.showChannelReact(message);
@@ -474,7 +474,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[25][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[25][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[25][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[25][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     reactionManager.removeChannelReact(message);
@@ -484,7 +484,7 @@ client.on('message', message => {
   else if(message.content.toLowerCase() === prefix + instructions[24][0].name.toLowerCase()){
     //Hat Zugriffsrechte?
     if(!hasAccessRights(message, instructions[24][0].security)){
-      message.reply("You don\'t have permission [LEVEL" + instructions[24][0].security + "] to use this command.");
+      message.reply("You don\'t have permission [LEVEL" + instructions[24][0].security + "] to use this command.").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
     roleManager.removeReactionRole(message);
@@ -492,6 +492,6 @@ client.on('message', message => {
 
   // Falsche Eingabe
   else if(message.content.startsWith(prefix)){
-    message.reply('Either I don\'t know this command or you\'ve forgotten the parameters :( Type \'' + prefix + instructions[8][0].name + '\' for a list of all the available commands with their parameters!');
+    message.reply('Either I don\'t know this command or you\'ve forgotten the parameters :( Type \'' + prefix + instructions[8][0].name + '\' for a list of all the available commands with their parameters!').catch(err => {logManager.writeErrorLog(err.stack);});
   }
 });

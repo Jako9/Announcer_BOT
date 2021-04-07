@@ -53,7 +53,7 @@ module.exports = {
     if(message.content.split(' ').length == 2 && isInteger(message.content.split(' ')[1]) && message.content.split(' ')[1] != 0){
       page = message.content.split(' ')[1];
       if(message.content.split(' ')[1] > maxPage){
-        message.reply("There is only " + maxPage+ " pages :(");
+        message.reply("There is only " + maxPage+ " pages :(").catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
     }
@@ -71,7 +71,7 @@ module.exports = {
       msg.push(command);
     }
     //msg = msg.substring(0,msg.length - 3);
-    message.reply({ embed: buildEmbed(msg, page, maxPage)}).catch();
+    message.reply({ embed: buildEmbed(msg, page, maxPage)}).catch(err => {logManager.writeErrorLog(err.stack);});
   },
 
   changeCommands: function (message, prefix, instructions){
@@ -108,12 +108,12 @@ module.exports = {
   changePrefix: function (message, prefix, instructions){
     var param = message.content.split(' ');
     if(param.length != 2 || param[1].length != 1){
-      message.reply('Incorrect usage of \'' +  prefix +  instructions[16][0].name + '\', type \'' + prefix + instructions[8][0].name + '\' for the correct syntax.');
+      message.reply('Incorrect usage of \'' +  prefix +  instructions[16][0].name + '\', type \'' + prefix + instructions[8][0].name + '\' for the correct syntax.').catch(err => {logManager.writeErrorLog(err.stack);});
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Der Präfix konnte nicht geändert werden (Fehlerhafte Argumente).");
       return null;
     }
     logManager.writeDebugLog(message.guild.name + ": Der Präfix wurde erfolgreich auf: \"" + param[1] + "\" gesetzt.");
-    message.reply('The prefix has been updated succesfully to \'' + param[1] + '\'.');
+    message.reply('The prefix has been updated succesfully to \'' + param[1] + '\'.').catch(err => {logManager.writeErrorLog(err.stack);});
     return param[1];
   },
 
@@ -122,7 +122,7 @@ module.exports = {
     //Ungültige Anzahl an Argumenten
     if (param.length != 2){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-      message.reply("Incorrect input...");
+      message.reply("Incorrect input...").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
 
@@ -130,18 +130,18 @@ module.exports = {
     let volume = param[1];
     if(!isInteger(volume)){
       logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-      message.reply("The volume has to be a whole number! ");
+      message.reply("The volume has to be a whole number! ").catch(err => {logManager.writeErrorLog(err.stack);});
       return;
     }
       if (volume < 0 || volume > 100){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Die Lautstärke konnte nicht geändert werden (Fehlerhafte Argumente).");
-        message.reply("The volume must be beteween 0 and 100.");
+        message.reply("The volume must be beteween 0 and 100.").catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
 
       serverManager.setVolume(message.guild.id, volume / 100.0);
       logManager.writeDebugLog(message.guild.name + ": Die Lautstärke wurde erfolgreich auf " + volume + "% gesetzt.");
-      message.reply("The volume has been set to " + volume +"%.");
+      message.reply("The volume has been set to " + volume +"%.").catch(err => {logManager.writeErrorLog(err.stack);});
 
   },
 
