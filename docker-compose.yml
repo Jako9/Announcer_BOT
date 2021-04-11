@@ -24,8 +24,6 @@ services:
             - ./docker/nginx/:/etc/nginx/conf.d/
         ports:
             - ${WEBPORT}:80
-        environment:
-         - NGINX_PORT=${WEBPORT}
         links:
             - php
     
