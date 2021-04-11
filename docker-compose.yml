@@ -23,7 +23,7 @@ services:
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
         ports:
-            - ${WEBPORT}:80
+            - 80:${WEBPORT}
         links:
             - php
     
@@ -51,7 +51,7 @@ services:
         image: jackgruber/phpmyadmin
         restart: always
         ports:
-            - '${PHPMYADMINPORT}:80'
+            - '80:${PHPMYADMINPORT}'
         environment:
             PMA_HOST: db
             MYSQL_ROOT_PASSWORD: ${DBROOT}
@@ -62,7 +62,7 @@ services:
             - db
         restart: always
         ports:
-            - '${NODEPORT}:3000'
+            - '3000:${NODEPORT}'
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics
