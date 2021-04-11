@@ -468,7 +468,6 @@ function isServerRunning(){
     $decodedAnswer = json_decode($output);
 
     curl_close($ch);
-    error_log(print_r("came here" . $decodedAnswer->running, true));
 
     return ($decodedAnswer->running == 1);
 }
