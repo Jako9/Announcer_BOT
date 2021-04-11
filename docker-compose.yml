@@ -23,7 +23,7 @@ services:
             - ./web:/code
             - ./docker/nginx/:/etc/nginx/conf.d/
         ports:
-            - ${WEBPORT}:80
+            - ${WEBPORT}:${WEBPORT}
         environment:
              - NGINX_PORT=${WEBPORT}
         links:
