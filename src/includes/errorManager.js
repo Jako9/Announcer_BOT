@@ -58,6 +58,32 @@ module.exports = {
       client.user.setActivity(".help", {
         type: "WATCHING"
       });
+    },
+
+    setAnnouncement: function(client, message){
+      let args = message.split(' ');
+      if(args.length < 3 || args[0] != "setStatus") return;
+      let msg = args[2];
+      for(let i = 3; i < args.length; i++){
+        msg += " ";
+        msg += args[i];
+      }
+      if(args[1].toLowerCase() == "playing"){
+        client.user.setActivity(msg, {
+          type: "PLAYING"
+        });
+      }
+      else if(args[1].toLowerCase() == "watching"){
+        client.user.setActivity(msg, {
+          type: "WATCHING"
+        });
+      }
+      else if(args[1].toLowerCase() == "streaming"){
+        client.user.setActivity(msg, {
+          type: "STREAMING",
+          url: "https://www.twitch.tv/jako9"
+        });
+      }
     }
 
 }
