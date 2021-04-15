@@ -173,6 +173,11 @@ client.on('message', message => {
     }
     return;
   }
+
+  //Message kommt von einem BOT
+  if(message.author.bot){
+    return;
+  }
   //Fetch atrributes for current guild
   var id = message.guild.id;
   try{
@@ -491,7 +496,7 @@ client.on('message', message => {
   }
 
   // Falsche Eingabe
-  else if(message.content.startsWith(prefix)){
+  else if(message.content.startsWith(prefix) && message.content != prefix){
     message.reply('Either I don\'t know this command or you\'ve forgotten the parameters :( Type \'' + prefix + instructions[8][0].name + '\' for a list of all the available commands with their parameters!').catch(err => {logManager.writeErrorLog(err.stack);});
   }
 });
