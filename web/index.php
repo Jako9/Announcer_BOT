@@ -8,7 +8,6 @@
         $decodedAnswer = json_decode($output);
     
         curl_close($ch);
-        error_log(print_r("came here" . $decodedAnswer->running, true));
     
         return ($decodedAnswer->running == 1);
     }
@@ -177,9 +176,6 @@
                 <h2 class="invite-text">Invite Bot</h2>
             </div>
         </a>
-        <div class="alert alert-danger" role="alert" style="margin-top:20px">
-              Due to verification delays, inviting our bot may not work temporarily. For more detailed information head to our <a href="https://twitter.com/dc_Announcer">twitter</a> and contact us there!
-        </div>
     </div>
     </div>
     <div class="container-fluid features" id="features">
@@ -208,6 +204,10 @@
             <h2 class="documentation-headline">Help</h2>
             <a href="https://github.com/Jako9/Announcer_BOT/wiki/home"><i class="fab fa-github documenation-icon"></i></a>
             <p class="lead">You want to <a href="https://github.com/Jako9/Announcer_BOT/wiki/setup">setup</a> the bot for your server or you need an <a href="https://github.com/Jako9/Announcer_BOT/wiki/usage">explanation</a>? Then refer to the 'help' command, or head over to the <a href="https://github.com/Jako9/Announcer_BOT/wiki/">github wiki</a>. </p>
+            
+            <h2 class="documentation-headline">Twitter</h2>
+            <a href="https://twitter.com/dc_Announcer"><i class="fab fa-twitter documenation-icon" style="color: #1DA1F2"></i></a>
+            <p class="lead">For news, updates and crazy developer stuff follow our twitter</p>
     </div>
     <div class="container-fluid statistics" id="statistics">
         <div class="statistics-block">
