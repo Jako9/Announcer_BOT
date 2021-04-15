@@ -154,11 +154,17 @@ client.on('message', message => {
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
     }
-    else if(message.content === "restart" && (message.author.id == "255064680417067019" || message.author.id == "174558221535674369")){
-      errorManager.restartAnnounce(client);
-    }
-    else if(message.content === "abort" && (message.author.id == "255064680417067019" || message.author.id == "174558221535674369")){
-      errorManager.restartAnnounceRemove(client);
+    //Admin Befehle => setting status
+    else if(message.author.id == "255064680417067019" || message.author.id == "174558221535674369"){
+      if(message.content === "restart"){
+        errorManager.restartAnnounce(client);
+      }
+      else if(message.content === "abort"){
+        errorManager.restartAnnounceRemove(client);
+      }
+      else if(message.content.startsWith("setStatus")){
+        errorManager.setAnnouncement(client, message.content);
+      }
     }
     else if(message.attachments.size == 1){
       let attachment = message.attachments.find(foo => true);
