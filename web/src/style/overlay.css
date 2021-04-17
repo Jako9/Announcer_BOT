@@ -1,0 +1,545 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.d-board-card{
+    margin-top: 50px;
+}
+
+.headline{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.headline > h2 {
+    font-weight: 700;
+}
+
+.log-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.half-container{
+    width: 75%;
+}
+
+.log-presenter{
+    width: 80%;
+    background-color: white;
+    height: 400px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.card-serverpic {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+.card-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.server-settings{
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 30px;
+}
+
+.setting-ist{
+    width: 50%;
+    margin-right: 25px;
+
+    background-color: rgba(0,0,0,.03);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+.setting-title{
+    font-size: 18px;
+    font-weight: 600;
+
+    margin-right: 25px;
+    width: 10%;
+}
+
+#volume-edit-button , .fa-check {
+    color: #00cc00;
+}
+
+.server-volume > .setting-ist{
+    display: flex;
+    flex-direction: row;
+}
+
+.range-val{
+    margin-left: 10px;
+}
+
+.server-settings-input-disabled{
+    background-color: rgba(0,0,0,.0);
+    border: none;
+
+    font-weight: 700;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.server-settings-input-enabled{
+    background-color: rgba(0,0,0,.03);
+    border: none;
+
+    font-weight: 700;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.array-box{
+    display: flex;
+    flex-direction: column;
+}
+
+.instruction-input{
+    width: 50%;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+.reset-button{
+    margin-left: 10px;
+}
+
+.volume-edit-button, .reaction-role-edit-button, .prefix-edit-button, .role-edit-button, .instructions-edit-button{
+    cursor: pointer;
+}
+
+.volume-range{
+    cursor: pointer;
+}
+.save-message{
+    margin-bottom: 0px !important;
+}
+
+.vip-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.vip-element{
+    margin-bottom: 20px;
+    width: 25%;
+    margin-left: 12.5px;
+    margin-right: 12.5px;
+}
+
+.vip-avatar{
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    border-radius: 50%;
+
+    margin-right: 10px;
+}
+
+.vip-sound-card{
+    display: flex;
+    justify-content: center;
+}
+
+.sound-icon{
+    font-size: 35px;
+
+    cursor: pointer;
+}
+
+.main-nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-item{
+    margin-right: 25px;
+}
+
+.action-icon{
+    font-size: 24px;
+}
+
+.off{
+    color: #d12c24;
+}
+
+.off:hover{
+    color: #b5261f !important;
+}
+
+.reboot{
+    color: #ebe617;
+}
+
+.action-button{
+    background: none;
+    border: none;
+}
+
+.action-button:focus{
+    outline:none;
+}
+
+.home-card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.home-header-status{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.home-status{
+    width: 12.5px;
+    height: 12.5px;
+
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.home-status-text{
+    margin-bottom: 0px !important;
+}
+
+.log-viewer{
+    width: 80%;
+    height: 400px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+
+    font-size: 10px;
+
+    overflow: auto;
+    font-family: 'Roboto Mono', monospace;
+
+    background-color: #2E3440;
+    color: #ECEFF4;
+}
+
+.accordion-log{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.accordion-log{
+    margin-bottom: 50px;
+}
+
+.log-actions{
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 50px;
+}
+
+.reload-log-button{
+    margin-right: 20px;
+}
+
+.restart{
+    color: #292929;
+}
+
+.restart:hover{
+    color: #171717;
+}
+
+#login{
+    width: 30%;
+}
+
+.login-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stats-values{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.stat-object{
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 30%;
+}
+
+.stat-title{
+    font-weight: 700;
+}
+
+.stat-description{
+    width: 50%;
+}
+
+.stats-headline{
+    margin-bottom: 50px;
+}
+
+.stat-value{
+    font-family: 'Roboto Mono', monospace;
+
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+#stage{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#stage-mic{
+    margin-bottom: 50px;
+
+    background: url(icon.svg);
+    height: 128px;
+    width: 128px;
+    display: block;
+}
+
+#stage-title{
+    font-weight: 800 !important;
+}
+
+.features{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.statistics{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.features-block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-row{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.centered-column{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.feature-icon{
+    font-size: 64px;
+    margin-bottom: 30px;
+}
+
+.feature-text{
+    font-weight: 600;
+}
+
+.feature-explanation{
+    width: 50%;
+}
+
+.documentation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #e9ecef;
+
+    padding-top: 30px;
+
+    margin-bottom: 50px;
+}
+
+.documentation-headline{
+    margin-bottom: 50px;
+}
+
+.documenation-icon{
+    font-size: 128px;
+    margin-bottom: 50px;
+
+    color: #000000;
+}
+
+.documentation > .lead{
+    margin-bottom: 50px;
+}
+
+.statistics-block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.discord-container{
+    width: 30%;
+    height: 100px;
+    background-color: #2C2F33;
+    border-radius: 10px;
+    margin-top: 50px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.discord-container:hover{
+    cursor: pointer;
+    background-color: #23272A;
+}
+
+.discord-icon{
+    color: white;
+    font-size: 3em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.invite-text{
+    color: white;
+    font-size: 2em;
+    font-weight: 800;
+    margin-left: 15px;
+}
+
+@media only screen 
+  and (max-device-width: 834px) 
+  and (orientation: portrait) {
+
+  .discord-container{
+    width: 50%;
+    height: 100px;
+  }
+
+  .invite-text {
+      font-size: 1em;
+    }
+
+    .discord-icon {
+        font-size: 2em;
+    }
+}
+
+.ich-hasse-links{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.github-link{
+    color: black;
+}
+
+.github-link:hover{
+    text-decoration: none;
+}
+
+.ich-hasse-links:hover{
+    text-decoration: none;
+}
+
+.status-circle{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+
+    margin-right: 10px;
+}
+
+.online-status-li{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-text{
+    margin-bottom: 0px;
+}
+
+.custom-nav-mic{
+    background: url(icon.svg);
+    height: 40px;
+    width: 40px;
+    display: block;
+}
+
+#server-header:hover{
+    cursor: pointer !important;
+}
+
+#vip-header:hover{
+    cursor: pointer !important;
+}
