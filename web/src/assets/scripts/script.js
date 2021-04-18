@@ -230,94 +230,60 @@ jQuery( document ).ready(function($) {
 
     
     $('#reload-debug').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reload-debug-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.debugLog != undefined){
-                    $('#debug-log-viewer').html(output.debugLog);
-                }
-            }
+        $.get( "backend/logs/debug", function( data ) {
+            $('#debug-log-viewer').html(data);
         });
     });
 
     $('#reset-debug-log').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reset-debug-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.debugLog != undefined){
-                    $('#debug-log-viewer').html("");
-                }
-            }
+        $.post( "backend/logs/debug", function( data ) {
+            $('#debug-log-viewer').html("");
         });
     });
 
     $('#reload-boot').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reload-boot-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.bootLog != undefined){
-                    $('#boot-log-viewer').html(output.bootLog);
-                }
-            }
+        $.get( "backend/logs/boot", function( data ) {
+            $('#boot-log-viewer').html(data);
         });
     });
 
     $('#reset-boot-log').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reset-boot-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.bootLog != undefined){
-                    $('#boot-log-viewer').html("");
-                }
-            }
+        $.post( "backend/logs/boot", function( data ) {
+            $('#boot-log-viewer').html("");
         });
+    
     });
 
     $('#reload-error').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reload-error-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.errorLog != undefined){
-                    $('#error-log-viewer').html(output.errorLog);
-                }
-            }
+        $.get( "backend/logs/error", function( data ) {
+            $('#error-log-viewer').html(data);
         });
     });
 
     $('#reset-error-log').click(function(){
-        $.ajax({
-            url: 'ajax.php',
-            data: {action: 'reset-error-log'},
-            //crossDomain: true,
-            dataType: 'json',
-            type: 'POST',
-            success: function(output) {
-                if(output.errorLog != undefined){
-                    $('#error-log-viewer').html("");
-                }
-            }
+        $.post( "backend/logs/error", function( data ) {
+            $('#error-log-viewer').html("");
         });
     });
+
+    $.get( "backend/logs/boot", function( data ) {
+        $('#boot-log-viewer').html(data);
+    });
+
+    $.get( "backend/logs/error", function( data ) {
+        $('#error-log-viewer').html(data);
+    });
+
+    $.get( "backend/logs/debug", function( data ) {
+        $('#debug-log-viewer').html(data);
+    });
+
+
+    
+    
+
+    
+
 
     $('#debug-log-viewer').scrollTop($('#debug-log-viewer')[0].scrollHeight);
     $('#boot-log-viewer').scrollTop($('#boot-log-viewer')[0].scrollHeight);
