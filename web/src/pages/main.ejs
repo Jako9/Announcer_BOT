@@ -12,11 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     
-    <link rel="stylesheet" href="http://announcer.jmk.cloud/overlay.css">
+    <link rel="stylesheet" href="/assets/style/overlay.css">
+
+    <link rel="shortcut icon" type="image/ico" href="/assets/icon.svg"/>
+
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -77,6 +79,12 @@
         </ul>
         <ul class="online-status navbar-nav">
             <li class="nav-item online-status-li">
+                <script>
+                    function addDarkmodeWidget() {
+                        new Darkmode().showWidget();
+                    }
+                    window.addEventListener('load', addDarkmodeWidget);
+                </script>
                 <div class="status-circle" style="background-color: <%= online.color %>"></div>
                 <p class="status-text"><%= online.text %></p>
             </li>
@@ -152,6 +160,8 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
     
 
     <!-- Optional JavaScript; choose one of the two! -->

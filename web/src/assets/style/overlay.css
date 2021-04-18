@@ -516,6 +516,7 @@ body {
     border-radius: 50%;
 
     margin-right: 10px;
+    z-index: 900;
 }
 
 .online-status-li{
@@ -542,4 +543,8 @@ body {
 
 #vip-header:hover{
     cursor: pointer !important;
+}
+
+.darkmode-layer, .darkmode-toggle {
+    z-index: 500 !important;
 }
