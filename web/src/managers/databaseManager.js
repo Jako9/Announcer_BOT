@@ -78,7 +78,38 @@ module.exports = {
             }
         });
         connection.end();
+    },
+
+    getAPICreds: (api, callback) => {
+        let connection = establishConnection();
+
+        let q = "SELECT * FROM api_creds WHERE name=?";
+
+        connection.query(q, [api], (error, results) => {
+            if(error){
+                throw error;
+            }else{
+              callback(results[0]);
+            }
+        });
+        connection.end();
+    },
+
+    updatePendingPayment: (status, id, callback) => {
+        let connection = establishConnection();
+
+        let q = "UPDATE pending_payments SET status=? WHERE transID=?";
+
+        connection.query(q, [status, id], (error, results) => {
+            if(error){
+                throw error;
+            }else{
+              callback(true);
+            }
+        });
+        connection.end();
     }
+    
 }
 
 function establishConnection(){

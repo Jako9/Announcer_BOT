@@ -27,10 +27,14 @@ services:
             - ./config/statistics/:/web/statistics
             - ./logs/:/web/logs
             - ./web/src/:/web/code
+            - ./.git/:/web/.git
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
             - DBNAME=${DBNAME}
+            - WEBUSER=${WEBUSER}
+            - WEBPASSWORD=${WEBPASSWORD}
+            - BRANCH=${BRANCH}
     
     phpmyadmin:
         depends_on:

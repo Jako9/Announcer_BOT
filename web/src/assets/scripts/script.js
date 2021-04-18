@@ -262,7 +262,7 @@ jQuery( document ).ready(function($) {
 
     $('#reset-error-log').click(function(){
         $.post( "backend/logs/error", function( data ) {
-            $('#error-log-viewer').html("");
+            $('#error-log-viewer').html(data);
         });
     });
 

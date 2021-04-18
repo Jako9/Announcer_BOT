@@ -2,6 +2,7 @@ const express = require('express')
 const session = require('express-session');
 const request = require('request');
 const moment = require('moment');
+const axios = require('axios');
 
 const dbManager = require('./managers/databaseManager');
 
@@ -12,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const onlineManager = require('./managers/onlineManager');
 const databaseManager = require('./managers/databaseManager');
+const { exec } = require('child_process');
 
 const app = express()
 const port = 80
@@ -55,34 +57,39 @@ app.get('/', (req, res) => {
 })
 
 app.get('/backend', (req, res) => {
-  dbManager.getStatistics().then((content) => {
-    let statistics = formatStatistics(JSON.parse(content));
-
-    onlineManager.getOnlineStatus().then((status) => {
-      databaseManager.getServers((servers) => {
-        databaseManager.getVips((vips) => {
-          let online = formatOnline(status.data);
-
-          let botRoute = (status == 1)? "http://localhost:3000/kill" : "http://localhost:3000/restart";
-
-          res.render("backend", {
-            "statistics": statistics,
-            "online": online,
-            "announcerRoute": botRoute,
-            "servers": servers,
-            "vips": vips
-          });
+  if(req.session.loggedin){
+    dbManager.getStatistics().then((content) => {
+      let statistics = formatStatistics(JSON.parse(content));
+  
+      onlineManager.getOnlineStatus().then((status) => {
+        databaseManager.getServers((servers) => {
+          databaseManager.getVips((vips) => {
+            let online = formatOnline(status.data);
+  
+            let botRoute = (status == 1)? "http://localhost:3000/kill" : "http://localhost:3000/restart";
+  
+            res.render("backend", {
+              "statistics": statistics,
+              "online": online,
+              "announcerRoute": botRoute,
+              "servers": servers,
+              "vips": vips
+            });
+          })
         })
       })
-    })
-  }).catch(function(error) {
-    console.log(error);
-    res.send("uff");
- })
+    }).catch(function(error) {
+      console.log(error);
+      res.send("uff");
+   })
+  }else{
+    res.redirect('/login');
+  }
 });
 
 app.post('/backend/saveserver/:editi-:id', (req, res) => {
-  const form = formidableMiddleware(formidableCache);
+  if(req.session.loggedin){
+    const form = formidableMiddleware(formidableCache);
  
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -96,62 +103,196 @@ app.post('/backend/saveserver/:editi-:id', (req, res) => {
       }
     })
   });
+  }
 });
 
 app.post('/backend/resetserver/:editi-:id', (req, res) => {
-  const form = formidableMiddleware(formidableCache);
+  if(req.session.loggedin){
+    const form = formidableMiddleware(formidableCache);
  
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        next(err);
+        return;
+      }
+
+      databaseManager.updateServer(req.params.id , '.', '0.2', (flawless) => {
+        if(flawless){
+          res.redirect("/backend");
+        }
+      })
+    });
+  }
+});
+
+app.get('/login', (req, response) =>{
+  if(req.session.loggedin){
+    response.redirect('/');
+  }else{
+    response.render('login', {"error": false});
+  }
+});
+
+app.post('/auth', (req, response) =>{
+  const form = formidableMiddleware({ multiples: true });
+
   form.parse(req, (err, fields, files) => {
     if (err) {
       next(err);
       return;
     }
 
-    databaseManager.updateServer(req.params.id , '.', '0.2', (flawless) => {
-      if(flawless){
-        res.redirect("/backend");
+    if(fields.user && fields.password ){
+      const password = fields.password;
+      const username = fields.user;
+
+      if(username == process.env.WEBUSER){
+        bcrypt.compare(fields.password, process.env.WEBPASSWORD, function(err, password_res){
+          console.log(process.env.WEBPASSWORD);
+          if(password_res){
+            req.session.loggedin = true;
+            req.session.username = username;
+            response.redirect('/backend');
+          }else{
+            response.render('login', {"error": true});
+          }
+        });
+      }else{
+        response.render('login', {"error": true});
       }
-    })
+    }else{
+      response.render('login', {"error": true});
+    }
   });
 });
 
 app.get('/backend/logs/error', (req, res) => {
-  databaseManager.getErrorlog().then((result) => {
-    res.send(result);
-  })
+  if(req.session.loggedin){
+    databaseManager.getErrorlog().then((result) => {
+      res.send(result);
+    })
+  }
 });
 
 app.get('/backend/logs/boot', (req, res) => {
-  databaseManager.getBootlog().then((result) => {
-    res.send(result);
-  })
+  if(req.session.loggedin){
+    databaseManager.getBootlog().then((result) => {
+      res.send(result);
+    })
+  }
 });
 
 app.get('/backend/logs/debug', (req, res) => {
-  databaseManager.getDebuglog().then((result) => {
-    res.send(result);
-  })
+  if(req.session.loggedin){
+    databaseManager.getDebuglog().then((result) => {
+      res.send(result);
+    })
+  }
 });
 
 
 
 app.post('/backend/logs/error', (req, res) => {
-  databaseManager.resetErrorlog().then((result) => {
-    res.redirect("/backend");
-  })
+  if(req.session.loggedin){
+    databaseManager.resetErrorlog().then((result) => {
+      res.redirect("/backend");
+    })
+  }
 });
 
 app.post('/backend/logs/debug', (req, res) => {
-  databaseManager.resetDebuglog().then((result) => {
-    res.redirect("/backend");
-  })
+  if(req.session.loggedin){
+    databaseManager.resetDebuglog().then((result) => {
+      res.redirect("/backend");
+    })
+  }
 });
 
 app.post('/backend/logs/boot', (req, res) => {
-  databaseManager.resetBootlog().then((result) => {
-    res.redirect("/backend");
-  })
+  if(req.session.loggedin){
+    databaseManager.resetBootlog().then((result) => {
+      res.redirect("/backend");
+    })
+  }
 });
+
+app.post('/backend/github', (req, res) => {
+  const form = formidableMiddleware({ multiples: true });
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    if(typeof(fields.payload) != 'undefined'){
+      const githubObj = JSON.parse(fields.payload);
+
+      if(githubObj.repository.url == 'https://github.com/Jako9/Announcer_BOT'){
+        if(githubObj.ref == 'refs/heads/' + process.env.BRANCH){
+          axios.post('http://node:3000/kill').then(function (response) {
+            exec('git pull', (err, stdout, stderr) => {
+              if(!err){
+                axios.post('http://node:3000/start').then(function (response) {
+                  res.send(stdout);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              }else{
+                res.send(stderr);
+              }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      }
+    }
+  });
+});
+
+app.get('/api/thankyou', (req, res) => {
+  databaseManager.getAPICreds('handleThankYou', (result) => {
+    let paymentId = req.query.paymentId;
+    let token = req.query.token;
+    let payerID = req.query.PayerID;
+
+    if(paymentId && token && payerID){
+      axios.post(result.link + "/?paymentId=" + paymentId + "&token=" + token + "&PayerID=" + payerID + "&pass=" + password).then(function (response) {
+        res.render(thankyou);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }else{
+      res.render('thankyou');
+    }
+  });
+});
+
+app.get('/api/transaction', (req, res) => {
+  databaseManager.getAPICreds('handleThankYou', (result) => {
+    let transID = req.query.transID;
+    let state = req.query.state;
+    let pass = req.query.pass;
+
+    if(transID && state && pass){
+      if(pass == result.pass){
+        databaseManager.updatePendingPayment(state, transID, (ergeb) => {
+          if(ergeb){
+            res.render('success');
+          }else{
+            res.render('fail');
+          }
+        });
+      }
+    }else{
+      res.render('fail');
+    }
+  });
+})
 
 app.listen(port, () => {
   console.log("Launching webserver...");
