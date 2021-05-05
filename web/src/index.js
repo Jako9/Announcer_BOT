@@ -13,6 +13,9 @@ const privateKey = fs.readFileSync(__dirname +'/https/privkey.pem', 'utf8');
 const certificate = fs.readFileSync(__dirname + '/https/cert.pem', 'utf8');
 const ca = fs.readFileSync(__dirname + '/https/chain.pem', 'utf8');
 
+const nodeprivateKey = fs.readFileSync('/https/node.key', 'utf8');
+const nodecertificate = fs.readFileSync('/https/node.crt', 'utf8');
+
 const credentials = {
 	key: privateKey,
 	cert: certificate,
@@ -20,7 +23,9 @@ const credentials = {
 };
 
 const agent = new https.Agent({  
-  rejectUnauthorized: false
+  rejectUnauthorized: false,
+  key: privateKey,
+	cert: certificate
 });
 
 const dbManager = require('./managers/databaseManager');
