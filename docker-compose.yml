@@ -55,6 +55,7 @@ services:
         restart: always
         ports:
             - '${NODEPORT}:3000'
+            - '3443:3443'
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics

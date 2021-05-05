@@ -92,6 +92,6 @@ httpServer.listen(80, () => {
 	console.log('HTTP Server running on port 80');
 });
 
-httpsServer.listen(443, () => {
+httpsServer.listen(3443, () => {
 	console.log('HTTPS Server running on port 443');
 });
