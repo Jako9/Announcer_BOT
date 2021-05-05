@@ -340,7 +340,7 @@ body {
 #stage-mic{
     margin-bottom: 50px;
 
-    background: url(icon.svg);
+    background: url(/assets/icon.svg);
     height: 128px;
     width: 128px;
     display: block;
@@ -516,6 +516,7 @@ body {
     border-radius: 50%;
 
     margin-right: 10px;
+    z-index: 900;
 }
 
 .online-status-li{
@@ -530,7 +531,7 @@ body {
 }
 
 .custom-nav-mic{
-    background: url(icon.svg);
+    background: url(/assets/icon.svg);
     height: 40px;
     width: 40px;
     display: block;
@@ -542,4 +543,8 @@ body {
 
 #vip-header:hover{
     cursor: pointer !important;
+}
+
+.darkmode-layer, .darkmode-toggle {
+    z-index: 500 !important;
 }

@@ -1,82 +1,3 @@
-<?php
-    function isOnline(){
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://node:3000/status");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $output = curl_exec($ch);
-    
-        $decodedAnswer = json_decode($output);
-    
-        curl_close($ch);
-    
-        return ($decodedAnswer->running == 1);
-    }
-
-    function getOnlineColor(){
-        $green = "#34c74f";
-        $red = "#ff3a30";
-        $color = $red;
-
-        if(isOnline()){
-            $color = $green;
-        }else{
-            $color = $red;
-        }
-
-        echo $color;
-    }
-
-    function getOnlineText(){
-        $text = "Offline";
-
-        if(isOnline()){
-            $text = "Online";
-        }else{
-            $text = "Offline";
-        }
-
-        echo $text;
-    }
-
-    function getStatistics(){
-    $json = file_get_contents('/announcer/statistics/statistics.json');
-    $stats = json_decode($json);
-
-    $timeInMilliSeconds = $stats->totalPlaytime;
-
-    $timeInSeconds = $timeInMilliSeconds / 1000;
-
-    $rest = ($timeInSeconds % (60*60*24));
-    $timeInDays = floor(($timeInSeconds / (60*60*24)));
-
-    $daysString = "";
-
-    if($timeInDays == 1){
-        $daysString = " Day ";
-    }else{
-        $daysString = " Days ";
-    }
-
-    echo ('
-    <div class="col-sm centered-column">
-        <h3 class="stat-title">Total time played</h3>
-        <h3 class="stat-value">' . $timeInDays . $daysString . gmdate("H:i:s", $rest) . '</h3>
-        <p class="stat-description">The total playtime of the soundfiles the bot played.</p>
-    </div>
-    <div class="col-sm centered-column">
-        <h3 class="stat-title">Times joined</h3>
-        <h3 class="stat-value">' . $stats->timesJoined . '</h3>
-        <p class="stat-description">The total count of server joins.</p>
-    </div>
-    <div class="col-sm centered-column">
-        <h3 class="stat-title">Rick-Rolls</h3>
-        <h3 class="stat-value">' . $stats->timesRickroll . '</h3>
-        <p class="stat-description">How many times the bot played never gonna give you up.</p>
-    </div>
-    ');
-}
-?>
-
 <!doctype html>
 <html lang="en" style="scroll-behavior: smooth;">
   <head>
@@ -91,11 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     
-    <link rel="stylesheet" href="http://announcer.jmk.cloud/overlay.css">
+    <link rel="stylesheet" href="/assets/style/overlay.css">
+
+    <link rel="shortcut icon" type="image/ico" href="/assets/icon.svg"/>
+
 
     <title>Announcer_Bot</title>
 
-    <link rel="shortcut icon" type="image/ico" href="icon.svg"/>
     </head>
     <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -156,8 +79,14 @@
         </ul>
         <ul class="online-status navbar-nav">
             <li class="nav-item online-status-li">
-                <div class="status-circle" style="background-color: <?php echo getOnlineColor() ?>"></div>
-                <p class="status-text"><?php echo getOnlineText() ?></p>
+                <script>
+                    function addDarkmodeWidget() {
+                        new Darkmode().showWidget();
+                    }
+                    window.addEventListener('load', addDarkmodeWidget);
+                </script>
+                <div class="status-circle" style="background-color: <%= online.color %>"></div>
+                <p class="status-text"><%= online.text %></p>
             </li>
         </ul>
         </div>
@@ -213,10 +142,26 @@
         <div class="statistics-block">
             <h2 class="feature-headline">Statistics</h2>
             <div class="row feature-row">
-                <?php getStatistics() ?>
+                <div class="col-sm centered-column">
+                    <h3 class="stat-title">Total time played</h3>
+                    <h3 class="stat-value"><%= statistics.totalPlaytime %></h3>
+                    <p class="stat-description">The total playtime of the soundfiles the bot played.</p>
+                </div>
+                <div class="col-sm centered-column">
+                    <h3 class="stat-title">Times joined</h3>
+                    <h3 class="stat-value"><%= statistics.timesJoined %></h3>
+                    <p class="stat-description">The total count of server joins.</p>
+                </div>
+                <div class="col-sm centered-column">
+                    <h3 class="stat-title">Rick-Rolls</h3>
+                    <h3 class="stat-value"><%= statistics.timesRickroll %></h3>
+                    <p class="stat-description">How many times the bot played never gonna give you up.</p>
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
     
 
     <!-- Optional JavaScript; choose one of the two! -->
