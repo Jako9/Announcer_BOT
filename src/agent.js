@@ -6,14 +6,12 @@ const { spawn } = require('child_process');
 const { type } = require('os');
 let announcer = {};
 
-const privateKey = fs.readFileSync('/https/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/https/cert.pem', 'utf8');
-const ca = fs.readFileSync('/https/chain.pem', 'utf8');
+const privateKey = fs.readFileSync('/https/node.key', 'utf8');
+const certificate = fs.readFileSync('/https/node.crt', 'utf8');
 
 const credentials = {
 	key: privateKey,
 	cert: certificate,
-	ca: ca
 };
 
 //erstelle den Webserver
