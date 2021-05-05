@@ -298,14 +298,14 @@ app.get('/api/thankyou', (req, res) => {
     let payerID = req.query.PayerID;
 
     if(paymentId && token && payerID){
-      axios.post(result.link + "/?paymentId=" + paymentId + "&token=" + token + "&PayerID=" + payerID + "&pass=" + password).then(function (response) {
+      axios.post(result.link + "/?paymentId=" + paymentId + "&token=" + token + "&PayerID=" + payerID + "&pass=" + result.password).then(function (response) {
         res.render(thankyou);
       })
       .catch(function (error) {
         console.log(error);
       });
     }else{
-      res.send(result);
+      res.send(result.link);
     }
   });
 });
