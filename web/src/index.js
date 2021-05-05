@@ -19,6 +19,10 @@ const credentials = {
 	ca: ca
 };
 
+const agent = new https.Agent({  
+  rejectUnauthorized: false
+});
+
 const dbManager = require('./managers/databaseManager');
 
 const formidableMiddleware = require('formidable');
@@ -282,10 +286,10 @@ app.post('/backend/github', (req, res) => {
 
       if(githubObj.repository.url == 'https://github.com/Jako9/Announcer_BOT'){
         if(githubObj.ref == 'refs/heads/' + process.env.BRANCH){
-          axios.post('https://node:3443/kill').then(function (response) {  
+          axios.post('https://node:3443/kill',  { httpsAgent: agent }).then(function (response) {  
             exec('cd gitCopy && git pull', (err, stdout, stderr) => {
               if(!err){
-                axios.post('https://node:3443/start').then(function (response) {
+                axios.post('https://node:3443/start',  { httpsAgent: agent }).then(function (response) {
                   res.send(stdout);
                 })
                 .catch(function (error) {
