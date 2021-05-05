@@ -24,7 +24,6 @@ const dbManager = require('./managers/databaseManager');
 const formidableMiddleware = require('formidable');
 const bcrypt = require('bcryptjs');
 
-const fs = require('fs');
 const path = require('path');
 const onlineManager = require('./managers/onlineManager');
 const databaseManager = require('./managers/databaseManager');
