@@ -293,7 +293,7 @@ app.post('/backend/github', (req, res) => {
 
 app.get('/api/thankyou', (req, res) => {
   databaseManager.getAPICreds('handleThankYou', (result) => {
-    let paymentId = req.query.transID;
+    let paymentId = req.query.paymentId;
     let token = req.query.token;
     let payerID = req.query.PayerID;
 
@@ -320,7 +320,7 @@ app.post('/api/transaction', (req, res) => {
     }
     
     databaseManager.getAPICreds('handleThankYou', (result) => {
-      let transID = fields.paymentId;
+      let transID = fields.transID;
       let state = fields.state;
       let pass = fields.pass;
   
