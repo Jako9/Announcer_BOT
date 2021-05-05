@@ -299,7 +299,7 @@ app.get('/api/thankyou', (req, res) => {
 
     if(paymentId && token && payerID){
       axios.post(result.link + "/?paymentId=" + paymentId + "&token=" + token + "&PayerID=" + payerID + "&pass=" + result.password).then(function (response) {
-        res.render(thankyou);
+        res.render('thankyou');
       })
       .catch(function (error) {
         console.log(error);
@@ -319,13 +319,13 @@ app.post('/api/transaction', (req, res) => {
       return;
     }
     
-    databaseManager.getAPICreds('handleThankYou', (result) => {
+    databaseManager.getAPICreds('processPayment', (result) => {
       let transID = fields.transID;
       let state = fields.state;
       let pass = fields.pass;
   
       if(transID && state && pass){
-        if(pass == result.pass){
+        if(pass == result.password){
           databaseManager.updatePendingPayment(state, transID, (ergeb) => {
             if(ergeb){
               res.send('success');
