@@ -22,7 +22,6 @@ app.set('view engine','ejs');
 app.engine('html', require('ejs').renderFile);
 app.set('views', __dirname + "/pages");
 
-app.use(express.static(__dirname + '/assets/https/', { dotfiles: 'allow' } ));
 app.use('/assets/', express.static(__dirname + '/assets/'));
 app.use('/resources/', express.static('/web/resources/'));
 
@@ -342,6 +341,9 @@ app.post('/api/transaction', (req, res) => {
   });
 });
 
+app.get('/.well-known/acme-challenge/', (req, res) => {
+  res.sendFile(__dirname + '/assets/https/pD31x-flZb0bvGKMNlJHr8g-hbB_VIEUhkC7sF_hv6E');
+});
 
 app.listen(port, () => {
   console.log("Launching webserver...");
