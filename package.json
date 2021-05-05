@@ -22,12 +22,15 @@
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.2.7",
+    "greenlock-express": "^4.0.3",
     "mp3-duration": "^1.1.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "opusscript": "0.0.7"
   },
   "nodemonConfig": {
-    "ignore": ["statistics/*.json"]
+    "ignore": [
+      "statistics/*.json"
+    ]
   }
 }

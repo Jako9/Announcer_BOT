@@ -8,10 +8,13 @@ let announcer = {};
 
 const privateKey = fs.readFileSync('/https/node.key', 'utf8');
 const certificate = fs.readFileSync('/https/node.crt', 'utf8');
+const cacertificate = fs.readFileSync('/https/rootCA.crt', 'utf8');
 
 const credentials = {
 	key: privateKey,
 	cert: certificate,
+    ca: cacertificate,
+    rejectUnauthorized: false
 };
 
 //erstelle den Webserver

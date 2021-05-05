@@ -4,11 +4,13 @@ const fs = require('fs');
 
 const privateKey = fs.readFileSync('/https/node.key', 'utf8');
 const certificate = fs.readFileSync('/https/node.crt', 'utf8');
+const cacertificate = fs.readFileSync('/https/rootCA.crt', 'utf8');
 
 const agent = new https.Agent({  
     rejectUnauthorized: false,
     key: privateKey,
-	cert: certificate
+	cert: certificate,
+    ca: cacertificate
 });
 
 module.exports = {
