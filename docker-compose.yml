@@ -27,7 +27,7 @@ services:
             - ./config/statistics/:/web/statistics
             - ./logs/:/web/logs
             - ./web/src/:/web/code
-            - ./.git/:/web/.git
+            - ./:/web/gitCopy
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
