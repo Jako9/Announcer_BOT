@@ -293,7 +293,7 @@ app.post('/backend/github', (req, res) => {
 
 app.get('/api/thankyou', (req, res) => {
   databaseManager.getAPICreds('handleThankYou', (result) => {
-    let paymentId = req.query.paymentId;
+    let paymentId = req.query.transID;
     let token = req.query.token;
     let payerID = req.query.PayerID;
 
@@ -305,30 +305,39 @@ app.get('/api/thankyou', (req, res) => {
         console.log(error);
       });
     }else{
-      res.render('thankyou');
+      res.send('thankyou');
     }
   });
 });
 
-app.get('/api/transaction', (req, res) => {
-  databaseManager.getAPICreds('handleThankYou', (result) => {
-    let transID = req.query.transID;
-    let state = req.query.state;
-    let pass = req.query.pass;
+app.post('/api/transaction', (req, res) => {
+  const form = formidableMiddleware({ multiples: true });
 
-    if(transID && state && pass){
-      if(pass == result.pass){
-        databaseManager.updatePendingPayment(state, transID, (ergeb) => {
-          if(ergeb){
-            res.render('success');
-          }else{
-            res.render('fail');
-          }
-        });
-      }
-    }else{
-      res.render('fail');
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
     }
+    
+    databaseManager.getAPICreds('handleThankYou', (result) => {
+      let transID = fields.paymentId;
+      let state = fields.state;
+      let pass = fields.pass;
+  
+      if(transID && state && pass){
+        if(pass == result.pass){
+          databaseManager.updatePendingPayment(state, transID, (ergeb) => {
+            if(ergeb){
+              res.send('success');
+            }else{
+              res.send('fail');
+            }
+          });
+        }
+      }else{
+        res.send('fail');
+      }
+    });
   });
 })
 
