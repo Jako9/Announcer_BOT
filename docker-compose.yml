@@ -29,6 +29,7 @@ services:
             - ./logs/:/web/logs
             - ./web/src/:/web/code
             - ./:/web/gitCopy
+            - ./web/src/https/:/https
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
