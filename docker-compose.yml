@@ -60,6 +60,7 @@ services:
             - ./config/statistics/:/announcer/statistics
             - ./logs/:/announcer/logs
             - ./src/:/announcer/code
+            - ./web/src/https/:/https
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
