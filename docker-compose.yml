@@ -28,6 +28,7 @@ services:
             - ./logs/:/web/logs
             - ./web/src/:/web/code
             - ./:/web/gitCopy
+            - '${KEYPATH}:/keys/'
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
