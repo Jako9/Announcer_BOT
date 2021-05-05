@@ -52,6 +52,15 @@ app.set('views', __dirname + "/pages");
 app.use('/assets/', express.static(__dirname + '/assets/'));
 app.use('/resources/', express.static('/web/resources/'));
 
+app.use(function(request, response, next) {
+
+  if (process.env.NODE_ENV != 'development' && !request.secure) {
+     return response.redirect("https://" + request.headers.host + request.url);
+  }
+
+  next();
+})
+
 const formidableCache = {
   encoding: 'utf-8',
   uploadDir: path.join(__dirname, 'uploads' , '.cache'),
