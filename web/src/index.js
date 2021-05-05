@@ -62,12 +62,12 @@ app.get('/backend', (req, res) => {
       let statistics = formatStatistics(JSON.parse(content));
   
       onlineManager.getOnlineStatus().then((status) => {
-	      console.dir(status);
+	      console.dir(status.data.running);
         databaseManager.getServers((servers) => {
           databaseManager.getVips((vips) => {
             let online = formatOnline(status.data);
   
-            let botRoute = (status == 1)? "http://localhost:3000/kill" : "http://localhost:3000/restart";
+            let botRoute = (status.data.running == 1) ? "http://localhost:3000/kill" : "http://localhost:3000/restart";
   
             res.render("backend", {
               "statistics": statistics,
@@ -309,7 +309,7 @@ function formatStatistics(statistics){
 }
 
 function formatOnline(onlineStatus){
-  let hstatus = (onlineStatus == 1);
+  let hstatus = (onlineStatus.running == 1);
 
   let obj = {};
 
