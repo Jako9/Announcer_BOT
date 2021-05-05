@@ -26,6 +26,11 @@ const agent = new https.Agent({
 	cert: certificate
 });
 
+const instance = axios.create({
+  httpsAgent: new https.Agent({  
+    rejectUnauthorized: false
+  })
+});
 
 const dbManager = require('./managers/databaseManager');
 
@@ -290,10 +295,10 @@ app.post('/backend/github', (req, res) => {
 
       if(githubObj.repository.url == 'https://github.com/Jako9/Announcer_BOT'){
         if(githubObj.ref == 'refs/heads/' + process.env.BRANCH){
-          axios.post('https://node:3443/kill',  { httpsAgent: agent }).then(function (response) {  
+          instance.post('https://node:3443/kill',  { httpsAgent: agent }).then(function (response) {  
             exec('cd gitCopy && git pull', (err, stdout, stderr) => {
               if(!err){
-                axios.post('https://node:3443/start',  { httpsAgent: agent }).then(function (response) {
+                instance.post('https://node:3443/start',  { httpsAgent: agent }).then(function (response) {
                   res.send(stdout);
                 })
                 .catch(function (error) {
