@@ -323,6 +323,11 @@ app.post('/api/transaction', (req, res) => {
       let transID = fields.transID;
       let state = fields.state;
       let pass = fields.pass;
+
+      console.log("transId: " + transID);
+      console.log("state: " + state);
+      console.log("pass: " + pass);
+      console.log("pass-DB: " + result.password);
   
       if(transID && state && pass){
         if(pass == result.password){
