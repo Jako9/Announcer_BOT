@@ -1,8 +1,14 @@
 const axios = require('axios');
 const https = require('https');
+const fs = require('fs');
+
+const privateKey = fs.readFileSync('/https/node.key', 'utf8');
+const certificate = fs.readFileSync('/https/node.crt', 'utf8');
 
 const agent = new https.Agent({  
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    key: privateKey,
+	cert: certificate
 });
 
 module.exports = {
