@@ -282,10 +282,10 @@ app.post('/backend/github', (req, res) => {
 
       if(githubObj.repository.url == 'https://github.com/Jako9/Announcer_BOT'){
         if(githubObj.ref == 'refs/heads/' + process.env.BRANCH){
-          axios.post('http://node:3000/kill').then(function (response) {  
+          axios.post('https://node:3443/kill').then(function (response) {  
             exec('cd gitCopy && git pull', (err, stdout, stderr) => {
               if(!err){
-                axios.post('http://node:3000/start').then(function (response) {
+                axios.post('https://node:3443/start').then(function (response) {
                   res.send(stdout);
                 })
                 .catch(function (error) {
