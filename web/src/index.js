@@ -400,7 +400,7 @@ function formatOnline(onlineStatus){
 
   obj.status = hstatus;
   obj.text = (hstatus)? "Online" : "Offline";
-  obj.color = (hstatus)? "#34c74f" : "#ff3a30";
+  obj.color = (hstatus)? "#ff3a30" : "#34c74f";
 
   return obj;
 }
