@@ -67,7 +67,7 @@ app.get('/backend', (req, res) => {
           databaseManager.getVips((vips) => {
             let online = formatOnline(status.data);
   
-            let botRoute = (status.data.running == 1) ? "http://localhost:3000/kill" : "http://localhost:3000/restart";
+            let botRoute = (status.data.running == 1) ? "/backend/kill" : "/backend/restart";
   
             res.render("backend", {
               "statistics": statistics,
@@ -85,6 +85,43 @@ app.get('/backend', (req, res) => {
    })
   }else{
     res.redirect('/login');
+  }
+});
+
+app.post('/backend/kill', (req, res) => {
+  if(req.session.loggedin){
+    const form = formidableMiddleware(formidableCache);
+ 
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+    
+    onlineManager.killServer().then(() =>{
+      res.redirect('/backend');
+    });
+    
+  });
+  }
+});
+
+app.post('/backend/restart', (req, res) => {
+  if(req.session.loggedin){
+    const form = formidableMiddleware(formidableCache);
+ 
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    onlineManager.killServer().then(() =>{
+      onlineManager.startServer().then(() => {
+        res.redirect('/backend');
+      });
+    });
+  });
   }
 });
 
