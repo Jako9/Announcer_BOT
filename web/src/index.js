@@ -9,9 +9,9 @@ const axios = require('axios');
 
 
 
-const privateKey = fs.readFileSync('/keys/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/keys/cert.pem', 'utf8');
-const ca = fs.readFileSync('/keys/hain.pem', 'utf8');
+const privateKey = fs.readFileSync('./https/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('./https/cert.pem', 'utf8');
+const ca = fs.readFileSync('./https/chain.pem', 'utf8');
 
 const credentials = {
 	key: privateKey,
