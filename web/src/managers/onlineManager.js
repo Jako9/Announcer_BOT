@@ -2,14 +2,14 @@ const axios = require('axios');
 
 module.exports = {
     getOnlineStatus: () => {
-        return axios.get('https://node:3000/status');
+        return axios.get('https://node:3443/status');
     },
 
     killServer: () => {
-        return axios.post('https://node:3000/kill');
+        return axios.post('https://node:3443/kill');
     },
 
     startServer: () => {
-        return axios.post('https://node:3000/start');
+        return axios.post('https://node:3443/start');
     }
 }
