@@ -3,7 +3,6 @@ const http = require('http');
 const https = require('https');
 const express = require('express')
 const { spawn } = require('child_process');
-const fs = require('fs');
 const { type } = require('os');
 let announcer = {};
 
