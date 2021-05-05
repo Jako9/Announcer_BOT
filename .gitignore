@@ -19,6 +19,8 @@ package-lock.json
 config/statistics/
 resources/vips/
 
+web/src/assets/https/
+
 .env
 
 docker/mysql/data
