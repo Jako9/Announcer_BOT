@@ -1,6 +1,7 @@
 const express = require('express')
 const { spawn } = require('child_process');
 const fs = require('fs');
+const { type } = require('os');
 let announcer = {};
 
 //erstelle den Webserver
@@ -29,9 +30,13 @@ app.post('/start', function (req, res) {
 //Beendet die Nodeapplikation
 app.post('/kill', function (req, res) {
     //Schickt an den Bot-Childprocess ein Sigterm um ihm zu beenden
-    announcer.kill('SIGTERM');
-    announcer = {};
-    res.send({"pid": announcer.pid});
+    if(typeof(announcer) != 'undefined' && Object.entries(announcer).length !== 0){
+        announcer.kill('SIGTERM');
+        announcer = {};
+        res.send({"pid": announcer.pid});
+    }else{
+        res.send({});
+    }
 });
 
 //Behilfsmethode um die Logdateien aus dem Webinterface heraus löschen zu können

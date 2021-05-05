@@ -14,37 +14,28 @@ services:
             MYSQL_USER: ${DBUSER}
             MYSQL_PASSWORD: ${DBPASSWORD}
 
-    webserver:
-        image: nginx
-        volumes:
-            - ./config/statistics/:/announcer/statistics
-            - ./resources/:/code/resources
-            - ./logs/:/var/www/logs
-            - ./web:/code
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        ports:
-            - ${WEBPORT}:80
-        links:
-            - php
-    
 
-    php:
-        depends_on:
+    webserver:
+        build: ./web
+        depends_on: 
             - db
-        build: ./docker/php
+        restart: always
+        ports:
+            - 80:80
         volumes:
-            - ./resources/:/announcer/resources
-            - ./config/statistics/:/announcer/statistics
-            - ./logs/:/var/www/logs
-            - ./web:/code
+            - ./resources/:/web/resources
+            - ./config/statistics/:/web/statistics
+            - ./logs/:/web/logs
+            - ./web/src/:/web/code
+            - ./.git/:/web/.git
         environment:
-            - LOGIN=${WEBUSER}
-            - PASSWORD=${WEBPASSWORD}
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
             - DBNAME=${DBNAME}
+            - WEBUSER=${WEBUSER}
+            - WEBPASSWORD=${WEBPASSWORD}
             - BRANCH=${BRANCH}
-
+    
     phpmyadmin:
         depends_on:
             - db
