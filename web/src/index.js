@@ -4,6 +4,16 @@ const request = require('request');
 const moment = require('moment');
 const axios = require('axios');
 
+const privateKey = fs.readFileSync('/keys/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/keys/cert.pem', 'utf8');
+const ca = fs.readFileSync('/keys/hain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
 const dbManager = require('./managers/databaseManager');
 
 const formidableMiddleware = require('formidable');
@@ -341,13 +351,21 @@ app.post('/api/transaction', (req, res) => {
   });
 });
 
-app.get('/.well-known/acme-challenge/pD31x-flZb0bvGKMNlJHr8g-hbB_VIEUhkC7sF_hv6E', (req, res) => {
-  res.sendFile(__dirname + '/assets/https/pD31x-flZb0bvGKMNlJHr8g-hbB_VIEUhkC7sF_hv6E');
+//app.get('/.well-known/acme-challenge/pD31x-flZb0bvGKMNlJHr8g-hbB_VIEUhkC7sF_hv6E', (req, res) => {
+//  res.sendFile(__dirname + '/assets/https/pD31x-flZb0bvGKMNlJHr8g-hbB_VIEUhkC7sF_hv6E');
+//}); //Route nut notwendig wenn auf HTTPS geupgraded werden soll
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
 });
 
-app.listen(port, () => {
-  console.log("Launching webserver...");
-})
+httpsServer.listen(443, () => {
+	console.log('HTTPS Server running on port 443');
+});
+
 
 function formatStatistics(statistics){
   let timeInMillisecs = statistics.totalPlaytime;
