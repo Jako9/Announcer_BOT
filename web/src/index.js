@@ -62,6 +62,7 @@ app.get('/backend', (req, res) => {
       let statistics = formatStatistics(JSON.parse(content));
   
       onlineManager.getOnlineStatus().then((status) => {
+	      console.log("Status " + status);
         databaseManager.getServers((servers) => {
           databaseManager.getVips((vips) => {
             let online = formatOnline(status.data);
