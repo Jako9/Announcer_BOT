@@ -19,7 +19,7 @@ package-lock.json
 config/statistics/
 resources/vips/
 
-web/src/assets/https/
+web/src/https/
 
 .env
 
