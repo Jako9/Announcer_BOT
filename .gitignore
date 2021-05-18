@@ -24,3 +24,5 @@ web/src/https/
 .env
 
 docker/mysql/data
+
+/src/dist/
