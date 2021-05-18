@@ -25,6 +25,7 @@
 [mysqld]
 wait_timeout = 31536000
 max_allowed_packet=500M
+max_connections=1000
 
 [mysqldump]
 max_allowed_packet=500M
