@@ -4,6 +4,10 @@ services:
     db:
         image: ${DBIMAGE}
         restart: always
+        ulimits:
+             nofile:
+             soft: 20000
+             hard: 40000
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/init.sql
