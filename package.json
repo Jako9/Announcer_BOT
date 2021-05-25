@@ -5,11 +5,11 @@
   "main": "agent.js",
   "scripts": {
     "start": "nodemon /announcer/code/agent.js",
-    "build": "./node_modules/typescript/bin/tsc",
+    "build": "tsc",
     "compile": "npm run lint && npm run build",
     "dev-start": "nodemon ./src/dist/agent.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "run": "./node_modules/typescript/bin/tsc && nodemon ./dist/agent.js"
+    "run": "tsc && nodemon ./dist/agent.js"
   },
   "repository": {
     "type": "git",
