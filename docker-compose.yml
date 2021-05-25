@@ -4,6 +4,10 @@ services:
     db:
         image: ${DBIMAGE}
         restart: always
+        ulimits:
+             nofile:
+                soft: 20000
+                hard: 40000
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/setup.sql:/docker-entrypoint-initdb.d/init.sql
@@ -14,37 +18,30 @@ services:
             MYSQL_USER: ${DBUSER}
             MYSQL_PASSWORD: ${DBPASSWORD}
 
-    webserver:
-        image: nginx
-        volumes:
-            - ./config/statistics/:/announcer/statistics
-            - ./resources/:/code/resources
-            - ./logs/:/var/www/logs
-            - ./web:/code
-            - ./docker/nginx/:/etc/nginx/conf.d/
-        ports:
-            - ${WEBPORT}:80
-        links:
-            - php
-    
 
-    php:
-        depends_on:
+    webserver:
+        build: ./web
+        depends_on: 
             - db
-        build: ./docker/php
+        restart: always
+        ports:
+            - 80:80
+            - 443:443
         volumes:
-            - ./resources/:/announcer/resources
-            - ./config/statistics/:/announcer/statistics
-            - ./logs/:/var/www/logs
-            - ./web:/code
+            - ./resources/:/web/resources
+            - ./config/statistics/:/web/statistics
+            - ./logs/:/web/logs
+            - ./web/src/:/web/code
+            - ./:/web/gitCopy
+            - ./web/src/https/:/https
         environment:
-            - LOGIN=${WEBUSER}
-            - PASSWORD=${WEBPASSWORD}
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}
             - DBNAME=${DBNAME}
+            - WEBUSER=${WEBUSER}
+            - WEBPASSWORD=${WEBPASSWORD}
             - BRANCH=${BRANCH}
-
+    
     phpmyadmin:
         depends_on:
             - db
@@ -63,11 +60,13 @@ services:
         restart: always
         ports:
             - '${NODEPORT}:3000'
+            - '3443:3443'
         volumes:
             - ./resources/:/announcer/resources
             - ./config/statistics/:/announcer/statistics
             - ./logs/:/announcer/logs
             - ./src/:/announcer/code
+            - ./web/src/https/:/https
         environment:
             - DBUSER=${DBUSER}
             - DBPASSWORD=${DBPASSWORD}

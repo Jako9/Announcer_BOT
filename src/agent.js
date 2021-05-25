@@ -1,7 +1,21 @@
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
 const express = require('express')
 const { spawn } = require('child_process');
-const fs = require('fs');
+const { type } = require('os');
 let announcer = {};
+
+const privateKey = fs.readFileSync('/https/node.key', 'utf8');
+const certificate = fs.readFileSync('/https/node.crt', 'utf8');
+const cacertificate = fs.readFileSync('/https/rootCA.crt', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+    ca: cacertificate,
+    rejectUnauthorized: false
+};
 
 //erstelle den Webserver
 const app = express()
@@ -29,9 +43,13 @@ app.post('/start', function (req, res) {
 //Beendet die Nodeapplikation
 app.post('/kill', function (req, res) {
     //Schickt an den Bot-Childprocess ein Sigterm um ihm zu beenden
-    announcer.kill('SIGTERM');
-    announcer = {};
-    res.send({"pid": announcer.pid});
+    if(typeof(announcer) != 'undefined' && Object.entries(announcer).length !== 0){
+        announcer.kill('SIGTERM');
+        announcer = {};
+        res.send({"pid": announcer.pid});
+    }else{
+        res.send({});
+    }
 });
 
 //Behilfsmethode um die Logdateien aus dem Webinterface heraus löschen zu können
@@ -68,7 +86,13 @@ app.post('/log/clear/:log', function (req, res) {
 });
 
 
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 
-app.listen(port, function () {
-  console.log('Der Bot lauscht auf ' + port)
-})
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(3443, () => {
+	console.log('HTTPS Server running on port 443');
+});

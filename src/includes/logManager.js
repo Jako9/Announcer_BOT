@@ -7,7 +7,7 @@ module.exports = {
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(bootLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(bootLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n<br>", (err) => {
                 if (err) throw err;
             });
         } catch(err) {
@@ -22,7 +22,7 @@ module.exports = {
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(debugLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(debugLogPath, "<span style='color:#A3BE8C;'>[" + date + "]</span> " + message + "\n<br>", (err) => {
                 if (err) throw err;
             });
         } catch(err) {
@@ -36,7 +36,7 @@ module.exports = {
 
         try {
             date = new Date().toUTCString();
-            fs.appendFileSync(errorLogPath, "<span style='color:#BF616A;'>[" + date + "]</span> " + message + "\n", (err) => {
+            fs.appendFileSync(errorLogPath, "<span style='color:#BF616A;'>[" + date + "]</span> " + message + "\n<br>", (err) => {
                 if (err) throw err;
             });
         } catch(err) {
