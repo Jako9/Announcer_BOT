@@ -362,13 +362,17 @@ app.post('/api/transaction', (req, res) => {
   
       if(transID && state && pass){
         if(pass == result.password){
-          databaseManager.updatePendingPayment(state, transID, (ergeb) => {
-            if(ergeb){
-              res.send('success');
-            }else{
-              res.send('fail');
-            }
-          });
+          try{
+            databaseManager.updatePendingPayment(state, transID, (ergeb) => {
+              if(ergeb){
+                res.send('success');
+              }else{
+                res.send('fail');
+              }
+            });
+          }catch(err){
+            res.send(err);
+          }
         }
       }else{
         res.send('fail');
