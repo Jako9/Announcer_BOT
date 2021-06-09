@@ -62,9 +62,14 @@ function bot_join(vc, connection, file){
     });
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // Bot Server verlassen
-function leave(guildFeeder){
+async function leave(guildFeeder){
   let id = guildFeeder.guild.me.id;
+  await sleep(400);
   if(guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel != null){
     guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
   }
