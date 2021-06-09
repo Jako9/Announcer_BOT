@@ -69,7 +69,7 @@ function sleep(ms) {
 // Bot Server verlassen
 async function leave(guildFeeder){
   let id = guildFeeder.guild.me.id;
-  await sleep(400);
+  await sleep(500);
   if(guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel != null){
     guildFeeder.guild.members.cache.find(member => member.id === id).voice.channel.leave();
   }
