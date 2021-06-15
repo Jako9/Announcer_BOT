@@ -139,18 +139,17 @@ module.exports = {
                 // The whole response has been received. Print out the result.
                 resp.on('end', () => {
                   let link = null
-                  let breakOut = false
+                  let jsonData = null;
                   try{
-                    let jsonData = JSON.parse(data);
+                    jsonData = JSON.parse(data);
                     link = jsonData.paypalLink;
                   }
                   catch(e){
                     logManager.writeErrorLog(e);
                     logManager.writeErrorLog(data);
-                    breakOut = true;
                   }
                   logManager.writeDebugLog("jsonData: " + jsonData);
-                  if(link && !breakOut){
+                  if(link && jsonData){
                     dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
                     let embed = buildEmbed(link);
                     message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
