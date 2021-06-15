@@ -149,7 +149,9 @@ module.exports = {
                     logManager.writeErrorLog(data);
                   }
                   logManager.writeDebugLog("jsonData: " + jsonData);
+                  logManager.writeDebugLog("link: " + link);
                   if(link && jsonData){
+                    logManager.writeDebugLog("---Entered if---");
                     dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
                     let embed = buildEmbed(link);
                     message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
