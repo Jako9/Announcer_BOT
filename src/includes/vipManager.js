@@ -149,6 +149,7 @@ module.exports = {
                     logManager.writeErrorLog(data);
                     breakOut = true;
                   }
+                  logManager.writeDebugLog("jsonData: " + jsonData);
                   if(link && !breakOut){
                     dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
                     let embed = buildEmbed(link);
