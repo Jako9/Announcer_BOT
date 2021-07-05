@@ -26,7 +26,7 @@
     "mp3-duration": "^1.1.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
-    "opusscript": "0.0.7"
+    "@discordjs/opus": "^0.5.3"
   },
   "nodemonConfig": {
     "ignore": [
