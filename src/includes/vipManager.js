@@ -59,7 +59,7 @@ function changeVIPSound(message, file){
       'Content-Type': 'audio/mpeg',
     },
   }).then((result) => {
-    logManager.writeDebugLog("Axios-Type-Check recieved");
+    logManager.writeDebugLog("Axios-Type-Check OK");
     const outputFilename = "/announcer/resources/.cache/" + message.author.id + ".mp3";
     fs.writeFileSync(outputFilename, result.data);
     const pathToCheck = outputFilename;
