@@ -173,25 +173,32 @@ module.exports = {
   },
 
   fileReceived: function(message, file){
-
+    logManager.writeDebugLog("---VIPSOUND---");
+    logManager.writeDebugLog("Checking VIP-Status...");
     dbManager.getVip(message.author.id, function(vip){
       if(vip){
         //Der Nutzer ist ein VIP => Er ändert seinen Joinsound
+        logManager.writeDebugLog("VIP-Status OK");
         changeVIPSound(message, file);
       }
       else{
+        logManager.writeDebugLog("VIP-Status FAILED");
         //Der Nutzer hat eine Bezahlung am laufen (erledigt oder nicht)
+        logManager.writeDebugLog("Checking Payment-Status...");
         dbManager.getPaymentStatus(message.author.id, function(status){
           if(!status){
             //Der Nutzer hat noch keinen Antrag auf VIP-Status gestellt
+            logManager.writeDebugLog("Payment-Status FAILED: NO-VIP");
             message.author.send("You are no vip YET! Type \"becomeVIP\" to become a vip.").catch(err => {logManager.writeErrorLog(err.stack);});
           }
           //Zahlung noch nicht erfolgt
           else if(status == "Pending"){
+            logManager.writeDebugLog("Payment-Status FAILED: Payment not received");
             message.author.send("Your payment has not been received yet. If you think you have already paid, please contact @Jako9#4446 on discord or write an email to announcer.backend@gmail.com.").catch(err => {logManager.writeErrorLog(err.stack);});
           }
           //Zahlung erfolgreich
           else if(status == "approved"){
+            logManager.writeDebugLog("Payment-Status OK");
             changeVIPSound(message, file);
           }
           //Das sollte nicht passieren
