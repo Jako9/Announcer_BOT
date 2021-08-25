@@ -43,11 +43,14 @@ function buildEmbed(link){
 
 function changeVIPSound(message, file){
   //File zu groß
+  logManager.writeDebugLog("Received File");
+  logManager.writeDebugLog("Checking File-Size...");
   if(file.size > (1024 * 700)){
     message.author.send("The file is too big. The maximum filesize must be at most 700kb").catch(err => {logManager.writeErrorLog(err.stack);});
     return;
   }
-
+  logManager.writeDebugLog("File-Size OK");
+  logManager.writeDebugLog("Requesting Axios-Type-Check...");
   axios.request({
     responseType: 'arraybuffer',
     url: file.proxyURL,
@@ -56,6 +59,7 @@ function changeVIPSound(message, file){
       'Content-Type': 'audio/mpeg',
     },
   }).then((result) => {
+    logManager.writeDebugLog("Axios-Type-Check recieved");
     const outputFilename = "/announcer/resources/.cache/" + message.author.id + ".mp3";
     fs.writeFileSync(outputFilename, result.data);
     const pathToCheck = outputFilename;
