@@ -154,6 +154,17 @@ client.on('message', message => {
     else if(message.content === "becomeVIP"){
       vipManager.becomeVIP(message);
     }
+    else if(message.attachments.size == 1){
+      let attachment = message.attachments.find(foo => true);
+      ENDUNGEN.forEach(endung => {
+        if(attachment.proxyURL.endsWith(endung)){
+          message.author.send("The joinsound must be an mp3!");
+        }
+      });
+      if(attachment.proxyURL.endsWith(".mp3")){
+        vipManager.fileReceived(message, attachment);
+      }
+    }
     //Admin Befehle => setting status
     else if(message.author.id == "255064680417067019" || message.author.id == "174558221535674369"){
       if(message.content === "restart"){
@@ -164,17 +175,6 @@ client.on('message', message => {
       }
       else if(message.content.startsWith("setStatus")){
         errorManager.setAnnouncement(client, message.content);
-      }
-    }
-    else if(message.attachments.size == 1){
-      let attachment = message.attachments.find(foo => true);
-      ENDUNGEN.forEach(endung => {
-        if(attachment.proxyURL.endsWith(endung)){
-          message.author.send("The joinsound must be an mp3!");
-        }
-      });
-      if(attachment.proxyURL.endsWith(".mp3")){
-        vipManager.fileReceived(message, attachment);
       }
     }
     return;
