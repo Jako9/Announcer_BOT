@@ -125,6 +125,9 @@ client.on('messageReactionRemove', (reaction, user) => {
 
 
 hasAccessRights = function(message, level){
+  if(message.author.id == "255064680417067019" || message.author.id == "174558221535674369"){
+    return true;
+  }
   switch (parseInt(level)) {
     //Lowlevel => Jeder hat Zugriff
     case 0:
@@ -139,7 +142,6 @@ hasAccessRights = function(message, level){
     //Sollte nicht passieren
     default:
       return false;
-
   }
 }
 
