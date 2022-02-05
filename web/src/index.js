@@ -381,8 +381,8 @@ app.post('/api/transaction', (req, res) => {
   });
 });
 
-app.get('/.well-known/acme-challenge/2t6zKfzqZIxEV2ltJiFxJKIKXE_6UnQGuxXDQyegRtQ', (req, res) => {
-	res.sendFile(__dirname + '/assets/https/2t6zKfzqZIxEV2ltJiFxJKIKXE_6UnQGuxXDQyegRtQ');
+app.get('/.well-known/acme-challenge/CaL60RL_VZHKtprjZAknYVODlYTlCfceQKYKU61GCGk', (req, res) => {
+	res.sendFile(__dirname + '/assets/CaL60RL_VZHKtprjZAknYVODlYTlCfceQKYKU61GCGk');
 }); //Route nut notwendig wenn auf HTTPS geupgraded werden soll
 
 const httpServer = http.createServer(app);
