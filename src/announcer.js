@@ -182,8 +182,11 @@ client.on('message', message => {
     return;
   }
 
+  logManager.writeDebugLog("Checking Channel Type...");
+  logManager.writeDebugLog("Channel Type: " + message.channel.type);
   //Message wurde nicht in einem Textchannel geschickt
   if(message.channel.type != 'GUILD_TEXT'){
+    logManager.writeDebugLog("Channel Type not suitable");
     return;
   }
 
