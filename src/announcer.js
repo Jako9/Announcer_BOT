@@ -94,9 +94,6 @@ client.on("guildDelete", guild => {
 
 // Join Automatisch
 client.on('voiceStateUpdate', (oldState, newState) => {
-
-    logManager.writeDebugLog("oldstate: " + oldState);
-    logManager.writeDebugLog("newstate: " + newState);
   //Fetch roles in case they are needed (on voiceChannelJoinEvent)
   try{
     let rolle = newState.channel == null ? null : serverManager.getRolle(newState.channel.guild.id);
@@ -192,6 +189,7 @@ client.on('message', message => {
     logManager.writeDebugLog("Channel Type not suitable");
     return;
   }
+  logManager.writeDebugLog("Evaluating...");
 
   //Message kommt von einem BOT
   if(message.author.bot){
