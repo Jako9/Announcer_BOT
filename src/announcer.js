@@ -148,7 +148,9 @@ hasAccessRights = function(message, level){
 
 // BEFEHL-ABFRAGE
 client.on('message', message => {
+  logManager.writeDebugLog("Message received");
   // DM => becomeVIP Regelung
+  logManager.writeDebugLog("message: " + message);
   if (!message.guild) {
     if(message.content.startsWith('Er9')){
       errorManager.er9(message,client);
