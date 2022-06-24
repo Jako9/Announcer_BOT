@@ -182,6 +182,11 @@ client.on('message', message => {
     return;
   }
 
+  //Message wurde nicht in einem Textchannel geschickt
+  if(message.channel.type != 'GUILD_TEXT'){
+    return;
+  }
+
   //Message kommt von einem BOT
   if(message.author.bot){
     return;
