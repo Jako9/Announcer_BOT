@@ -148,9 +148,7 @@ hasAccessRights = function(message, level){
 
 // BEFEHL-ABFRAGE
 client.on('message', message => {
-  logManager.writeDebugLog("Message received");
   // DM => becomeVIP Regelung
-  logManager.writeDebugLog("message: " + message);
   if (!message.guild) {
     if(message.content.startsWith('Er9')){
       errorManager.er9(message,client);
@@ -183,15 +181,6 @@ client.on('message', message => {
     }
     return;
   }
-
-  logManager.writeDebugLog("Checking Channel Type...");
-  logManager.writeDebugLog("Channel Type: " + message.channel.type);
-  //Message wurde nicht in einem Textchannel geschickt
-  if(message.channel.type != 'GUILD_TEXT'){
-    logManager.writeDebugLog("Channel Type not suitable");
-    return;
-  }
-  logManager.writeDebugLog("Evaluating...");
 
   //Message kommt von einem BOT
   if(message.author.bot){
