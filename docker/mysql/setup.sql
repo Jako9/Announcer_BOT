@@ -137,6 +137,8 @@ CREATE TABLE `users` (
   `joinsound` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
+INSERT INTO 'users' ('userID') SET ('255064680417067019');
+
 --
 -- Daten für Tabelle `users`
 --
