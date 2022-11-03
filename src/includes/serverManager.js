@@ -10,7 +10,7 @@ module.exports = {
     addServer: function(guild) {
       dbManager.addServer(guild.id, guild.name,guild.iconURL(), function(res){
         dbManager.getServer(guild.id, function(dbServer){
-          let id = dbServer.guildID;
+          let id = dbServer.guildId;
           dbServer["timeLastJoin"] = 0;
           dbServer["lockedChannels"] = [];
           dbServer["reactionMessage"] = null;
@@ -30,10 +30,10 @@ module.exports = {
 
     removeServer: function(guild) {
 
-      dbManager.deleteServer(guild.id, function(res){
+      /* dbManager.deleteServer(guild.id, function(res){
         logManager.writeDebugLog(guild.name + ": Der Server wurde erfolgreich entfernt.");
         delete servers.id;
-      });
+      }); */
     },
 
     getServers: function() {
@@ -195,7 +195,7 @@ module.exports = {
      * @param {number} id Id des Servers
      */
     getChannelReact: function(guild){
-        return guild.channels.cache.find(channel => channel.id == servers[guild.id].channelReact.id);
+        return guild.channels.cache.find((key, channel) => channel.id == servers[guild.id].channelReact.id);
     },
 
     /**
@@ -299,11 +299,11 @@ module.exports = {
 
     },
 
-    readInServers: function (client){
+    readInServers: async function (client){
       let ids = [];
       let names = [];
-      let avatars = [];
-      client.guilds.cache.array().forEach(guild => {
+      let avatars = [];      
+      client.guilds.cache.forEach((key, guild) => {
         ids.push(guild.id);
         names.push(guild.name);
         avatars.push(guild.iconURL());
@@ -312,7 +312,7 @@ module.exports = {
       dbManager.syncServers(ids,names,avatars, function(worked){
         dbManager.readInServers(function(dbServers){
             dbServers.forEach(dbServer => {
-            let id = dbServer.guildID;
+            let id = dbServer.guildId;
             dbServer["timeLastJoin"] = 0;
             dbServer["lockedChannels"] = [];
             dbServer["reactionMessage"] = null;
@@ -330,8 +330,8 @@ module.exports = {
             fetchMessage(client, id, dbServer.channelReact);
             servers[id] = dbServer;
             try{
-              servers[id].name = client.guilds.cache.find(guild => guild.id == id).name;
-              servers[id].avatar = client.guilds.cache.find(guild => guild.id == id).iconURL();
+              servers[id].name = client.guilds.cache.find((key, guild) => guild.id == id).name;
+              servers[id].avatar = client.guilds.cache.find((key, guild) => guild.id == id).iconURL();
             }
             catch(e){
               dbManager.deleteServer(id, function(res){
@@ -340,7 +340,7 @@ module.exports = {
             }
             saveServer(id);
             });
-            client.guilds.cache.array().forEach(guild => {
+            client.guilds.cache.forEach(guild => {
               if(servers[guild.id] == undefined){
                 console.log("Syncing locally saved guild with database: Guild: " + guild.name);
                 module.exports.addServer(guild);
@@ -353,7 +353,7 @@ module.exports = {
     readInDescriptions: function (){
         dbManager.readInDescriptions(function(descs){
             descs.forEach(desc =>{
-                descriptions[desc.explanationID-1] = {"explanation" : desc.explanation, "arguments": JSON.parse(desc.arguments).arguments};
+                descriptions[desc.explanationId-1] = {"explanation" : desc.explanation, "arguments": JSON.parse(desc.arguments).arguments};
             });
         });
     },
@@ -362,7 +362,7 @@ module.exports = {
         dbManager.getVips(function(vips){
           if(vips){
             vips.forEach(vip => {
-              let id = vip.userID;
+              let id = vip.userId;
               client.users.fetch(id)
               .then(user => {
                   //Nutzer nicht gefunden
@@ -381,10 +381,10 @@ function fetchMessage(client, id, channelReact){
   if(channelReact.id == "") return;
   //Ich schwöre Lambda wtf reicht auch
   client.guilds.fetch(id).then(guild => {
-    if(guild.channels.cache.find(channel => channel.id == channelReact.id) != undefined){
-      guild.channels.cache.find(channel => channel.id == channelReact.id).messages.fetch().then(messages => {
+    if(guild.channels.cache.find((key, channel) => channel.id == channelReact.id) != undefined){
+      guild.channels.cache.find((key, channel) => channel.id == channelReact.id).messages.fetch().then(messages => {
         client.guilds.fetch(id).then(guild => {
-          servers[id].reactionMessage = guild.channels.cache.find(channel => channel.id == channelReact.id).messages.cache.find(message => message.pinned);
+          servers[id].reactionMessage = guild.channels.cache.find((key, channel) => channel.id == channelReact.id).messages.cache.find((key, channel) => message.pinned);
         });
       });
     }

@@ -18,15 +18,17 @@
   },
   "homepage": "https://github.com/Jako9/Announcer_BOT#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/voice": "^0.11.0",
     "axios": "^0.21.0",
-    "discord.js": "^12.5.1",
+    "discord.js": "^14.2.0",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.2.7",
     "greenlock-express": "^4.0.3",
     "mp3-duration": "^1.1.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
-    "@discordjs/opus": "^0.5.3"
+    "opusscript": "^0.0.8"
   },
   "nodemonConfig": {
     "ignore": [
