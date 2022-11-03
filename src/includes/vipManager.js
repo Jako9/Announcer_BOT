@@ -125,7 +125,7 @@ module.exports = {
               dbManager.getPaymentLink(message.author.id, function(link){
                 let embed = buildEmbed(link);
                 message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
-                if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.").catch(err => {logManager.writeErrorLog(err.stack);});
+                if(message.guild) message.reply({content: "Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
               });
             }
             else{
@@ -153,10 +153,10 @@ module.exports = {
                     logManager.writeErrorLog(data);
                   }
                   if(link && jsonData){
-                    dbManager.createPendingPayment(jsonData.transID,message.author.id,link,"Pending",function(worked){});
+                    dbManager.createPendingPayment(jsonData.transId,message.author.id,link,"Pending",function(worked){});
                     let embed = buildEmbed(link);
                     message.author.send({ embed: embed}).catch(err => {logManager.writeErrorLog(err.stack);});
-                    if(message.guild) message.reply("Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.").catch(err => {logManager.writeErrorLog(err.stack);});
+                    if(message.guild) message.reply({content: "Check your dms ;). If they are empty, your dms are probably closed. In this case open them and try again.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
 
                   }else{
                     message.author.send("Transaction failure, please try again!").catch(err => {logManager.writeErrorLog(err.stack);});

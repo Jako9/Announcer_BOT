@@ -49,7 +49,7 @@ module.exports = {
       //User in keinem Channel
       if(!message.member.voice.channel){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Benutzer sitzt in keinem Channel).");
-        message.reply('You must first join a channel that is lockable!').catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: 'You must first join a channel that is lockable!', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       //Channel nicht abschließbar
@@ -59,7 +59,7 @@ module.exports = {
       });
       if(!ids.includes(message.member.voice.channel.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Der Channel ist nicht abschließbar).");
-        message.reply('The current voicechannel is not lockable. For more info type: ' + prefix + instructions[8][0].name + " 2" + " or " + prefix + instructions[8][0].name + " 3").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: 'The current voicechannel is not lockable. For more info type: ' + prefix + instructions[8][0].name + " 2" + " or " + prefix + instructions[8][0].name + " 3", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let channels = serverManager.getLockedChannels(message.guild.id);
@@ -68,12 +68,12 @@ module.exports = {
       });
       if(channel != undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht abgeschlossen werden (Dieser Channel ist schon abgeschlossen).");
-        message.reply('This channel is locked already.').catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: 'This channel is locked already.', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       lockChannel(message);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde abgeschlossen.");
-      message.reply('The channel has been locked').catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: 'The channel has been locked', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     unlock: function(message){
@@ -84,35 +84,35 @@ module.exports = {
       });
       if(channel == undefined){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Channel ist nicht abgeschlossen).");
-        message.reply('This channel is not locked!').catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: 'This channel is not locked!', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       if(!channel.members.includes(message.member.id)){
         logManager.writeDebugLog(message.guild.name + ": <span style='color:#c72222;'>FEHLER</span>: Es konnte nicht aufgeschlossen werden (Der Nutzer darf den Channel nicht aufschließen).");
-        message.reply('You don\'t have the permission to unlock this channel! Only people who have been present while locking the channel may unlock it.').catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: 'You don\'t have the permission to unlock this channel! Only people who have been present while locking the channel may unlock it.', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       unlockChannel(channel);
       logManager.writeDebugLog(message.guild.name + ": Der Channel wurde aufgeschlossen.");
-      message.reply('Unlocked!').catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: 'Unlocked', allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     lockableClear: function(message){
       serverManager.setLockable(message.guild.id, []);
       logManager.writeDebugLog(message.guild.name + ": Die abzuschließenden Channel wurden zurückgesetzt.");
-      message.reply("The lockable channels have been reset.").catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: "The lockable channels have been reset.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     showLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(channels.length == 0){
-        message.reply("There are no channels, which may be locked.").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: "There are no channels, which may be locked.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let msg = "```\n"
       channels.forEach(channel => msg += (channel.name + "\n"));
       msg += "```";
-      message.reply(msg).catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: msg, allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     removeMember: function(member){
@@ -127,6 +127,7 @@ module.exports = {
     },
 
     forceUnlock: function(voiceState){
+      logManager.writeErrorLog(voiceState.guild.id);
       let channels = serverManager.getLockedChannels(voiceState.guild.id);
       channels.forEach(channel => {
         if(channel.whoLocked == voiceState.member.id) unlockChannel(channel);
@@ -144,7 +145,7 @@ module.exports = {
     addLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Please enter the channel you want to be lockable.").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: "Please enter the channel you want to be lockable.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let ids = []
@@ -152,18 +153,18 @@ module.exports = {
         ids.push(channel.id);
       });
       if(ids.includes(message.member.voice.channel.id)){
-        message.reply("This channel is lockable already.").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: "This channel is lockable already.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       channels.push({"name":message.member.voice.channel.name, "id":message.member.voice.channel.id});
       serverManager.setLockable(message.guild.id, channels);
-      message.reply(message.member.voice.channel.name + " is now lockable!").catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: message.member.voice.channel.name + " is now lockable!", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     },
 
     removeLockable: function(message){
       let channels = serverManager.getLockable(message.guild.id);
       if(!message.member.voice.channel){
-        message.reply("Please enter the channel you want to no longer be lockable.").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: "Please enter the channel you want to no longer be lockable.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let ids = []
@@ -171,12 +172,12 @@ module.exports = {
         ids.push(channel.id);
       });
       if(!ids.includes(message.member.voice.channel.id)){
-        message.reply("This channel is not lockable.").catch(err => {logManager.writeErrorLog(err.stack);});
+        message.reply({content: "This channel is not lockable.", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
         return;
       }
       let index = ids.indexOf(message.member.voice.channel.id);
       channels.splice(index, 1);
       serverManager.setLockable(message.guild.id, channels);
-      message.reply(message.member.voice.channel.name + " is no longer lockable!").catch(err => {logManager.writeErrorLog(err.stack);});
+      message.reply({content: message.member.voice.channel.name + " is no longer lockable!", allowedMentions: {repliedUser: true}}).catch(err => {logManager.writeErrorLog(err.stack);});
     }
 }

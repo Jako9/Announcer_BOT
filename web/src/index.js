@@ -9,22 +9,22 @@ const axios = require('axios');
 
 
 
-const privateKey = fs.readFileSync('/https/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/https/cert.pem', 'utf8');
-const ca = fs.readFileSync('/https/chain.pem', 'utf8');
+//const privateKey = fs.readFileSync('/https/privkey.pem', 'utf8');
+//const certificate = fs.readFileSync('/https/cert.pem', 'utf8');
+//const ca = fs.readFileSync('/https/chain.pem', 'utf8');
 
 
-const credentials = {
+/* const credentials = {
 	key: privateKey,
 	cert: certificate,
 	ca: ca
-};
+}; */
 
-const agent = new https.Agent({  
+/* const agent = new https.Agent({  
   rejectUnauthorized: false,
   key: privateKey,
 	cert: certificate
-});
+}); */
 
 const instance = axios.create({
   httpsAgent: new https.Agent({  
@@ -386,15 +386,15 @@ app.get('/.well-known/acme-challenge/CaL60RL_VZHKtprjZAknYVODlYTlCfceQKYKU61GCGk
 }); //Route nut notwendig wenn auf HTTPS geupgraded werden soll
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
+//const httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(80, () => {
 	console.log('HTTP Server running on port 80');
 });
 
-httpsServer.listen(443, () => {
+/* httpsServer.listen(443, () => {
 	console.log('HTTPS Server running on port 443');
-});
+}); */
 
 
 function formatStatistics(statistics){
